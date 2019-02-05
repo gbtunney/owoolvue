@@ -1,14 +1,14 @@
 
-$viewportIncrement: 1px;
-$siteWidth: 1050px;
-$small: 590px;
-$medium: 768px;
-$large: 769px;
-$xlarge: $siteWidth + $viewportIncrement;
+$viewportIncrement: 1px!default;
+$siteWidth: 1050px!default;
+$small: 590px!default;
+$medium: 768px!default;
+$large: 769px!default;
+$xlarge: $siteWidth + $viewportIncrement!default;
 
-$postSmall: $small + $viewportIncrement;
-$preMedium: $medium - $viewportIncrement;
-$preLarge: $large - $viewportIncrement;
+$postSmall: $small + $viewportIncrement!default;
+$preMedium: $medium - $viewportIncrement!default;
+$preLarge: $large - $viewportIncrement!default;
 
 /*================ The following are dependencies of csswizardry grid ================*/
 $breakpoints: (
@@ -17,116 +17,116 @@ $breakpoints: (
 	'medium-down' '(max-width: #{$medium})',
 	'large' '(min-width: #{$large})'
 );
-$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
-$breakpoint-has-push:  ('medium', 'medium-down', 'large');
-$breakpoint-has-pull:  ('medium', 'medium-down', 'large');
+$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large')!default;
+$breakpoint-has-push:  ('medium', 'medium-down', 'large')!default;
+$breakpoint-has-pull:  ('medium', 'medium-down', 'large')!default;
 
 /*================ Color variables ================*/
-$colorPrimary: #1c1d1d;
-$colorSecondary: #a26b25;
+$colorPrimary: #1c1d1d!default;
+$colorSecondary: #a26b25!default;
 
 // Button colors
 $colorBtnPrimary: $colorPrimary;
-$colorBtnPrimaryHover: lighten($colorBtnPrimary, 12%);
-$colorBtnPrimaryActive: adaptive-color($colorPrimary, 24%);
-$colorBtnPrimaryText: #ffffff;
+$colorBtnPrimaryHover: lighten($colorBtnPrimary, 12%)!default;
+$colorBtnPrimaryActive: adaptive-color($colorPrimary, 24%)!default;
+$colorBtnPrimaryText: #ffffff!default;
 
 $colorBtnSecondary: $colorSecondary;
-$colorBtnSecondaryHover: lighten($colorBtnSecondary, 10%);
-$colorBtnSecondaryActive: adaptive-color($colorSecondary, 10%);
-$colorBtnSecondaryText: #ffffff;
+$colorBtnSecondaryHover: lighten($colorBtnSecondary, 10%)!default;
+$colorBtnSecondaryActive: adaptive-color($colorSecondary, 10%)!default;
+$colorBtnSecondaryText: #ffffff!default;
 
 $colorBtnSecondaryAccent: $colorBtnPrimary;
-$colorBtnSecondaryAccentHover: lighten($colorBtnSecondaryAccent, 12%);
-$colorBtnSecondaryAccentActive: adaptive-color($colorBtnSecondaryAccent, 24%);
+$colorBtnSecondaryAccentHover: lighten($colorBtnSecondaryAccent, 12%)!default;
+$colorBtnSecondaryAccentActive: adaptive-color($colorBtnSecondaryAccent, 24%)!default;
 
 // Text link colors
-$colorLink: $colorSecondary;
-$colorLinkHover: $colorPrimary;
+$colorLink: $colorSecondary!default;
+$colorLinkHover: $colorPrimary!default;
 
 // Text colors
-$colorTextBody: #222323;
+$colorTextBody: #222323!default;
 
 // Heading colors
-$colorHeadings: #222323;
+$colorHeadings: #222323!default;
 
 // Backgrounds
-$colorBody: #ffffff;
-$colorProductBackground: #f7f7f7;
-$colorInputBg: #f6f6f6;
-$colorNewsletter: #f6f6f6;
+$colorBody: #ffffff!default;
+$colorProductBackground: #f7f7f7!default;
+$colorInputBg: #f6f6f6!default;
+$colorNewsletter: #f6f6f6!default;
 
 // Border colors
-$colorBorder: #1c1d1d;
+$colorBorder: #1c1d1d!default;
 
 // Border size
-$borderWidthHeader: 1px;
+$borderWidthHeader: 1px!default;
 
 // Sale tag color
-$colorSaleTag: #990000;
+$colorSaleTag: #990000!default;
 
 // Nav and dropdown link background
-$colorNav: $colorBody;
-$colorNavText: $colorHeadings;
+$colorNav: $colorBody!default;
+$colorNavText: $colorHeadings!default;
 
 // Helper colors
-$disabledGrey: #f6f6f6;
-$disabledBorder: darken($disabledGrey, 25%);
-$errorRed: #d02e2e;
-$errorRedBg: #fff6f6;
-$successGreen: #56ad6a;
-$successGreenBg: #ecfef0;
+$disabledGrey: #f6f6f6!default;
+$disabledBorder: darken($disabledGrey, 25%)!default;
+$errorRed: #d02e2e!default;
+$errorRedBg: #fff6f6!default;
+$successGreen: #56ad6a!default;
+$successGreenBg: #ecfef0!default;
 
 // Drawer sizes and colors
-$drawerNavWidth: 300px;
-$drawerCartWidth: 300px;
-$drawerCartWidthLarge: 400px; // small-up width
-$drawerHeaderHeight: 80px;
-$drawerCartFooterHeight: 130px; // default, overwritten by JS
-$colorDrawers: #1c1d1d;
-$colorDrawerBorder: #343535;
-$colorDrawerText: #ffffff;
-$colorDrawerButton: #a26b25;
-$colorDrawerButtonText: #ffffff;
-$drawerTransition: 'all 0.35s cubic-bezier(0.46, 0.01 , 0.32, 1)';
+$drawerNavWidth: 300px!default;
+$drawerCartWidth: 300px!default;
+$drawerCartWidthLarge: 400px!default; // small-up width
+$drawerHeaderHeight: 80px!default;
+$drawerCartFooterHeight: 130px!default; // default, overwritten by JS
+$colorDrawers: #1c1d1d!default;
+$colorDrawerBorder: #343535!default;
+$colorDrawerText: #ffffff!default;
+$colorDrawerButton: #a26b25!default;
+$colorDrawerButtonText: #ffffff!default;
+$drawerTransition: 'all 0.35s cubic-bezier(0.46, 0.01 , 0.32, 1)'!default;
 
 // Sizing variables
-$gutter: 30px;
-$gridGutterMobile: 22px;
-$section-spacing-small: 35px;
-$gridGutter: 30px; // can be a %, but nested grids will have smaller margins because of it
-$contentTopMargin: 80px;
-$contentTopMarginSmall: 35px;
-$radius: 0;
-$customSelectHeight: 46px;
+$gutter: 30px!default;
+$gridGutterMobile: 22px!default;
+$section-spacing-small: 35px!default;
+$gridGutter: 30px!default; // can be a %, but nested grids will have smaller margins because of it
+$contentTopMargin: 80px!default;
+$contentTopMarginSmall: 35px!default;
+$radius: 0!default;
+$customSelectHeight: 46px!default;
 
 // Z-index
-$zindexNavDropdowns: 5;
-$zindexDrawer: 10;
-$zindexHeroHeader: 2;
-$zindexDrawerOverlay: 20;
+$zindexNavDropdowns: 5!default;
+$zindexDrawer: 10!default;
+$zindexHeroHeader: 2!default;
+$zindexDrawerOverlay: 20!default;
 
 // Product Collage Grid
-$collageImageXLarge: 670px;
-$collageImageLarge: 520px;
-$collageImageMedium: 310px;
-$collageImageSmall: 230px;
+$collageImageXLarge: 670px!default;
+$collageImageLarge: 520px!default;
+$collageImageMedium: 310px!default;
+$collageImageSmall: 230px!default;
 
 
 
 // Collection Collage Grid
 // These heights are used to determine the row height for the
 // collection grid.
-$collectionCollageRowHeightFull: 450px;
-$collectionCollageRowHeightLarge: 310px;
-$collectionCollageRowHeightSmall: 280px;
+$collectionCollageRowHeightFull: 450px!default;
+$collectionCollageRowHeightLarge: 310px!default;
+$collectionCollageRowHeightSmall: 280px!default;
 
 // Password page
-$passwordPageUseBgImage: true;
+$passwordPageUseBgImage: true!default;
 
 // Section onboarding
-$color-blankstate: rgba($colorTextBody, 0.35);
-$color-blankstate-background: rgba($colorTextBody, 0.10);
+$color-blankstate: rgba($colorTextBody, 0.35)!default;
+$color-blankstate-background: rgba($colorTextBody, 0.10)!default;
 
 /*================ Typography ================*/@font-face {
 	font-family: Montserrat;
@@ -172,23 +172,23 @@ $color-blankstate-background: rgba($colorTextBody, 0.10);
 
 
 // Header Font
-$headerFontStack: "Old Standard TT", serif;
-$headerFontWeight: 400;
-$headerFontStyle: normal;
-$headerBaseFontSize: 30px;
+$headerFontStack: "Old Standard TT", serif!default;
+$headerFontWeight: 400!default;
+$headerFontStyle: normal!default;
+$headerBaseFontSize: 30px!default;
 
 // Body Font
-$bodyFontStack: Arapey, serif;
-$bodyFontWeight: 400;
-$bodyFontWeightBold: 700;
-$bodyFontStyle: normal;
-$baseFontSize: 16px; // Henceforth known as 1em
+$bodyFontStack: Arapey, serif!default;
+$bodyFontWeight: 400!default;
+$bodyFontWeightBold: 700!default;
+$bodyFontStyle: normal!default;
+$baseFontSize: 16px!default; // Henceforth known as 1em
 
 // Accent Font
-$accentFontStack: Montserrat, sans-serif;
-$accentFontWeight: 600;
-$accentFontWeightBold: 900;
-$accentFontStyle: normal;
+$accentFontStack: Montserrat, sans-serif!default;
+$accentFontWeight: 600!default;
+$accentFontWeightBold: 900!default;
+$accentFontStyle: normal!default;
 
 @font-face {
 	font-family: 'icons';
@@ -201,7 +201,7 @@ $accentFontStyle: normal;
 	font-style: normal;
 };
 
-$socialIconFontStack: 'icons';
+$socialIconFontStack: 'icons'!default;
 
 
 //Font Stack Mixins
