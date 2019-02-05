@@ -1,3 +1,6 @@
+npm install --save-dev breakpoint-sass breakpoint-slicer modularscale-sass chroma-sass compass-mixins sass-bem-constructor sass-dry sass-toolkit sassytester
+
+
 ## This is a vue starter template for slate, it is based on Shopify's starter template
 
 

@@ -2118,6 +2118,16 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
+breakpoint-sass@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/breakpoint-sass/-/breakpoint-sass-2.7.1.tgz#8ef6c4744dcc25ba83d969b6c9a17e5daa29980a"
+  integrity sha1-jvbEdE3MJbqD2Wm2yaF+XaopmAo=
+
+breakpoint-slicer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/breakpoint-slicer/-/breakpoint-slicer-2.0.0.tgz#dc70c63de9ed76057bb4285fabb2303151c9045c"
+  integrity sha1-3HDGPentdgV7tChfq7IwMVHJBFw=
+
 brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
@@ -2682,6 +2692,11 @@ chownr@^1.0.1, chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.1.tgz#54726b8b8fff4df053c42187e801fb4412df1494"
   integrity sha512-j38EvO5+LHX84jlo6h4UzmOwi0UgW61WRyPtJz4qaadK5eY3BTS5TY/S1Stc3Uk2lIM6TPevAlULiEJwie860g==
 
+chroma-sass@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/chroma-sass/-/chroma-sass-1.2.6.tgz#34e377be22016c260f88b10f6924e06360e25689"
+  integrity sha1-NON3viIBbCYPiLEPaSTgY2DiVok=
+
 chrome-trace-event@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.0.tgz#45a91bd2c20c9411f0963b5aaeb9a1b95e09cc48"
@@ -2940,6 +2955,11 @@ commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
+
+compass-mixins@^0.12.10:
+  version "0.12.10"
+  resolved "https://registry.yarnpkg.com/compass-mixins/-/compass-mixins-0.12.10.tgz#cd9f15f829c4e960cc43bb226f049b28beb99d41"
+  integrity sha1-zZ8V+CnE6WDMQ7sibwSbKL65nUE=
 
 component-bind@1.0.0:
   version "1.0.0"
@@ -7888,6 +7908,11 @@ mock-fs@^4.4.2:
   resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-4.8.0.tgz#eb0784ceba4b34c91a924a5112eeb36e1b5a9e29"
   integrity sha512-Gwj4KnJOW15YeTJKO5frFd/WDO5Mc0zxXqL9oHx3+e9rBqW8EVARqQHSaIXznUdljrD6pvbNGW2ZGXKPEfYJfw==
 
+modularscale-sass@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/modularscale-sass/-/modularscale-sass-3.0.8.tgz#57c92ee0750f6807e37359699ef2ce63a4997db6"
+  integrity sha512-NOO6NLXPiVG8T/ZkXImxSj1YtvzF37suAGxc9ty0pmQrU998fmJqR6kNqs+HmFqOjeCRJ3roBfA9Arohta2sBQ==
+
 moment@^2.22.1:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
@@ -10238,6 +10263,16 @@ sane@^2.0.0:
   optionalDependencies:
     fsevents "^1.2.3"
 
+sass-bem-constructor@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sass-bem-constructor/-/sass-bem-constructor-1.1.0.tgz#1a5a78283b29b96faf65d6dd74d4d1c9b893549b"
+  integrity sha1-Glp4KDspuW+vZdbddNTRybiTVJs=
+
+sass-dry@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sass-dry/-/sass-dry-1.0.0.tgz#5366a57065dcdde9115c98903afd025d9b847a61"
+  integrity sha1-U2alcGXc3ekRXJiQOv0CXZuEemE=
+
 sass-graph@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/sass-graph/-/sass-graph-2.2.4.tgz#13fbd63cd1caf0908b9fd93476ad43a51d1e0b49"
@@ -10258,6 +10293,16 @@ sass-loader@6.0.7:
     lodash.tail "^4.1.1"
     neo-async "^2.5.0"
     pify "^3.0.0"
+
+sass-toolkit@^2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/sass-toolkit/-/sass-toolkit-2.10.2.tgz#c290ad71d76f435b068d963226f287e022dc696a"
+  integrity sha1-wpCtcddvQ1sGjZYyJvKH4CLcaWo=
+
+sassytester@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sassytester/-/sassytester-1.1.0.tgz#472af03474feec47721a67e8ea1f71944c1e7f91"
+  integrity sha1-RyrwNHT+7EdyGmfo6h9xlEwef5E=
 
 sax@^1.2.4, sax@~1.2.1, sax@~1.2.4:
   version "1.2.4"
