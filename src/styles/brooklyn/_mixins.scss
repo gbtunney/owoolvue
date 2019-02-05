@@ -1,0 +1,255 @@
+/*============================================================================
+  #Sass Mixins
+==============================================================================*/
+.clearfix {
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin clearfix() {
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin prefix($property, $value) {
+	-webkit-#{$property}: #{$value};
+	-moz-#{$property}: #{$value};
+	-ms-#{$property}: #{$value};
+	-o-#{$property}: #{$value};
+	#{$property}: #{$value};
+}
+
+/*============================================================================
+  Prefix mixin for generating vendor prefixes.
+  Based on https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/addons/_prefixer.scss
+  Usage:
+    // Input:
+    .element {
+      @include prefix(transform, scale(1), ms webkit spec);
+    }
+    // Output:
+    .element {
+      -ms-transform: scale(1);
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+==============================================================================*/
+@mixin prefixFlex($property, $value, $prefixes) {
+	@each $prefix in $prefixes {
+		@if $prefix == webkit {
+			-webkit-#{$property}: $value;
+		} @else if $prefix == moz {
+			-moz-#{$property}: $value;
+		} @else if $prefix == ms {
+			-ms-#{$property}: $value;
+		} @else if $prefix == o {
+			-o-#{$property}: $value;
+		} @else if $prefix == spec {
+			#{$property}: $value;
+		} @else  {
+			@warn 'Unrecognized prefix: #{$prefix}';
+		}
+	}
+}
+
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-ms-keyframes #{$name} {
+		@content;
+	}
+	@keyframes #{$name} {
+		@content;
+	}
+}
+
+@mixin transition($transition: 0.1s all) {
+	@include prefix('transition', #{$transition});
+}
+
+@mixin transform($transform: 0.1s all) {
+	@include prefix('transform', #{$transform});
+}
+
+@mixin animation($animation) {
+	-webkit-animation: $animation;
+	-moz-animation:    $animation;
+	-o-animation:      $animation;
+	animation:         $animation;
+}
+
+@mixin gradient($from, $to, $fallback) {
+	background: $fallback;
+	background: -moz-linear-gradient(top, $from 0%, $to 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
+	background: -webkit-linear-gradient(top, $from 0%, $to 100%);
+	background: -o-linear-gradient(top, $from 0%, $to 100%);
+	background: -ms-linear-gradient(top, $from 0%, $to 100%);
+	background: linear-gradient(top bottom, $from 0%, $to 100%);
+}
+
+@mixin backface($visibility: hidden) {
+	@include prefix('backface-visibility', #{$visibility});
+}
+
+@mixin box-sizing($box-sizing: border-box) {
+	-webkit-box-sizing: #{$box-sizing};
+	-moz-box-sizing: #{$box-sizing};
+	box-sizing: #{$box-sizing};
+}
+
+/*================ Functions ================*/
+@function em($target, $context: $baseFontSize) {
+	@if $target == 0 {
+		@return 0;
+	}
+	@return $target / $context + 0em;
+}
+
+@function color-control($color) {
+	@if (lightness( $color ) > 40) {
+		@return #1c1d1d;
+	}
+	@else {
+		@return #fff;
+	}
+}
+
+@function adaptive-color($color, $percentage) {
+	@if (lightness( $color ) > 40) {
+		@return darken($color, $percentage);
+	}
+	@else {
+		@return lighten($color, $percentage);
+	}
+}
+
+@function strip-units($number) {
+	@return $number / ($number * 0 + 1);
+}
+@mixin visuallyHidden {
+	clip: rect(0 0 0 0);
+	clip: rect(0, 0, 0, 0);
+	overflow: hidden;
+	position: absolute;
+	height: 1px;
+	width: 1px;
+}
+
+/*================ Animations and keyframes ================*/
+@include keyframes(spin) {
+	0% {
+		@include transform(rotate(0deg));
+	}
+
+	100% {
+		@include transform(rotate(360deg));
+	}
+}
+
+@include keyframes(fadeIn) {
+	0%, 35% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@include keyframes(heroContentIn) {
+	0%, 35% {
+		opacity: 0;
+		@include transform('translateY(8px)');
+	}
+	60% {
+		opacity: 1;
+	}
+	100% {
+		@include transform('translateY(0)');
+	}
+}
+
+/*============================================================================
+  Dependency-free breakpoint mixin
+    - http://blog.grayghostvisuals.com/sass/sass-media-query-mixin/
+==============================================================================*/
+$min: min-width;
+$max: max-width;
+@mixin at-query ($constraint, $viewport1, $viewport2:null) {
+	@if $constraint == $min {
+		@media screen and ($min: $viewport1) {
+			@content;
+		}
+	} @else if $constraint == $max {
+		@media screen and ($max: $viewport1) {
+			@content;
+		}
+	} @else {
+		@media screen and ($min: $viewport1) and ($max: $viewport2) {
+			@content;
+		}
+	}
+}
+
+/*============================================================================
+  Flexbox prefix mixins from Bourbon
+    https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/css3/_flex-box.scss
+==============================================================================*/
+@mixin display-flexbox() {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 100%; // necessary for ie10
+}
+
+@mixin flex-wrap($value: nowrap) {
+	@include prefixFlex(flex-wrap, $value, webkit moz ms spec);
+}
+
+@mixin flex-direction($value) {
+	@include prefixFlex(flex-direction, $value, webkit moz ms spec);
+}
+
+@mixin align-items($value: stretch) {
+	$alt-value: $value;
+
+	@if $value == 'flex-start' {
+		$alt-value: start;
+	} @else if $value == 'flex-end' {
+		$alt-value: end;
+	}
+
+	// sass-lint:disable no-misspelled-properties
+	-ms-flex-align: $alt-value;
+	@include prefixFlex(align-items, $value, webkit moz ms o spec);
+}
+
+@mixin flex($value) {
+	@include prefixFlex(flex, $value, webkit moz ms spec);
+}
+
+@mixin flex-basis($width: auto) {
+	// sass-lint:disable no-misspelled-properties
+	-ms-flex-preferred-size: $width;
+	@include prefixFlex(flex-basis, $width, webkit moz spec);
+}
+
+@mixin align-self($align: auto) {
+	// sass-lint:disable no-misspelled-properties
+	-ms-flex-item-align: $align;
+	@include prefixFlex(align-self, $align, webkit spec);
+}
+
+@mixin justify-content($justify: flex-start) {
+	@include prefixFlex(justify-content, $justify, webkit ms spec);
+}
