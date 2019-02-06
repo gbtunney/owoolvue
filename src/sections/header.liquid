@@ -87,6 +87,7 @@
                   {% assign image_size = "180x" %}
                 {% endif %}
 
+
                 {% if section.settings.logo-inverted and template.name == 'index' %}
                   <a href="/" itemprop="url" class="site-header__logo-link">
                     <img src="{{ section.settings.logo-inverted | img_url: image_size }}"
@@ -94,7 +95,11 @@
                     alt="{{ section.settings.logo-inverted.alt | default: shop.name }}"
                     itemprop="logo">
                   </a>
-                {% elsif section.settings.logo %}
+                    {% elsif section.settings.logo_svg %}
+                    <div class="svg">
+                        {% include 'svg-definitions' with section.settings.logo_svg  %}
+                    </div>
+                    {% elsif section.settings.logo %}
                   <a href="/" itemprop="url" class="site-header__logo-link">
                      <img src="{{ section.settings.logo | img_url: image_size }}"
                      srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
@@ -301,6 +306,19 @@
         "pt-BR": "Logotipo"
       }
     },
+{
+"type": "text",
+"id": "logo_svg",
+"label": {
+"de": "Logo",
+"en": "Logo",
+"es": "Logo",
+"fr": "Logo",
+"it": "Logo",
+"ja": "ロゴ",
+"pt-BR": "Logotipo"
+}
+},
     {
       "type": "image_picker",
       "id": "logo-inverted",

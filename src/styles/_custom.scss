@@ -19,3 +19,18 @@ $accentFontStack:get-type-prop(font-family,font-san-serif);
 $accentFontWeight: get-type-prop(font-weight,font-small-caps);
 $accentFontWeightBold: 900;
 $accentFontStyle: normal;
+
+
+.svg{
+	@include u-icon-svg(false,100px);
+}
+
+.hero__header{
+	position: relative!important;
+}
+
+.site-nav__item {
+	@include g-color-scheme(dark){
+		@extend %u-reset-link-color;
+	}
+}
