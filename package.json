@@ -44,7 +44,8 @@
     "watch": "slate-tools start --skipFirstDeploy",
     "build": "slate-tools build",
     "deploy": "slate-tools build && slate-tools deploy",
-    "zip": "slate-tools build && slate-tools zip"
+    "zip": "slate-tools build && slate-tools zip",
+    "styles": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/testing.scss src/assets/testing.css"
   },
   "dependencies": {
     "vue": "^2.5.21",
