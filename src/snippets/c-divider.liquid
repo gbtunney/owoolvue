@@ -1,0 +1,7 @@
+<!-- divider  -->
+
+{% if style_modifier == nil %}
+    {% assign style_modifier = 'light' %}
+{% endif %}
+
+{% include 'c-kabob' with flags : '--monochrome' , component_name: 'Divider' , reflect:true, style_modifier: style_modifier %}

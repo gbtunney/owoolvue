@@ -1,0 +1,243 @@
+$logo-width: 10%;
+
+$show-guides: false;
+
+
+
+.Owool_Mobile-Header {
+
+    $self: &;
+
+    @include breakpoint-range(md,">="){
+        display: none;
+    }
+
+    @include u-default-container;
+    @extend %u-reset-link-color;
+
+    padding-top: rhythm(1);
+
+    position: relative;
+    display: block;
+
+    &__nav-trigger{
+        padding-left: rhythm(1);
+        background: red;
+        display: none;
+    }
+
+    &__wrapper {
+
+        display: grid;
+        grid-template-columns: 20% 60% 20%;
+        grid-gap: 0;
+
+        justify-items: stretch;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+
+
+        @include margin-trailer(1);
+        > * {
+            &:nth-child(1) {
+                @if ($show-guides) {
+                    background: pink;
+                }
+                align-self: flex-start;
+            }
+            &:nth-child(2) {
+                @if ($show-guides) {
+                    background: orange;
+                }
+                @include breakpoint-range(sm){
+                    padding: 0 rhythm(2);
+                }
+            }
+            &:nth-child(3) {
+                @if ($show-guides) {
+                    background: yellow;
+                }
+                //align-self: flex-end;
+            }
+            &:nth-child(4) {
+                @if ($show-guides) {
+                    background: red;
+                }
+            }
+        }
+    }
+
+    &__logo {
+
+        height: auto;
+        width: 100%;
+
+
+        @include breakpoint-range(xs){
+            padding: 0 rhythm(3) rhythm(1) rhythm(3);
+        }
+        @include breakpoint-range(sm){
+            width: 80% ;
+            max-width: 40vw;
+            margin: 0 auto;
+            padding: 0 rhythm(1) rhythm(1) rhythm(1);
+        }
+        .Owool_Logo_SVG {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__meta {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: auto;
+        flex-wrap: nowrap;
+
+
+        $props: (
+            background: true,
+            foreground: true,
+            border: false,
+            accent:foreground
+        );
+        @include g-color-scheme($chroma-active-scheme,$props...);
+
+
+
+       // font-style: italic;
+
+        //@include u-inherit-selector();
+    }
+
+    //part of meta
+    &__cart {
+        width: auto;
+        @include setType(0, font-serif-italic);
+        @include u-horizontal-list(rhythm(.5),flex-end);
+        align-items: center;
+
+        &-icon {
+
+        }
+        &-item-count {
+
+        }
+    }
+
+    &__social {
+        width: auto;
+        height: auto;
+        @include u-horizontal-list(0);
+        @include u-make-container(80%);
+
+
+        @include breakpoint-range(sm){
+            @include u-make-container(100%,38vw);
+
+        }
+            ///  width: 100% ;
+      //  max-width: 40vw;
+
+    }
+
+    &__customer {
+        width: auto;
+
+        @include trailer(1);
+        //padding: 0 rhythm(.5) 0 rhythm(1);
+        @include u-horizontal-list(0);
+
+        align-items: center;
+        @include setType(0, font-serif-italic);
+        &-account {
+
+        }
+        &-login {
+
+        }
+        &-logout {
+
+        }
+        &-create {
+            display: none;
+        }
+    }
+
+    &__search {
+        background: red;
+        display: none;
+    }
+
+
+    //Owool_Mobile-Header__nav-trigger
+}
+
+.Owool_Main-Menu-Mobile {
+//display: none;
+    a {
+        //   @include u-reset-link;
+   // @extend %u-reset-link-color;
+    }
+
+   // @include u-horizontal-list();
+
+    display: none;
+
+    &.--is-active{
+
+        display: block;
+    }
+    justify-content: flex-end;
+
+    width: 100%;
+    height: 100%;
+    background: pink;
+    $parent: &;
+
+   // border-bottom: 1px solid color(border);
+
+   // @include setType(2, font-san-serif);
+
+    $props: (
+        background: true,
+        foreground: true,
+        border: false,
+        accent:true
+    );
+    @include g-color-scheme(light,$props...);
+
+
+    &__item {
+        $parent : &;
+        @include u-transition(opacity);
+        $props: (
+            background: false,
+            foreground: true,
+            border: false,
+            fill:accent,
+            hover-foreground:false,
+            hover-fill: false
+        );
+
+        @include c-kabob(light-alt,$props,true,auto,sm, font-san-serif ){
+            &__left, &__right{
+                opacity: 0;
+                @include u-transition(opacity);
+            }
+        &__center{
+        }
+            &:hover{
+                #{$parent}__left, #{$parent}__right{
+                    opacity: 1;
+
+                }
+            }
+        };
+    }
+
+}

@@ -1,0 +1,27 @@
+.email-list-form {
+
+    $color-scheme: light-alt;
+    $props: (
+        background: true,
+        foreground: true,
+        border: accent
+    );
+@debug color($color-scheme,accent);
+    & > * {
+        @include u-horizontal-list(0);
+    }
+
+    input[type="text"] {
+        @include g-color-scheme($color-scheme, $props...);
+
+        // border: 5px solid green;
+        @include setType(0, font-serif-italic);
+        padding: rhythm(.25) rhythm(.5);
+        width: 100%;
+
+        color:inherit;
+    }
+    @include input-placeholder() {
+        color: color($color-scheme, foreground);
+    }
+}

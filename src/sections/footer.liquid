@@ -1,249 +1,113 @@
-<footer class="site-footer small--text-center" role="contentinfo">
-  <div class="wrapper">
+{% assign footer_style_modifier = 'dark' %}
+{% assign footer_style_modifier__social = 'dark' %}
+{% assign footer_style_modifier__form = 'dark' %}
+{% assign footer_style_modifier__form_button = 'dark' %}
+GILLIAN
+<footer class="Owool_Footer">
+    <div class="inner">
 
-    <div class="grid-uniform">
+        <section class="Owool_Footer__grid footer-content-area">
+            <div class="Owool_Footer__col footer-col" id="footer-1">
+                <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
+                {% assign footer_settings = section.settings %}
+                <div> {{ footer_settings.footer_emailform_text  }}</div>
+                {% include 'c-email-list-form' %}
 
-      {% comment %}
-        Default to 1 footer column (copyright/powered_by/payment_types)
-      {% endcomment %}
-      {% assign num_footer_columns = 1 %}
+                <div class="Owool_Footer__social">
+                {% assign social_nav_theme = "accent-primary" %}
+                {% include 'c-social-nav-links' %}
+                </div>
+                <!-- END: Constant Contact Basic Opt-in Email List Form -->
 
-      {% comment %}
-        Create an extra menu column if link list has more than 5 links
-      {% endcomment %}
-      {% if linklists[section.settings.footer_link_list].links.size > 0 %}
-        {% comment %}
-          We have a Footer menu that isn't empty, we will need another column
-        {% endcomment %}
-        {% assign num_footer_columns = num_footer_columns | plus: 1 %}
-        {% assign extra_footer_linklist_column = false %}
-        {% assign footer_linklist_count = linklists[section.settings.footer_link_list].links.size %}
-        {% if footer_linklist_count > 5 %}
-          {% assign extra_footer_linklist_column = true %}
-          {% comment %}
-            We split the links so we'll need another column
-          {% endcomment %}
-          {% assign num_footer_columns = num_footer_columns | plus: 1 %}
-        {% endif %}
-        {% comment %}
-          If we have an odd amount of links, we need to show 1 more link in 1st column
-        {% endcomment %}
-        {% assign extra_link = footer_linklist_count | modulo: 2 %}
-        {% comment %}
-          We start with a 2nd column after first column is filled up.
-        {% endcomment %}
-        {% assign footer_linklist_split = footer_linklist_count | divided_by: 2 | plus: extra_link | plus: 1 %}
-      {% endif %}
+            </div><!-- /#footer-1 -->
 
-      {% comment %}
-        Determine whether there are social links
-      {% endcomment %}
-      {% assign footer_social_enable = false %}
-      {% if
-        settings.social_twitter_link != blank
-        or settings.social_facebook_link != blank
-        or settings.social_pinterest_link != blank
-        or settings.social_google_plus_link != blank
-        or settings.social_instagram_link != blank
-        or settings.social_tumblr_link != blank
-        or settings.social_youtube_link != blank
-        or settings.social_vimeo_link != blank
-        or settings.social_fancy_link != blank
-        or settings.social_snapchat_link != blank
-      %}
-        {% assign footer_social_enable = true %}
-      {% endif %}
+            <div class="Owool_Footer__col footer-col" id="footer-2">
+                <ul class="footer-nav" class="clearfix">
+                    {% for link in linklists.footer.links %}
+                        <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                    {% endfor %}
+                </ul>
 
-      {% comment %}
-        Calculate the number of footer columns shown. Default to 1.
-      {% endcomment %}
-      {% if footer_social_enable %}
-        {% assign num_footer_columns = num_footer_columns | plus: 1 %}
-      {% endif %}
+            </div><!-- /#footer-2 -->
 
-      {% case num_footer_columns %}
-        {% when 0 %}
-        {% when 1 %}
-          {% assign footer_column_width = '' %}
-        {% when 2 %}
-          {% assign footer_column_width = 'one-half small--one-whole' %}
-        {% when 3 %}
-          {% assign footer_column_width = 'one-third small--one-whole' %}
-        {% when 4 %}
-          {% assign footer_column_width = 'large--one-quarter medium--one-half' %}
-      {% endcase %}
+            <div class="Owool_Footer__col footer-col" id="footer-3">
+                <ul class="footer-nav" class="clearfix">
+                    {% for link in linklists.footer-right.links %}
+                      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="66.755px" height="58.65px" viewBox="0 0 66.755 58.65" enable-background="new 0 0 66.755 58.65" xml:space="preserve">
+<path fill="#808080" d="M0,30.095c0.469-0.508,0.938-0.957,1.426-1.445c-0.02-0.059-0.059-0.117-0.059-0.176
+	c0.059,0.01,0.117,0.029,0.195,0.029c0.059-0.059,0.137-0.127,0.195-0.195l0,0C5.429,14.898,19.238,2.549,31.689,0
+	c-3.193,6.416-6.396,11.548-9.6,15.591c12.812-3.467,27.371,0.469,44.666,14.074c-13.662,12.217-30.35,17.549-44.49,14.98
+	c2.441,3.857,4.814,8.477,7.139,14.004C18.847,55.769,7.792,45.583,3.144,34.109C2.011,32.869,0.957,31.55,0,30.095z"/>
+</svg>  <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div><!-- /#footer-3 -->
 
-      {% if linklists[section.settings.footer_link_list].links.size > 0 %}
-        <div class="grid__item {{ footer_column_width }}">
-          <ul class="no-bullets site-footer__linklist">
-            {% for link in linklists[section.settings.footer_link_list].links %}
+            <div class="Owool_Footer__col footer-col" id="footer-4">
+                <img src="{{ 'star.png' | asset_url }}" width="15" height="17" alt="*" style="vertical-align:middle"/>
+                <a href="http://www.aeolidia.com/" onclick="window.open(this.href,'_blank');return false;">site by
+                    Aeolidia</a> <img src="{{ 'star2.png' | asset_url }}" width="9" height="9" alt="*"
+                                      style="vertical-align:top"/><br/>
+                &copy; <a href="/">{{ shop.name }}</a> {{ 'now' | date: '%Y' }}
 
-      {% comment %}
-        Create a second column
-      {% endcomment %}
-      {% if extra_footer_linklist_column and forloop.index == footer_linklist_split %}
-          </ul>
-        </div>
-        <div class="grid__item {{ footer_column_width }}">
-          <ul class="no-bullets site-footer__linklist">
-      {% endif %}
+            </div><!-- /#footer-4 -->
 
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        </section>
 
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
+        {% if section.settings.show_payment_icons %}
+            {% unless shop.enabled_payment_types == empty %}
+            {%- assign payment_icons_available = 'amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,litecoin,maestro,master,paypal,visa' | split: ',' -%}
 
-      {% if footer_social_enable %}
-        <div class="grid__item {{ footer_column_width }}">
-            <ul class="no-bullets social-icons">
-              {% if settings.social_facebook_link != blank %}
-                <li>
-                  <a href="{{ settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
-                    <span class="icon icon-facebook" aria-hidden="true"></span>
-                    Facebook
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_twitter_link != blank %}
-                <li>
-                  <a href="{{ settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
-                    <span class="icon icon-twitter" aria-hidden="true"></span>
-                    Twitter
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_pinterest_link != blank %}
-                <li>
-                  <a href="{{ settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
-                    <span class="icon icon-pinterest" aria-hidden="true"></span>
-                    Pinterest
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_instagram_link != blank %}
-                <li>
-                  <a href="{{ settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
-                    <span class="icon icon-instagram" aria-hidden="true"></span>
-                    Instagram
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_snapchat_link != blank %}
-                <li>
-                  <a href="{{ settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}">
-                    <span class="icon icon-snapchat" aria-hidden="true"></span>
-                    Snapchat
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_google_plus_link != blank %}
-                <li>
-                  <a href="{{ settings.social_google_plus_link | escape }}" rel="publisher" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Google Plus' }}">
-                    <span class="icon icon-google_plus" aria-hidden="true"></span>
-                    Google Plus
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_tumblr_link != blank %}
-                <li>
-                  <a href="{{ settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
-                    <span class="icon icon-tumblr" aria-hidden="true"></span>
-                    Tumblr
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_youtube_link != blank %}
-                <li>
-                  <a href="{{ settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
-                    <span class="icon icon-youtube" aria-hidden="true"></span>
-                    YouTube
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_vimeo_link != blank %}
-                <li>
-                  <a href="{{ settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
-                    <span class="icon icon-vimeo" aria-hidden="true"></span>
-                    Vimeo
-                  </a>
-                </li>
-              {% endif %}
-              {% if settings.social_fancy_link != blank %}
-                <li>
-                  <a href="{{ settings.social_fancy_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Fancy' }}">
-                    <span class="icon icon-fancy" aria-hidden="true"></span>
-                    Fancy
-                  </a>
-                </li>
-              {% endif %}
+            <span class="visually-hidden">{{ 'layout.footer.payment_methods' | t }}</span>
+            <ul class="payment-icons">
+                {% for type in shop.enabled_payment_types %}
+                    {% if payment_icons_available contains type %}
+                        <li>
+                            {%- assign icon_name = type | prepend: 'icon-' -%}
+                            {% include icon_name %}
+                            <span class="visually-hidden">{{ type | capitalize | replace: '_', ' ' }}</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
             </ul>
+            {% endunless %}
+        {% endif %}
+        <div class="Owool_Footer__divider">
+            {% include 'c-divider'   with  style_modifier: footer_style_modifier %}
         </div>
-      {% endif %}
-
-      <div class="grid__item {{ footer_column_width }} {% if num_footer_columns == 1 %}text-center{% else %}large--text-right{% endif %}">
-        <p>&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: '/' }}<br>{{ powered_by_link }}</p>
-          {%- if section.settings.show_payment_icons -%}
-            {%- unless shop.enabled_payment_types == empty -%}
-              <span class="visually-hidden">{{ 'general.payment.method' | t }}</span>
-              <ul class="inline-list payment-icons">
-                {%- for type in shop.enabled_payment_types -%}
-                  <li>
-                    {{ type | payment_type_svg_tag: class: 'icon' }}
-                  </li>
-                {%- endfor -%}
-              </ul>
-            {%- endunless -%}
-          {%- endif -%}
-      </div>
+        <div class="Owool_Footer__meta">
+            <small>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}
+                . {{ powered_by_link }}</small>
+        </div>
     </div>
-
-  </div>
 </footer>
-
 
 
 {% schema %}
 {
-  "name": {
-    "de": "Fußzeile",
-    "en": "Footer",
-    "es": "Pie de página",
-    "fr": "Pied de page",
-    "it": "Footer",
-    "ja": "フッター",
-    "pt-BR": "Rodapé"
-  },
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "footer_link_list",
-      "label": {
-        "de": "Fußzeilenmenü",
-        "en": "Footer menu",
-        "es": "Menú inferior",
-        "fr": "Menu pied de page",
-        "it": "Menu footer",
-        "ja": "フッターメニュー",
-        "pt-BR": "Menu do rodapé"
-      },
-      "default": "footer"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": {
-        "de": "Zahlungssymbole anzeigen",
-        "en": "Show payment icons",
-        "es": "Mostrar iconos de pago",
-        "fr": "Afficher les icônes de paiement",
-        "it": "Mostra le icone di pagamento",
-        "ja": "支払いアイコンを表示する",
-        "pt-BR": "Exibir ícones de pagamento"
-      },
-      "default": true
-    }
-  ]
+"name": "Footer",
+"settings": [
+{
+"type": "link_list",
+"id": "footer_linklist",
+"label": "First menu",
+"default": "footer"
+},
+{
+"type": "checkbox",
+"id": "show_payment_icons",
+"label": "Show payment icons",
+"default": false
+},
+{
+"type": "text",
+"id": "footer_emailform_text",
+"default": "Subscribe",
+"label": "EMail form!"
 }
+]
+}
+
+
 {% endschema %}
