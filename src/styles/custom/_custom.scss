@@ -9,11 +9,15 @@
 }
 
 .site-nav__item {
-	@include g-color-scheme(dark){
+	@include g-color-scheme(light){
 		@extend %u-reset-link-color;
 	}
 }
 
 .svg-icon{
 	@include u-icon-svg(false,1em);
+}
+
+.announcement-bar{
+	@include set-type(lg);
 }

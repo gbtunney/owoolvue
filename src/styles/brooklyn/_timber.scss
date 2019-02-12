@@ -2041,12 +2041,9 @@ $socialIconFontStack: 'icons';
 }
 
 .site-nav__link {
-  display: inline-block;
-  text-decoration: none;
-  padding: $gutter / 2;
+
+  // now cbutton
   white-space: nowrap;
-  color: $colorNavText;
-  font-size: em(14px);
 
   .icon-arrow-down {
     position: relative;
@@ -2066,21 +2063,6 @@ $socialIconFontStack: 'icons';
   }
   .site-nav__dropdown-grandchild & {
     white-space: normal;
-  }
-}
-
-.site-nav__link--icon {
-  padding-left: $gutter / 4;
-  padding-right: $gutter / 4;
-}
-
-.site-nav--mobile {
-  .site-nav__link {
-    display: inline-block;
-  }
-
-  .icon {
-    font-size: em(30px);
   }
 }
 

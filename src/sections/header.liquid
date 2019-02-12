@@ -19,30 +19,8 @@
     <div class="header-wrapper{% unless hero_full_height %} header-wrapper--over-hero{% endunless %}">
       {% if section.settings.show_announcement %}
         {% if section.settings.home_page_only == false or template.name == 'index' %}
-          <style>
-            .announcement-bar {
-              background-color: {{ section.settings.color_bg }};
-            }
-
-            .announcement-bar--link:hover {
-              {% assign brightness = section.settings.color_bg | color_brightness %}
-
-              {% if brightness <= 192 %}
-                {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
-                background-color: {{ section.settings.color_bg | color_lighten: lightenAmount }};
-              {% else %}
-                {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
-                background-color: {{ section.settings.color_bg | color_darken: darkenAmount }};
-              {% endif %}
-            }
-
-            .announcement-bar__message {
-              color: {{ section.settings.color_text }};
-            }
-          </style>
-
           {% if section.settings.link == blank %}
-            <div class="announcement-bar">
+            <div class="announcement-bar u-color-schemes--dark-accent-primary">
           {% else %}
             <a href="{{ section.settings.link }}" class="announcement-bar announcement-bar--link">
           {% endif %}
@@ -64,9 +42,11 @@
             <div class="grid__item large--hide large--one-sixth one-quarter">
               <div class="site-nav--open site-nav--mobile">
                 <button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
-                  <span class="burger-icon burger-icon--top"></span>
-                  <span class="burger-icon burger-icon--mid"></span>
-                  <span class="burger-icon burger-icon--bottom"></span>
+                  <div class="c-button c-button--accent-primary ">
+                    <div class="c-button__icon">
+                        {% include 'svg-definitions' with 'burger'  %}
+                    </div>
+                  </div>
                   <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
                 </button>
               </div>
