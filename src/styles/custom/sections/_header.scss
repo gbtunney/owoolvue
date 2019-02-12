@@ -9,10 +9,10 @@ $show-guides: false;
 .Owool_Header {
 
     $self: &;
-    @include breakpoint-range(sm,"<="){
-        display: none;
-    }
-    @include u-default-container;
+   // @include breakpoint-range(sm,"<="){
+     //   display: none;
+    //}
+   // @includfe u-default-container;
     @extend %u-reset-link-color;
 
     padding-top: rhythm(1);
@@ -27,9 +27,9 @@ $show-guides: false;
 
         @include breakpoint-range(xl,">="){
            // background: red;
-            grid-template-columns: 12% 1fr;
+            //grid-template-columns: 12% 1fr;
 
-        }
+       }
         grid-template-rows: 100% 100%;
         grid-gap: 0;
 
@@ -37,7 +37,7 @@ $show-guides: false;
         align-items: stretch;
         width: 100%;
 
-        @include margin-trailer(1);
+      //  @include margin-trailer(1);
         > * {
             &:nth-child(1) {
                 @if ($show-guides) {
@@ -91,9 +91,9 @@ $show-guides: false;
             border: false,
             accent:foreground
         );
-        @include g-color-scheme($chroma-active-scheme,$props...);
+       // @include g-color-scheme($chroma-active-scheme,$props...);
 
-        @include set-type(0, font-serif-italic);
+        // set-type(0, font-serif-italic);
 
        // font-style: italic;
 
@@ -178,6 +178,7 @@ $show-guides: false;
         $parent : &;
         @include u-transition(opacity);
 
+
         $props: (
             background: false,
             foreground: true,
@@ -186,10 +187,11 @@ $show-guides: false;
             hover-foreground:false,
             hover-fill: false
         );
+   //@error get-color-collection($props,light-alt);
 
-        @include c-kabob(light-alt,$props,true,auto,xl, font-san-serif ){
+        @include c-kabob(kabob,true,light-alt,$props,true ){
             &__left, &__right{
-                opacity: 0;
+                opacity: 1;
                 @include u-transition(opacity);
             }
             &:hover{
@@ -201,4 +203,8 @@ $show-guides: false;
         };
     }
 
+}
+
+.Owool_Header__divider{
+@include c-divider(light-alt);
 }
