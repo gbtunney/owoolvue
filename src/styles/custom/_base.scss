@@ -4,11 +4,11 @@
 
 
     body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        @include font-smoothing(true);
         // @include color-scheme();
-        @include setType(0, font-serif);
 
+
+        //@include setType(0, font-serif);
         width:100%;
         max-width: 100vw;
         overflow-x: hidden;
@@ -17,33 +17,40 @@
 
 
     p {
-        @include setType(0, font-serif);
+            @include set-type(base, font-serif);
     }
     /*
      * Links
 
      */
     a {
-
+        @extend %u-reset-link-color;
+        color: color(accent);
             text-decoration: none;
         &:hover{
             text-decoration: inherit;
         }
-        /*
-font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        text-decoration: inherit;
-
-        font-weight: inherit;*/
-        //color: color(accent);
-
-
-
- //    @include setType(0, font-serif);
-
     }
 
+    body,
+    input,
+    textarea,
+    button,
+    select {
+        @include set-type(base, font-serif);
+
+        $props: (
+            background: true,
+            foreground: true,
+            accent: true,
+        );
+        @include g-color-scheme($chroma-active-scheme, $props...);
+
+
+
+
+
+    }
 
     /* Headers */
     h1,
@@ -52,8 +59,7 @@ font-family: inherit;
     h4,
     h5,
     h6 {
-       // color: color(accent);
-
+       color: color(accent);
         margin-bottom: 0;
         margin-top: 0;
     }
@@ -65,49 +71,51 @@ font-family: inherit;
     h5 a,
     h6 a {
         color: inherit;
-
         font-size: inherit;
         line-height: inherit;
         //@include trailer(3);
-
     }
 
     h1 {
-        @include setType(5, font-san-serif);
+        @include set-type(xxl, font-san-serif);
     }
 
     h2 {
-        @include setType(4, font-san-serif);
+        @include set-type(xl, font-san-serif);
 
     }
 
     h3 {
-        @include setType(3, font-san-serif);
+        @include set-type(lg, font-san-serif);
     }
 
+
     h4 {
-        @include setType(2, font-san-serif);
+        @include set-type(md, font-san-serif);
     }
 
     h5 {
-        @include setType(1, font-san-serif);
+        @include set-type(md, font-san-serif);
 
     }
 
     h6 {
-        @include setType(-1, font-san-serif);
+        @include set-type(sm, font-san-serif);
     }
 
-    /* Text-Related Elements */
+    /*
+    !* Text-Related Elements *!
+    */
     p {
         @include trailer();
     }
 
-    /* Blockquote */
+    /*
+    !* Blockquote *!
+    */
     blockquote {
-        font-style: italic;
-       // border-left: 1px solid $gray;
-        //color: $gray;
+
+        @include set-type(md,font-serif-italic);
         @include trailer();
     }
 
@@ -116,11 +124,10 @@ font-family: inherit;
         cursor: help;
     }
 
-    /*------------------------------------*\
+   /* !*------------------------------------*\
         $MEDIA ELEMENTS
-    \*------------------------------------*/
+    \*------------------------------------*!*/
 
-    /* Flexible Media */
     img, video, object, svg {
         max-width: 100%;
         height: auto;
@@ -140,9 +147,9 @@ font-family: inherit;
         font-style: italic;
     }
 
-    /*------------------------------------*\
-      LIST ELEMENTS
-  \*------------------------------------*/
+    /*------------------------------------*/
+     // LIST ELEMENTS
+  /*------------------------------------*/
 
     ol, ul {
         margin: 0;
@@ -150,7 +157,9 @@ font-family: inherit;
         list-style: none;
     }
 
-    /* Definition Lists */
+    /*
+    !* Definition Lists *!
+    */
     dl {
         overflow: hidden;
     }

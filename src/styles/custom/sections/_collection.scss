@@ -2,7 +2,7 @@
 
     //@include u-default-container;
     &__title {
-        @include setType(3, font-san-serif);
+        @include set-type(3, font-san-serif);
         text-align: left;
     }
 
@@ -25,7 +25,7 @@ grid-gap: rhythm(2);
 
     }
     .g-Card__vendor{
-@include setType(1,font-serif);
+@include set-type(1,font-serif);
        // background-color: red;
     }
 }

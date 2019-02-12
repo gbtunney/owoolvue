@@ -93,7 +93,7 @@ $show-guides: false;
         );
         @include g-color-scheme($chroma-active-scheme,$props...);
 
-        @include setType(0, font-serif-italic);
+        @include set-type(0, font-serif-italic);
 
        // font-style: italic;
 

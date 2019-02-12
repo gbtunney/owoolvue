@@ -1,0 +1,19 @@
+
+//scratch pad...
+.svg{
+	@include u-icon-svg(false,100px);
+}
+
+.hero__header{
+	position: relative!important;
+}
+
+.site-nav__item {
+	@include g-color-scheme(dark){
+		@extend %u-reset-link-color;
+	}
+}
+
+.svg-icon{
+	@include u-icon-svg(false,1em);
+}

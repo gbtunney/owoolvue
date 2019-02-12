@@ -4,11 +4,13 @@
 footer {
 }
 
+
 .Owool_Footer {
    // @include u-full-width-container;
+    //@include u-default-container;
+
     width: 100%;
     > .inner {
-        @include u-default-container;
     }
     $props: (
         background: true,
@@ -18,11 +20,11 @@ footer {
     );
     @include g-color-scheme(dark-accent-primary, $props...);
 
-    @include setType(2, font-serif);
+   // @include setType(2, font-serif);
 
     text-align: left;
 
-    padding-top: rhythm(2);
+    //padding-top: rhythm(2);
     //todo: figure out better way of dealing with this
     a {
         //background: purple;
@@ -33,32 +35,32 @@ footer {
     }
     &__divider {
 
-        @include margin-leader(1);
+        //@include margin-leader(1);
 
     }
     &__meta {
-        @include margin-leader(1);
+       // @include margin-leader(1);
 
-        text-align: center;
-        @include trailer(1);
+      //  text-align: center;
+       // @include trailer(1);
     }
 
     &__social {
-        @include leader();
+       // @include leader();
         @include u-horizontal-list;
         width: 80%;
     }
     &__grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-gap: rhythm(1);
+       // grid-gap: rhythm(1);
 
         @include breakpoint-range(sm,"<="){
             display: block;
         }
     }
     &__divider {
-        @include leader();
+      //  @include leader();
     }
 }
 
@@ -70,7 +72,11 @@ footer {
 
 //TODO::REMOVDE
 @include breakpoint-range(sm, "<=") {
-
+///HELLO
+   test{
+       background: red;
+   }
 }
+
 
 

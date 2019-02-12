@@ -1,27 +1,69 @@
 .email-list-form {
 
     $color-scheme: light-alt;
-    $props: (
-        background: true,
-        foreground: true,
-        border: accent
-    );
+
 @debug color($color-scheme,accent);
     & > * {
         @include u-horizontal-list(0);
     }
 
     input[type="text"] {
-        @include g-color-scheme($color-scheme, $props...);
+       // @include g-color-scheme($color-scheme, $props...);
 
         // border: 5px solid green;
-        @include setType(0, font-serif-italic);
-        padding: rhythm(.25) rhythm(.5);
-        width: 100%;
+        //@include setType(0, font-serif-italic);
+        ///padding: rhythm(.25) rhythm(.5);
 
-        color:inherit;
+        width: 100%;
+       // color:inherit;
     }
     @include input-placeholder() {
         color: color($color-scheme, foreground);
     }
+}
+
+
+.newsletter--form {
+}
+.note,
+.errors {
+    margin-bottom: 0;
+
+}
+
+form .newsletter--form,
+.newsletter__input {
+    background-color: red;
+    color: $colorTextBody;
+}
+
+.newsletter--form input,.email-list-form input{
+    $props: (
+        background: true,
+        foreground: true,
+        border: true,
+        accent:false
+    );
+
+    @include g-color-scheme(light, $props...);
+
+
+
+@include c-input(false, font-san-serif base , typeography font-size );
+
+    padding:  get-lookup-prop(base-padding,md);
+   // ;
+}
+
+.newsletter__input {
+    -moz-appearance: normal;
+    -webkit-appearance: normal;
+    appearance: normal;
+
+}
+
+
+
+.newsletter__label {
+    padding-left: 10px;
 }

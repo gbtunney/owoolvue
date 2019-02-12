@@ -117,7 +117,7 @@ $show-guides: false;
     //part of meta
     &__cart {
         width: auto;
-        @include setType(0, font-serif-italic);
+        @include set-type(0, font-serif-italic);
         @include u-horizontal-list(rhythm(.5),flex-end);
         align-items: center;
 
@@ -153,7 +153,7 @@ $show-guides: false;
         @include u-horizontal-list(0);
 
         align-items: center;
-        @include setType(0, font-serif-italic);
+        @include set-type(0, font-serif-italic);
         &-account {
 
         }

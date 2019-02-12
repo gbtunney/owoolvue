@@ -4,7 +4,7 @@
     @include trailer(2);
     &__breadcrumbs {
 
-        @include setType(2, font-serif-italic);
+        @include set-type(2, font-serif-italic);
 
         a {
             text-decoration: none;
@@ -45,7 +45,7 @@
     }
     //****ATTRIBUTES SINGLE
     &__option-info{
-        @include setType(1,font-serif);
+        @include set-type(1,font-serif);
     }
     &__option-selected{
         //   text-transform: uppercase;
@@ -120,7 +120,7 @@ padding: 0 rhythm(1);
     $parent: &;
     &__title {
 
-        @include setType(4, font-serif, 1);
+        @include set-type(4, font-serif, 1);
 
         #{$parent}__icon {
             @include o-icon-svg(color(light-alt, accent), 4);
@@ -128,10 +128,10 @@ padding: 0 rhythm(1);
         }
     }
     &__description {
-        @include setType(1, font-serif-italic);
+        @include set-type(1, font-serif-italic);
 
         h4 {
-            @include setType(1, font-san-serif, 0);
+            @include set-type(1, font-san-serif, 0);
 
         }
         strong {
@@ -139,10 +139,10 @@ padding: 0 rhythm(1);
         }
     }
     &__vendors {
-        @include setType(2, font-san-serif)
+        @include set-type(2, font-san-serif)
 
     }
     &__add-to-cart {
-        @include setType(2, font-serif-italic);
+        @include set-type(2, font-serif-italic);
     }
 }

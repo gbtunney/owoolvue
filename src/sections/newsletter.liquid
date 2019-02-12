@@ -28,8 +28,11 @@
             <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" id="Email" class="input-group-field newsletter__input" autocorrect="off" autocapitalize="off">
             <span class="input-group-btn">
               <button id="Subscribe" type="submit"
-                class="btn newsletter__submit"
+                class=" c-button --dark-accent-primary newsletter__submit"
                 aria-label="{{ 'general.newsletter_form.submit' | t }}">
+               <span class="c-button__icon">
+                   {% include 'svg-definitions' with 'leaves-a'  %}
+               </span>
                 <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
                 <span class="newsletter__submit-text--small">
                   <span class="icon icon-arrow-right" aria-hidden="true"></span>

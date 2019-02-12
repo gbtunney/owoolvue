@@ -2816,7 +2816,8 @@ button.mfp-arrow {
 }
 
 .grid-product__title {
-  @include bodyFontItalic;
+  @extend %u-reset-link-color;
+  @include g-color-scheme(light);
   font-size: em(floor($baseFontSize * 1.25));  //20px based on 16px base font size
 }
 

@@ -1,0 +1,58 @@
+//TODO: reorganize this...
+
+//gillians
+$include-base-classes:true;
+
+// Header Font
+$headerFontStack: get-type(font-family,font-small-caps);
+$headerFontWeight: get-type(font-weight);
+$headerFontStyle: get-type(font-style);
+$headerBaseFontSize: 30px;
+
+// Body Font
+$bodyFontStack:  get-type(font-family);
+$bodyFontWeight:  get-type(font-weight);
+$bodyFontWeightBold: 700;
+$bodyFontStyle: get-type(font-style);
+$baseFontSize: 16px; // Henceforth known as 1em
+
+// Accent Font
+$accentFontStack:get-type(font-family,font-san-serif);
+$accentFontWeight: get-type(font-weight,font-small-caps);
+$accentFontWeightBold: 900;
+$accentFontStyle: normal;
+
+$chroma-active-scheme:light;
+//colors
+$colorPrimary: color(foreground);
+$colorSecondary: color(accent);
+
+
+// Text link colors
+$colorLink: color(accent);
+$colorLinkHover: lighten(color(accent),10%);//$colorPrimary!default;
+
+// Text colors
+$colorTextBody:color(foreground);
+
+// Heading colors
+$colorHeadings: color(foreground);
+
+// Backgrounds
+$colorBody: #ffffff;
+$colorProductBackground: #f7f7f7;
+$colorInputBg: #f6f6f6;
+$colorNewsletter: red;
+
+// Border colors
+$colorBorder: color(border);
+
+// Border size
+$borderWidthHeader: 1px;
+
+//drawer
+$colorDrawers: color(accent);
+$colorDrawerBorder: red;
+$colorDrawerText: #ffffff!default;
+$colorDrawerButton: #a26b25!default;
+$colorDrawerButtonText: #ffffff!default;

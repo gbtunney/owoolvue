@@ -11,10 +11,10 @@
     );
     @include g-color-scheme($chroma-active-scheme,$props...);
 
-    @include setType(2, font-serif);
+    @include set-type(2, font-serif);
 
 @include breakpoint-range(sm,"<="){
-    @include setType(1, font-serif);
+    @include set-type(1, font-serif);
     @include u-make-container(90%);
 
 }
@@ -56,7 +56,7 @@
 
     &__showing{
 
-        @include setType(-1, font-serif);
+        @include set-type(-1, font-serif);
 //TODO: formalize this
 font-style: italic;
     }
