@@ -17,7 +17,3 @@
 .svg-icon{
 	@include u-icon-svg(false,1em);
 }
-
-.announcement-bar{
-	@include set-type(lg);
-}

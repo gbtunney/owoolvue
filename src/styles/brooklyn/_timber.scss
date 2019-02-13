@@ -1935,20 +1935,6 @@ $socialIconFontStack: 'icons';
   }
 }
 
-.announcement-bar {
-  display: block;
-  text-align: center;
-  position: relative;
-  text-decoration: none;
-}
-
-.announcement-bar__message {
-  display: block;
-  font-weight: $headerFontWeight;
-  padding: 10px $gutter;
-  margin: 0;
-}
-
 /*================ Module | Search Bar ================*/
 .search-bar {
   max-width: 100%;
