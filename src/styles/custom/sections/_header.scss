@@ -189,7 +189,7 @@ $show-guides: false;
         );
    //@error get-color-collection($props,light-alt);
 
-        @include c-kabob(kabob,true,light-alt,$props,true ){
+        @include c-kabob(light-alt,true,$props,true ){
             &__left, &__right{
                 opacity: 1;
                 @include u-transition(opacity);

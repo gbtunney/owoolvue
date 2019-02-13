@@ -1034,5 +1034,90 @@
         }
       }
     ]
+  },
+  {
+    "name": "Social Media Icons",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Facebook"
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_facebook",
+        "label": "Show?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sm_facebook_link",
+        "label": "Link to",
+        "default": "http:\/\/www.facebook.com"
+      },
+      {
+        "type": "paragraph",
+        "content": "Twitter"
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_twitter",
+        "label": "Show?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sm_twitter_link",
+        "label": "Link to",
+        "default": "http:\/\/www.twitter.com"
+      },
+      {
+        "type": "paragraph",
+        "content": "Ravelry"
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_ravelry",
+        "label": "Show?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sm_ravelry_link",
+        "label": "Link to",
+        "default": "http:\/\/www.ravelry.com"
+      },
+      {
+        "type": "paragraph",
+        "content": "Instagram"
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_instagram",
+        "label": "Show?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sm_instagram_link",
+        "label": "Link to",
+        "default": "http:\/\/www.instagram.com"
+      },
+      {
+        "type": "paragraph",
+        "content": "Pinterest"
+      },
+      {
+        "type": "checkbox",
+        "id": "sm_pinterest",
+        "label": "Show?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sm_pinterest_link",
+        "label": "Link to",
+        "default": "http:\/\/www.pinterest.com"
+      }
+    ]
   }
 ]

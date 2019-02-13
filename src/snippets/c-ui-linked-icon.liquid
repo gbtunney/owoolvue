@@ -1,10 +1,10 @@
-{% assign default_component_id = 'Button' %}
+{% assign default_component_id = 'button' %}
 {% assign default_style_modifier = 'dark' %}
 {% assign default_flags = '' %}
 {% assign default_icon = 'icon-tumblr' %}
 
-<div class="g-{{ component_id |  default: default_component_id }} g-{{ component_id |  default: default_component_id }}--{{ style_modifier | default: default_style_modifier }}  {{ flags | default: default_flags }}">
-    <div class="g-{{ component_id |  default: default_component_id }}--{{ style_modifier | default: default_style_modifier }}__icon">
+<div class="c-{{ component_id |  default: default_component_id }} c-{{ component_id |  default: default_component_id }}--{{ style_modifier | default: default_style_modifier }}  {{ flags | default: default_flags }}">
+    <div class="c-{{ component_id |  default: default_component_id }}__icon">
         <a href="{{href}}"  target="{{ target }}">
             {{ label  }}
             {% if icon_name != empty %}
