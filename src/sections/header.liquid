@@ -18,6 +18,9 @@
 	}
 </style>
 
+
+
+
 {% assign hero_full_height = true %}
 <div data-section-id="{{ section.id }}" data-section-type="header-section" data-template="{{ template.name }}">
 	<div id="NavDrawer" class="drawer drawer--left">
@@ -47,6 +50,229 @@
 				{% endif %}
 			{% endif %}
 
+
+
+
+
+
+
+
+
+			{% include 'mobile-header' %}
+
+			<header class="{{ menu_name }}" role="banner">
+
+				<div class="{{ menu_name }}__wrapper">
+					<div class="{{ menu_name }}__logo">
+						<a href="/" itemprop="url"
+						   class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
+							<div alt="{{ shop.name }}" class="Owool_Logo_SVG">
+								{% include 'svg-definitions' with 'owool-logo' %}
+							</div>
+						</a>
+					</div>
+					<div class="{{ menu_name }}__meta">
+						<div class="{{ menu_name }}__social">
+							{% include 'c-social-nav-links' with social_nav_theme : header_style_modifier__social %}
+						</div>
+
+
+						{% if shop.customer_accounts_enabled %}
+							<div class="{{ menu_name }}__customer">
+								{% if customer %}
+									<div class="{{ menu_name }}__customer-account">
+										{% if customer.first_name != blank %}
+											{% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
+											{{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
+										{% else %}
+											<a href="/account">{{ 'layout.customer.account' | t }}</a>
+										{% endif %}
+									</div>
+									<div class="{{ menu_name }}__customer-logout">
+										{{ 'layout.customer.log_out' | t | customer_logout_link }}
+									</div>
+								{% else %}
+									<div class="{{ menu_name }}__customer-login">
+										{{ 'layout.customer.log_in' | t | customer_login_link }}
+									</div>
+									<div class="{{ menu_name }}__customer-create">
+										{{ 'layout.customer.create_account' | t | customer_register_link }}
+									</div>
+								{% endif %}
+							</div>
+						{% endif %}
+
+						<div class="{{ menu_name }}__cart cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+							<div class="{{ menu_name }}__cart-icon">
+								{% include 'c-ui-linked-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
+							</div>
+							<div class="{{ menu_name }}__cart-item-count">
+								<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
+									{{ 'layout.cart.title' | t }}
+									({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div>
+						<nav  role="navigation">
+							<ul class="Owool_Main-Menu" id="AccessibleNav">
+								{% for link in linklists[section.settings.main_menu_link_list].links %}
+									{% if link.links != blank %}
+										{% assign parent_index = forloop.index %}
+										<li
+												class="site-nav__item site-nav--has-dropdown {% if link.active %}site-nav--active{% endif %}"
+												aria-haspopup="true"
+												data-meganav-type="parent">
+											<a
+													href="{{ link.url }}"
+													class="site-nav__link"
+													data-meganav-type="parent"
+													aria-controls="MenuParent-{{ parent_index }}"
+													aria-expanded="false"
+													{% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
+												{{ link.title | escape }}
+												<span class="icon icon-arrow-down" aria-hidden="true"></span>
+											</a>
+											<ul
+													id="MenuParent-{{ parent_index }}"
+													class="site-nav__dropdown {% if link.levels == 2 %}site-nav--has-grandchildren{% endif %}"
+													data-meganav-dropdown>
+												{% for childlink in link.links %}
+													{% if childlink.links != blank %}
+														{% assign child_index = forloop.index %}
+														<li
+																class="site-nav__item site-nav--has-dropdown site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
+																aria-haspopup="true">
+															<a
+																	href="{{ childlink.url }}"
+																	class="site-nav__dropdown-link"
+																	aria-controls="MenuChildren-{{ parent_index }}-{{ child_index }}"
+																	data-meganav-type="parent"
+																	{% unless template.name == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless %}
+																	tabindex="-1">
+																{{ childlink.title | escape }}
+																<span class="icon icon-arrow-down" aria-hidden="true"></span>
+															</a>
+															<div class="site-nav__dropdown-grandchild">
+																<ul
+																		id="MenuChildren-{{ parent_index }}-{{ child_index }}"
+																		data-meganav-dropdown>
+																	{% for grandchildlink in childlink.links %}
+																		<li{% if grandchildlink.active %} class="site-nav--active"{% endif %}>
+																			<a
+																					href="{{ grandchildlink.url }}"
+																					class="site-nav__dropdown-link"
+																					data-meganav-type="child"
+																					{% unless template.name == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}
+																					tabindex="-1">
+																				{{ grandchildlink.title | escape }}
+																			</a>
+																		</li>
+																	{% endfor %}
+																</ul>
+															</div>
+														</li>
+													{% else %}
+														<li{% if childlink.active %} class="site-nav--active"{% endif %}>
+															<a
+																	href="{{ childlink.url }}"
+																	class="site-nav__dropdown-link"
+																	data-meganav-type="child"
+																	{% if childlink.active %}aria-current="page"{% endif %}
+																	tabindex="-1">
+																{{ childlink.title | escape }}
+															</a>
+														</li>
+													{% endif %}
+												{% endfor %}
+											</ul>
+										</li>
+									{% else %}
+										<li class="site-nav__item{% if link.active %} site-nav--active{% endif %}">
+											<div class="Owool_Main-Menu__item --reflect">
+												<div class="Owool_Main-Menu__item__left">
+													{% include 'svg-definitions' with 'leaves-b' %}
+												</div>
+												<div class="Owool_Main-Menu__item__center">
+													<div class="Owool_Main-Menu__item__inner">
+														<a
+																href="{{ link.url }}"
+																class="site-nav__link"
+																data-meganav-type="child"
+																{% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
+															{{ link.title | escape }}
+														</a>
+													</div>
+												</div>
+												<div class="Owool_Main-Menu__item__right">
+													{% include 'svg-definitions' with 'leaves-b' %}
+												</div>
+											</div>
+
+										</li>
+									{% endif %}
+								{% endfor %}
+
+								{% comment %}
+								Remove comment tags below to add a search box to your header, visible on screens where your
+								header menu
+								is displayed inline.
+								<li class="site-nav__item site-nav--search__bar medium-down--hide">
+									{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
+								</li>
+								{% endcomment %}
+
+
+								{% if section.settings.search == 'page' or section.settings.search == 'modal' %}
+									{% assign search_modal = true %}
+									{% if section.settings.search == 'page' %}
+										{% assign search_modal = false %}
+									{% endif %}
+									<li class="site-nav__item site-nav__item--compressed">
+										<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
+										<span class="icon-fallback-text">
+											<span class="icon icon-search" aria-hidden="true"></span>
+											<span class="fallback-text">{{ 'general.search.title' | t }}</span>
+										</span>
+										</a>
+									</li>
+								{% endif %}
+
+							</ul>
+						</nav>
+					</div>
+					<div>
+						<div class="{{ menu_name }}__search">
+
+							<form action="/search" method="get" role="search">
+								<label for="Search" class="label-hidden">
+									{{ 'general.search.placeholder' | t }}
+								</label>
+								<input type="search"
+								       name="q"
+								       id="Search"
+								       value="{{ search.terms | escape }}"
+								       placeholder="{{ 'general.search.placeholder' | t }}">
+								<button type="submit" class="btn">
+									{% include 'icon-search' %}
+									<span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+								</button>
+							</form>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="{{ menu_name }}__divider">
+
+					{% include 'c-divider'   with  style_modifier: header_style_modifier__divider %}
+
+				</div>
+
+			</header>
+
 			<header class="site-header" role="banner">
 				<div class="wrapper">
 					<div class="grid--full grid--table">
@@ -63,48 +289,8 @@
 							</div>
 						</div>
 						<div class="grid__item large--one-third medium-down--one-half">
-							{% comment %}
-							Use the uploaded logo from theme settings if enabled.
-							Site name gets precedence with H1 tag on homepage, div on other pages.
-							{% endcomment %}
-							{% if template.name == 'index' %}
-							<h1 class="site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
-								{% else %}
-								<div class="h1 site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
-									{% endif %}
-									{% if section.settings.logo_max_width != blank %}
-										{% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
-									{% else %}
-										{% assign image_size = "180x" %}
-									{% endif %}
 
 
-									{% if section.settings.logo-inverted and template.name == 'index' %}
-										<a href="/" itemprop="url" class="site-header__logo-link">
-											<img src="{{ section.settings.logo-inverted | img_url: image_size }}"
-											     srcset="{{ section.settings.logo-inverted | img_url: image_size }} 1x, {{ section.settings.logo-inverted | img_url: image_size, scale: 2 }} 2x"
-											     alt="{{ section.settings.logo-inverted.alt | default: shop.name }}"
-											     itemprop="logo">
-										</a>
-										{% elsif section.settings.logo_svg %}
-										<div class="svg">
-											{% include 'svg-definitions' with section.settings.logo_svg %}
-										</div>
-										{% elsif section.settings.logo %}
-										<a href="/" itemprop="url" class="site-header__logo-link">
-											<img src="{{ section.settings.logo | img_url: image_size }}"
-											     srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-											     alt="{{ section.settings.logo.alt | default: shop.name }}"
-											     itemprop="logo">
-										</a>
-									{% else %}
-										<a href="/" itemprop="url">{{ shop.name }}</a>
-									{% endif %}
-									{% if template.name == 'index' %}
-							</h1>
-							{% else %}
-						</div>
-						{% endif %}
 					</div>
 					<nav class="grid__item large--two-thirds large--text-right medium-down--hide" role="navigation">
 						{% comment %}
@@ -114,159 +300,6 @@
 						- http://docs.shopify.com/themes/liquid-variables/linklists
 						{% endcomment %}
 						<!-- begin site-nav -->
-						<ul class="site-nav" id="AccessibleNav">
-							{% for link in linklists[section.settings.main_menu_link_list].links %}
-								{% if link.links != blank %}
-									{% assign parent_index = forloop.index %}
-									<li
-											class="site-nav__item site-nav--has-dropdown {% if link.active %}site-nav--active{% endif %}"
-											aria-haspopup="true"
-											data-meganav-type="parent">
-										<a
-												href="{{ link.url }}"
-												class="site-nav__link"
-												data-meganav-type="parent"
-												aria-controls="MenuParent-{{ parent_index }}"
-												aria-expanded="false"
-												{% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
-											{{ link.title | escape }}
-											<span class="icon icon-arrow-down" aria-hidden="true"></span>
-										</a>
-										<ul
-												id="MenuParent-{{ parent_index }}"
-												class="site-nav__dropdown {% if link.levels == 2 %}site-nav--has-grandchildren{% endif %}"
-												data-meganav-dropdown>
-											{% for childlink in link.links %}
-												{% if childlink.links != blank %}
-													{% assign child_index = forloop.index %}
-													<li
-															class="site-nav__item site-nav--has-dropdown site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
-															aria-haspopup="true">
-														<a
-																href="{{ childlink.url }}"
-																class="site-nav__dropdown-link"
-																aria-controls="MenuChildren-{{ parent_index }}-{{ child_index }}"
-																data-meganav-type="parent"
-																{% unless template.name == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless %}
-																tabindex="-1">
-															{{ childlink.title | escape }}
-															<span class="icon icon-arrow-down" aria-hidden="true"></span>
-														</a>
-														<div class="site-nav__dropdown-grandchild">
-															<ul
-																	id="MenuChildren-{{ parent_index }}-{{ child_index }}"
-																	data-meganav-dropdown>
-																{% for grandchildlink in childlink.links %}
-																	<li{% if grandchildlink.active %} class="site-nav--active"{% endif %}>
-																		<a
-																				href="{{ grandchildlink.url }}"
-																				class="site-nav__dropdown-link"
-																				data-meganav-type="child"
-																				{% unless template.name == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}
-																				tabindex="-1">
-																			{{ grandchildlink.title | escape }}
-																		</a>
-																	</li>
-																{% endfor %}
-															</ul>
-														</div>
-													</li>
-												{% else %}
-													<li{% if childlink.active %} class="site-nav--active"{% endif %}>
-														<a
-																href="{{ childlink.url }}"
-																class="site-nav__dropdown-link"
-																data-meganav-type="child"
-																{% if childlink.active %}aria-current="page"{% endif %}
-																tabindex="-1">
-															{{ childlink.title | escape }}
-														</a>
-													</li>
-												{% endif %}
-											{% endfor %}
-										</ul>
-									</li>
-								{% else %}
-									<li class="site-nav__item{% if link.active %} site-nav--active{% endif %}">
-										<div class="Owool_Main-Menu__item --reflect">
-											<div class="Owool_Main-Menu__item__left">
-												{% include 'svg-definitions' with 'leaves-b' %}
-											</div>
-											<div class="Owool_Main-Menu__item__center">
-												<div class="Owool_Main-Menu__item__inner">
-													<a
-															href="{{ link.url }}"
-															class="site-nav__link"
-															data-meganav-type="child"
-															{% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
-														{{ link.title | escape }}
-													</a>
-												</div>
-											</div>
-											<div class="Owool_Main-Menu__item__right">
-												{% include 'svg-definitions' with 'leaves-b' %}
-											</div>
-										</div>
-
-									</li>
-								{% endif %}
-							{% endfor %}
-
-							{% comment %}
-							Remove comment tags below to add a search box to your header, visible on screens where your
-							header menu
-							is displayed inline.
-							<li class="site-nav__item site-nav--search__bar medium-down--hide">
-								{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
-							</li>
-							{% endcomment %}
-							{% if shop.customer_accounts_enabled %}
-								<li class="site-nav__item site-nav__expanded-item site-nav__item--compressed">
-									<a class="site-nav__link site-nav__link--icon" href="/account">
-										<span class="icon-fallback-text">
-											<span class="icon icon-customer" aria-hidden="true"></span>
-											<span class="fallback-text">
-						                          {% if customer %}
-							                          {{ 'layout.customer.account' | t }}
-						                          {% else %}
-							                          {{ 'layout.customer.log_in' | t }}
-						                          {% endif %}
-					                        </span>
-										</span>
-									</a>
-								</li>
-							{% endif %}
-
-							{% if section.settings.search == 'page' or section.settings.search == 'modal' %}
-								{% assign search_modal = true %}
-								{% if section.settings.search == 'page' %}
-									{% assign search_modal = false %}
-								{% endif %}
-								<li class="site-nav__item site-nav__item--compressed">
-									<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
-										<span class="icon-fallback-text">
-											<span class="icon icon-search" aria-hidden="true"></span>
-											<span class="fallback-text">{{ 'general.search.title' | t }}</span>
-										</span>
-									</a>
-								</li>
-							{% endif %}
-
-							<li class="site-nav__item site-nav__item--compressed">
-								<a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
-										<div class="{{ menu_name }}__cart-icon">
-											{% include 'c-ui-linked-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
-										</div>
-										<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
-											{{ 'layout.cart.title' | t }}
-											({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
-                                        </div>
-										<!-- TODO translate--- idk???-->
-									</span>
-								</a>
-							</li>
-
-						</ul>
 						<!-- //site-nav -->
 					</nav>
 					<div class="grid__item large--hide one-quarter">

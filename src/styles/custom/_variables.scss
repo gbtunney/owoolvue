@@ -51,8 +51,10 @@ $colorBorder: color(border);
 $borderWidthHeader: 1px;
 
 //drawer
-$colorDrawers: color(accent);
-$colorDrawerBorder: red;
+$nav-drawer-scheme: dark-accent-primary;
+
+$colorDrawers: color($nav-drawer-scheme,background);
+$colorDrawerBorder: color($nav-drawer-scheme,border);
 $colorDrawerText: #ffffff!default;
 $colorDrawerButton: #a26b25!default;
 $colorDrawerButtonText: #ffffff!default;

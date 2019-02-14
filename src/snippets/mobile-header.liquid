@@ -1,0 +1,117 @@
+{% assign header_style_modifier = 'light' %}
+{% assign header_style_modifier__social = 'dark-accent-default' %}
+{% assign header_style_modifier__cart = 'accent-primary' %}
+{% assign header_flags__cart = '--md --no-border --no-padding' %}
+{% assign header_style_modifier__divider = 'accent-default' %}
+{% assign header_style_modifier__main_menu_icon = 'accent-secondary --sm Owool_Main-Menu__icon' %}
+
+{% assign menu_name = 'Owool_Mobile-Header' %}
+
+<header class="{{ menu_name }}" role="banner">
+
+	<div class="{{ menu_name }}__wrapper">
+		<div class="{{ menu_name }}__col">
+			
+			<div class="{{ menu_name }}__mobile-nav-trigger">
+				<button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
+					<div class="c-button c-button--accent-primary ">
+						<div class="c-button__icon">
+							{% include 'svg-definitions' with 'burger' %}
+						</div>
+					</div>
+					<span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+				</button>
+			</div>
+
+		</div>
+		<div class="{{ menu_name }}__col">
+			<div class="{{ menu_name }}__logo">
+				<a href="/" itemprop="url"
+				   class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
+					<div alt="{{ shop.name }}" class="Owool_Logo_SVG">
+						{% include 'svg-definitions' with 'owool-logo' %}
+					</div>
+				</a>
+			</div>
+			<div class="{{ menu_name }}__social">
+				{% include 'c-social-nav-links' with social_nav_theme : header_style_modifier__social %}
+			</div>
+		</div>
+		<div class="{{ menu_name }}__col">
+			<div class="{{ menu_name }}__cart cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+				<div class="{{ menu_name }}__cart-icon">
+					{% include 'c-ui-linked-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
+				</div>
+				<div class="{{ menu_name }}__cart-item-count">
+					<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
+						{{ 'layout.cart.title' | t }}
+						({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+	<nav  role="navigation">
+		<ul class="Owool_Main-Menu-Mobile">
+			{% for link in linklists[section.settings.main_linklist].links %}
+				{% if link.links != blank %}
+					<li class="Owool_Main-Menu-Mobile__item --has-submenu">
+						{% include 'ui-linked-icon' with icon_name: 'icon-leaves-a.svg',style_modifier: header_style_modifier__main_menu_icon %}
+						<a href="{{ link.url }}">{{ link.title | escape }}</a>
+						<ul>
+							{% for childlink in link.links %}
+								{% if childlink.links != blank %}
+									<li>
+										<a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+										<ul>
+											{% for grandchildlink in childlink.links %}
+												<li>
+													<a href="{{ grandchildlink.url }}">{{ grandchildlink.title | escape }}</a>
+												</li>
+											{% endfor %}
+										</ul>
+									</li>
+								{% else %}
+									<li>
+										<a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</li>
+				{% else %}
+					<li class="">
+						<a href="{{ link.url }}">
+
+							<div class="Owool_Main-Menu-Mobile__item --reflect">
+								<div class="Owool_Main-Menu-Mobile__item__left">
+									{% include   'icon-leaves-b.svg' %}
+								</div>
+								<div class="Owool_Main-Menu__item__center">
+									<div class="Owool_Main-Menu__item__inner">
+										<span>{{ link.title  | escape }}</span>
+									</div>
+								</div>
+								<div class="Owool_Main-Menu__item__right">
+									{% include 'icon-leaves-b.svg' %}
+								</div>
+							</div>
+
+
+
+						</a>
+
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</nav>
+	<div class="{{ menu_name }}__divider">
+		{% include 'c-divider'   with  style_modifier: header_style_modifier__divider %}
+	</div>
+</header>

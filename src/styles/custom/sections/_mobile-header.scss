@@ -12,8 +12,8 @@ $show-guides: false;
         display: none;
     }
 
-    @include u-default-container;
-    @extend %u-reset-link-color;
+  //  @include u-default-container;
+  //  @extend %u-reset-link-color;
 
     padding-top: rhythm(1);
 
@@ -22,8 +22,8 @@ $show-guides: false;
 
     &__nav-trigger{
         padding-left: rhythm(1);
-        background: red;
-        display: none;
+      //  background: red;
+       // display: none;
     }
 
     &__wrapper {
@@ -37,6 +37,7 @@ $show-guides: false;
         width: 100%;
         height: 100%;
         overflow: hidden;
+
 
 
 
@@ -117,7 +118,7 @@ $show-guides: false;
     //part of meta
     &__cart {
         width: auto;
-        @include set-type(0, font-serif-italic);
+        //@include set-type(0, font-serif-italic);
         @include u-horizontal-list(rhythm(.5),flex-end);
         align-items: center;
 
@@ -133,11 +134,11 @@ $show-guides: false;
         width: auto;
         height: auto;
         @include u-horizontal-list(0);
-        @include u-make-container(80%);
+       // @include u-make-container(80%);
 
 
         @include breakpoint-range(sm){
-            @include u-make-container(100%,38vw);
+         //   @include u-make-container(100%,38vw);
 
         }
             ///  width: 100% ;
@@ -153,7 +154,7 @@ $show-guides: false;
         @include u-horizontal-list(0);
 
         align-items: center;
-        @include set-type(0, font-serif-italic);
+      //  @include set-type(0, font-serif-italic);
         &-account {
 
         }
