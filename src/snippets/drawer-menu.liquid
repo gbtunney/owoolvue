@@ -1,9 +1,8 @@
   <div class="drawer__inner drawer-left__inner">
 
-    {% if section.settings.drawer_search_enable %}
-      {% include 'search-bar', search_btn_style: 'btn--secondary', search_bar_location: 'search-bar--drawer' %}
-    {% endif %}
-
+<div class="c-icon--accent-primary">
+	{% include 'svg-definitions' with 'leaves-a' %}
+</div>
     <ul class="mobile-nav">
       {% for link in linklists[section.settings.main_menu_link_list].links %}
         {% if link.links != blank %}
@@ -97,31 +96,55 @@
         Spacer element
       {% endcomment %}
       <li class="mobile-nav__spacer"></li>
-	    {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
+        {% comment %}
+          Drop down subnav
+           If customer accounts are enabled, provide login and create account links
+	    {% endcomment %}
+	    {% if shop.customer_accounts_enabled %}
+      <li class="mobile-nav__item">
+        <div class="mobile-nav__has-sublist">
+          <a href="/collections/yarns" class="mobile-nav__link" id="Label-1">
+	        hjhjhjh
+            Account</a>
+          <div class="mobile-nav__toggle">
+            <button type="button" class="mobile-nav__toggle-btn icon-fallback-text" aria-controls="Linklist-1" aria-expanded="false">
+                  <span class="icon-fallback-text mobile-nav__toggle-open">
+                      {% include 'c-ui-icon' with icon_name: 'plus' ,style_modifier: 'dark-accent-primary', flag: '--no-border' %}
+                  </span>
+              <span class="icon-fallback-text mobile-nav__toggle-close">
+                  {% include 'c-ui-icon' with icon_name: 'minus' ,style_modifier: 'dark-accent-primary',flag: '--no-border'  %}
+                  </span>
+            </button>
+          </div>
+        </div>
+        <ul class="mobile-nav__sublist" id="Linklist-1" aria-labelledby="Label-1" role="navigation" style="display: none;">
 
-      {% comment %}
-        If customer accounts are enabled, provide login and create account links
-      {% endcomment %}
-      {% if shop.customer_accounts_enabled %}
-        {% if customer %}
-          <li class="mobile-nav__item mobile-nav__item--secondary">
-            <a href="/account">{{ 'layout.customer.account' | t }}</a>
-          </li>
-          <li class="mobile-nav__item mobile-nav__item--secondary">
-            {{ 'layout.customer.log_out' | t | customer_logout_link }}
-          </li>
-        {% else %}
-          <li class="mobile-nav__item mobile-nav__item--secondary">
-            {{ 'layout.customer.log_in' | t | customer_login_link }}
-          </li>
-          <li class="mobile-nav__item mobile-nav__item--secondary">
-            {{ 'layout.customer.create_account' | t | customer_register_link }}
-          </li>
-        {% endif %}
-      {% endif %}
+	        {% if customer %}
+              <li class="mobile-nav__item ">
+                <a href="/account">{{ 'layout.customer.account' | t }}</a>
+              </li>
+              <li class="mobile-nav__item">
+		          {{ 'layout.customer.log_out' | t | customer_logout_link }}
+              </li>
+	        {% else %}
+              <li class="mobile-nav__item">
+		          {{ 'layout.customer.log_in' | t | customer_login_link }}
+              </li>
+              <li class="mobile-nav__item">
+		          {{ 'layout.customer.create_account' | t | customer_register_link }}
+              </li>
+	        {% endif %}
+
+        </ul>
+      </li>
+	    {% endif %}
+	    {% endif %}
+
       {% for link in linklists[section.settings.drawer_bottom_link_list].links %}
         <li class="mobile-nav__item mobile-nav__item--secondary"><a href="{{ link.url }}">{{ link.title }}</a></li>
       {% endfor %}
+
+
     </ul>
     <!-- //mobile-nav -->
   </div>

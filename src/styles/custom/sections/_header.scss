@@ -1,6 +1,6 @@
 $logo-width: 15%;
 
-$show-guides: true;
+$show-guides: false;
 
 [data-section-type="header-section"] {
 	border-top: 2px solid color($chroma-active-scheme, accent);
@@ -12,7 +12,7 @@ $show-guides: true;
 	 @include breakpoint-range(sm,"<="){
 	  display: none;
 	}
-	// @includfe u-default-container;
+	 @include u-default-container;
 	@extend %u-reset-link-color;
 
 	padding-top: rhythm(1);

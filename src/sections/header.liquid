@@ -1,11 +1,3 @@
-{% assign header_style_modifier = 'light' %}
-{% assign header_style_modifier__social = 'dark-accent-default' %}
-{% assign header_style_modifier__cart = 'accent-primary' %}
-{% assign header_flags__cart = '--md --no-border --no-padding' %}
-{% assign header_style_modifier__divider = 'accent-default' %}
-{% assign header_style_modifier__main_menu_icon = 'accent-secondary --sm Owool_Main-Menu__icon' %}
-{% assign menu_name = 'Owool_Header' %}
-
 <style>
 	.site-header__logo img {
 		max-width: {{ section.settings.logo_max_width | escape | default: '180' | remove: 'px' | append: 'px' }};
@@ -19,8 +11,6 @@
 </style>
 
 
-
-
 {% assign hero_full_height = true %}
 <div data-section-id="{{ section.id }}" data-section-type="header-section" data-template="{{ template.name }}">
 	<div id="NavDrawer" class="drawer drawer--left">
@@ -28,37 +18,20 @@
 	</div>
 	<div class="header-container drawer__header-container">
 		<div class="header-wrapper{% unless hero_full_height %} header-wrapper--over-hero{% endunless %}">
-			{% if section.settings.show_announcement %}
-				{% if section.settings.home_page_only == false or template.name == 'index' %}
-					{% if section.settings.link == blank %}
-						<div class="active announcement-bar">
-					{% else %}
-						<a href="{{ section.settings.link }}" class="announcement-bar announcement-bar--link">
-					{% endif %}
 
-					<span class="announcement-bar__message">{{ section.settings.text | escape }}</span>
-					<span class="announcement-bar__icon announcement-bar__close js-close">
-                {% include 'svg-definitions' with 'close' %}
-            </span>
-
-					{% if section.settings.link == blank %}
-						</div>
-					{% else %}
-						</a>
-					{% endif %}
-
-				{% endif %}
-			{% endif %}
-
-
-
-
-
-
-
+			{% include 'announcement-bar' %}
 
 
 			{% include 'mobile-header' %}
+
+			{% assign header_style_modifier = 'light' %}
+			{% assign header_style_modifier__social = 'dark-accent-default' %}
+			{% assign header_style_modifier__cart = 'accent-primary' %}
+			{% assign header_flags__cart = '--md --no-border --no-padding' %}
+			{% assign header_style_modifier__divider = 'accent-default' %}
+			{% assign header_style_modifier__main_menu_icon = 'accent-secondary --sm Owool_Main-Menu__icon' %}
+			{% assign menu_name = 'Owool_Header' %}
+
 
 			<header class="{{ menu_name }}" role="banner">
 
@@ -230,7 +203,7 @@
 									{% if section.settings.search == 'page' %}
 										{% assign search_modal = false %}
 									{% endif %}
-									<li class="site-nav__item site-nav__item--compressed">
+									<li class="site-nav__item">
 										<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
 										<span class="icon-fallback-text">
 											<span class="icon icon-search" aria-hidden="true"></span>

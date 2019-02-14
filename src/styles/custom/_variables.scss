@@ -2,7 +2,9 @@
 
 //gillians
 $include-base-classes:true;
-
+$content-boxed-width: 90%;
+$content-boxed-width-mobile: 95%;
+$content-max-width: none;
 // Header Font
 $headerFontStack: get-type(font-family,font-small-caps);
 $headerFontWeight: get-type(font-weight);

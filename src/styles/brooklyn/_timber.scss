@@ -2112,7 +2112,7 @@ $socialIconFontStack: 'icons';
 /*================ Mobile navigation ================*/
 .mobile-nav {
   // Negative of .drawer left/right padding for full-width link tap area
-  margin: (-$gutter / 2) (-$gutter / 2) 0 (-$gutter / 2);
+ /// margin: (-$gutter / 2) (-$gutter / 2) 0 (-$gutter / 2);
 
   li {
     margin-bottom: 0;
@@ -2131,7 +2131,7 @@ $socialIconFontStack: 'icons';
   // Background color on top level items so there is no
   // element overlap on subnav's CSS toggle animation
   .mobile-nav > & {
-    background-color: $colorDrawers;
+   // background-color: $colorDrawers;
   }
 
   &:after {
@@ -2150,7 +2150,7 @@ $socialIconFontStack: 'icons';
 
 .mobile-nav__item a {
   display: block;
-  font-size: 22px;
+ // font-size: 22px;
   .mobile-nav__subsublist & {
     padding-left: 45px;
     font-size: 16px;

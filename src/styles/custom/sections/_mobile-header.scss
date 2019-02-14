@@ -12,8 +12,8 @@ $show-guides: false;
         display: none;
     }
 
-  //  @include u-default-container;
-  //  @extend %u-reset-link-color;
+   @include u-default-container;
+   @extend %u-reset-link-color;
 
     padding-top: rhythm(1);
 
@@ -241,4 +241,47 @@ $show-guides: false;
         };
     }
 
+}
+
+///TODO : MORE THIS TO DRAWER MENU
+.mobile-nav__item a {
+    display: block;
+    // font-size: 22px;
+    .mobile-nav__subsublist & {
+        padding-left: 45px;
+        font-size: 16px;
+    }
+}
+
+.mobile-nav__item a,
+.mobile-nav__toggle button {
+    color: $colorDrawerText;
+    padding: $gutter / 2;
+    text-decoration: none;
+
+    &:active,
+    &:focus {
+        color: darken($colorDrawerText, 15%);
+        background-color: darken($colorDrawers, 5%);
+    }
+}
+
+.mobile-nav__item {
+
+    a {
+        @include set-type(md,font-san-serif);
+        color:color($nav-drawer-scheme, foreground);//adaptive-color($colorDrawerText, 25%);
+    }
+}
+
+.mobile-nav__sublist{
+    background: darken(color($nav-drawer-scheme, background),5%);
+    padding-left: get-spacing(3);
+    @include set-type(sm,font-san-serif);
+
+    > .mobile-nav__item{
+        &:after{
+            content: none;
+        }
+    }
 }
