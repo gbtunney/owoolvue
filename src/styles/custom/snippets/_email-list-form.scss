@@ -51,7 +51,7 @@ form .newsletter--form,
 
 @include c-input(false, font-san-serif base , typeography font-size );
 
-    padding:  get-lookup-prop(base-padding,md);
+    padding:  0;//get-lookup-prop(base-padding,xs);
    // ;
 }
 

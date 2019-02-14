@@ -193,7 +193,7 @@
 								header menu
 								is displayed inline.
 								<li class="site-nav__item site-nav--search__bar medium-down--hide">
-									{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
+									{% include 'search-bar', search_btn_style: 'c-button--accent-primary', search_bar_location: 'search-bar--header' %}
 								</li>
 								{% endcomment %}
 
@@ -205,9 +205,9 @@
 									{% endif %}
 									<li class="site-nav__item">
 										<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
-										<span class="icon-fallback-text">
-											<span class="icon icon-search" aria-hidden="true"></span>
-											<span class="fallback-text">{{ 'general.search.title' | t }}</span>
+
+											<span class="icon-fallback-text">
+												{% include 'c-ui-icon' with icon_name: 'search' ,style_modifier: 'light', flags: '  --no-border' %}
 										</span>
 										</a>
 									</li>
@@ -228,7 +228,7 @@
 								       id="Search"
 								       value="{{ search.terms | escape }}"
 								       placeholder="{{ 'general.search.placeholder' | t }}">
-								<button type="submit" class="btn">
+								<button type="submit" class="c-button">
 									{% include 'icon-search' %}
 									<span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
 								</button>
@@ -247,48 +247,7 @@
 			</header>
 
 			<header class="site-header" role="banner">
-				<div class="wrapper">
-					<div class="grid--full grid--table">
-						<div class="grid__item large--hide large--one-sixth one-quarter">
-							<div class="site-nav--open site-nav--mobile">
-								<button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
-									<div class="c-button c-button--accent-primary ">
-										<div class="c-button__icon">
-											{% include 'svg-definitions' with 'burger' %}
-										</div>
-									</div>
-									<span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
-								</button>
-							</div>
-						</div>
-						<div class="grid__item large--one-third medium-down--one-half">
 
-
-					</div>
-					<nav class="grid__item large--two-thirds large--text-right medium-down--hide" role="navigation">
-						{% comment %}
-						List out your main-menu linklist (default)
-
-						More info on linklists:
-						- http://docs.shopify.com/themes/liquid-variables/linklists
-						{% endcomment %}
-						<!-- begin site-nav -->
-						<!-- //site-nav -->
-					</nav>
-					<div class="grid__item large--hide one-quarter">
-						<div class="site-nav--mobile text-right">
-							<a href="/cart" class="site-nav__link cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
-                  <span class="icon-fallback-text">
-                    <span class="icon icon-cart" aria-hidden="true"></span>
-                    <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
-                  </span>
-								<span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
-							</a>
-						</div>
-					</div>
-				</div>
-
-		</div>
 		</header>
 	</div>
 </div>

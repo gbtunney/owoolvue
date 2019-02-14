@@ -9,7 +9,10 @@ GILLIAN
         <section class="Owool_Footer__grid footer-content-area">
             <div class="Owool_Footer__col footer-col" id="footer-1">
                 <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
-                {% assign footer_settings = section.settings %}
+	            {% include 'c-ui-icon' with icon_name: 'llama' ,style_modifier: 'c-icon-accent-default', flags: '  --no-border' %}
+
+
+	            {% assign footer_settings = section.settings %}
                 <div> {{ footer_settings.footer_emailform_text  }}</div>
                 {% include 'c-email-list-form' %}
 

@@ -17,3 +17,34 @@
 .svg-icon{
 //	@include u-icon-svg(false,1em);
 }
+
+
+button{
+	background-color: none;
+}
+
+.section-header__title{
+//@include trailing-border();
+
+@include padding-trailer(1);
+	border-bottom: 1px solid grey;
+}
+
+.collection-grid__item-title {
+	@include set-type(md,font-small-caps);
+	//text-transform: uppercase;
+///border: 1px solid red;
+	//@include bodyFontItalic;
+	//font-size: em(26px);
+	///line-height: 1.1;
+
+	@include at-query($min, $postSmall) {
+		// font-size: em(34px);
+	}
+}
+.ajaxcart__qty-adjust,.ajaxcart__qty-num{
+	@include g-color-scheme(accent-primary);
+}
+.vue-stuff-temp{
+	display: none;
+}

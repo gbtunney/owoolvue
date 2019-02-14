@@ -1,0 +1,13 @@
+.hero{
+	&__subtitle{
+		@include set-type(sm, font-san-serif);
+		text-transform: uppercase;
+	}
+	&__title{
+
+	}
+	.hero__cta{
+		@include set-type(sm,font-small-caps);
+	}
+
+}

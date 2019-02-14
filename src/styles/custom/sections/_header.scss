@@ -9,10 +9,10 @@ $show-guides: false;
 .Owool_Header {
 
 	$self: &;
-	 @include breakpoint-range(sm,"<="){
-	  display: none;
+	@include breakpoint-range(sm, "<=") {
+		display: none;
 	}
-	 @include u-default-container;
+	@include u-default-container;
 	@extend %u-reset-link-color;
 
 	padding-top: rhythm(1);
@@ -37,7 +37,6 @@ $show-guides: false;
 		align-items: stretch;
 		width: 100%;
 
-		//  @include margin-trailer(1);
 		> * {
 			&:nth-child(1) {
 				@if ($show-guides) {
@@ -106,11 +105,20 @@ $show-guides: false;
 		@include u-horizontal-list();
 		align-items: center;
 
+		.c-button__icon{
+			@include u-icon-svg(false,1.5em);
+		}
 		&-icon {
 
 		}
 		&-item-count {
 			//: red;
+			@include set-type(base, font-serif-italic);
+
+			a{
+				color: color(accent)!important;
+			}
+			padding: 0 rhythm(.5) 0 rhythm(1);
 			&.--active {
 				//background: green;
 
@@ -128,6 +136,11 @@ $show-guides: false;
 	&__customer {
 		width: auto;
 
+		@include set-type(base, font-serif-italic);
+
+		a{
+			color: color(accent)!important;
+		}
 		padding: 0 rhythm(.5) 0 rhythm(1);
 		@include u-horizontal-list();
 		align-items: center;
@@ -191,9 +204,7 @@ $show-guides: false;
 			hover-foreground:false,
 			hover-fill: false
 		);
-		//@error get-color-collection($props,light-alt);
-
-		@include c-kabob(light-alt, true, $props, true) {
+		@include c-kabob(light-alt, $props, true) {
 			&__left, &__right {
 				opacity: 0;
 				@include u-transition(opacity);
@@ -205,46 +216,15 @@ $show-guides: false;
 				}
 			}
 		}
-	;
 	}
-
 }
 
 .Owool_Header__divider {
 	@include c-divider(light-alt);
 }
 
-.announcement-bar {
+.site-nav__link--burger {
 
-	$announcement-bar-scheme: dark-accent-primary;
-	@include set-type(md);
-	@include render-queue(get-collection(base-padding, md));
-	$props: (
-		background: true,
-		foreground: true,
-		border: false,
-		fill:foreground,
-		hover-foreground:rgba(color($announcement-bar-scheme, foreground), .7)
-	);
-	@include g-color-scheme($announcement-bar-scheme, $props...);
-
-	&__message {
-		text-align: center;
-		width: 100%;
-	}
-	&__icon {
-		@include u-icon-svg(false, 1em);
-	}
-	display: flex;
-	justify-content: space-between;
-	text-align: center;
-	position: relative;
-	width: 100vw;
-	overflow-y: hidden;
-	margin-top: -50px;
-
-	@include u-transition(margin-top);
-	&.active {
-		margin-top: 0px;
+	.c-icon {
 	}
 }

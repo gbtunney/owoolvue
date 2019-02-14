@@ -25,8 +25,10 @@
   {% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
   <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
   <span class="input-group-btn">
-    <button type="submit" class="{{ search_btn_style }} icon-fallback-text">
-      <span class="icon icon-search" aria-hidden="true"></span>
+    <button type="submit" class="c-button  icon-fallback-text">
+       <div class="c-button__icon">
+                 {% include 'svg-definitions' with 'search' %}
+       </div>
       <span class="fallback-text">{{ 'general.search.submit' | t }}</span>
     </button>
   </span>

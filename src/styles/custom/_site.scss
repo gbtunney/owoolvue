@@ -11,9 +11,14 @@
 @import "base";
 
 @import "sections/sections";
+@import "snippets/hero";
+@import "snippets/announcement-bar";
 @import "snippets/email-list-form";
 //@import "snippets/pagination";
 
 
+#preview-bar-iframe{
+	display: none;
+}
 
 

@@ -1,0 +1,42 @@
+$announcement-bar-scheme: dark!default;
+
+.announcement-bar {
+
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	position: relative;
+	width: 100vw;
+	overflow-y: hidden;
+	margin-top: -50px;
+
+	$props: (
+		background: true,
+		foreground: true,
+		border: false,
+		fill:foreground,
+		hover-foreground:rgba(color($announcement-bar-scheme, foreground), .7)
+	);
+	@include set-type(md);
+	@include render-queue(get-collection(base-padding, md));
+	@include g-color-scheme($announcement-bar-scheme, $props...);
+
+	@include breakpoint-range(sm,"<="){
+		@include set-type(base);
+	}
+
+	@include u-transition(margin-top);
+	&.active {
+		margin-top: 0px;
+	}
+
+	&__message {
+		text-align: center;
+		width: 100%;
+	}
+	&__icon {
+		@include u-icon-svg(false, 1em);
+	}
+
+
+}

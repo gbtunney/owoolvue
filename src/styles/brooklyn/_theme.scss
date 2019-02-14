@@ -384,8 +384,8 @@ img.mfp-img {
 /*================ Theme-specific partials ================*/
 /*================ Theme specific global styles ================*/
 hr {
-  border-width: $borderWidthHeader 0 0 0;
-  width: 50px;
+  //border-width: $borderWidthHeader 0 0 0;
+ // width: 50px;
 }
 
 .hr--small {
@@ -507,45 +507,45 @@ input,
 textarea,
 button,
 select {
-  line-height: 1.563; // 25px based on 16px font
+  //line-height: 1.563; // 25px based on 16px font
 }
 
 h1 {
-  font-size: em($headerBaseFontSize);
+//  font-size: em($headerBaseFontSize);
 }
 
 h2 {
-  font-size: em(floor($headerBaseFontSize * 0.93));
+ // font-size: em(floor($headerBaseFontSize * 0.93));
 }
 
 h3 {
-  font-size: em(floor($headerBaseFontSize * 0.77));
+ // font-size: em(floor($headerBaseFontSize * 0.77));
 }
 
 h4 {
-  font-size: em(floor($headerBaseFontSize * 0.65));
+ // font-size: em(floor($headerBaseFontSize * 0.65));
 }
 
 h5 {
-  font-size: em(floor($headerBaseFontSize * 0.56));
+ // font-size: em(floor($headerBaseFontSize * 0.56));
 }
 
 h6 {
-  font-size: em(floor($headerBaseFontSize * 0.51));
+  //font-size: em(floor($headerBaseFontSize * 0.51));
 }
 
 
   h3, h4, h5, h6 {
-    @include accentFontStack;
+  //  @include accentFontStack;
   }
 
-
+/*
 .h1 { @extend h1; }
 .h2 { @extend h2; }
 .h3 { @extend h3; }
 .h4 { @extend h4; }
 .h5 { @extend h5; }
-.h6 { @extend h6; }
+.h6 { @extend h6; }*/
 
 /*================ Tables ================*/
 th,
@@ -576,22 +576,22 @@ th,
 
   h3 {
     
-      @include accentFontStack;
+    //  @include accentFontStack;
     
     text-align: center;
   }
 
   h4, h5, h6 {
     
-      @include accentFontStack;
+    //  @include accentFontStack;
     
   }
 }
 
 blockquote {
-  @include bodyFontItalic;
-  font-size: em(23px);
-  line-height: 1.385;
+ // @include bodyFontItalic;
+//  font-size: em(23px);
+ // line-height: 1.385;
   text-align: center;
 
   @include at-query($min, $postSmall) {
@@ -713,12 +713,12 @@ blockquote {
 }
 
 .collection-grid__item-title {
-  @include bodyFontItalic;
+  //@include bodyFontItalic;
   font-size: em(26px);
-  line-height: 1.1;
+  ///line-height: 1.1;
 
   @include at-query($min, $postSmall) {
-    font-size: em(34px);
+   // font-size: em(34px);
   }
 }
 
@@ -2303,25 +2303,12 @@ $slick-opacity-not-active: 0.25;
 }
 
 .site-nav__link--burger {
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  text-align: center;
-  line-height: 50px;
-  background-color: transparent;
-  border: 0;
-  position: relative;
-  top: 4px;
+
+
   transition: transform 0.15s ease-out;
 
-  svg {
-    width: 20px;
-    height: 30px;
-  }
 
-  &::after {
-    border-color: #000;
-  }
+
 }
 
 .site-nav__item {

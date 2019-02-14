@@ -1,8 +1,10 @@
   <div class="drawer__inner drawer-left__inner">
 
-<div class="c-icon--accent-primary">
-	{% include 'svg-definitions' with 'leaves-a' %}
-</div>
+      <div class="leaves-deco">
+	      {% include 'c-ui-icon' with icon_name: 'leaves-a' ,style_modifier: 'dark-accent-primary', flags: '--reflect  --no-border' %}
+	      {% include 'c-ui-icon' with icon_name: 'leaves-a' ,style_modifier: 'dark-accent-primary', flags: '--no-border' %}
+      </div>
+
     <ul class="mobile-nav">
       {% for link in linklists[section.settings.main_menu_link_list].links %}
         {% if link.links != blank %}
@@ -103,16 +105,16 @@
 	    {% if shop.customer_accounts_enabled %}
       <li class="mobile-nav__item">
         <div class="mobile-nav__has-sublist">
-          <a href="/collections/yarns" class="mobile-nav__link" id="Label-1">
-	        hjhjhjh
-            Account</a>
+          <a class="mobile-nav__link mobile-nav__toggle-btn " id="Label-1">
+	          {% include 'c-ui-icon' with icon_name: 'account' ,style_modifier: 'dark-accent-primary', flags: '  --no-border' %}
+              Account</a>
           <div class="mobile-nav__toggle">
             <button type="button" class="mobile-nav__toggle-btn icon-fallback-text" aria-controls="Linklist-1" aria-expanded="false">
                   <span class="icon-fallback-text mobile-nav__toggle-open">
-                      {% include 'c-ui-icon' with icon_name: 'plus' ,style_modifier: 'dark-accent-primary', flag: '--no-border' %}
+                      {% include 'c-ui-icon' with icon_name: 'plus' ,style_modifier: 'dark-accent-primary', flags: '--no-border' %}
                   </span>
               <span class="icon-fallback-text mobile-nav__toggle-close">
-                  {% include 'c-ui-icon' with icon_name: 'minus' ,style_modifier: 'dark-accent-primary',flag: '--no-border'  %}
+                  {% include 'c-ui-icon' with icon_name: 'minus' ,style_modifier: 'dark-accent-primary',flags: '--no-border'  %}
                   </span>
             </button>
           </div>
@@ -138,12 +140,10 @@
         </ul>
       </li>
 	    {% endif %}
-	    {% endif %}
 
-      {% for link in linklists[section.settings.drawer_bottom_link_list].links %}
-        <li class="mobile-nav__item mobile-nav__item--secondary"><a href="{{ link.url }}">{{ link.title }}</a></li>
-      {% endfor %}
-
+        <li class="mobile-nav__item mobile-nav__item--secondary">
+	    {% include 'search-bar', search_btn_style: 'c-button c-button--accent-primary --sm  ', search_bar_location: 'search-bar--header' %}
+        </li>
 
     </ul>
     <!-- //mobile-nav -->

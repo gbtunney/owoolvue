@@ -1196,7 +1196,7 @@ label.error {
 
 .input-group .btn,
 .input-group .input-group-field {
-  height: 37px;
+  //height: 37px;
 }
 
 .input-group .input-group-field {
@@ -1951,8 +1951,8 @@ $socialIconFontStack: 'icons';
 }
 
 .search-bar--header {
-  max-width: 300px;
-  background-color: $colorInputBg;
+ // max-width: 300px;
+ // background-color: $colorInputBg;
 }
 
 .search-bar--drawer {
@@ -2159,14 +2159,14 @@ $socialIconFontStack: 'icons';
 
 .mobile-nav__item a,
 .mobile-nav__toggle button {
-  color: $colorDrawerText;
-  padding: $gutter / 2;
-  text-decoration: none;
+  //color: $colorDrawerText;
+//  padding: $gutter / 2;
+ // text-decoration: none;
 
   &:active,
   &:focus {
-    color: darken($colorDrawerText, 15%);
-    background-color: darken($colorDrawers, 5%);
+ //   color: darken($colorDrawerText, 15%);
+ //   background-color: darken($colorDrawers, 5%);
   }
 }
 

@@ -14,7 +14,7 @@
 
 			<div class="{{ menu_name }}__mobile-nav-trigger">
 				<button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
-					<div class="c-button c-button--accent-primary ">
+					<div class="c-button c-button--accent-primary --rounded  padding--sm ">
 						<div class="c-button__icon">
 							{% include 'svg-definitions' with 'burger' %}
 						</div>
@@ -44,7 +44,6 @@
 				</div>
 				<div class="{{ menu_name }}__cart-item-count">
 					<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
-						{{ 'layout.cart.title' | t }}
 						({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
 					</div>
 				</div>
@@ -87,7 +86,6 @@
 				{% else %}
 					<li class="">
 						<a href="{{ link.url }}">
-
 							<div class="Owool_Main-Menu-Mobile__item --reflect">
 								<div class="Owool_Main-Menu-Mobile__item__left">
 									{% include   'icon-leaves-b.svg' %}
@@ -101,11 +99,7 @@
 									{% include 'icon-leaves-b.svg' %}
 								</div>
 							</div>
-
-
-
 						</a>
-
 					</li>
 				{% endif %}
 			{% endfor %}

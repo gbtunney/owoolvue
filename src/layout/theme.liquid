@@ -107,9 +107,10 @@
       {% unless template.name == "index" or template == "collection.image" %}
         <div class="wrapper">
       {% endunless %}
-          **** This is a vue component ****
-          <div id="theme-vue-wrapper" prop-shopname="{{shop.name}}"> ... </div>
-          *******
+          <div class="vue-stuff-temp">**** This is a vue component ****
+            <div id="theme-vue-wrapper" prop-shopname="{{shop.name}}"> ... </div>
+            *******
+          </div>
         {{ content_for_layout }}
       {% unless template.name == "index" or template == "collection.image" %}
         </div>

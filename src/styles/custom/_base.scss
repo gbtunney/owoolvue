@@ -1,23 +1,16 @@
 @if ($include-base-classes) {
 
-    @include establish-baseline;
-
+ @include establish-baseline;
 
     body {
         @include font-smoothing(true);
-        // @include color-scheme();
-
-
-        //@include setType(0, font-serif);
         width:100%;
         max-width: 100vw;
         overflow-x: hidden;
     }
 
-
-
     p {
-            @include set-type(base, font-serif);
+           // @include set-type(29px, font-serif);
     }
     /*
      * Links
@@ -46,10 +39,6 @@
         );
         @include g-color-scheme($chroma-active-scheme, $props...);
 
-
-
-
-
     }
 
     /* Headers */
@@ -73,34 +62,33 @@
         color: inherit;
         font-size: inherit;
         line-height: inherit;
-        //@include trailer(3);
     }
 
     h1 {
-        @include set-type(xxl, font-san-serif);
+        @include set-type(xxl, font-serif);
     }
 
     h2 {
-        @include set-type(xl, font-san-serif);
+        @include set-type(xl, font-serif);
 
     }
 
     h3 {
-        @include set-type(lg, font-san-serif);
+        @include set-type(lg, font-serif);
     }
 
 
     h4 {
-        @include set-type(md, font-san-serif);
+        @include set-type(md, font-serif);
     }
 
     h5 {
-        @include set-type(md, font-san-serif);
+        @include set-type(md, font-serif);
 
     }
 
     h6 {
-        @include set-type(sm, font-san-serif);
+        @include set-type(sm, font-serif);
     }
 
     /*
