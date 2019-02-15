@@ -27,8 +27,8 @@
 			{% assign header_style_modifier = 'light' %}
 			{% assign header_style_modifier__social = 'dark-accent-default' %}
 			{% assign header_style_modifier__cart = 'accent-primary' %}
-			{% assign header_flags__cart = '--md --no-border --no-padding' %}
-			{% assign header_style_modifier__divider = 'accent-default' %}
+			{% assign header_flags__icon = '--md --no-border --no-padding' %}
+			{% assign header_style_modifier__divider = 'light' %}
 			{% assign header_style_modifier__main_menu_icon = 'accent-secondary --sm Owool_Main-Menu__icon' %}
 			{% assign menu_name = 'Owool_Header' %}
 
@@ -77,7 +77,7 @@
 
 						<div class="{{ menu_name }}__cart cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
 							<div class="{{ menu_name }}__cart-icon">
-								{% include 'c-ui-linked-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
+								{% include 'c-ui-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__icon %}
 							</div>
 							<div class="{{ menu_name }}__cart-item-count">
 								<a class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
@@ -204,11 +204,12 @@
 										{% assign search_modal = false %}
 									{% endif %}
 									<li class="site-nav__item">
-										<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
 
-											<span class="icon-fallback-text">
-												{% include 'c-ui-icon' with icon_name: 'search' ,style_modifier: 'light', flags: '  --no-border' %}
-										</span>
+
+										<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
+											<div class="{{ menu_name }}__cart-icon">
+												{% include 'c-ui-icon' with icon_name: 'search' ,style_modifier: 'light' , flags: header_flags__icon %}
+											</div>
 										</a>
 									</li>
 								{% endif %}
@@ -238,10 +239,8 @@
 					</div>
 				</div>
 
-				<div class="{{ menu_name }}__divider">
-
+				<div class="{{ menu_name }}__divider --leader --trailer">
 					{% include 'c-divider'   with  style_modifier: header_style_modifier__divider %}
-
 				</div>
 
 			</header>

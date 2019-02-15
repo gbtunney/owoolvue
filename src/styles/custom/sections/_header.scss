@@ -69,7 +69,7 @@ $show-guides: false;
 
 	&__logo {
 
-		height: 100%;
+		width: 85%;
 
 		.Owool_Logo_SVG {
 			width: 100%;
@@ -98,17 +98,17 @@ $show-guides: false;
 		@include u-horizontal-list();
 		align-items: center;
 
-		.c-button__icon{
-			@include u-icon-svg(false,1.5em);
+		.c-button__icon {
+			//@include u-icon-svg(false,1.5em);
 		}
 		&-icon {
-
+			display: flex;
 		}
 		&-item-count {
 
 			@include set-type(base, font-serif-italic);
-			a{
-				color: color(accent)!important;
+			a {
+				color: color(accent) !important;
 			}
 			&.--active {
 
@@ -127,8 +127,8 @@ $show-guides: false;
 
 		@include set-type(base, font-serif-italic);
 
-		a{
-			color: color(accent)!important;
+		a {
+			color: color(accent) !important;
 		}
 		padding: 0 rhythm(.5) 0 rhythm(1);
 		@include u-horizontal-list();
@@ -197,15 +197,5 @@ $show-guides: false;
 		a {
 			@extend %u-reset-link-color;
 		}
-	}
-}
-
-.Owool_Header__divider {
-	@include c-divider(light-alt);
-}
-
-.site-nav__link--burger {
-
-	.c-icon {
 	}
 }

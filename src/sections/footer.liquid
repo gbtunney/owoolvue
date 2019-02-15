@@ -1,10 +1,12 @@
-{% assign footer_style_modifier = 'dark' %}
-{% assign footer_style_modifier__social = 'dark' %}
+{% assign footer_style_modifier = 'dark-accent-primary' %}
+{% assign footer_style_modifier__social = 'accent-primary' %}
 {% assign footer_style_modifier__form = 'dark' %}
 {% assign footer_style_modifier__form_button = 'dark' %}
 <footer class="Owool_Footer">
     <div class="inner">
-
+        <div class="Owool_Footer__divider --leader-2 --trailer">
+		    {% include 'c-divider'   with  style_modifier: footer_style_modifier %}
+        </div>
         <section class="Owool_Footer__grid footer-content-area">
             <div class="Owool_Footer__col footer-col" id="footer-1">
                 <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
@@ -14,8 +16,7 @@
                 {% include 'c-email-list-form' %}
 
                 <div class="Owool_Footer__social">
-                {% assign social_nav_theme = "accent-primary" %}
-                {% include 'c-social-nav-links' %}
+                {% include 'c-social-nav-links' with social_nav_theme:footer_style_modifier__social  %}
                 </div>
 	            {% include 'c-ui-icon' with icon_name: 'llama' ,style_modifier: 'dark-accent-primary --lg', flags: '  --no-border' %}
 
@@ -63,9 +64,6 @@
             </ul>
             {% endunless %}
         {% endif %}
-        <div class="Owool_Footer__divider">
-            {% include 'c-divider'   with  style_modifier: footer_style_modifier %}
-        </div>
         <div class="Owool_Footer__meta">
             <small>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}
                 . {{ powered_by_link }}</small>

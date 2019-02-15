@@ -4,4 +4,4 @@
     {% assign style_modifier = 'light' %}
 {% endif %}
 
-{% include 'c-kabob' with flags : '--monochrome' , component_name: 'divider' , reflect:true, style_modifier: style_modifier %}
+{% include 'c-kabob' with flags : '--no-border --divider' , component_name: 'kabob' , reflect:true, style_modifier: style_modifier %}
