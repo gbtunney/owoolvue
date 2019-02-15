@@ -575,16 +575,16 @@ th,
   }
 
   h3 {
-    
+
     //  @include accentFontStack;
-    
+
     text-align: center;
   }
 
   h4, h5, h6 {
-    
+
     //  @include accentFontStack;
-    
+
   }
 }
 
@@ -723,35 +723,15 @@ blockquote {
 }
 
 /*================ Partials | Theme Form Overrides ================*/
-label {
+/*label {
   @include bodyFontItalic;
   font-weight: $bodyFontWeight;
-}
-
-::-webkit-input-placeholder {
-  color: $colorTextBody;
-  opacity: 0.6;
-}
-
-:-moz-placeholder {
-  color: $colorTextBody;
-  opacity: 0.6;
-}
-
-:-ms-input-placeholder {
-  color: $colorTextBody;
-  opacity: 0.6;
-}
-
-::-ms-input-placeholder {
-  color: $colorTextBody;
-  opacity: 1;
 }
 
 input,
 textarea,
 select {
-  @include bodyFontItalic;
+//  @include bodyFontItalic;
   font-size: em(18px);
   border-color: transparent;
   background-color: $colorInputBg;
@@ -786,10 +766,10 @@ input[type="number"] {
 
 input[type="image"] {
   background-color: transparent;
-}
+}*/
 
 /*================ Ajax quantity selectors ================*/
-.js-qty {
+/*.js-qty {
   background-color: $colorInputBg;
   color: color-control($colorInputBg);
 }
@@ -805,139 +785,9 @@ input[type="image"] {
 .js-qty__adjust--plus {
   border-color: darken($colorInputBg, 5%);
   color: color-control($colorInputBg);
-}
+}*/
 
-/*================ Newsletter area ================*/
-.newsletter {
-  background-color: $colorNewsletter;
-  padding: $gutter 0;
-  margin-top: $gutter * 2;
 
-  .shopify-section:first-child & {
-    margin-top: -($gutter * 2);
-    @include at-query($min, $postSmall) {
-      margin-bottom: -($gutter * 2);
-      position: relative;
-      top: -($gutter * 5 / 3);
-    }
-  }
-
-  @include at-query($min, $postSmall) {
-    padding: ($gutter * 2) 0;
-  }
-
-  .section-header {
-    @include at-query($max, $small) {
-      margin-bottom: 20px;
-    }
-  }
-
-  .section-header + .section-subheading {
-    margin-bottom: 20px;
-
-    @include at-query($min, $postSmall) {
-      margin-top: -50px;
-      margin-bottom: 50px;
-    }
-  }
-
-  .rte p {
-    @include at-query($max, $small) {
-      margin-bottom: $gridGutterMobile;
-    }
-  }
-
-  form {
-    margin: 0 auto;
-    max-width: 520px;
-
-    .newsletter--form {
-      padding: $gutter / 3;
-    }
-    .note,
-    .errors {
-      margin-bottom: 0;
-    }
-  }
-
-  form .newsletter--form,
-  .newsletter__input {
-    background-color: $colorBody;
-    color: $colorTextBody;
-  }
-
-  .newsletter__input {
-    font-size: em(18px);
-    -moz-appearance: textfield;
-    -webkit-appearance: textfield;
-    appearance: textfield;
-
-    &::-webkit-input-placeholder {
-      /* WebKit browsers */
-      color: $colorTextBody;
-      opacity: 1;
-    }
-
-    &:-moz-placeholder {
-      /* Mozilla Firefox 4 to 18 */
-      color: $colorTextBody;
-      opacity: 1;
-    }
-
-    &::-moz-placeholder {
-      /* Mozilla Firefox 19+ */
-      color: $colorTextBody;
-      opacity: 1;
-    }
-
-    &:-ms-input-placeholder {
-      /* Internet Explorer 10+ */
-      color: $colorTextBody;
-    }
-
-    &::-ms-input-placeholder {
-      /* Microsoft Edge 12+ */
-      color: $colorTextBody;
-      opacity: 1;
-    }
-
-    @include at-query($min, $postSmall) {
-      font-size: em(21px);
-    }
-  }
-
-  .newsletter__submit-text--large {
-    white-space: nowrap;
-  }
-}
-
-@include at-query($max, $small) {
-  .newsletter__submit-text--large,
-  .password-page__login-form__submit-text--large {
-    display: none;
-  }
-
-  .newsletter__submit-text--small,
-  .password-page__login-form__submit-text--small {
-    display: block;
-  }
-}
-
-@include at-query($min, $postSmall) {
-  .newsletter__submit-text--large,
-  .password-page__login-form__submit-text--large {
-    display: block;
-  }
-
-  .newsletter__submit-text--small,
-  .password-page__login-form__submit-text--small {
-    display: none;
-  }
-}
-
-.newsletter__label {
-  padding-left: 10px;
-}
 
 /*================ Modules | Theme product collage grid ================*/
 .grid__row-separator {
@@ -1775,9 +1625,9 @@ $shareCountBg: $colorBody;
   }
 
   .hero__subtitle {
-    
+
       @include accentFontStack;
-    
+
     margin-bottom: 15px;
   }
 

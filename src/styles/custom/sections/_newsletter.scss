@@ -1,0 +1,38 @@
+/*================ Newsletter area ================*/
+/*
+
+@include at-query($max, $small) {
+	.newsletter__submit-text--large,
+	.password-page__login-form__submit-text--large {
+		display: none;
+	}
+
+	.newsletter__submit-text--small,
+	.password-page__login-form__submit-text--small {
+		display: block;
+	}
+}
+
+@include at-query($min, $postSmall) {
+	.newsletter__submit-text--large,
+	.password-page__login-form__submit-text--large {
+		display: block;
+	}
+
+	.newsletter__submit-text--small,
+	.password-page__login-form__submit-text--small {
+		display: none;
+	}
+}
+*/
+.newsletter{
+
+	@include u-make-container(90%);
+}
+.newsletter__label {
+	padding-left: 10px;
+}
+
+.input-group {
+	@include c-input-group(test-input-group);
+}

@@ -7,10 +7,12 @@ footer {
 
 .Owool_Footer {
    // @include u-full-width-container;
-    //@include u-default-container;
+
 
     width: 100%;
     > .inner {
+        @include u-make-container(90%);
+
     }
     $props: (
         background: true,
@@ -20,47 +22,42 @@ footer {
     );
     @include g-color-scheme(dark-accent-primary, $props...);
 
-   // @include setType(2, font-serif);
+    @include set-type(md, font-serif);
 
     text-align: left;
 
-    //padding-top: rhythm(2);
+    padding-top: get-spacing(2,lg);
     //todo: figure out better way of dealing with this
     a {
-        //background: purple;
         font-family: inherit;
         font-size: inherit;
-        text-transform: uppercase;
-        //color: red;
     }
     &__divider {
-
-        //@include margin-leader(1);
-
+        @include margin-leader(1);
     }
     &__meta {
-       // @include margin-leader(1);
+        @include margin-leader(1);
 
-      //  text-align: center;
-       // @include trailer(1);
+       text-align: center;
+        @include trailer(1);
     }
 
     &__social {
-       // @include leader();
+        @include leader();
         @include u-horizontal-list;
         width: 80%;
     }
     &__grid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-       // grid-gap: rhythm(1);
+        grid-template-columns: 1fr  1fr 1fr;
+        grid-gap: get-spacing();
 
         @include breakpoint-range(sm,"<="){
             display: block;
         }
     }
     &__divider {
-      //  @include leader();
+       @include leader();
     }
 }
 

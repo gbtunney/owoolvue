@@ -90,13 +90,6 @@ $show-guides: false;
 			border: false,
 			accent:foreground
 		);
-		// @include g-color-scheme($chroma-active-scheme,$props...);
-
-		// set-type(0, font-serif-italic);
-
-		// font-style: italic;
-
-		//@include u-inherit-selector();
 	}
 
 	//part of meta
@@ -112,18 +105,14 @@ $show-guides: false;
 
 		}
 		&-item-count {
-			//: red;
-			@include set-type(base, font-serif-italic);
 
+			@include set-type(base, font-serif-italic);
 			a{
 				color: color(accent)!important;
 			}
-			padding: 0 rhythm(.5) 0 rhythm(1);
 			&.--active {
-				//background: green;
 
 			}
-
 		}
 	}
 
@@ -167,21 +156,13 @@ $show-guides: false;
 
 .Owool_Main-Menu {
 
-	a {
-		//   @include u-reset-link;
-		// @extend %u-reset-link-color;
-	}
-
-	@include u-horizontal-list();
-
-	justify-content: flex-end;
+	display: flex;
+	@include u-horizontal-list(flex-end);
+	align-items: center;
 
 	width: 100%;
-	height: 100%;
-	background: pink;
+	height: auto;
 	$parent: &;
-
-	// @include setType(2, font-san-serif);
 
 	$props: (
 		background: true,
@@ -194,8 +175,6 @@ $show-guides: false;
 	&__item {
 		$parent: &;
 		@include u-transition(opacity);
-
-		@include set-type(lg, font-san-serif);
 		$props: (
 			background: false,
 			foreground: true,
@@ -204,7 +183,7 @@ $show-guides: false;
 			hover-foreground:false,
 			hover-fill: false
 		);
-		@include c-kabob(light-alt, $props, true) {
+		@include c-kabob(light-alt, $props, $reflect: true, $type-collection: ((font-size typography), (lg font-san-serif))) {
 			&__left, &__right {
 				opacity: 0;
 				@include u-transition(opacity);
@@ -212,9 +191,11 @@ $show-guides: false;
 			&:hover {
 				#{$parent}__left, #{$parent}__right {
 					opacity: 1;
-
 				}
 			}
+		}
+		a {
+			@extend %u-reset-link-color;
 		}
 	}
 }

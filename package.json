@@ -45,6 +45,7 @@
     "build": "slate-tools build",
     "deploy": "slate-tools build && slate-tools deploy",
     "zip": "slate-tools build && slate-tools zip",
+    "pattern-test": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/pattern-lab-test.scss src/styles/pattern-lab-test.css",
     "styles": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/testing.scss src/assets/testing.css"
   },
   "dependencies": {

@@ -212,7 +212,7 @@ $show-guides: false;
 			hover-fill: false
 		);
 
-		@include c-kabob(light-alt, $props, true, auto, sm, font-san-serif) {
+		@include c-kabob(light-alt, $props, true, auto) {
 			&__left, &__right {
 				opacity: 0;
 				@include u-transition(opacity);
