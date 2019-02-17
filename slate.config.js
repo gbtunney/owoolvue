@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+
 function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
     
@@ -34,6 +35,10 @@ const alias = {
     jQuery: path.resolve('./node_modules/jquery'),
     $: path.resolve('./node_modules/jquery'),
 };
+
+
+
+
 
 const part = {
     resolve: {

@@ -38,5 +38,8 @@ button {
 }
 
 .vue-stuff-temp {
-	display: none;
+	///display: none;
 }
+
+//todo: fix this
+textarea, select, input, button { outline: none; }

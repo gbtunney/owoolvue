@@ -284,6 +284,10 @@ $show-guides: false;
 		@include set-type(md, font-san-serif);
 		color: color($nav-drawer-scheme, foreground); //adaptive-color($colorDrawerText, 25%);
 	}
+
+	&--search{
+		padding: get-spacing(1, lg) get-spacing(1, sm) ;
+	}
 }
 
 .mobile-nav__sublist {

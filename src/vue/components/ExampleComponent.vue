@@ -7,16 +7,26 @@
             make sure you use vue only for stuff you used to do with JQuery and not for generating content/meta tags,
             because that will hurt your SEO.
         </p>
+        <multiselect v-model="value" :options="options"></multiselect>
+
     </div>
 </template>
 
 <script>
   import {mapGetters, mapMutations} from 'vuex';
+  import Multiselect from 'vue-multiselect'
 
   export default {
     props: {
       shopname: String,
     },
+      components: { Multiselect },
+      data () {
+          return {
+              value: null,
+              options: ['list', 'of', 'options']
+          }
+      },
     name: 'ThemeComponent',
     computed: mapGetters(['count']),
     methods: mapMutations(['increment']),
