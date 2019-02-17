@@ -1,0 +1,38 @@
+{% assign default_component_id = 'icon' %}
+{% assign default_style_modifier = 'dark' %}
+{% assign default_flags = '' %}
+{% assign default_icon = 'plus' %}
+
+<div class="c-{{ component_id |  default: default_component_id }} c-{{ component_id |  default: default_component_id }}--{{ style_modifier | default: default_style_modifier }}  {{ flags | default: default_flags }}">
+	{% if icon_name != empty %}
+		{% include 'svg-definitions' with icon_name %}
+	{% else %}
+		{%  include 'svg-definitions' with  default_icon %}
+	{% endif %}
+</div>
+
+
+
+<div class=" c-test-input-group">
+	<input type="email" class="-{{ component_id |  default: default_component_id }} c-{{ component_id |  default: default_component_id }}--{{ style_modifier | default: default_style_modifier }}  {{ flags | default: default_flags }}" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" id="Email"  autocorrect="off" autocapitalize="off">
+	<button id="Subscribe" type="submit"
+	        class=" c-button c-button--dark-accent-primary --no-border --round-right newsletter__submit"
+	        aria-label="{{ 'general.newsletter_form.submit' | t }}">
+               <span class="c-button__icon">
+                   {% include 'svg-definitions' with 'leaves-a'  %}
+               </span>
+		<span class="c-button__label newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+		<span class="newsletter__submit-text--small">
+                  <span class="icon icon-arrow-right" aria-hidden="true"></span>
+                </span>
+	</button>
+</div>
+
+
+<!-- reset all variables cuz liquids scoping is dum? -->
+{% assign style_modifier = nil %}
+{% assign flags = nil %}
+{% assign reflect = nil %}
+{% assign icon_name = nil %}
+{% assign kabob_left_icon = nil %}
+{% assign component_name = nil %}

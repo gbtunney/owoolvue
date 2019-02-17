@@ -1,35 +1,44 @@
 <!-- /snippets/search-bar.liquid -->
 {% comment %}
 
-  A snippet to include a search bar anywhere in your theme.
-  Note we are using 'input-group' for the layout. Look under Forms > Input Groups for some demos.
+A snippet to include a search bar anywhere in your theme.
+Note we are using 'input-group' for the layout. Look under Forms > Input Groups for some demos.
 
-  More information:
-   - http://docs.shopify.com/themes/liquid-variables/search
+More information:
+- http://docs.shopify.com/themes/liquid-variables/search
 
-  To return only products in results:
-    - http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
-    - Or manually add type=product to the search URL as a query parameter
-    - Uncomment hidden input with value="product" below
+To return only products in results:
+- http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
+- Or manually add type=product to the search URL as a query parameter
+- Uncomment hidden input with value="product" below
 
 {% endcomment %}
 
+{% assign input_group_component_name= 'c-input-group' %}
+{% assign input_component_name= 'c-input' %}
+{% assign button_component_name= 'c-button' %}
+{% assign search_icon_name = 'search' %}
+
+{% assign input_style_modifier = 'light-alt' %}
+{% assign button_style_modifier = 'light-alt' %}
+{% assign input_flags = '' %}
+{% assign button_flags = '--round-right' %}
+
 {% comment %}
-  Set the default button style if not defined
+Set the default button style if not defined
 {% endcomment %}
 {% unless search_btn_style %}
   {% assign search_btn_style = 'btn--secondary' %}
 {% endunless %}
 
-<form action="/search" method="get" class="input-group search-bar {{ search_bar_location }}" role="search">
-  {% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
-  <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
-  <span class="input-group-btn">
-    <button type="submit" class="c-button  icon-fallback-text">
-       <div class="c-button__icon">
-                 {% include 'svg-definitions' with 'search' %}
-       </div>
-      <span class="fallback-text">{{ 'general.search.submit' | t }}</span>
-    </button>
-  </span>
+<form action="/search" method="get" class="{{ input_group_component_name }} search-bar {{ search_bar_location }}" role="search">
+	{% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
+	<input class="{{ input_component_name }} {{input_component_name}}--{{ input_style_modifier }} {{ input_group_component_name }}__input {{ input_flags }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
+	<button type="submit" class="{{ button_component_name }} {{ button_component_name }}--{{button_style_modifier}} {{ button_flags }}  icon-fallback-text">
+		<div class="c-button__icon">
+			{% include 'svg-definitions' with search_icon_name %}
+		</div>
+		<span class="fallback-text">{{ 'general.search.submit' | t }}</span>
+	</button>
 </form>
+

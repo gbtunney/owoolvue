@@ -33,6 +33,7 @@
 	padding-left: 10px;
 }
 
+///TODO: TEMPORARY INPUT GROUP COMPONENT.
 .input-group {
-	@include c-input-group(test-input-group);
+	@include c-input-group(input-group);
 }
