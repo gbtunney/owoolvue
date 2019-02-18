@@ -4,35 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-    
-    if (loader) {
-        loaders.push({
-            loader: loader + '-loader',
-            options: Object.assign({}, loaderOptions, {
-                sourceMap: options.sourceMap
-            })
-        })
-    }
-    
-    // Extract CSS when that option is specified
-    // (which is the case during production build)
-    if (options.extract) {
-        return ExtractTextPlugin.extract({
-            use: loaders,
-            fallback: 'vue-style-loader'
-        })
-    } else {
-        return ['vue-style-loader'].concat(loaders)
-    }
-}
-
-
-
 const alias = {
     jQuery: path.resolve('./node_modules/jquery'),
     $: path.resolve('./node_modules/jquery'),
+    '@': path.resolve(__dirname, './src/vue'),
+    'src': path.resolve(__dirname, 'src'),
+    'assets': path.resolve(__dirname, 'assets'),
+    'styles':path.resolve(__dirname, './src/styles'),
+    'patternlab': path.resolve(__dirname, 'assets/g-Patternlab')
 };
 
 const part = {
@@ -61,8 +40,7 @@ const part = {
 const styleLoader = {
     loader: 'style-loader',
     options: {
-        hmr: isDevelopment,
-        includePaths: ["node_modules"]
+        hmr: isDevelopment
     }
 };
 
@@ -72,8 +50,7 @@ const cssLoader = {
     // styles using a <link> tag instead of <style> tag. This causes
     // a FOUC content, which can cause issues with JS that is reading
     // the DOM for styles (width, height, visibility) on page load.
-    options: {        includePaths: ["node_modules"],
-        sourceMap: !isDevelopment}
+    options: {sourceMap: !isDevelopment}
 };
 
 const postcssLoader = {

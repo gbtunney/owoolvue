@@ -7,6 +7,16 @@
     {% assign current_variant = product.selected_or_first_available_variant %}
     {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
+<script type="text/javascript">
+  var myproduct = {{ product | json }};
+window.myproduct = myproduct;
+</script>
+  <div class="">**** This is a vue component ****
+    <div id="theme-vue-product-app" prop-currentproduct="myproduct" prop-productid={{product.id}} prop-producthandle="{{product.handle}}"  prop-shopname="{{shop.name}}"> ... </div>
+    *******
+  </div>
+
+
     <div class="grid product-single">
       <div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 

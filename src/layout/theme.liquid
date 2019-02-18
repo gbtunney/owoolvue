@@ -59,6 +59,9 @@
 
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 
+	{% include 'style-tags', layout: 'theme' %}
+	{% include 'script-tags', layout: 'theme' %}
+
   <!-- Header hook for plugins ================================================== -->
   {{ content_for_header }}
 
@@ -107,10 +110,6 @@
       {% unless template.name == "index" or template == "collection.image" %}
         <div class="wrapper">
       {% endunless %}
-          <div class="vue-stuff-temp">**** This is a vue component ****
-            <div id="theme-vue-wrapper" prop-shopname="{{shop.name}}"> ... </div>
-            *******
-          </div>
         {{ content_for_layout }}
       {% unless template.name == "index" or template == "collection.image" %}
         </div>

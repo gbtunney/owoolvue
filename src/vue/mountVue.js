@@ -1,6 +1,7 @@
 /* eslint-disable id-length */
 import Vue from 'vue';
 import store from './store';
+import router from './router'
 
 /**
  * retrieves attributes from an element and turn them into an object
@@ -48,6 +49,7 @@ export function mountVue(selector, rootComponent) {
   if (el) {
       const props = getAttributes(el, 'prop-');
       new Vue({
+          router,
           store,
           render: (h) => h(rootComponent, {
               props
