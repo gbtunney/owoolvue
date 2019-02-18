@@ -8,19 +8,19 @@
             because that will hurt your SEO.
         </p>
         <multiselect v-model="value" :options="options"></multiselect>
-
     </div>
 </template>
 
 <script>
   import {mapGetters, mapMutations} from 'vuex';
   import Multiselect from 'vue-multiselect'
+import Product from './shopify/product/Product.vue'
 
   export default {
     props: {
       shopname: String,
     },
-      components: { Multiselect },
+      components: { Multiselect,Product },
       data () {
           return {
               value: null,

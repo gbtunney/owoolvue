@@ -43,10 +43,10 @@
 				type: String,
 				default: 'not set'
 			},
-			productID: Number,
+			productid: Number,
 			currentproduct: Object,
 			products: Array,
-			variantID: {
+			variantid: {
 				required: false,
 			},
 			currentvariant: Object,
@@ -62,8 +62,8 @@
 		created: function() {
 			const PRODUCT_SCHEMA = schema(
 				{
-					productID: {type: String},
-					variantID: {type: String, default: false},
+					productid: {type: String},
+					variantid: {type: String, default: false},
 					products: {type: Array, required: true},
 				});
 
@@ -73,7 +73,7 @@
 				payload = Object.assign(payload);
 				payload.products = [res.data.product]
 				store.dispatch('SHOPIFY_DATA_INIT', payload).then(function(res) {
-					if (payload.productID){
+					if (payload.productid){
 						store.dispatch('SET_CURRENT_PRODUCT', payload).then(function(res) {
 							store.dispatch('SET_CURRENT_VARIANT', payload);
 						});
@@ -119,7 +119,7 @@
 
 				if (variant != undefined){
 					store.dispatch('SET_CURRENT_VARIANT', {selectedVariant: variant});
-					setQueryStringParameter("variant", variant.id);
+					//setQueryStringParameter("variant", variant.id);
 				}
 			},
 		}

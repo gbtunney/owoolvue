@@ -34,6 +34,12 @@ function generateLoaders (loader, loaderOptions) {
 const alias = {
     jQuery: path.resolve('./node_modules/jquery'),
     $: path.resolve('./node_modules/jquery'),
+    '@': path.resolve(__dirname, './src/vue'),
+    'src': path.resolve(__dirname, 'src'),
+    'assets': path.resolve(__dirname, 'assets'),
+    'styles':path.resolve(__dirname, './src/styles'),
+    'patternlab': path.resolve(__dirname, 'assets/g-Patternlab')
+    
 };
 
 
