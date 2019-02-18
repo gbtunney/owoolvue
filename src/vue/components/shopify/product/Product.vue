@@ -69,7 +69,8 @@
 
 			let payload = PRODUCT_SCHEMA.parse(this.$props);
 
-			this.getProduct({params: {id: this.producthandle}}).then(function(res) {
+
+            this.getProduct({params: {id: this.producthandle}}).then(function(res) {
 				payload = Object.assign(payload);
 				payload.products = [res.data.product]
 				store.dispatch('SHOPIFY_DATA_INIT', payload).then(function(res) {

@@ -1,7 +1,7 @@
 /* eslint-disable id-length */
 import Vue from 'vue';
 import store from './store';
-
+import VueRouter from 'vue-router';
 /**
  * retrieves attributes from an element and turn them into an object
  * @param el: htmlElement
@@ -43,12 +43,22 @@ function getAttributes(el, prefix = null) {
  * @param rootComponent
  * @returns boolean
  */
+
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: []
+});
+
+
+
 export function mountVue(selector, rootComponent) {
   const el = document.querySelector(selector);
   if (el) {
       const props = getAttributes(el, 'prop-');
       new Vue({
           store,
+          router,
           render: (h) => h(rootComponent, {
               props
           }),
