@@ -58,6 +58,7 @@
     "styles": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/testing.scss src/assets/testing.css"
   },
   "dependencies": {
+    "json-loader": "^0.5.7",
     "vue": "^2.5.21",
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1",

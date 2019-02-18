@@ -59,6 +59,11 @@
 
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 
+  <script type="text/javascript">
+    //set temp global var
+    window.asset_url ="{{ 'gg' | asset_url }}";
+
+  </script>
   <!-- Header hook for plugins ================================================== -->
   {{ content_for_header }}
 

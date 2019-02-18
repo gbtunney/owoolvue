@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import shopify from "./shopify";
 import {Slugify, GDatamapper} from '@/gUtilities/main.js'
 import math from 'mathjs';
+import{ SWATCHES} from "@/components/configjs.js";
+
 
 import isColor from 'is-color';
 import randomColor from 'randomcolor';
@@ -20,6 +22,8 @@ export const SHOPIFY_DATA_COMPLETE = 'SHOPIFY_DATA_COMPLETE';
 
 
 //shopify...
+//todo :fix this PLS.
+const ASSET_URL = "//cdn.shopify.com/s/files/1/0084/4044/7094/t/15/assets";
 
 const 	parseOptions =function (inOptions) {
     
@@ -29,6 +33,7 @@ const 	parseOptions =function (inOptions) {
                 id: (obj, key) => ( !obj[key] ) ? false : true,
                 slug: (obj, key) => ( !obj[key] ) ? Slugify(obj['title']) : false,
                 title: (obj, key) => obj[key],
+                swatch_image: (obj,key)=> "helllo!!",
                 testing: "gillintunney"
             }
         },
@@ -39,8 +44,8 @@ const 	parseOptions =function (inOptions) {
             $isDisabled:  {type: Boolean, default: false},
             title: {type: String},
             _index: {type: Number, required: true},
-            swatch_image: {type: Number, default: false},
-            color: {type: String, default: randomColor()}
+            swatch_image: {type: String, default: false},
+            color: {type: String, default: false}
         })
     }
     
@@ -64,20 +69,70 @@ const 	parseOptions =function (inOptions) {
         for (var u = 0; u < currentObj.values.length; u++) {
             var newValueObj = GDatamapper.expandToObject(currentObj.values[u], "title", {
                 slug: Slugify(currentObj.values[u]),
+                color: getColorData(Slugify(currentObj.values[u])),
+                swatch_image:getSwatchData(Slugify(currentObj.values[u])),
                 _index: u,
                 parent_id: optionsArray[i].id,
                 gillian: "test"
             })
+            
+           // throw newValueObj;
             newValueObj = GDataMapOptionValues.validate().parse(newValueObj);
             currentObj.values[u] = newValueObj;
+            console.log("currobk", newValueObj);
+    
         }
+        
+        
         currentObj.valueDictionary = GDatamapper.parseToDictionary(currentObj.values, "id");
-        //	throw currentObj;
         newArray.push(currentObj);
     }
     //throw newArray;
     
     return newArray;//GDatamapper.parseToDictionary(newArray, "id")
+}
+const getSwatchData = function(slug, asset_url = ASSET_URL ) {
+    
+    let _slug = slug;
+    
+    var new_arr = SWATCHES().filter(function(swatch) {
+        
+        console.log("SEARCHING ", _slug, swatch);
+        
+        if (swatch.slug == _slug){
+            //  throw "FOUND!!";
+            return true;
+            
+        } else {
+            return false;
+        }
+    });
+    
+    if (new_arr.length > 0){
+        //throw ('found' , `${asset_url}/${new_arr[0].swatch_image}`);
+        return `${asset_url}/${new_arr[0].swatch_image}`;
+    } else {
+        return false;
+    }
+}
+const getColorData = function(slug, asset_url = ASSET_URL ) {
+    
+    let _slug = slug;
+    
+    var new_arr = SWATCHES().filter(function(swatch) {
+        if (swatch.slug == _slug){
+            return true;
+            
+        } else {
+            return false;
+        }
+    });
+    
+    if (new_arr.length > 0){
+        return `${new_arr[0].color}`;
+    } else {
+        return randomColor();
+    }
 }
 
 const parseVariants=function(inVariants, inOptionsArr) {
@@ -116,8 +171,6 @@ const parseVariants=function(inVariants, inOptionsArr) {
         }
         item.options = GDatamapper.parseToDictionary(newTargetArray, "parent_id");
     })
-    
-    //console.log("VARIANT length" , newTargetArray);
     return variantArr.slice(0);
 }
 

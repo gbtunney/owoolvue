@@ -1,19 +1,24 @@
 <template>
-		<div class="product-wrapper">
+		<div class="product-single product-wrapper">
 
 			<div>
+
 				<ProductImages :images="Images"></ProductImages>
 			</div>
 			<div>
-				<div class="current-product">{{CurrentProduct.title}}</div>
-				<div class="quantity-selector">
-					<vue-numeric-input class="quantity-selector__input"  v-model="selectedQuantity" :min="1" :max="QuantityMax" :step="1"></vue-numeric-input>
-					<h6 class="quantity-selector__available">available: {{QuantityMax}}</h6>
-				</div>
-				<button>
-					Add to cart
-				</button>
+				<h1 class="product-single__title" itemprop="name">{{CurrentProduct.title}}</h1>
+				<h2>{{this.CurrentVariant.price}}</h2>
+
 				<productOptionSelect  :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
+				<div class="add-to-cart-section">
+					<div class="quantity-selector">
+						<vue-numeric-input class="quantity-selector__input"  v-model="selectedQuantity" :min="1" :max="QuantityMax" :step="1"></vue-numeric-input>
+						<h6 class="quantity-selector__available">available: {{QuantityMax}}</h6>
+					</div>
+					<button class="c-button c-button--dark-accent-primary">
+						Add to cart
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -68,8 +73,6 @@
 				});
 
 			let payload = PRODUCT_SCHEMA.parse(this.$props);
-
-
             this.getProduct({params: {id: this.producthandle}}).then(function(res) {
 				payload = Object.assign(payload);
 				payload.products = [res.data.product]
@@ -121,6 +124,15 @@
 				if (variant != undefined){
 					store.dispatch('SET_CURRENT_VARIANT', {selectedVariant: variant});
 					//setQueryStringParameter("variant", variant.id);
+                    var newurl =
+                        window.location.protocol +
+                        '//' +
+                        window.location.host +
+                        window.location.pathname +
+                        '?variant=' +
+                        variant.id;
+                    window.history.replaceState({ path: newurl }, '', newurl);
+
 				}
 			},
 		}
@@ -131,10 +143,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss">
-
 	//@import "../assets/g-Patternlab-config.json";
 	.multiselect__tags {
 
+	}
+	.add-to-cart-section{
+
+		display: flex;
 	}
 
 	.product-wrapper {

@@ -297,9 +297,9 @@
 </script>
 
 <style lang="scss" type="text/scss" scoped>
-	@import "~@/assets/g-Patternlab-Project/_base.scss";
+	//@import "~@/assets/g-Patternlab-Project/_base.scss";
 
-	@import "~@/assets/g-Patternlab/components/simple-component";
+	//@import "~@/assets/g-Patternlab/components/simple-component";
 
 
 	%quick-button{
@@ -529,7 +529,7 @@
 		cursor: pointer;
 		white-space: nowrap;
 
-		@include g-simple-component(accent-secondary,font-san-serif,1);
+	//	@include g-simple-component(accent-secondary,font-san-serif,1);
 	}
 
 	.multiselect__option:after {

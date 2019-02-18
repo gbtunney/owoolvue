@@ -1128,5 +1128,13 @@
 				19612388098166
 			]
 		}
-	}
+	},
+	"swatches":[
+		{
+			"product_id": 1919179161718,
+			"swatch_image": "https:\/\/cdn.shopify.com\/s\/files\/1\/0084\/4044\/7094\/products\/LSteelhead2.jpg",
+			"color": "19.25",
+			"slug" : "alumnroot"
+		}
+	]
 }
