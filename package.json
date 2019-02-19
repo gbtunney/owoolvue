@@ -31,6 +31,7 @@
     "is-color": "^1.0.2",
     "mathjs": "^5.4.2",
     "modularscale-sass": "^3.0.8",
+    "node-sass-tilde-importer": "^1.0.2",
     "postcss-import": "^12.0.1",
     "postcss-url": "^8.0.0",
     "randomcolor": "^0.5.4",
@@ -55,7 +56,7 @@
     "deploy": "slate-tools build && slate-tools deploy",
     "zip": "slate-tools build && slate-tools zip",
     "pattern-test": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/pattern-lab-test.scss src/styles/pattern-lab-test.css",
-    "styles": "node-sass  -r --watch -rw   --watch -rw src/styles/testing.scss src/assets/testing.css"
+    "styles": "node-sass  -r --importer=node_modules/node-sass-tilde-importer  --watch -rw src/styles/testing.scss src/assets/testing.css"
   },
   "dependencies": {
     "json-loader": "^0.5.7",

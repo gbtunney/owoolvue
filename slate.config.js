@@ -45,7 +45,6 @@ const alias = {
 
 
 
-
 const part = {
     resolve: {
         alias,
@@ -61,8 +60,7 @@ const part = {
                 test: /.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
-            },
-            { test: /\.json$/, loader: 'json' }
+            }
         ]
     },
     plugins: [
@@ -102,14 +100,14 @@ module.exports = {
             test: /\.pcss$/,
             exclude: config.get('webpack.commonExcludes')
         };
-
+        
         postCssRule.use = [
             ...(isDevelopment ? [styleLoader] : [MiniCssExtractPlugin.loader]),
             cssLoader,
             postcssLoader
         ];
         part.module.rules.push(postCssRule);
-
+        
         return part
     }
 };
