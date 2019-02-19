@@ -9,7 +9,7 @@
 				<h1 class="product-single__title" itemprop="name">{{CurrentProduct.title}}</h1>
 				<h2>{{this.CurrentVariant.price}}</h2>
 
-				<productOptionSelect  :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
+				<productOptionSelect class="--is-grid-2" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
 				<div class="add-to-cart-section">
 					<div class="quantity-selector">
 						<vue-numeric-input class="quantity-selector__input"  v-model="selectedQuantity" :min="1" :max="QuantityMax" :step="1"></vue-numeric-input>
@@ -154,8 +154,10 @@
 	}
 
 	.product-wrapper {
-		display: grid;
-		grid-template-columns: 500px 1fr;
+		@include breakpoint-range(md,">="){
+			display: grid;
+			grid-template-columns: 50% 1fr;
+		}
 	}
 
 	.quantity-selector {
@@ -169,18 +171,130 @@
 
 		}
 	}
+///BLOCK LAYOUT INSTEAD
 
-	.multiselect__content-wrapper {
-		display: block;
+	.c-input-group__icon{
+
+		display: none;
+
+		.is-open & {
+			display: block;
+			background: red;
+
+		}
 	}
+
+
+	.--is-open{
+		.multiselect__content-wrapper {
+			display: block!important;
+			max-height:none!important;
+			height:100%;
+			position: relative;
+		}
+		.multiselect__select{
+			display: none;
+
+		}
+		.multiselect__option--highlight:after, .multiselect__option--selected:after, .multiselect__option--selected.multiselect__option--highlight:after {
+			content: " ";
+
+		}
+	}
+	.--is-grid-2{
+
+	}
+	.multiselect{
+		.option__swatch{
+			display: none;
+
+
+		}
+		&.color{
+
+		}
+
+	}
+
+
+	.attribute-color{
+		.option__swatch{
+			display: block;
+		}
+		.multiselect__content{
+
+			@include breakpoint-range(md,">=") {
+				display: grid!important;
+				grid-template-columns: repeat(2,auto);
+			}
+
+		}
+
+
+	}
+
+
+		.multiselect__option--selected {
+
+			background: purple;
+
+		}
+
+		.multiselect__option{
+			display: flex;
+			align-items: center;
+			//background:none!important;
+
+			$props:(foreground:true,
+				background:true,
+				accent:false,
+				border:false,
+				hover-foreground: color(light,foreground),
+				hover-background: darken(color(light,background),2%));
+			@include g-color-scheme(light,$props...);
+			.option__desc{
+				padding-left:get-spacing();
+				@include set-type(sm,font-small-caps);
+
+			}
+
+			&--selected{
+
+				$props:(foreground:true,
+					background:true,
+					accent:false,
+					border:true,
+					hover-background: darken(color(light,background),2%),
+				);
+				@include g-color-scheme(light,$props...);
+
+
+			}
+
+		}
+
+
+	.option__name{
+		@include set-type(base);
+	}
+	.multiselect__tags{
+
+	}
+	.multiselect__input{
+		@include c-input(false,dark font-serif lg sm);
+//	border:2px solid red;
+		border-radius: 0;
+	}
+
 
 	.optionbutton {
 	}
 
+
 	.option__swatch {
 		border: 1px solid black;
-		height: 50px;
-		width: 50px;
+		height: 100%;
+		width: 100%
 	}
 
 

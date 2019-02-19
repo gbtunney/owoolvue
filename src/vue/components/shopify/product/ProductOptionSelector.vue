@@ -6,16 +6,17 @@
             <li>INVENTORY AVAILABLE {{selectedVariant.inventory_quantity}</li>
         </ul>
         <div class="attribute-panel" v-for="option,index in Options">
-        <h3> {{option.name}}</h3>
+        <h3 class="option__name"> {{option.name}}</h3>
             <slot name="search-icon"></slot>
 
             <multiselect :options="option.values"
-
+class="--is-open "
                          v-model="selectedOptions[index]"
                          @input="_getVariantFromOptions()"
-                         :class="option.slug"
+                         :class="GetMultiselectClass(option)"
                          :optionid="option.id"
-                         v-on:close="selectClosed"
+                         v-on:close=""
+                         v-on:open="selectOpen(option)"
 
                          :key="index"
                          :taggable="false"
@@ -30,14 +31,14 @@
                 <template slot="singleLabel"  slot-scope="props">
                     <div class="optionbutton" >{{ props.option.title }}</div>
                 </template>
-                <template slot="selection" slot-scope="{ values, searchable,search, isOpen }"><div v-if="option.name == 'Color'" class="testicon">
-                    <div class="c-icon c-icon--light-alt --no-border">
+                <template slot="selection" slot-scope="{ values, searchable,search, isOpen }"><div v-if="option.name == 'Color'">
+                    <div class="c-input-group__icon c-icon c-icon--light-alt --no-border">
                         <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 32 32"><path fill="#444" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z"/></svg>
                     </div></div>
                     <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
 
                 <template slot="option" class="" slot-scope="props">
-                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img class="option__image" :src="props.option.swatch_image">
+                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if="option.name == 'Color' && props.option.swatch_image != 'false'" class="option__image" :src="props.option.swatch_image">
                     </div>
                     <div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
                 </template>
@@ -115,6 +116,7 @@
 	        }
 		},
 		computed: {
+
 			SelectedVariant:{
 				get: function(){
 					return this.$data.selectedVariant;
@@ -136,8 +138,35 @@
 			])
 		},
 		methods: {
-			selectClosed: function() {
-				console.log("select was deactivated");
+            GetMultiselectClass:function(option){
+               // console.log("IS OPEN",refs,index);
+
+               // if ( refs[index] ){
+
+                   // refs[index].isOpen=true;
+
+
+                    return `attribute-${option.slug}`;
+               // }
+
+
+            },
+            selectOpen: function(option) {
+                if (option.isOpen ){
+                    Vue.set(option, 'isOpen', ! option.isOpen);
+
+                }else{
+                    Vue.set(option, 'isOpen', ! true);
+
+                }
+
+
+                console.log("@@@@@@@@!!!!!!!select was opened!!!",option);
+            },
+			selectClosed: function(option) {
+                //Vue.set(option, 'isOpen', false);
+
+                console.log("select was deactivated");
 			},
 			_getSearchable: function (option){
 				return ( option.slug == "color") ? true : false;
@@ -253,6 +282,7 @@
 		},
 		data() {
 			return {
+
 				msg: 'Welcome to Your Vue.js App',
 				totalOptions: 3,
 				selectedOptions: [],
@@ -289,6 +319,7 @@
             bottom: 0;
         }
     }
+
 
     .multiselect__tags{
 
@@ -505,18 +536,7 @@
     code{
 
     }
-    .multiselect{
-        .option__swatch{
-            display: none;
 
-
-        }
-        &.color{
-            .option__swatch{
-                display: block;
-            }
-        }
-    }
 
     //real
     .multiselect__tag{

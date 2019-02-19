@@ -49,6 +49,20 @@ const SHOPIFY_API = new ShopifyApi({
 		state.post = null;
 	}
 })
+.get({
+    action: "getVariant",
+    property: "variant",
+    path: ({ id }) => `/products/${id}.json`,
+    onSuccess(state, payload, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        //state._products =[ payload.data];
+        console.log(`Post with id ${params.id} successfully fetched.`,payload.data);
+    },
+    onError(state, error, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        state.post = null;
+    }
+})
 .getStore();
 
 export default SHOPIFY_API;

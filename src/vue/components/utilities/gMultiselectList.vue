@@ -9,7 +9,7 @@
 		ref="list">
 		<ul class="multiselect__content " :style="contentStyle">
 			<slot name="beforeList"></slot>
-			<li v-if="multiple && max === internalValue.length">
+			<li v-if="multipxle && max === internalValue.length">
               <span class="multiselect__option">
                 <slot name="maxElements">Maximum of {{ max }} options selected. First remove a selected option to select another.</slot>
               </span>
