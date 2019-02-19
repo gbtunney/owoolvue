@@ -143,7 +143,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss">
-	//@import "../assets/g-Patternlab-config.json";
+	@import "test";
+	//@import "src/assets/g-Patternlab-config.json";
 	.multiselect__tags {
 
 	}

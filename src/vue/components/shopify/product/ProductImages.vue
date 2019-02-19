@@ -79,7 +79,8 @@
 				_currentSlideIndex: 0,
 				_images: undefined,
 				swiperOption: {
-					zoom: true,
+                    effect: 'fade',
+                    zoom: true,
 					speed: 1000,
 					spaceBetween: 0,
 					navigation: {
