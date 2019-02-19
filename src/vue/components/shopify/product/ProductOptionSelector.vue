@@ -9,8 +9,8 @@
         <h3 class="option__name"> {{option.name}}</h3>
             <slot name="search-icon"></slot>
 
-            <multiselect :options="option.values"
-class="--is-open "
+            <multiselect :options="option.values" class="--is-open"
+
                          v-model="selectedOptions[index]"
                          @input="_getVariantFromOptions()"
                          :class="GetMultiselectClass(option)"

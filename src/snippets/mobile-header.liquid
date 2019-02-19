@@ -40,7 +40,7 @@
 		<div class="{{ menu_name }}__col">
 			<div class="{{ menu_name }}__cart cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
 				<div class="{{ menu_name }}__cart-icon">
-					{% include 'c-ui-linked-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
+					{% include 'c-ui-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
 				</div>
 				<div class="{{ menu_name }}__cart-item-count">
 					<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">

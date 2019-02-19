@@ -1,0 +1,36 @@
+<div id="Curator-io-section" data-section-id="{{ section.id }}" data-section-type="curator-io-section">
+	{% if section.settings.title != blank %}
+		<div class="section-header text-center">
+			<h2 class="h1 section-header__title">{{ section.settings.title | escape }}</h2>
+		</div>
+	{% endif %}
+
+	{% include 'curator-io-widget' %}
+</div>
+
+{% schema %}
+	{
+		"name": "Curator-io widget",
+		"settings":
+		[
+			{
+				"id": "curator-title",
+				"type": "text",
+				"label": "Heading",
+				"default": "Title Here"
+			}
+		],
+"presets": [{
+"name": "Curator-io widget",
+"category": "Text",
+"curator-title": "hello test title"
+
+}]
+	}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

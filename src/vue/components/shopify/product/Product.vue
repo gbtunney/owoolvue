@@ -186,20 +186,42 @@
 
 
 	.--is-open{
-		.multiselect__content-wrapper {
-			display: block!important;
-			max-height:none!important;
-			height:100%;
-			position: relative;
-		}
-		.multiselect__select{
-			display: none;
+
+
+		.attribute-color{
+			.option__swatch{
+				display: block;
+			}
+			.multiselect__content{
+
+				@include breakpoint-range(md,">=") {
+					display: grid!important;
+					grid-template-columns: repeat(2,auto);
+				}
+
+			}
+
 
 		}
-		.multiselect__option--highlight:after, .multiselect__option--selected:after, .multiselect__option--selected.multiselect__option--highlight:after {
-			content: " ";
 
+		@include breakpoint-range(md,">=") {
+			.multiselect__content-wrapper {
+			border:1px solid red;
+					display: block!important;
+				max-height:none!important;
+				height:100%;
+				position: relative;
+			}
+			.multiselect__select{
+				display: none;
+
+			}
+			.multiselect__option--highlight:after, .multiselect__option--selected:after, .multiselect__option--selected.multiselect__option--highlight:after {
+				content: " ";
+
+			}
 		}
+
 	}
 	.--is-grid-2{
 
@@ -217,21 +239,6 @@
 	}
 
 
-	.attribute-color{
-		.option__swatch{
-			display: block;
-		}
-		.multiselect__content{
-
-			@include breakpoint-range(md,">=") {
-				display: grid!important;
-				grid-template-columns: repeat(2,auto);
-			}
-
-		}
-
-
-	}
 
 
 		.multiselect__option--selected {
@@ -285,6 +292,7 @@
 //	border:2px solid red;
 		border-radius: 0;
 	}
+
 
 
 	.optionbutton {
