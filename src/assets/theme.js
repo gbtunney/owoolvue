@@ -699,6 +699,7 @@ ShopifyAPI.onError = function(XMLHttpRequest) {
     - Allow custom error callback
 ==============================================================================*/
 ShopifyAPI.addItemFromForm = function(form, callback, errorCallback) {
+  console.log("item from form", form);
   var params = {
     type: 'POST',
     url: '/cart/add.js',
@@ -722,6 +723,31 @@ ShopifyAPI.addItemFromForm = function(form, callback, errorCallback) {
   jQuery.ajax(params);
 };
 
+//GILLIAN
+ShopifyAPI.addItem = function(data, callback, errorCallback) {
+    console.log("item from form", data);
+    var params = {
+        type: 'POST',
+        url: '/cart/add.js',
+        data:data,
+        dataType: 'json',
+        success: function(data) {
+          console.log("recienve",data);
+        }/*,
+        error: function(XMLHttpRequest, textStatus) {
+            if (typeof errorCallback === 'function') {
+                errorCallback(XMLHttpRequest, textStatus);
+            } else {
+                ShopifyAPI.onError(XMLHttpRequest, textStatus);
+            }
+        }*/
+    };
+    return jQuery.ajax(params);
+    
+  //  return jQuery.post( '/cart/add.js',params);
+    
+};
+
 // Get from cart.js returns the cart in JSON
 ShopifyAPI.getCart = function(callback) {
   jQuery.getJSON('/cart.js', function(cart) {
@@ -735,8 +761,9 @@ ShopifyAPI.getCart = function(callback) {
 
 // POST to cart/change.js returns the cart in JSON
 ShopifyAPI.changeItem = function(line, quantity, callback) {
+ console.log( "UPDATING!!!!",line,quantity,callback);
   var params = {
-    type: 'POST',
+      type: 'POST',
     url: '/cart/change.js',
     data: 'quantity=' + quantity + '&line=' + line,
     dataType: 'json',

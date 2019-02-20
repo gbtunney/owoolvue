@@ -15,7 +15,7 @@
 						<vue-numeric-input class="quantity-selector__input"  v-model="selectedQuantity" :min="1" :max="QuantityMax" :step="1"></vue-numeric-input>
 						<h6 class="quantity-selector__available">available: {{QuantityMax}}</h6>
 					</div>
-					<button class="c-button c-button--dark-accent-primary">
+					<button @click="addMultipletoCart" class="c-button c-button--dark-accent-primary">
 						Add to cart
 					</button>
 				</div>
@@ -36,7 +36,7 @@
 	import {Slugify, setQueryStringParameter, GDatamapper} from '@/gUtilities/main.js'
 	import {mapGetters} from 'vuex'
 	import VueNumericInput from 'vue-numeric-input';
-
+import axios from 'axios';
 	export default {
 		name: 'Product',
 		components: {
@@ -73,7 +73,13 @@
 				});
 
 			let payload = PRODUCT_SCHEMA.parse(this.$props);
-            this.getProduct({params: {id: this.producthandle}}).then(function(res) {
+
+            let urlArray = [] // unknown # of urls (1 or more)
+
+
+
+
+            this.getProduct({params: {id: this.productid}}).then(function(res) {
 				payload = Object.assign(payload);
 				payload.products = [res.data.product]
 				store.dispatch('SHOPIFY_DATA_INIT', payload).then(function(res) {
@@ -107,7 +113,8 @@
 				'OptionsDictionary',
 				'CurrentProduct',
 				'CurrentVariant',
-				'Images'
+				'Images',
+				'Cart'
 				// ...
 			])
 		},
@@ -115,7 +122,11 @@
 		methods: {
 
 			...mapActions([
-				'getProduct'
+				'getProduct',
+				'getVariant',
+				'getProducts',
+                'getCart',
+				'addItem'
 				// ...
 			]),
 			variantChanged: function(variant) {
@@ -135,6 +146,41 @@
 
 				}
 			},
+            addMultipletoCart: function(variantArr) {
+
+
+
+                const params = { id: 42 }
+                const data = { quantity: this.$data.selectedQuantity, id: this.CurrentVariant.id }
+
+
+			    let self = this;
+                this.getCart().then(function(res) {
+   // console.log("result:::::  " ,res, self.Cart)
+                });
+
+                this.addItem({ params, data }).then(function(res) {
+                    //console.log("added and   result:::::  " ,res, self.Cart)
+                });
+
+                    //console.log("added!!!!!!", variantArr)
+                //console.log("sopify api ", window.ShopifyAPI);
+              /*  var test = window.ShopifyAPI.addItem({
+                    quantity: 2,
+                    id: 18250174693494
+                });
+               // throw("test is ",test);
+                 let promiseArray =[test,this.getVariant({params: {id: 18250174333046 }}),this.getProducts()]// urlArray.map(url => axios.get(url)); // or whatever
+                  axios.all(promiseArray)
+				  .then(function(results) {
+					  let temp = results.map(r => r.data);
+
+					  throw("resultsssss", temp );
+
+				  });
+*/
+
+            }
 		}
 	}
 

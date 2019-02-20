@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import shopify from "./shopify";
+import shopifycart from "./shopify-cart";
+
 import {Slugify, GDatamapper} from '@/gUtilities/main.js'
 import math from 'mathjs';
 import{ SWATCHES} from "@/components/configjs.js";
@@ -249,6 +251,10 @@ const BASESTORE = {
         CurrentOptionsSelected: state => {
             return state._currentOptionsSelected;
         },
+            Cart: state => {
+                return state._cart;
+            }
+        
     },
     mutations: {...{
         increment(state) {
@@ -433,9 +439,9 @@ const BASESTORE = {
 }
 
 
-BASESTORE.mutations = {...BASESTORE.mutations, ...shopify.mutations}
-BASESTORE.actions = {...BASESTORE.actions, ...shopify.actions}
-BASESTORE.state = {...BASESTORE.state, ...shopify.state}
+BASESTORE.mutations = {...BASESTORE.mutations, ...shopify.mutations,...shopifycart.mutations}
+BASESTORE.actions = {...BASESTORE.actions, ...shopify.actions,...shopifycart.actions}
+BASESTORE.state = {...BASESTORE.state, ...shopify.state,...shopifycart.state}
 
 console.log(BASESTORE);
 export default new Vuex.Store(BASESTORE);

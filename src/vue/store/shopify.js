@@ -9,8 +9,11 @@ export const SINGLE_OPTION_CHANGED = 'SINGLE_OPTION_CHANGED';
 export const SINGLE_OPTION_SELECTED = 'SINGLE_OPTION_SELECTED';
 export const SHOPIFY_DATA_COMPLETE = 'SHOPIFY_DATA_COMPLETE';
 
+//https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/orders.json
+// products thru admin: https://o-wool-stage.myshopify.com/admin/products/#{id}.json
+
 const SHOPIFY_API = new ShopifyApi({
-	baseURL: "https://o-wool-stage.myshopify.com/",
+	baseURL: "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/",
 	state: {
 		_products: [],
 	}
@@ -50,9 +53,11 @@ const SHOPIFY_API = new ShopifyApi({
 	}
 })
 .get({
+   // https://o-wool-stage.myshopify.com/admin/variants/18250174333046.json
+  
     action: "getVariant",
     property: "variant",
-    path: ({ id }) => `/products/${id}.json`,
+    path: ({ id }) => `/variants/${id}.json`,
     onSuccess(state, payload, axios, { params, data }) {
         // if you define the onSuccess function you have to set the state by yourself
         //state._products =[ payload.data];
