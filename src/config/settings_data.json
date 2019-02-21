@@ -42,6 +42,12 @@
     "product_vendor_enable": false,
     "social_sharing_style": "clean",
     "sections": {
+      "curator-io-section": {
+        "type": "curator-io-section",
+        "settings": {
+          "title": "gillian"
+        }
+      },
       "header": {
         "type": "header",
         "settings": {
@@ -107,6 +113,7 @@
       }
     },
     "content_for_index": [
+      "curator-io-section",
       "featured-content",
       "featured-collections",
       "featured-products",
@@ -189,6 +196,13 @@
             "home_featured_products": "frontpage"
           }
         },
+        "curator-io-section": {
+          "type": "curator-io-section",
+          "settings": {
+            "home_featured_products": "frontpage"
+          }
+        },
+
         "featured-content": {
           "type": "featured-content",
           "settings": {}
@@ -225,7 +239,8 @@
         "featured-content",
         "featured-collections",
         "featured-products",
-        "newsletter"
+        "newsletter",
+        "curator-io-section"
       ]
     },
     "Playful": {
@@ -406,6 +421,7 @@
         "1496177901425",
         "featured-products",
         "newsletter",
+        "curator-io-section",
         "1496078102297",
         "1494860348200",
         "1494894035034"

@@ -132,57 +132,78 @@ import axios from 'axios';
 			variantChanged: function(variant) {
 				console.log(">>>>>>>>>>>.NEW VARIANT", variant)
 
+				let self = this;
 				if (variant != undefined){
-					store.dispatch('SET_CURRENT_VARIANT', {selectedVariant: variant});
-					//setQueryStringParameter("variant", variant.id);
-                    var newurl =
-                        window.location.protocol +
-                        '//' +
-                        window.location.host +
-                        window.location.pathname +
-                        '?variant=' +
-                        variant.id;
-                    window.history.replaceState({ path: newurl }, '', newurl);
+
+				    if ( variant.length > 1 ){
+
+
+                        var newArr = variant.map(function(item) {
+
+                            const params = { id: 42 }
+                            const data = { quantity:1, id: item.id }
+
+                            return {params,data };
+                        });
+
+                       //self.addItem(
+
+					    newArr.forEach(function(item){
+
+                            self.addItem(item);
+					    });
+
+                        console.log('multiple selected!',newArr);
+
+
+                      //  this.addMultipletoCart(newArr);
+
+
+                    }else{
+                        store.dispatch('SET_CURRENT_VARIANT', {selectedVariant: variant});
+                        //setQueryStringParameter("variant", variant.id);
+                        var newurl =
+                            window.location.protocol +
+                            '//' +
+                            window.location.host +
+                            window.location.pathname +
+                            '?variant=' +
+                            variant.id;
+                        window.history.replaceState({ path: newurl }, '', newurl);
+				    }
+
+
 
 				}
 			},
-            addMultipletoCart: function(variantArr) {
+            addMultipletoCart: function(_promiseArr) {
+
+                //const data = { quantity: this.$data.selectedQuantity, id: this.CurrentVariant.id }
+
+                let self = this;
+
+                // throw("test is ",test);
 
 
-
-                const params = { id: 42 }
-                const data = { quantity: this.$data.selectedQuantity, id: this.CurrentVariant.id }
-
-
-			    let self = this;
-                this.getCart().then(function(res) {
-   // console.log("result:::::  " ,res, self.Cart)
-                });
-
-                this.addItem({ params, data }).then(function(res) {
+                //this.addItem({ params, data }).then(function(res) {
                     //console.log("added and   result:::::  " ,res, self.Cart)
+               // });
+
+
+
+                let promiseArray = _promiseArr;// urlArray.map(url => axios.get(url)); // or whatever
+                axios.all(promiseArray)
+                .then(function(results) {
+                    //let temp = results.map(r => r.data);
+console.log(results);
+                   /// throw("resultsssss", temp );
+
                 });
 
-                    //console.log("added!!!!!!", variantArr)
-                //console.log("sopify api ", window.ShopifyAPI);
-              /*  var test = window.ShopifyAPI.addItem({
-                    quantity: 2,
-                    id: 18250174693494
-                });
-               // throw("test is ",test);
-                 let promiseArray =[test,this.getVariant({params: {id: 18250174333046 }}),this.getProducts()]// urlArray.map(url => axios.get(url)); // or whatever
-                  axios.all(promiseArray)
-				  .then(function(results) {
-					  let temp = results.map(r => r.data);
-
-					  throw("resultsssss", temp );
-
-				  });
-*/
 
             }
+            }
 		}
-	}
 
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

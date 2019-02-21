@@ -4,7 +4,8 @@
 			<!-- slides -->
 			<swiper-slide v-for="image,index in images" :key="index">
 				<div class="swiper-zoom-container">
-					<img class="slide-image" :src="image.src" :alt="image.alt">
+					<img class="slide-image swiper-lazy" :src="image.src" :alt="image.alt">
+					<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 				</div>
 			</swiper-slide>
 
@@ -83,6 +84,7 @@
                     zoom: true,
 					speed: 1000,
 					spaceBetween: 0,
+                    lazy: true,
 					navigation: {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',

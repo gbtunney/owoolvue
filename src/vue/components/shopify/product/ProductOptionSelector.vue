@@ -54,7 +54,7 @@
                      label="title"
                      ref="multiselectmaster"
                      :taggable="false"
-                     :multiple="false"
+                     :multiple="true"
                      :closeOnSelect="false"
                      placeholder="Select one"
                      :searchable="searchable"
