@@ -90,9 +90,7 @@
             },
         },
         mounted: function() {
-            console.log("REFS!!", this.$refs.gillian);
             this.$refs.gillian.forEach(function(optionselect) {
-                console.log("HELLLLLLLL", optionselect.isOpen);
                 optionselect.isOpen = true;
             });
         },
@@ -146,7 +144,6 @@
             },
             selectClosed: function(option) {
                 //Vue.set(option, 'isOpen', false);
-                console.log("select was deactivated");
             },
             _getSearchable: function(option) {
                 return ( option.slug == "color") ? true : false;
@@ -197,7 +194,6 @@
 
             },
             clickMe: function() {
-                console.log("!!VARIANTS", this.Variants);
             },
             customLabel({title, desc}) {
                 return `${title} – ${desc}`
@@ -224,11 +220,8 @@
                 var arrayAfterFilter = newFilteredArray;
                 if (arrayAfterFilter.length == 1){
                     console.log(" VARIANT THAT MEET CRITERIA FOUND ", this.$data.selectedOptions)
-                    console.log(arrayAfterFilter[0]);
-
                     if (arrayAfterFilter[0] != this.SelectedVariant){
                         this.SelectedVariant = arrayAfterFilter[0];
-
                     }
                 } else if (arrayAfterFilter.length >= 1){
                     console.log(` ${arrayAfterFilter.length}MASTER VARIANT THAT MATCHES `, this.$data.selectedOptions)
@@ -238,9 +231,7 @@
                 }
             },
             _setSelectedOptions: function() {
-
                 var selectedArr = new Array()
-
                 if (this.$data.selectedVariant){
                     this.$data.selectedOptions = [];
                     for (var i = 0; i < this.Options.length; i++) {
@@ -262,7 +253,6 @@
         },
         data() {
             return {
-
                 msg: 'Welcome to Your Vue.js App',
                 totalOptions: 3,
                 selectedOptions: [],
