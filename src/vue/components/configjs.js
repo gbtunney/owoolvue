@@ -46,6 +46,29 @@ export function METAFIELDS(text) {
             ]
         }
     ];
-    
-    
+}
+
+export function FILTERS(text) {
+    return [
+        {
+            "datatype":"tag",
+            "type":"multiselect",
+            "slug": "fibertype",
+            "name": "Fiber Type",
+            "options": [
+                {
+                    "tag": "llama",
+                    "icon": "llama",
+                    "slug": "fibertype",
+                    "color": "#4b1b3f"
+                },
+                {
+                    "tag": "sheep",
+                    "icon": "sheep",
+                    "color": "#3e404c",
+                    "slug": "ash"
+                }
+            ]
+        }
+    ];
 }
