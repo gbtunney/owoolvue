@@ -50,24 +50,36 @@ export function METAFIELDS(text) {
 
 export function FILTERS(text) {
     return [
+        //
+        
+      
         {
             "datatype":"tag",
             "type":"multiselect",
+            "operation":"OR",
             "slug": "fibertype",
             "name": "Fiber Type",
             "options": [
                 {
-                    "tag": "llama",
+                    "tag": "patterns",
                     "icon": "llama",
-                    "slug": "fibertype",
+                    "slug": "product-type-patterns",
                     "color": "#4b1b3f"
                 },
                 {
-                    "tag": "sheep",
+                    "tag": "yarns",
                     "icon": "sheep",
                     "color": "#3e404c",
-                    "slug": "ash"
+                    "slug": "product-type-yarns"
+                },
+                {
+                    "tag": "pdf-download",
+                    "icon": "sheep",
+                    "color": "#3e404c",
+                    "slug": "pdf-download"
                 }
+    
+                
             ]
         }
     ];

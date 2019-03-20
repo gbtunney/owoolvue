@@ -8,6 +8,7 @@ export const GET_SHOPIFY_DATA = 'GET_SHOPIFY_DATA';
 export const SINGLE_OPTION_CHANGED = 'SINGLE_OPTION_CHANGED';
 export const SINGLE_OPTION_SELECTED = 'SINGLE_OPTION_SELECTED';
 export const SHOPIFY_DATA_COMPLETE = 'SHOPIFY_DATA_COMPLETE';
+import {Slugify} from '@/gUtilities/main.js'
 
 //https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/orders.json
 // products thru admin: https://o-wool-stage.myshopify.com/admin/products/#{id}.json
@@ -26,11 +27,19 @@ const SHOPIFY_API = new ShopifyApi({
 
 	onSuccess(state, payload, axios, { params, data }) {
 		// if you define the onSuccess function you have to set the state by yourself
-		
-		let product_id = params.product_id;
+		console.log("trying to get products!!");
+		///let product_id = params.product_id;
+		//TODO: move this??????? processing actions??
+        var formattedproducts = payload.data.products.map(function (product) {
+        	var strToArray = product.tags.split(',')
+        	var newTags= strToArray.map(function (tag) {
+        		return Slugify(tag);
+            })
+            return Object.assign(product,{ tags: newTags } );
+        });
+        
 	state._products = payload.data.products;
 		console.log(`Post with id ${data} successfully fetched.`,state._products);
-		//console.log("STATE", params);
 	},
 	onError(state, error, axios, { params, data }) {
 		// if you define the onSuccess function you have to set the state by yourself
