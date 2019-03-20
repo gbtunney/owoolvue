@@ -24,4 +24,28 @@ export function SWATCHES(text) {
     
 }
 
-
+export function METAFIELDS(text) {
+    return [
+        {
+            "tag": "llama",
+            "slug": "fibertype",
+            "name": "Fiber Type",
+            "options": [
+                {
+                    "tag": "llama",
+                    "icon": "llama",
+                    "slug": "fibertype",
+                    "color": "#4b1b3f"
+                },
+                {
+                    "tag": "sheep",
+                    "icon": "sheep",
+                    "color": "#3e404c",
+                    "slug": "ash"
+                }
+            ]
+        }
+    ];
+    
+    
+}

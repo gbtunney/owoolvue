@@ -56,14 +56,14 @@ export function mountVue(selector, rootComponent) {
   const el = document.querySelector(selector);
   if (el) {
       const props = getAttributes(el, 'prop-');
-      new Vue({
+      var myvue = new Vue({
           store,
           router,
           render: (h) => h(rootComponent, {
               props
           }),
       }).$mount(`${selector}`);
-      return true;
+      return myvue;
   } else {
       console.error(`Failed to find selector ${selector}`);
       return false;

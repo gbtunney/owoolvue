@@ -91,7 +91,7 @@
 			},
 		},
         mounted:function(){
-            console.log (  this.$refs.gillian);
+            console.log ( "REFS!!", this.$refs.gillian);
             this.$refs.gillian.forEach(function(optionselect) {
                 console.log("HELLLLLLLL",optionselect.isOpen);
                 optionselect.isOpen=true;

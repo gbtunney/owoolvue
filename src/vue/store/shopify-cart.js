@@ -15,7 +15,7 @@ export const SHOPIFY_DATA_COMPLETE = 'SHOPIFY_DATA_COMPLETE';
 
 const SHOPIFY_API = new ShopifyApi({
     state: {
-        _cart: {}
+        _cart: {"no cart": "set yet"}
     },
 })
 .get({
@@ -27,8 +27,10 @@ const SHOPIFY_API = new ShopifyApi({
         // if you define the onSuccess function you have to set the state by yourself
         
         //let product_id = params.product_id;
-        state._cart = payload.data;
-        console.log(`Post with id ${data} successfully fetched.`, state._cart);
+        
+        state._cart = payload.data;        console.log(`Post with id ${data} successfully fetched.`, state._cart);
+    
+    
         //console.log("STATE", params);
     },
     onError(state, error, axios, {params, data}) {

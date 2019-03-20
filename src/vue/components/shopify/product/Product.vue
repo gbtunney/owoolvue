@@ -8,14 +8,14 @@
 			<div>
 				<h1 class="product-single__title" itemprop="name">{{CurrentProduct.title}}</h1>
 				<h2>{{this.CurrentVariant.price}}</h2>
-
+cart: {{this.Cart.item_count}}
 				<productOptionSelect class="--is-grid-2" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
 				<div class="add-to-cart-section">
 					<div class="quantity-selector">
 						<vue-numeric-input class="quantity-selector__input"  v-model="selectedQuantity" :min="1" :max="QuantityMax" :step="1"></vue-numeric-input>
 						<h6 class="quantity-selector__available">available: {{QuantityMax}}</h6>
 					</div>
-					<button @click="addMultipletoCart" class="c-button c-button--dark-accent-primary">
+					<button @click="addToCart" class="c-button c-button--dark-accent-primary">
 						Add to cart
 					</button>
 				</div>
@@ -79,6 +79,7 @@ import axios from 'axios';
 
 
 
+
             this.getProduct({params: {id: this.productid}}).then(function(res) {
 				payload = Object.assign(payload);
 				payload.products = [res.data.product]
@@ -91,9 +92,12 @@ import axios from 'axios';
 				})
 			})
 
+
+			this.getCart();
 		},
 		mounted: function() {
 
+		    console.log("REFS!!" , this);
 		}, computed: {
 			QuantityMax: function() {
 				//return 22;
@@ -141,10 +145,17 @@ import axios from 'axios';
                         var newArr = variant.map(function(item) {
 
                             const params = { id: 42 }
-                            const data = { quantity:1, id: item.id }
+                            const data = { quantity:1, id: item.id,
+                                properties: {
+                                    'childproduct': true,
+                                    'notes': "as part of xxxx kit",
+                                    'editable':false
+                                }
+                            }
 
                             return {params,data };
                         });
+
 
                        //self.addItem(
 
@@ -178,16 +189,19 @@ import axios from 'axios';
 			},
             addMultipletoCart: function(_promiseArr) {
 
-                //const data = { quantity: this.$data.selectedQuantity, id: this.CurrentVariant.id }
+                const data = { quantity: this.$data.selectedQuantity, id: this.CurrentVariant.id }
+                const params = { id: 42 }
 
                 let self = this;
 
                 // throw("test is ",test);
 
 
-                //this.addItem({ params, data }).then(function(res) {
+                this.addItem({params, data }).then(function(res) {
+                    self.getCart();
+
                     //console.log("added and   result:::::  " ,res, self.Cart)
-               // });
+                });
 
 
 
@@ -201,8 +215,21 @@ console.log(results);
                 });
 
 
+            },
+            addToCart: function(_promiseArr) {
+
+                const data = { quantity: this.$data.selectedQuantity, id: this.CurrentVariant.id }
+                const params = {  }
+
+                let self = this;
+
+                this.addItem({params, data }).then(function(res) {
+                    self.getCart();
+                });
+
             }
-            }
+
+        }
 		}
 
 </script>
