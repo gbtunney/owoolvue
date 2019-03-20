@@ -9,6 +9,12 @@
     module.exports = {
         data: function() {
             return {
+                prefix: false,
+	            label: false,
+	            options:[
+	                slug: 'product-type-'
+
+	            ]
                 greeting: 'Hello'
             }
         },
