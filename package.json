@@ -59,7 +59,9 @@
     "styles": "node-sass  -r --importer=node_modules/node-sass-tilde-importer  --watch -rw src/styles/owoolvue-styles.scss src/assets/owoolvue-styles.css"
   },
   "dependencies": {
+    "easy-promise-queue": "^0.5.4",
     "json-loader": "^0.5.7",
+    "uniqid": "^5.0.3",
     "vue": "^2.5.21",
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1",

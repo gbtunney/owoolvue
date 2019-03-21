@@ -3984,6 +3984,11 @@ easy-extender@^2.3.4:
   dependencies:
     lodash "^4.17.10"
 
+easy-promise-queue@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/easy-promise-queue/-/easy-promise-queue-0.5.4.tgz#c614df35e2014b2dc7f2d90ddcd605ccc54f8deb"
+  integrity sha512-u4ejDptPhIGp/i6N54JLpv+6nY25zyWdI+GD5QMjLOLODS0y1nrs4S2peXhUDtMzGaBM+RSQCxKD9CLYPE9d9Q==
+
 eazy-logger@^3:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/eazy-logger/-/eazy-logger-3.0.2.tgz#a325aa5e53d13a2225889b2ac4113b2b9636f4fc"
@@ -11876,6 +11881,11 @@ uniq@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/uniq/-/uniq-1.0.1.tgz#b31c5ae8254844a3a8281541ce2b04b865a734ff"
   integrity sha1-sxxa6CVIRKOoKBVBzisEuGWnNP8=
+
+uniqid@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/uniqid/-/uniqid-5.0.3.tgz#917968310edc868d50df6c44f783f32c7d80fac1"
+  integrity sha512-R2qx3X/LYWSdGRaluio4dYrPXAJACTqyUjuyXHoJLBUOIfmMcnYOyY2d6Y4clZcIz5lK6ZaI0Zzmm0cPfsIqzQ==
 
 uniqs@^2.0.0:
   version "2.0.0"

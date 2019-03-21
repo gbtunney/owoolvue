@@ -2,25 +2,18 @@
 <div>
 	Catalog
 	<code>{{ `${products.length} products fetched yet!` }}</code>
-	<br>
-	<br>
-	<button @click="getProduct({ params: { id: 12 } })">get post with id 12</button>
-	<br>
 
 	<div >found {{FoundCount}}
-		<li v-for="filter in Filters">
-			<h5>{{ filter.name }}</h5>
-			<Multiselect :multiple="true" @input="_applyFilter(filter)" label="slug" track-by="slug"  v-model="activeFilters" :options="filter.options"></Multiselect>
-		</li>
+		<Multiselect :multiple="true"
+		             group-label="taggroup"  @input="_applyFilter()"  group-values="options"
+		             :group-select="true" :options="Filters" label="name" track-by="name"  v-model="activeFilters" ></Multiselect>
+
 		active filters: {{this.ActiveFilters}}
 		<ul class="product-cards">
 			<li v-for="product in productlist">
 				{{ product.title }} tags: {{product.tags}}
 			</li>
 		</ul>
-
-
-
 	</div>
 </div>
 </template>
@@ -87,7 +80,7 @@
                     products: {type: Array, required: true},
                 });
 
-            let payload = PRODUCT_SCHEMA.parse(this.$props);
+           // let payload = PRODUCT_SCHEMA.parse(this.$props);
 	let self = this;
             this.getProducts().then(function(res) {
             self.FilteredProducts = self.products;
@@ -113,10 +106,8 @@
                         console.log("operation  !!!:",filter, reducedProductList.length, filter);
 
                         if (filter.operation == "OR"){
-
-
                             reducedProductList = self.products.filter(function(product) {
-                                if (product.tags.includes(filter.slug)){
+                                if (product.tags.includes(filter.tag)){
                                     return true;
                                 } else {
                                     return false;
@@ -125,7 +116,7 @@
 
                         }else{
                             reducedProductList = reducedProductList.filter(function(product) {
-                                if (product.tags.includes(filter.slug)){
+                                if (product.tags.includes(filter.tag)){
                                     return true;
                                 } else {
                                     return false;
