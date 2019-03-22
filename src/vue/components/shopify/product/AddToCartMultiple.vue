@@ -40,7 +40,7 @@
         props: {
             metavisible: {
                 type: Boolean,
-                default: false
+                default: true
             },
             addtocartvariants: {
                 type: Array,
