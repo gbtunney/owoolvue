@@ -1,13 +1,15 @@
 <template>
 	<div ref="MYCART" class="cart-wrapper">
-	<button  class="c-button c-button--dark-accent-primary" :disabled="Loading" @click="addMultipletoCart">{{label}}<div v-show="Loading">
-		LOADING SPINNER</div></button>
+	<button  class="c-button c-button--dark-accent-primary"  :disabled="isDisabled" @click="addMultipletoCart">{{label}}
+		<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
+	</button>
 
+		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
 		<div v-show="metavisible" class="productMeta" >
 			<h5>Includes: </h5>
 			<ul>
 				<li v-for="pendingCartItem in PendingItems">
-					<PendingCartItem :item="pendingCartItem"></PendingCartItem>
+					<PendingCartItem @unavailable="updateAvailability" :item="pendingCartItem"></PendingCartItem>
 				</li>
 			</ul>
 		</div>
@@ -27,6 +29,11 @@
     const schema = require("schm");
     const pq_additems = new PromiseQueue({concurrency: 1});
 
+    //disable if unavailable
+    // (true) means if requested quantity ANY KIT item is unavailable
+    //- (false) requested quantity will be replaced with max available
+    // will ALWAYS BE DISABLED IF SOMETHINGS available quantity is 0
+
     export default {
         name: 'Cart',
         components: {PendingCartItem},
@@ -43,18 +50,24 @@
                 type: String,
                 default: "nottt setAdd to Cart"
             },
+            disableunavailable: {
+                type: Boolean,
+                default: false
+            }
         },
-
         data() {
             return {
                 _loading: false,
-                _pendingItems: []
+                _pendingItems: [],
+                _isDisabled: false,
             }
         },
         created: function() {
         },
         mounted: function() {
             this.PendingItems = this.PendingItemsChanged(this.$props.addtocartvariants)
+
+            // this.isDisabled=true;
         }, computed: {
             ...mapGetters([
                 'Cart'
@@ -66,6 +79,14 @@
                 },
                 set: function(newVal) {
                     this.$data._loading = newVal;  ///this.Variants[this.CurrentVariant._index];
+                }
+            },
+            isDisabled: {
+                get: function() {
+                    return this.$data._isDisabled;
+                },
+                set: function(newVal) {
+                    this.$data._isDisabled = newVal;  ///this.Variants[this.CurrentVariant._index];
                 }
             },
             PendingItems: {
@@ -90,6 +111,28 @@
             ...mapActions([
                 'getCart', 'getVariant', 'addItem'
             ]),
+            updateAvailability: function(id) {
+
+                //todo: make some way of doing alternate number here.
+                let _id = Number(id);
+
+                console.log("TRYING TO REMOVE@!~!");
+                let self = this;
+                if (this.$props.disableunavailable){
+                    this.isDisabled = true;
+
+                }
+
+                /*    var filteredArr = this.PendingItems.filter(function(item) {
+						if (Number(item.id) == _id){
+							return false;
+						} else {
+							return true;
+						}
+					});
+
+					this.PendingItems = filteredArr;*/
+            },
             PendingItemsChanged: function(itemArr) {
                 // store.dispatch('increment')
                 var requestedItemArr = itemArr;
@@ -105,40 +148,39 @@
                             }
                         );
                         return PENDING_ITEM_SCHEMA.parse(item);
-
                     });
 
                     let self = this;
 
                     let retrievedDataArr = [];
 
-                    requestedItemArr.forEach(function (item){
+                    requestedItemArr.forEach(function(item) {
                         let _unprocessedItemArr = requestedItemArr;
 
-                        self.getVariant({params: {id: item.id} }).then(function(res){
+                        self.getVariant({params: {id: item.id}}).then(function(res) {
 
                             let variantData = res.data.variant;
 
-                            var myObj =  requestedItemArr.find(function(item){
-                                if ( item.id == Number(variantData.id) )
+                            var myObj = requestedItemArr.find(function(item) {
+                                if (item.id == Number(variantData.id))
                                     return true;
                             });
-                            retrievedDataArr.push(Object.assign( myObj, {variant:  res.data.variant}  ) );
+                            retrievedDataArr.push(Object.assign(myObj, {variant: res.data.variant}));
                         })
                     });
-                  return retrievedDataArr;
-
-                }else{
+                    return retrievedDataArr;
+                } else {
                     //push it?
                 }
             },
             addMultipletoCart: function(_data, _promiseArr) {
                 let self = this;
                 let pq = new PromiseQueue({concurrency: 1});
-                this.Loading = true;
+
+                this.Loading = this.isDisabled = true;
 
                 ///TODO THIS IS SOME DUMB BULLSHITTTTTT
-                var dataObjArray = this.$props.addtocartvariants.map(function(item) {
+                var dataObjArray = this.PendingItems.map(function(item) {
 
                     const ITEM_SCHEMA = schema(
                         {
@@ -165,7 +207,7 @@
                     return new Promise(function(resolve, reject) {
                         setTimeout(function() {
                             console.log('QUEUE COMPLETE', pq, self);
-                            self.Loading = false;
+                            self.Loading = self.isDisabled = false;
                             resolve();
                         }, 5)
                     });
