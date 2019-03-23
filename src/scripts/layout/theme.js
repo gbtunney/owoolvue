@@ -2,22 +2,35 @@
 //import "../../styles/theme.scss.liquid";
 //import "../../styles/testing.scss";
 import {mountVue} from "../../vue/mountVue";
-import Cart from "../../vue/components/shopify/product/Cart.vue";
 import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
+import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
+import ProductApp from "../../vue/components/shopify/product/Product.vue";
+
+
 const UNIQID = require('uniqid');
 
 //mountVue('#owool-cart-app', Cart);
 ////MOUNT DYNAMIC COMPONENTS WITH MULTIPLE INSTANCES
 const vueelements = document.querySelectorAll('[js-mount-vue]');
-vueelements.forEach( el => {
-    var component = el.getAttribute("js-mount-vue");
-    var uid = UNIQID(`${component}-`);
-    el.id= uid;
+
+if ( vueelements && vueelements.length>0){
+    vueelements.forEach( el => {
     
-    ///TODO : replace with something sane
-    if (component == "AddToCart"){
-        mountVue(`#${uid}`, AddToCart);
-    }
-});
+        var component = el.getAttribute("js-mount-vue");
+        var uid = UNIQID(`${component}-`);
+        el.id= uid;
+        
+        ///TODO : replace with something sane
+        if (component == "AddToCart"){
+            mountVue(`#${uid}`, AddToCart);
+        }else if (component == "ProductVariantSelector"){
+            mountVue(`#${uid}`, ProductVariantSelector);
+        }
+        else if (component == "ProductApp"){
+            mountVue(`#${uid}`, ProductApp);
+        }
+    });
+}
 
 
+ProductApp
