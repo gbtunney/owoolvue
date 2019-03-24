@@ -28,6 +28,3 @@ if ( vueelements && vueelements.length>0){
         }
     });
 }
-
-alert();
-//ProductApp

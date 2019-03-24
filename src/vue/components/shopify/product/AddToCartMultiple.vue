@@ -70,6 +70,31 @@
         },
         mounted: function() {
             this.PendingItems = this.PendingItemsChanged(this.$props.addtocartvariants);
+
+let self = this;
+          this.getCart().then(function(res){
+
+                console.log("CARRRRT",res);
+
+
+              const params = {id: 42}
+              const data = {
+                  quantity: 1, id: '18250174562422',
+                  properties: {
+                      'childproduct': true,
+                      'notes': "as part of xxxx kit",
+                      'editable': false
+                  }
+              }
+
+              ///return {params, data};
+
+              self.addItem({params, data});
+
+
+          });
+
+
         },
 	    computed: {
             ...mapGetters([
@@ -170,39 +195,24 @@
 
                 this.Loading = this.isDisabled = true;
 
+
                 ///TODO THIS IS SOME DUMB BULLSHITTTTTT
-                var dataObjArray = this.PendingItems.map(function(item) {
+                var dataObjArray = this.$props.addtocartvariants.map(function(item) {
 
                     const ITEM_SCHEMA = schema(
                         {
                             id: {type: Number, required: true},
-                            quantity: {type: Number, default: 1},
-                            properties: {type: Object, default: {} }
+                            quantity: {type: Number, default: 1}
                         });
 
-                    const data_obj = ITEM_SCHEMA.parse(item);
-
-                    pending_data_obj = Object.assign(data_obj, {quantity: item.requested_quantity});
-
-                    var lineItemData = {};
-                    if (this.$props.line_item_message){
-                        lineItemData = {
-                            message: this.$props.line_item_message
-                        }
-                    }
-
-                    //merge with acutal items messages
-                    if ( item.message ){
-                        lineItemData = Object.assign(lineItemData,  {item_message : item.message} );
-                    }
-
-                    if (lineItemData != {} ){
-                        pending_data_obj = Object.assign(pending_data_obj,  {properties : lineItemData} );
-                    }
-                   // pending_data_obj
+                    const data = ITEM_SCHEMA.parse(item);
                     const params = {}
-                    return {params, pending_data_obj};
+                    return {params, data};
                 });
+
+                
+                console.log(dataObjArray);
+
                 pq.add([() => {
                     return new Promise(function(resolve, reject) {
                         setTimeout(function() {

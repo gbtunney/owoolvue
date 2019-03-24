@@ -7,6 +7,10 @@
 	{% assign current_variant = product.selected_or_first_available_variant %}
 	{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
+
+
+
+    GILLIAN TUNNEY
 	{% if product.price == 0 %}
 		{% if  product.metafields.download != blank  %}
             <a href="{{ product.metafields.download.link  }}">DOWNLOAD LINK</a>

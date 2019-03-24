@@ -2,12 +2,12 @@
 		<div class="product-single product-wrapper">
 			<div>
 				<h2 class="product-single__title" itemprop="name">{{ Product.title}}</h2>
-				<multiselect v-model="SelectedVariant"
+				<Multiselect v-model="SelectedVariant"
 				             :options="variants" label="title"
 				             track-by="title"
 				             @input="variantChanged"
 				             :show-labels="false"
-				             placeholder="Pick a value"></multiselect>
+				             placeholder="Pick a value"></Multiselect>
 				<pre v-show="false" class="language-json"><code>{{ value  }}</code></pre>
 			</div>
 		</div>
@@ -21,8 +21,8 @@
     import {mapState, mapActions, mapGetters} from "vuex"
     import axios from 'axios'
 
-    // import Multiselect from 'vue-multiselect'
-    import multiselect from '@/components/utilities/gMultiselectList.vue'
+    import Multiselect from 'vue-multiselect'
+   // import Multiselect from '@/components/utilities/gMultiselectList.vue'
     import {Slugify, setQueryStringParameter, GDatamapper} from '@/gUtilities/main.js'
 
     export default {

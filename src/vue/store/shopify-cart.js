@@ -42,6 +42,8 @@ const SHOPIFY_API = new ShopifyApi({
 .post({
     action: "addItem",
     property: "_cart",
+    dataType: 'json',
+   // data: $('#'+form_id).serialize(),
     path: "/cart/add.js",
     
     onSuccess(state, payload, axios, {params, data}) {
