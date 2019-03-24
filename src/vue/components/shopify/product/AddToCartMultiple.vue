@@ -67,7 +67,9 @@
         mounted: function() {
             this.PendingItems = this.PendingItemsChanged(this.$props.addtocartvariants)
 
-            // this.isDisabled=true;
+            //const params = {productid:1919134400630, imageid:5622056681590};
+
+	        console.log("pending",this.PendingItems);
         }, computed: {
             ...mapGetters([
                 'Cart'
@@ -100,6 +102,7 @@
             ItemCount: function() {
                 let total = 0;
 
+
                 this.$props.addtocartvariants.forEach(function(item) {
 
                     total += item.quantity;
@@ -109,7 +112,7 @@
         },
         methods: {
             ...mapActions([
-                'getCart', 'getVariant', 'addItem'
+                'getCart', 'getVariant', 'addItem','getVariantDefaultImage'
             ]),
             updateAvailability: function(id) {
 
@@ -120,7 +123,6 @@
                 let self = this;
                 if (this.$props.disableunavailable){
                     this.isDisabled = true;
-
                 }
 
                 /*    var filteredArr = this.PendingItems.filter(function(item) {
@@ -143,6 +145,7 @@
                             {
                                 id: {type: Number, required: true},
                                 variant: {type: Object},
+                                message: {type: String},
                                 requested_quantity: {type: Number, required: true, default: item.quantity},
                                 quantity: {type: Number, required: true, default: item.requested_quantity}
                             }
@@ -185,8 +188,12 @@
                     const ITEM_SCHEMA = schema(
                         {
                             id: {type: Number, required: true},
-                            quantity: {type: Number, default: 1}
+                            quantity: {type: Number, default: 1},
+                            properties: {type: Object, default: {
+                                'Some prop': 'Some value'
+                            }},
                         });
+
 
                     const data = ITEM_SCHEMA.parse(item);
                     const params = {}

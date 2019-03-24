@@ -33,4 +33,4 @@ if ( vueelements && vueelements.length>0){
 }
 
 
-ProductApp
+//ProductApp

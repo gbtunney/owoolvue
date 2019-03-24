@@ -17,6 +17,7 @@ const SHOPIFY_API = new ShopifyApi({
 	baseURL: "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/",
 	state: {
 		_products: [],
+		_images: [],
 	}
 	
 })
@@ -46,6 +47,19 @@ const SHOPIFY_API = new ShopifyApi({
 	//	state.post = null;
 		throw "REST ERROR"
 	}
+})
+.get({
+    action: "getVariantDefaultImage",
+    property: "image",
+    path: ({ productid,imageid }) => `/products/${productid}/images/${imageid}.json`,
+    onSuccess(state, payload, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        console.log(`TWEST  with id ${params} successfully fetched.`,params,payload.data);
+    },
+    onError(state, error, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        state.post = null;
+    }
 })
 .get({
 	action: "getProduct",
