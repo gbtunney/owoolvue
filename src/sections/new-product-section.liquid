@@ -23,7 +23,7 @@
 	{% endif %}
 	{% if  current_variant.metafields.kit != blank  %}
        <h2> THIS IS A KIT</h2>
-        <div js-mount-vue="AddToCart" class="add-to-cart-multiple"
+        <div js-mount-vue="AddToCart" prop-lineitemmessage="From kit: {{current_variant.id}} {{ current_variant.title }}" class="add-to-cart-multiple"
 
 				{% for kitmeta in current_variant.metafields.kit %}
 

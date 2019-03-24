@@ -3,7 +3,6 @@
 	<button  class="c-button c-button--dark-accent-primary"  :disabled="isDisabled" @click="addMultipletoCart">{{label}}
 		<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
 	</button>
-
 		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
 		<div v-show="metavisible" class="productMeta" >
 			<h5>Includes: </h5>
@@ -54,9 +53,9 @@
                 type: Boolean,
                 default: false
             },
-            line_item_message: {
+            lineitemmessage: {   ///this is used to give the kit an id
                 type: String,
-	            default:false
+	            default: false
             }
         },
         data() {
@@ -70,31 +69,6 @@
         },
         mounted: function() {
             this.PendingItems = this.PendingItemsChanged(this.$props.addtocartvariants);
-
-let self = this;
-          this.getCart().then(function(res){
-
-                console.log("CARRRRT",res);
-
-
-              const params = {id: 42}
-              const data = {
-                  quantity: 1, id: '18250174562422',
-                  properties: {
-                      'childproduct': true,
-                      'notes': "as part of xxxx kit",
-                      'editable': false
-                  }
-              }
-
-              ///return {params, data};
-
-              self.addItem({params, data});
-
-
-          });
-
-
         },
 	    computed: {
             ...mapGetters([
@@ -150,6 +124,8 @@ let self = this;
                 }
             },
             PendingItemsChanged: function(itemArr) {
+
+
                 var requestedItemArr = itemArr;
                 if (requestedItemArr instanceof Array){
                     requestedItemArr = requestedItemArr.map(function(item) {
@@ -190,28 +166,36 @@ let self = this;
                 }
             },
             addMultipletoCart: function(_data, _promiseArr) {
+
                 let self = this;
                 let pq = new PromiseQueue({concurrency: 1});
 
                 this.Loading = this.isDisabled = true;
 
+                let line_props = {};
 
+                if (this.$props.lineitemmessage){
+                    line_props = Object.assign(line_props, {message: this.$props.lineitemmessage});
+
+                }
                 ///TODO THIS IS SOME DUMB BULLSHITTTTTT
                 var dataObjArray = this.$props.addtocartvariants.map(function(item) {
 
                     const ITEM_SCHEMA = schema(
                         {
                             id: {type: Number, required: true},
-                            quantity: {type: Number, default: 1}
+                            quantity: {type: Number, default: 1},
+                            properties: {type: Number, default: line_props},
                         });
+
+                    if (item.message){
+                       line_props = Object.assign(line_props ,{message2: item.message } );
+                    }
 
                     const data = ITEM_SCHEMA.parse(item);
                     const params = {}
                     return {params, data};
                 });
-
-                
-                console.log(dataObjArray);
 
                 pq.add([() => {
                     return new Promise(function(resolve, reject) {
@@ -223,8 +207,7 @@ let self = this;
                 }, ...dataObjArray.map(function(item) {
                     return () => {
                         return self.addItem(item);
-                    }
-                }), () => {
+                    }}), () => {
                     return new Promise(function(resolve, reject) {
                         setTimeout(function() {
                             console.log('QUEUE COMPLETE', pq, self);
