@@ -1,6 +1,3 @@
-//import "../../styles/theme.scss";
-//import "../../styles/theme.scss.liquid";
-//import "../../styles/testing.scss";
 import {mountVue} from "../../vue/mountVue";
 import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
@@ -32,5 +29,5 @@ if ( vueelements && vueelements.length>0){
     });
 }
 
-
+alert();
 //ProductApp

@@ -53,6 +53,10 @@
             disableunavailable: {
                 type: Boolean,
                 default: false
+            },
+            line_item_message: {
+                type: String,
+	            default:false
             }
         },
         data() {
@@ -65,12 +69,9 @@
         created: function() {
         },
         mounted: function() {
-            this.PendingItems = this.PendingItemsChanged(this.$props.addtocartvariants)
-
-            //const params = {productid:1919134400630, imageid:5622056681590};
-
-	        console.log("pending",this.PendingItems);
-        }, computed: {
+            this.PendingItems = this.PendingItemsChanged(this.$props.addtocartvariants);
+        },
+	    computed: {
             ...mapGetters([
                 'Cart'
                 // ...
@@ -102,9 +103,7 @@
             ItemCount: function() {
                 let total = 0;
 
-
                 this.$props.addtocartvariants.forEach(function(item) {
-
                     total += item.quantity;
                 })
                 return total;
@@ -124,19 +123,8 @@
                 if (this.$props.disableunavailable){
                     this.isDisabled = true;
                 }
-
-                /*    var filteredArr = this.PendingItems.filter(function(item) {
-						if (Number(item.id) == _id){
-							return false;
-						} else {
-							return true;
-						}
-					});
-
-					this.PendingItems = filteredArr;*/
             },
             PendingItemsChanged: function(itemArr) {
-                // store.dispatch('increment')
                 var requestedItemArr = itemArr;
                 if (requestedItemArr instanceof Array){
                     requestedItemArr = requestedItemArr.map(function(item) {
@@ -189,15 +177,31 @@
                         {
                             id: {type: Number, required: true},
                             quantity: {type: Number, default: 1},
-                            properties: {type: Object, default: {
-                                'Some prop': 'Some value'
-                            }},
+                            properties: {type: Object, default: {} }
                         });
 
+                    const data_obj = ITEM_SCHEMA.parse(item);
 
-                    const data = ITEM_SCHEMA.parse(item);
+                    pending_data_obj = Object.assign(data_obj, {quantity: item.requested_quantity});
+
+                    var lineItemData = {};
+                    if (this.$props.line_item_message){
+                        lineItemData = {
+                            message: this.$props.line_item_message
+                        }
+                    }
+
+                    //merge with acutal items messages
+                    if ( item.message ){
+                        lineItemData = Object.assign(lineItemData,  {item_message : item.message} );
+                    }
+
+                    if (lineItemData != {} ){
+                        pending_data_obj = Object.assign(pending_data_obj,  {properties : lineItemData} );
+                    }
+                   // pending_data_obj
                     const params = {}
-                    return {params, data};
+                    return {params, pending_data_obj};
                 });
                 pq.add([() => {
                     return new Promise(function(resolve, reject) {

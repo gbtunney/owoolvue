@@ -30,6 +30,7 @@
 
   <!-- CSS ================================================== -->
   {{ 'owoolvue-styles.css' | asset_url | stylesheet_tag }}
+    {{ 'fonts.css' | asset_url | stylesheet_tag }}
 
   <!-- Sections ================================================== -->
   <script>
@@ -102,7 +103,6 @@
     {% if template.name == "index" %}
       {% section 'slideshow' %}
     {% endif %}
-
     <main class="main-content" role="main">
 
 	    {% unless template.name == "index" or template == "collection.image" %}
