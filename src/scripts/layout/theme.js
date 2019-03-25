@@ -2,7 +2,7 @@ import {mountVue} from "../../vue/mountVue";
 import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
 import ProductApp from "../../vue/components/shopify/product/Product.vue";
-import AdminProductApp from "../../vue/components/shopify/admin/admin-product-selector.vue";
+import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
 
 
 const UNIQID = require('uniqid');
@@ -13,23 +13,22 @@ const vueelements = document.querySelectorAll('[js-mount-vue]');
 
 if ( vueelements && vueelements.length>0){
     vueelements.forEach( el => {
-    
+        
         var component = el.getAttribute("js-mount-vue");
         var uid = UNIQID(`${component}-`);
-        el.id= uid;
-        
+        el.id = uid;
+    
         ///TODO : replace with something sane
         if (component == "AddToCart"){
             mountVue(`#${uid}`, AddToCart);
-        }else if (component == "ProductVariantSelector"){
-     mountVue(`#${uid}`, ProductVariantSelector);
+        } else if (component == "ProductVariantSelector"){
+            mountVue(`#${uid}`, ProductVariantSelector);
         }
         else if (component == "ProductApp"){
-           mountVue(`#${uid}`, ProductApp);
+            mountVue(`#${uid}`, ProductApp);
         }
         else if (component == "AdminProductApp"){
             mountVue(`#${uid}`, AdminProductApp);
         }
-    
     });
 }
