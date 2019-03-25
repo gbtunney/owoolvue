@@ -38,11 +38,11 @@
                     <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
 
                 <template slot="option" class="is-grid-2" slot-scope="props">
-                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if="option.name == 'Color' && props.option.swatch_image != 'false'" class="option__image" :src="props.option.swatch_image">
+                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if="option.name == 'Color' && getSwatchSrc(props.option)" class="option__image" :src="getSwatchSrc(props.option)">
                     </div>
                     <div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
                 </template>
-            </multiselect>
+            </multiselect>{
         </div>
 
 
@@ -78,6 +78,9 @@
     import Multiselect from 'vue-multiselect'
     import {mapGetters} from 'vuex'
     import store from '@/store'
+    import { ShopifyImgURL} from '@/gUtilities/main.js'
+
+
 
     export default {
         name: 'HelloWorld',
@@ -125,7 +128,8 @@
                 'Variants',
                 'Options',
                 'OptionsDictionary',
-                'CurrentVariant'
+                'CurrentVariant',
+            'ImagesDictionary'
                 // ...
             ])
         },
@@ -147,6 +151,59 @@
             },
             _getSearchable: function(option) {
                 return ( option.slug == "color") ? true : false;
+            },
+            getSwatchSrc:function (option){
+
+                //onsole.log(option);
+
+                let newFilteredArray = this.Variants;
+
+                newFilteredArray = newFilteredArray.filter(function(variant) {
+
+                    var foundArray = [];
+
+                    var optionID = option.parent_id;
+                    var optionValueID = option.id;
+
+                    if (optionValueID == variant.options.get(optionID).id){
+                        return true;
+                    }
+                })
+
+                if (newFilteredArray.length>=1 ) {
+
+                    var variant= newFilteredArray[0];
+
+                    var img = this.ImagesDictionary.get( String(variant.image_id))
+                    console.log("AERT CLLUNG ",this.ImagesDictionary);
+
+
+
+                }
+                        return ShopifyImgURL(img.src,'100x100') ;
+                /*
+
+
+
+								let mySelectedOptions = this.$data.selectedOptions;
+								let newFilteredArray = this.Variants;
+
+								for (let i = 0; i < mySelectedOptions.length; i++) {
+
+									newFilteredArray = newFilteredArray.filter(function(variant) {
+
+										var foundArray = [];
+
+										var optionID = mySelectedOptions[i].parent_id;
+										var optionValueID = mySelectedOptions[i].id;
+
+										if (optionValueID == variant.options.get(optionID).id){
+											return true;
+										}
+									})
+								}*/
+
+               //
             },
             _getIsDisabled: function(option) {
                 var inverseMap = new Map(this.OptionsDictionary)  //.delete(option.id);

@@ -33,7 +33,7 @@ cart: {{this.Cart.item_count}}
     import {mapState, mapActions} from "vuex";
 
     const schema = require("schm");
-    import {Slugify, setQueryStringParameter, GDatamapper} from '@/gUtilities/main.js'
+    import {Slugify, ShopifyImgURL,setQueryStringParameter, GDatamapper} from '@/gUtilities/main.js'
     import {mapGetters} from 'vuex'
     import VueNumericInput from 'vue-numeric-input';
     import axios from 'axios';
@@ -93,6 +93,7 @@ cart: {{this.Cart.item_count}}
         },
         mounted: function() {
 
+
         },
         computed: {
             QuantityMax: function() {
@@ -114,9 +115,11 @@ cart: {{this.Cart.item_count}}
                 'CurrentProduct',
                 'CurrentVariant',
                 'Images',
-                'Cart'
+                'Cart',
+            'ImagesDictionary'
                 // ...
             ])
+
         },
 
         methods: {

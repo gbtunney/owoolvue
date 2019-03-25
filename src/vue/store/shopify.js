@@ -24,7 +24,8 @@ const SHOPIFY_API = new ShopifyApi({
 .get({
 	action: "getProducts",
 	property: "_products",
-	path: "/products.json",
+	path: "products.json",
+    path: ({ producttype="" }) => `products.json?product_type=${producttype}`,
 
 	onSuccess(state, payload, axios, { params, data }) {
 		// if you define the onSuccess function you have to set the state by yourself

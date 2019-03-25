@@ -2,6 +2,7 @@ import {mountVue} from "../../vue/mountVue";
 import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
 import ProductApp from "../../vue/components/shopify/product/Product.vue";
+import AdminProductApp from "../../vue/components/shopify/admin/admin-product-selector.vue";
 
 
 const UNIQID = require('uniqid');
@@ -21,10 +22,14 @@ if ( vueelements && vueelements.length>0){
         if (component == "AddToCart"){
             mountVue(`#${uid}`, AddToCart);
         }else if (component == "ProductVariantSelector"){
-            mountVue(`#${uid}`, ProductVariantSelector);
+     mountVue(`#${uid}`, ProductVariantSelector);
         }
         else if (component == "ProductApp"){
-            mountVue(`#${uid}`, ProductApp);
+           mountVue(`#${uid}`, ProductApp);
         }
+        else if (component == "AdminProductApp"){
+            mountVue(`#${uid}`, AdminProductApp);
+        }
+    
     });
 }

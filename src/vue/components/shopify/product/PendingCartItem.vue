@@ -82,7 +82,7 @@ let self =this;
                 if (this.$props.item.message){
                     return this.$props.item.message;
                 }else{
-                    return "not sent yet"
+                    return "";
                 }
 
             },
