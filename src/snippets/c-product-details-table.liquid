@@ -1,0 +1,8 @@
+{% if product.metafields['product.details']  != blank %}
+	<ul class="product-details-table"></ul>
+		{% for key_value in product.metafields['product.details'] %}
+			<li><strong>{{ key_value[0] | capitalize }}</strong> : {{ key_value[1] }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+

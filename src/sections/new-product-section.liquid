@@ -7,6 +7,12 @@
 	{% assign current_variant = product.selected_or_first_available_variant %}
 	{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
+    {% include 'c-collection-badge' %}
+
+
+    {%  include 'c-product-description' %}
+
+
 	{% if product.price == 0 %}
 		{% if  product.metafields.download != blank  %}
             <a href="{{ product.metafields.download.link  }}">DOWNLOAD LINK</a>
@@ -743,13 +749,6 @@
 
                     </div>
 
-                    <div class="product-single__description rte" itemprop="description">
-						{{ product.description }}
-                    </div>
-
-					{% if section.settings.social_sharing_products %}
-						{% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
-					{% endif %}
                 </div>
             </div>
         </div>

@@ -1,0 +1,26 @@
+{% for collection in product.collections %}
+
+	{% if  collection.metafields.badge  != blank  %}
+
+		{% assign badge_meta = collection.metafields.badge %}
+
+		{% if  badge_meta.usedescription  != blank  %}
+				{{ collection.description  }}
+		{% endif %}
+
+		{% if  badge_meta.usetitle  != blank  %}
+			<a href="{{collection.url}}">{{ collection.title  }}</a>
+		{% endif %}
+
+		{% if  badge_meta.usetemplate != blank %}
+
+			<a href="{{ collection.url }}" class="collection-grid__item-link collection-collage__item-wrapper">
+				{% include 'c-ui-icon' with icon_name: 'llama' ,style_modifier: 'light'  %}
+			</a>
+
+		{% endif %}
+
+	{% endif %}
+
+{% endfor %}
+
