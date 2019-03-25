@@ -85,7 +85,7 @@
             },
             isDisabled: {
                 get: function() {
-                    return this.$data._isDisabled;
+	                return this.$data._isDisabled;
                 },
                 set: function(newVal) {
                     this.$data._isDisabled = newVal;  ///this.Variants[this.CurrentVariant._index];

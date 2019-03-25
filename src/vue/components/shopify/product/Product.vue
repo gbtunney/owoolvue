@@ -84,6 +84,8 @@ cart: {{this.Cart.item_count}}
                     if (payload.productid){
                         store.dispatch('SET_CURRENT_PRODUCT', payload).then(function(res) {
                             store.dispatch('SET_CURRENT_VARIANT', payload);
+
+
                         });
                     }
                 })
@@ -129,6 +131,7 @@ cart: {{this.Cart.item_count}}
                 'getVariant',
                 'getProducts',
                 'getCart',
+                'getProductMeta',
                 'addItem'
                 // ...
             ]),

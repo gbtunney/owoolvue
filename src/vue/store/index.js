@@ -298,12 +298,10 @@ const BASESTORE = {
         },
         
         ["SHOPIFY_DATA_INIT"](state,  payload) {
-            
             //INIT PRODUCTS
             this.state._products =payload.products;
             this.state._productDictionary= GDatamapper.parseToDictionary(payload.products, "id");
             console.log("INITING DATA~!!!",this.state._productDictionary);
-            
         },
         ["PARSE_VARIANTS"](state,  payload) {
             //INIT PRODUCTS

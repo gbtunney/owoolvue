@@ -9,7 +9,7 @@
 		ref="list">
 		<ul class="multiselect__content " :style="contentStyle">
 			<slot name="beforeList"></slot>
-			<li v-if="multipxle && max === internalValue.length">
+			<li v-if="multiple && max === internalValue.length">
               <span class="multiselect__option">
                 <slot name="maxElements">Maximum of {{ max }} options selected. First remove a selected option to select another.</slot>
               </span>
@@ -308,77 +308,6 @@
 		//@include setType(2, font-san-serif, 0);
 		///@include rhythm-padding(1,2);
 	}
-	fieldset[disabled] .multiselect {
-		pointer-events: none;
-	}
-
-
-
-	.multiselect__spinner {
-		position: absolute;
-		right: 1px;
-		top: 1px;
-		width: 48px;
-		height: 35px;
-		background: #fff;
-		display: block;
-	}
-
-	.multiselect__spinner:before,
-	.multiselect__spinner:after {
-		position: absolute;
-		content: "";
-		top: 50%;
-		left: 50%;
-		margin: -8px 0 0 -8px;
-		width: 16px;
-		height: 16px;
-		border-radius: 100%;
-		border-color: #41b883 transparent transparent;
-		border-style: solid;
-		border-width: 2px;
-		box-shadow: 0 0 0 1px transparent;
-	}
-
-	.multiselect__spinner:before {
-		animation: spinning 2.4s cubic-bezier(0.41, 0.26, 0.2, 0.62);
-		animation-iteration-count: infinite;
-	}
-
-	.multiselect__spinner:after {
-		animation: spinning 2.4s cubic-bezier(0.51, 0.09, 0.21, 0.8);
-		animation-iteration-count: infinite;
-	}
-
-	.multiselect__loading-enter-active,
-	.multiselect__loading-leave-active {
-		transition: opacity 0.4s ease-in-out;
-		opacity: 1;
-	}
-
-	.multiselect__loading-enter,
-	.multiselect__loading-leave-active {
-		opacity: 0;
-	}
-
-	.multiselect,
-	.multiselect__input,
-	.multiselect__single {
-
-		//font-family: inherit;
-		touch-action: manipulation;
-	}
-
-	.multiselect {
-		border:1px solid grey;
-		box-sizing: content-box;
-		display: block;
-		position: relative;
-		width: 100%;
-		min-height: 40px;
-		text-align: left;
-		color: #35495e;
-	}
 
 	.multiselect * {
 		box-sizing: border-box;
@@ -544,15 +473,15 @@
 	}
 
 	.multiselect__option--highlight {
-		background: #41b883;
+		//background: #41b883;
 		outline: none;
-		color: white;
+		//color: white;
 	}
 
 	.multiselect__option--highlight:after {
 		content: attr(data-select);
-		background: #41b883;
-		color: white;
+		//background: #41b883;
+		//color: white;
 	}
 
 	.multiselect__option--selected {
@@ -568,14 +497,14 @@
 	}
 
 	.multiselect__option--selected.multiselect__option--highlight {
-		background: #ff6a6a;
-		color: #fff;
+		//background: #ff6a6a;
+		//color: #fff;
 	}
 
 	.multiselect__option--selected.multiselect__option--highlight:after {
-		background: #ff6a6a;
+		//background: #ff6a6a;
 		content: attr(data-deselect);
-		color: #fff;
+		//color: #fff;
 	}
 
 	.multiselect--disabled {
@@ -615,12 +544,12 @@
 	}
 
 	.multiselect__option--group-selected.multiselect__option--highlight {
-		background: #ff6a6a;
+		//background: #ff6a6a;
 		color: #fff;
 	}
 
 	.multiselect__option--group-selected.multiselect__option--highlight:after {
-		background: #ff6a6a;
+		//background: #ff6a6a;
 		content: attr(data-deselect);
 		color: #fff;
 	}

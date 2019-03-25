@@ -600,6 +600,12 @@
 
                     <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
 
+	                {% if  product.metafields.download != blank  %}
+		                {% if  product.metafields.download.ravelry != blank  %}
+                           {{ product.metafields.download.ravelry }} DOWNLOAD ON RAVELRY
+		                {% endif %}
+                    {% endif %}
+
                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                         <div data-price-container>
 							{% comment %}
