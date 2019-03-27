@@ -1,11 +1,31 @@
 <template>
 		<div class="product-single product-wrapper">
 
+
 			<div>
 
 				<ProductImages :images="Images"></ProductImages>
 			</div>
 			<div>
+				<v-text-field
+					label="Search colors"
+					append-outer-icon="search"
+				></v-text-field>
+				<v-btn-toggle  @change="testBtn" v-model="toggle_exclusive">
+					<v-btn flat>
+						<v-icon>format_align_left</v-icon>
+					</v-btn>
+					<v-btn flat>
+						<v-icon>format_align_center</v-icon>
+					</v-btn>
+					<v-btn flat>
+						<v-icon>format_align_right</v-icon>
+					</v-btn>
+					<v-btn flat>
+						<v-icon>format_align_justify</v-icon>
+					</v-btn>
+				</v-btn-toggle>
+
 				<h1 class="product-single__title" itemprop="name">{{CurrentProduct.title}}</h1>
 				<h2>{{this.CurrentVariant.price}}</h2>
 cart: {{this.Cart.item_count}}
@@ -37,6 +57,25 @@ cart: {{this.Cart.item_count}}
     import {mapGetters} from 'vuex'
     import VueNumericInput from 'vue-numeric-input';
     import axios from 'axios';
+    import 'vuetify/dist/vuetify.min.css'
+
+
+    import Vuetify from 'vuetify'
+    import 'vuetify/dist/vuetify.min.css'
+
+    Vue.use(Vuetify, {
+        theme: {
+            primary: '#ee44aa',
+            secondary: '#424242',
+            accent: '#82B1FF',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107'
+        },
+        iconfont: 'md',
+    })
+
 
     export default {
         name: 'Product',
@@ -205,7 +244,6 @@ cart: {{this.Cart.item_count}}
         }
     }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss">
@@ -254,6 +292,10 @@ cart: {{this.Cart.item_count}}
 		}
 	}
 
+
+	.multiselect__content-wrapper{
+		border: 0px solid red!important;
+	}
 	.--is-open {
 
 		.attribute-color {
@@ -270,7 +312,7 @@ cart: {{this.Cart.item_count}}
 
 		@include breakpoint-range(md, ">=") {
 			.multiselect__content-wrapper {
-				border: 1px solid red;
+				//border: 1px solid red;
 				display: block !important;
 				max-height: none !important;
 				height: 100%;
@@ -283,6 +325,7 @@ cart: {{this.Cart.item_count}}
 			.multiselect__option--highlight:after, .multiselect__option--selected:after, .multiselect__option--selected.multiselect__option--highlight:after {
 				content: " ";
 
+				background: none;
 			}
 		}
 	}
@@ -300,7 +343,8 @@ cart: {{this.Cart.item_count}}
 		}
 	}
 
-	.multiselect__option--selected {
+	.multiselect__option--selected.multiselect__option--highlight{
+		background: none!important;
 	}
 
 	.multiselect__option {
@@ -341,10 +385,7 @@ cart: {{this.Cart.item_count}}
 
 	}
 
-	.multiselect__input {
-		@include c-input(false, dark font-serif lg sm);
-		border-radius: 0;
-	}
+
 
 	.optionbutton {
 	}
