@@ -1,8 +1,13 @@
 import {mountVue} from "../../vue/mountVue";
-import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
+/*import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
 import ProductApp from "../../vue/components/shopify/product/Product.vue";
 import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
+*/
+import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
+
+
+//mountVue('#owool-test-app', NewProduct);
 
 
 const UNIQID = require('uniqid');
@@ -20,15 +25,21 @@ if ( vueelements && vueelements.length>0){
     
         ///TODO : replace with something sane
         if (component == "AddToCart"){
-            mountVue(`#${uid}`, AddToCart);
+//            mountVue(`#${uid}`, AddToCart);
         } else if (component == "ProductVariantSelector"){
-            mountVue(`#${uid}`, ProductVariantSelector);
+           // mountVue(`#${uid}`, ProductVariantSelector);
         }
         else if (component == "ProductApp"){
-            mountVue(`#${uid}`, ProductApp);
+           // mountVue(`#${uid}`, ProductApp);
         }
         else if (component == "AdminProductApp"){
-            mountVue(`#${uid}`, AdminProductApp);
+            //mountVue(`#${uid}`, AdminProductApp);
+        }else if (component=="TestApp"){
+            
+            mountVue(`#${uid}`, NewProduct);
+    
+    
         }
     });
 }
+

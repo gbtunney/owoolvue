@@ -1,6 +1,6 @@
 /* eslint-disable id-length */
 import Vue from 'vue';
-import store from './store';
+import store from './store/indexbk';
 import VueRouter from 'vue-router';
 /**
  * retrieves attributes from an element and turn them into an object

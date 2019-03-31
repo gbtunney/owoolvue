@@ -300,6 +300,11 @@ const BASESTORE = {
         ["SHOPIFY_DATA_INIT"](state,  payload) {
             //INIT PRODUCTS
             this.state._products =payload.products;
+        
+            
+        
+            this.getProductMeta({params: {productid: 1919136071798}});
+        
             this.state._productDictionary= GDatamapper.parseToDictionary(payload.products, "id");
             console.log("INITING DATA~!!!",this.state._productDictionary);
         },
