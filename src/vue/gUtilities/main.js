@@ -85,8 +85,8 @@ export const GDatamapper = {
 			return _value;
 		}
 	},
-	parseToDictionary : function( _array ,_keyprop,_addprops ={}){
-		var _dictionary = new Map();
+	parseToDictionary : function( _array ,_keyprop,_currentMap = new Map() , _currObject={} ){
+		var _dictionary = _currentMap;//new Map();
 		
 		if ( typeof _array == "object" ){
 			for ( var i = 0 ; i < _array.length; i++){
