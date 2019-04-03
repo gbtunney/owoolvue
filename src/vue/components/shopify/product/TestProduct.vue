@@ -36,6 +36,12 @@
 	    computed: {
 
     },
+	    created:function(){
+		    this.loadProduct();
+	    },
+	    mounted:function(){
+		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedPVariantID)
+	    },
     methods:{
      },
 }

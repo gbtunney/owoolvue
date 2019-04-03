@@ -56,21 +56,6 @@ onError(state, error, axios, { params, data }) {
         state.post = null;
     }
 })
-.get({    //	        this.getProductMeta({params: {productid: 1919136071798}});
-    
-    action: "getProductMeta",
-    property: "meta",
-    path: ({ productid }) => `/products/${productid}/metafields.json`,
-    onSuccess(state, payload, axios, { params, data }) {
-    // if you define the onSuccess function you have to set the state by yourself
-    console.log(`TWEST  with id ${params} successfully fetched.`,params,payload.data);
-},
-onError(state, error, axios, { params, data }) {
-    // if you define the onSuccess function you have to set the state by yourself
-    state.post = null;
-}
-})
-//https://o-wool-stage.myshopify.com/admin/products/1919136071798/metafields.json
 .get({
    // https://o-wool-stage.myshopify.com/admin/variants/18250174333046.json
   
@@ -87,6 +72,36 @@ onError(state, error, axios, { params, data }) {
         state.post = null;
     }
 })
+.get({    //	        this.getProductMeta({params: {productid: 1919136071798}});
+	
+	action: "getProductMeta",
+	property: "meta",
+	path: ({ productid }) => `/products/${productid}/metafields.json`,
+	onSuccess(state, payload, axios, { params, data }) {
+	// if you define the onSuccess function you have to set the state by yourself
+	console.log(`TWEST  with id ${params} successfully fetched.`,params,payload.data);
+},
+onError(state, error, axios, { params, data }) {
+	// if you define the onSuccess function you have to set the state by yourself
+	state.post = null;
+}
+})
+.get({    //	        this.getProductMeta({params: {productid: 1919136071798}});
+	
+	action: "getVariantMeta",
+	property: "meta",
+	path: ({ productid ,variantid}) => `/products/${productid}/variants/${variantid}/metafields.json`,
+	onSuccess(state, payload, axios, { params, data }) {
+	// if you define the onSuccess function you have to set the state by yourself
+	console.log(`TVARIANT META CALLED`,params,payload.data);
+},
+onError(state, error, axios, { params, data }) {
+	// if you define the onSuccess function you have to set the state by yourself
+	state.post = null;
+}
+})
 .getStore();
 
 export default SHOPIFY_API;
+
+///admin/products/#{id}/variants/#{id}/metafields.json

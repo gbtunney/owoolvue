@@ -2,8 +2,9 @@ import {mountVue} from "../../vue/mountVue";
 /*import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
 import ProductApp from "../../vue/components/shopify/product/Product.vue";
-import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
+
 */
+import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
 import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
 
@@ -34,9 +35,8 @@ if ( vueelements && vueelements.length>0){
            // mountVue(`#${uid}`, ProductApp);
         }
         else if (component == "AdminProductApp"){
-            //mountVue(`#${uid}`, AdminProductApp);
+            mountVue(`#${uid}`, AdminProductApp);
         }else if (component=="TestApp"){
-            
             mountVue(`#${uid}`, NewProduct);
     
     

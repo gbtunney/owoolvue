@@ -19,16 +19,14 @@
 <script type="text/javascript">
 
     import Vue from 'vue';
-    import {mapState, mapActions, mapGetters} from "vuex"
 
   //  import Multiselect from 'vue-multiselect'
     import Multiselect from '@/components/utilities/gMultiselectList.vue'
-    import {Slugify, setQueryStringParameter, GDatamapper} from '@/gUtilities/main.js'
     import {ProductMixin} from  '@/mixins/productmixin.js';
 
 
     export default {
-        name: 'Product Variant Linker',
+        name: 'ProductVariantLinker',
         components: {
             Multiselect
         }, props: {
@@ -46,9 +44,12 @@
             }
         },
         created: function() {
-this.loadProduct();
+			this.loadProduct();
+			//this.loadProductMeta();
         },
         mounted: function() {
+        	console.log("variamtid",this.NormalizedVariantID)
+	        this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID);
 
         },
         computed: {
@@ -65,13 +66,7 @@ this.loadProduct();
         },
 
         methods: {
-            ...mapActions([
-                'getProduct',
-                'getVariant'
-                // ...
-            ]),
             variantChanged: function(variant) {
-
                 var newurl =
                     window.location.protocol +
                     '//' +

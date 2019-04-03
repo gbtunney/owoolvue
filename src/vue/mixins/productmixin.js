@@ -63,7 +63,7 @@ export const ProductMixin={
     },
     methods:{
     ...mapActions([
-		    'getProduct','getVariant'
+		    'getProduct','getVariant','getProductMeta','getVariantMeta'
 	    ]),
     ...mapMutations(['increment', 'add_product_to_dictionary','add_variants_to_dictionary','add_images_to_dictionary']),
 		    loadVariant:function(){
@@ -83,6 +83,21 @@ export const ProductMixin={
 			    self.add_product_to_dictionary({product: res.data.product});
 			    self.add_variants_to_dictionary({variants: res.data.product.variants});
 			    self.add_images_to_dictionary({images: res.data.product.images});
+		    })
+		
+	    },
+        loadProductMeta:function(productid){
+	      //  getProductMeta
+	        this.getProductMeta({params: {productid:1919142953078}}).then(function(res) {
+	        
+	        })
+         
+        },
+	    loadVariantMeta:function(productid,variantid){
+		    //  getProductMeta
+		    console.log("product variant meta");
+		    this.getVariantMeta({params: {productid:productid,variantid:variantid}}).then(function(res) {
+			
 		    })
 		
 	    }
