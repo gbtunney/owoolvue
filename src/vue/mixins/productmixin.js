@@ -1,4 +1,5 @@
 import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
+const Numeral = require('numeral');
 
 export const ProductMixin={
 	    props: {
@@ -41,6 +42,13 @@ export const ProductMixin={
 	
 	    return this.CurrentProduct.id;
     },
+	CurrentProductVendor:function(){
+		if ( this.CurrentProduct && this.CurrentProduct.vendor ){
+			return this.CurrentProduct.vendor;
+		}else{
+			return false;
+		}
+	},
     CurrentVariantID: function() {
 	
 	    return this.CurrentVariant.id;
@@ -54,6 +62,36 @@ export const ProductMixin={
 	    }
 	
     },
+	CurrentVariantPrice:function(){
+		if ( this.CurrentVariant && this.CurrentVariant.price ){
+			return Numeral(this.CurrentVariant.price).format('$ 0,0[.]00');
+		}else{
+			return false;
+		}
+	},
+	CurrentVariantCompareAtPrice:function(){
+		if ( this.CurrentVariant && this.CurrentVariant.compare_at_price ){
+			return Numeral(this.CurrentVariant.compare_at_price).format('$ 0,0[.]00');
+		}else{
+			return false;
+		}
+	},
+	CurrentVariantOnSale:function(){
+		
+		if ( this.CurrentVariant && this.CurrentVariant.compare_at_price  ){
+
+		if (  this.CurrentVariant.compare_at_price >  this.CurrentVariant.price ){
+			return true;
+		}else {
+			return false;
+		}
+		}else{
+			return false;
+		}
+	},
+	CurrentVariantAvailable:function(){
+		return true;
+	},
     NormalizedProductID: function() {
 	    return parseInt(this.$props.productid);
     },

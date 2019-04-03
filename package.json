@@ -61,6 +61,7 @@
   "dependencies": {
     "easy-promise-queue": "^0.5.4",
     "json-loader": "^0.5.7",
+    "numeral": "^2.0.6",
     "uniqid": "^5.0.3",
     "vue": "^2.5.21",
     "vue-router": "^3.0.2",
