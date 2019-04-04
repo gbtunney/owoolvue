@@ -13,21 +13,23 @@ export const ProductMixin={
 	    components: {},
 	    data() {
 		    return {
-			
+		    	_currentVariant: false,
+	          _currentProduct: false
 		    }
 	    },
 	    name: 'testcomponent',
 	    computed: {
+	    ...mapGetters([
+		    'Variants'
+	    ]),
+
 	    ...mapState({product_dictionary: state => state.product_dictionary,
 		    variant_dictionary: state => state.variant_dictionary,
 	    product_image_dictionary: state => state.product_image_dictionary,
+	option_dictionary: state => state.option_dictionary,
 	    CurrentProduct(state)
     {
 	    return state.product_dictionary.get(this.NormalizedProductID);
-    },
-    CurrentVariant(state)
-    {
-	    return state.variant_dictionary.get(this.NormalizedVariantID);
     }
     }),
     CurrentProductTitle: function() {
@@ -76,6 +78,19 @@ export const ProductMixin={
 			return false;
 		}
 	},
+CurrentVariant:{
+	get: function() {
+		if (this.$data._currentVariant == false ){
+			return this.variant_dictionary.get(this.NormalizedVariantID);
+		}else{
+			return  this.$data._currentVariant;
+		}
+	},
+	set: function(newVal) {
+		this.$data._currentVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
+	}
+},
+
 	CurrentVariantOnSale:function(){
 		
 		if ( this.CurrentVariant && this.CurrentVariant.compare_at_price  ){
@@ -103,7 +118,7 @@ export const ProductMixin={
     ...mapActions([
 		    'getProduct','getVariant','getProductMeta','getVariantMeta'
 	    ]),
-    ...mapMutations(['increment', 'add_product_to_dictionary','add_variants_to_dictionary','add_images_to_dictionary']),
+    ...mapMutations(['increment', 'add_product_to_dictionary','add_variants_to_dictionary','add_images_to_dictionary','add_options_to_dictionary']),
 		    loadVariant:function(){
 		    let self = this;
 		
@@ -114,6 +129,16 @@ export const ProductMixin={
 			    console.log("currenty variant ", this.variant_dictionary)
 		    })
 	    },
+	    setCurrentVariant:function(variant){
+		    let self = this;
+		    
+		    if (this.$data._currentVariant == false ){
+			    this.$data._currentVariant = variant;
+		    }
+		
+		   
+		
+	    },
 	    loadProduct:function(){
 		    let self = this;
 		
@@ -121,12 +146,13 @@ export const ProductMixin={
 			    self.add_product_to_dictionary({product: res.data.product});
 			    self.add_variants_to_dictionary({variants: res.data.product.variants});
 			    self.add_images_to_dictionary({images: res.data.product.images});
+			    self.add_options_to_dictionary({options: res.data.product.options});
 		    })
 		
 	    },
         loadProductMeta:function(productid){
 	      //  getProductMeta
-	        this.getProductMeta({params: {productid:1919142953078}}).then(function(res) {
+	        this.getProductMeta({params: {productid:productid}}).then(function(res) {
 	        
 	        })
          

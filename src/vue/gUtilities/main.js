@@ -30,6 +30,9 @@ export function setQueryStringParameter(name, value) {
 	params.set(name, value);
 	window.history.replaceState({}, "", decodeURIComponent(`${location.pathname}?${params}`));
 }
+export function normalize(value) {
+	return parseInt(value);
+}
 
 export function filterArrayByValue(_array,_value, _prop=false){
 	if ( !_array || !_value  || _array.lengt <= 0 ) return;

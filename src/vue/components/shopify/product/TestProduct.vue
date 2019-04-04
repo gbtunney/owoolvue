@@ -4,6 +4,8 @@
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 			<h1 class="product-single__title" itemprop="name">{{ CurrentProductTitle }}</h1>
 
+
+
 			<div data-price-container>
 				<span v-if="CurrentVariantOnSale" class="product-single__price--wrapper" aria-hidden="false">
                   <span id="ComparePrice" class="product-single__price--compare-at">
@@ -19,6 +21,20 @@
 			</div>
 		</div>
 
+		<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
+
+		<productOptionSelect class="--is-grid-2"   :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
+
+
+		multiselect
+		<Multiselect v-model="CurrentVariant"
+		             :options="Variants" label="title"
+		             track-by="title"
+		             @input="variantChanged"
+		             :multiple="false"
+		             :show-labels="false"
+		             placeholder="Pick a value"></Multiselect>
+
 
 		<span>{{CurrentProductTitle}} {{CurrentVariantTitle}} <button @click="increment">increment</button></span>
 		<p>
@@ -33,6 +49,9 @@
 <script type="text/javascript">
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
     import {ProductMixin} from  '@/mixins/productmixin.js';
+    import ProductImageSlideshow from '@/components/shopify/product/ProductImageSlideshow.vue'
+    import productOptionSelect from '@/components/shopify/product/NewProductOptionSelector.vue'
+    import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
 
 
@@ -51,7 +70,7 @@
 		    }
 	    },
 	    mixins: [ProductMixin],
-	    components: {},
+	    components: {ProductImageSlideshow,Multiselect,productOptionSelect},
 	    data() {
 		    return {
 
@@ -64,15 +83,25 @@
 	    created:function(){
 		    this.loadProduct();
 		    console.log("settings are", this.$props.sectionsettings);
+
+
 	    },
 	    mounted:function(){
 		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
     methods:{
+	    variantChanged: function(variant) {
+	    	this.CurrentVariant  = variant;
+		console.log("variant changed!!!!!",variant);
+	    }
      },
 }
     ;
 </script>
+<style lang="scss" type="text/scss">
+
+	</style>
+
 
 
 
