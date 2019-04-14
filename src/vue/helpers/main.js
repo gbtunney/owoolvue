@@ -1,7 +1,3 @@
-import math from 'mathjs'
-import isColor from 'is-color';
-import randomColor from 'randomcolor';
-
 export function Slugify(text) {
 				// https://gist.github.com/mathewbyrne/1280286
 		return text.toString().toLowerCase()

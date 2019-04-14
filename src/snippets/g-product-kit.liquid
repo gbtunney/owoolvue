@@ -1,0 +1,11 @@
+<div js-mount-vue="AddToCart" prop-lineitemmessage="From kit: {{current_variant.id}} {{ current_variant.title }}" class="add-to-cart-multiple"
+
+		{% for kitmeta in current_variant.metafields.kit %}
+
+			{% capture key %}{{ kitmeta | first }}{% endcapture %}
+			{% capture value %}{{ kitmeta | last }}{% endcapture %}
+			{% capture  prop %} prop-{{ kitmeta | first }}='{{ kitmeta | last }}' {% endcapture %}
+			{{ prop }}
+
+		{% endfor %} prop-label="Add Kit to Cart:"
+></div>

@@ -4,8 +4,6 @@
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 			<h1 class="product-single__title" itemprop="name">{{ CurrentProductTitle }}</h1>
 
-
-
 			<div data-price-container>
 				<span v-if="CurrentVariantOnSale" class="product-single__price--wrapper" aria-hidden="false">
                   <span id="ComparePrice" class="product-single__price--compare-at">
@@ -25,9 +23,7 @@
 
 		<productOptionSelect class="--is-grid-2" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
 
-
 		multiselect
-
 
 
 		<span>{{CurrentProductTitle}} {{CurrentVariantTitle}} <button @click="increment">increment</button></span>
