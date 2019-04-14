@@ -1,9 +1,8 @@
 /// project related functions utilitized by the store.
-import math from 'mathjs'
 import isColor from 'is-color';
 import randomColor from 'randomcolor';
 
-export getSwatchSrc=function (option){
+export function getSwatchSrc(option){
 	
 	let newFilteredArray = this.Variants;
 	
@@ -56,7 +55,7 @@ export getSwatchSrc=function (option){
 	//
 };
 
-export getColorData = function(slug) {
+export function getColorData(slug) {
 	
 	let _slug = slug;
 	

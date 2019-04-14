@@ -1,7 +1,10 @@
 const schema = require("schm");
-import {Slugify, GDatamapper} from '@/helpers/main.js'
+import math from 'mathjs'
 
-export parseOptions =function (inOptions) {
+import {Slugify, GDatamapper} from '@/helpers/main.js'
+import {getSwatchSrc, getColorData} from './meta'
+
+export function parseOptions(inOptions) {
 	
 	const GDataMapOptionValues = {
 			adapters: {
@@ -67,7 +70,7 @@ export parseOptions =function (inOptions) {
 	return newArray;//GDatamapper.parseToDictionary(newArray, "id")
 }
 
-export parseVariants=function(inVariants, inOptionsArr) {
+export function parseVariants(inVariants, inOptionsArr) {
 	var optionCount = 3;
 	let variantArr = inVariants;
 	

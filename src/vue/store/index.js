@@ -4,6 +4,8 @@ import VuexPersistence from 'vuex-persist';
 const schema = require("schm");
 
 import shopifyAdminApi from "./shopify_admin_api";
+import {parseOptions, parseVariants} from './functions/parse'
+import {Slugify, GDatamapper} from '@/helpers/main.js'
 
 Vue.use(Vuex);
 

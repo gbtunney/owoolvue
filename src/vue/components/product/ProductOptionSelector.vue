@@ -9,7 +9,7 @@
         <h3 class="option__name"> {{option.name}}</h3>
 
 
-            <multiselect :options="option.values" class="--is-open"
+            <Multiselect :options="option.values" class="--is-open"
 
                          v-model="selectedOptions[index]"
                          @input="_getVariantFromOptions()"
@@ -50,12 +50,12 @@
                     </div>
                     <div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
                 </template>
-            </multiselect>{
+            </Multiselect>{
         </div>
 
 
 
-        <multiselect :options="Variants"
+        <Multiselect :options="Variants"
                      v-model="selectedVariant"
                      @input="variantSelectorChanged"
                      track-by="title"
@@ -72,7 +72,7 @@
                 <strong>{{ option.id }}</strong> ID:<strong>  {{ option.title }}</strong>
             </template>
 
-        </multiselect>
+        </Multiselect>
 
         <pre class="--debug language-json"><code>{{ selectedVariant  }}</code></pre>
 
@@ -85,6 +85,7 @@
     import Vue from 'vue';
 //    import Multiselect from 'vue-multiselect'
     import Multiselect from '@/components/utilities/gMultiselectList.vue'
+   //import Multiselect from 'vue-multiselect'
 
     import {mapGetters,mapState} from 'vuex'
     import store from '@/store'
@@ -473,4 +474,3 @@
     .multiselect__tag {
     }
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

@@ -43,7 +43,8 @@
     import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
 
     //custom version of vuemultiselect - stripped down.
-    import Multiselect from '@/components/utilities/gMultiselectList.vue'
+  //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
+    //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
 
 /*    <Multiselect v-model="CurrentVariant"
@@ -69,7 +70,7 @@
 		    }
 	    },
 	    mixins: [ProductMixin],
-	    components: {ProductImageSlideshow,Multiselect,productOptionSelect},
+	    components: {ProductImageSlideshow,productOptionSelect},
 	    data() {
 		    return {
 		    }
