@@ -1,6 +1,6 @@
 <template>
     <div >
-        <ul class="--debug temp-meta">
+        <ul class="temp-meta">
             <li>SELECTED VARIANT {{selectedVariant.title}} </li>
             <li>VARIANT ID: {{selectedVariant.id}}</li>
             <li>INVENTORY AVAILABLE {{selectedVariant.inventory_quantity}</li>
@@ -46,7 +46,7 @@
                     <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
 
                 <template slot="option" class="is-grid-2" slot-scope="props">
-                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if="option.name == 'Color' && getSwatchSrc(props.option)" class="option__image" :src="getSwatchSrc(props.option)">
+                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if="option.name == 'Color' " class="option__image" >
                     </div>
                     <div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
                 </template>
@@ -62,7 +62,7 @@
                      label="title"
                      ref="multiselectmaster"
                      :taggable="false"
-                     :multiple="true"
+                     :multiple="false"
                      :closeOnSelect="false"
                      placeholder="Select one"
                      :searchable="searchable"
@@ -87,7 +87,7 @@
     import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
     //gMultiselectList.vue
-    import {mapGetters} from 'vuex'
+    import {mapGetters,mapState} from 'vuex'
     import store from '@/store'
     import { ShopifyImgURL} from '@/gUtilities/main.js'
 
@@ -104,15 +104,16 @@
             },
         },
         mounted: function() {
-            this.$refs.gillian.forEach(function(optionselect) {
+           /* this.$refs.gillian.forEach(function(optionselect) {
                 optionselect.isOpen = true;
-            });
+            });*/
+           console.log("restarting");
         },
         watch: {
             selectedVariant: function(val) {
                 this.$emit("variant", this.$data.selectedVariant);
                 if (val != this.$data.selectedVariant){
-                    // this.$data.selectedVariant=val;
+                     //this.$data.selectedVariant=val;
                 }
             },
             CurrentVariant: function(val) {
@@ -134,15 +135,17 @@
             SelectedOptions: function() {
                 return this.$data.selectedOptions;
             },
-            ...mapGetters([
-                'VariantDictionary',
-                'Variants',
-                'Options',
-                'OptionsDictionary',
-                'CurrentVariant',
-            'ImagesDictionary'
-                // ...
-            ])
+        ...mapGetters([
+	        'Variants',
+	        'Options'
+
+        ]),
+    ...mapState({
+	    variant_dictionary: state => state.variant_dictionary,
+	    product_image_dictionary: state => state.product_image_dictionary,
+	    option_dictionary: state => state.option_dictionary
+    })
+
         },
         methods: {
             GetMultiselectClass: function(option) {
@@ -163,61 +166,8 @@
             _getSearchable: function(option) {
                 return ( option.slug == "color") ? true : false;
             },
-            getSwatchSrc:function (option){
-
-                //onsole.log(option);
-
-                let newFilteredArray = this.Variants;
-
-                newFilteredArray = newFilteredArray.filter(function(variant) {
-
-                    var foundArray = [];
-
-                    var optionID = option.parent_id;
-                    var optionValueID = option.id;
-
-                    if (optionValueID == variant.options.get(optionID).id){
-                        return true;
-                    }
-                })
-
-                if (newFilteredArray.length>=1 ) {
-
-                    var variant= newFilteredArray[0];
-
-                    var img = this.ImagesDictionary.get( String(variant.image_id))
-                    console.log("AERT CLLUNG ",this.ImagesDictionary);
-
-
-
-                }
-                        return ShopifyImgURL(img.src,'100x100') ;
-                /*
-
-
-
-								let mySelectedOptions = this.$data.selectedOptions;
-								let newFilteredArray = this.Variants;
-
-								for (let i = 0; i < mySelectedOptions.length; i++) {
-
-									newFilteredArray = newFilteredArray.filter(function(variant) {
-
-										var foundArray = [];
-
-										var optionID = mySelectedOptions[i].parent_id;
-										var optionValueID = mySelectedOptions[i].id;
-
-										if (optionValueID == variant.options.get(optionID).id){
-											return true;
-										}
-									})
-								}*/
-
-               //
-            },
             _getIsDisabled: function(option) {
-                var inverseMap = new Map(this.OptionsDictionary)  //.delete(option.id);
+                var inverseMap = new Map(this.option_dictionary)  //.delete(option.id);
                 inverseMap.delete(option.parent_id);
 
                 let newFilteredArray = this.Variants;
@@ -300,10 +250,13 @@
             },
             _setSelectedOptions: function() {
                 var selectedArr = new Array()
+
                 if (this.$data.selectedVariant){
                     this.$data.selectedOptions = [];
                     for (var i = 0; i < this.Options.length; i++) {
-                        this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
+	                    console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
+
+	                    this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
                     }
                 }
             },
@@ -523,3 +476,4 @@
     .multiselect__tag {
     }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

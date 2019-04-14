@@ -23,17 +23,11 @@
 
 		<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
 
-		<productOptionSelect class="--is-grid-2"   :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
+		<productOptionSelect class="--is-grid-2" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
 
 
 		multiselect
-		<Multiselect v-model="CurrentVariant"
-		             :options="Variants" label="title"
-		             track-by="title"
-		             @input="variantChanged"
-		             :multiple="false"
-		             :show-labels="false"
-		             placeholder="Pick a value"></Multiselect>
+
 
 
 		<span>{{CurrentProductTitle}} {{CurrentVariantTitle}} <button @click="increment">increment</button></span>
@@ -50,11 +44,18 @@
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
     import {ProductMixin} from  '@/mixins/productmixin.js';
     import ProductImageSlideshow from '@/components/shopify/product/ProductImageSlideshow.vue'
-    import productOptionSelect from '@/components/shopify/product/NewProductOptionSelector.vue'
+    import productOptionSelect from '@/components/shopify/product/ProductOptionSelector.vue'
     import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
 
-
+/*    <Multiselect v-model="CurrentVariant"
+    :options="Variants" label="title"
+    track-by="title"
+		             @input="variantChanged"
+    :multiple="false"
+    :show-labels="false"
+    placeholder="Pick a value"></Multiselect>
+    */
     const schema = require("schm");
   //  ProductMixin
     export default {
@@ -81,8 +82,12 @@
 
     },
 	    created:function(){
-		    this.loadProduct();
-		    console.log("settings are", this.$props.sectionsettings);
+
+	    	let self = this;
+		    this.loadProduct().then(function(res){
+			    console.log("DOUFUUODSUOUOSUOsettings are", self.CurrentVariant);
+			    self.CurrentVariant  = self.CurrentVariant ;
+		    })
 
 
 	    },

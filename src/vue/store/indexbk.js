@@ -7,6 +7,60 @@ const schema = require("schm");
 import math from 'mathjs';
 import randomColor from 'randomcolor';
 
+const getSwatchSrc=function (option){
+	
+	//onsole.log(option);
+	
+	let newFilteredArray = this.Variants;
+	
+	newFilteredArray = newFilteredArray.filter(function(variant) {
+		
+		var foundArray = [];
+		
+		var optionID = option.parent_id;
+		var optionValueID = option.id;
+		
+		if (optionValueID == variant.options.get(optionID).id){
+			return true;
+		}
+	})
+	if (newFilteredArray.length>=1 ) {
+		
+		var variant= newFilteredArray[0];
+		
+		var img = this.product_image_dictionary.get( variant.image_id)
+		console.log("AERT CLLUNG ",img,this.product_image_dictionary);
+		
+		
+		
+	}
+	console.log("got to  here!!!");
+	
+	return ShopifyImgURL(img.src,'100x100') ;
+	/*
+
+
+
+					let mySelectedOptions = this.$data.selectedOptions;
+					let newFilteredArray = this.Variants;
+
+					for (let i = 0; i < mySelectedOptions.length; i++) {
+
+						newFilteredArray = newFilteredArray.filter(function(variant) {
+
+							var foundArray = [];
+
+							var optionID = mySelectedOptions[i].parent_id;
+							var optionValueID = mySelectedOptions[i].id;
+
+							if (optionValueID == variant.options.get(optionID).id){
+								return true;
+							}
+						})
+					}*/
+	
+	//
+};
 
 const getColorData = function(slug) {
 	

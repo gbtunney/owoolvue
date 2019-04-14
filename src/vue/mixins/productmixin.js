@@ -87,6 +87,7 @@ CurrentVariant:{
 		}
 	},
 	set: function(newVal) {
+		console.log("setting@");
 		this.$data._currentVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
 	}
 },
@@ -142,12 +143,12 @@ CurrentVariant:{
 	    loadProduct:function(){
 		    let self = this;
 		
-		    this.getProduct({params: {id: this.$props.productid}}).then(function(res) {
+		    return this.getProduct({params: {id: this.$props.productid}}).then(function(res) {
 			    self.add_product_to_dictionary({product: res.data.product});
 			    self.add_variants_to_dictionary({variants: res.data.product.variants});
 			    self.add_images_to_dictionary({images: res.data.product.images});
 			    self.add_options_to_dictionary({options: res.data.product.options});
-		    })
+		    });
 		
 	    },
         loadProductMeta:function(productid){

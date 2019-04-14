@@ -54,8 +54,8 @@ New option selector!
 <script type="text/javascript">
 
     import Vue from 'vue';
-//    import Multiselect from 'vue-multiselect'
-    import Multiselect from '@/components/utilities/gMultiselectList.vue'
+   import Multiselect from 'vue-multiselect'
+//    import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
     //gMultiselectList.vue
     import {mapGetters,mapState} from 'vuex'
@@ -79,7 +79,7 @@ New option selector!
         },
         mounted: function(){
 
-            //this.SelectedVariant = this.$props.currentvariant;
+            this.SelectedVariant = this.$props.currentvariant;
             this.$refs.gillian.forEach(function(optionselect) {
                 optionselect.isOpen = true;
             });
@@ -90,6 +90,8 @@ New option selector!
         },
         watch: {
             selectedVariant: function(val) {
+
+            	console.log("new option selector - changing!!");
                 this.$emit("variant", this.$data.selectedVariant);
                 if (val != this.$data.selectedVariant){
                     // this.$data.selectedVariant=val;
@@ -290,12 +292,16 @@ New option selector!
         }
     }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss" scoped>
 
     @import "product-dependancies";
 
+    .multiselect{
+        z-index: 321312321313213123123123;
+    }
     .multiselect__single{
         width: 100%;
     }
