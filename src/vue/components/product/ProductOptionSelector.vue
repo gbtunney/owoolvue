@@ -17,7 +17,7 @@
                          :optionid="option.id"
                          v-on:close=""
                          v-on:open="selectOpen(option)"
-
+                         displayMode="vertical"
                          :key="index"
                          :taggable="false"
                          label="title"
@@ -301,25 +301,6 @@
         right: 0;
     }
 
-
-
-    @mixin aspect-ratio($width, $height) {
-        position: relative;
-        &:before {
-            display: block;
-            content: "";
-            width: 100%;
-            padding-top: ($height / $width) * 100%;
-        }
-        > .content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-    }
-
     .multiselect__tags {
     }
 
@@ -375,102 +356,10 @@
         );
     }
 
-    /*-----------------*/
-    /*-----------------*/
-    /*-----------------*/
-    /*PROTOTYPE EXAMPLE*/
-
-    /*Red Lining*/
-    h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
-        width: 100%;
-        height: 1px;
-        content: "";
-        position: absolute;
-        bottom: .145833em;
-        left: 0;
-        background-color: rgba(255, 0, 0, 0.23);
-        z-index: -100;
-    }
-
-    h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
-        width: 100%;
-        height: 1px;
-        content: "";
-        position: absolute;
-        top: .27em;
-        left: 0;
-        background-color: rgba(255, 0, 0, 0.23);
-        z-index: -100;
-    }
-
-    .newbutton {
-
-        & > * {
-            // background: green;
-        }
-    }
-
-    .__icon-wrap {
-    }
-
-    .__icon {
-    }
-
-    .testgrid {
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-    }
-
-    .wrapper-with-intrinsic-ratio {
-        position: relative;
-        padding-bottom: 20%;
-        height: 0;
-    }
-
-    .element-to-stretch {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-    }
-
-    .testicon {
-    }
-
-    .--debug {
-        display: none;
-    }
-
-    .multiselect__content-wrapper {
-        display: block;
-        position: relative;
-        height: 100%;
-        max-height: 220.438px;
-    }
-
-    .optionbutton {
-    }
-
-
-    .attribute-panel {
-       // background: #eeeeee;
-        padding: 30px;
-        margin-bottom: 20px;
-    }
-
     .option__swatch {
         border: 1px solid black;
         height: 50px;
         width: 50px;
     }
 
-    code {
-
-    }
-
-    //real
-    .multiselect__tag {
-    }
 </style>
