@@ -1,7 +1,7 @@
 
 import ShopifyApi from "vuex-rest-api";
 
-import {Slugify,GDatamapper} from '@/gUtilities/main.js'
+import {Slugify,GDatamapper} from '@/helpers/main.js'
 
 //https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/orders.json
 // products thru admin: https://o-wool-stage.myshopify.com/admin/products/#{id}.json

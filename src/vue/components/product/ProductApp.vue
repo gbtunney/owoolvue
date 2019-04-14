@@ -39,8 +39,10 @@
 <script type="text/javascript">
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
     import {ProductMixin} from  '@/mixins/productmixin.js';
-    import ProductImageSlideshow from '@/components/shopify/product/ProductImageSlideshow.vue'
-    import productOptionSelect from '@/components/shopify/product/ProductOptionSelector.vue'
+    import ProductImageSlideshow from '@/components/product/ProductImageSlideshow.vue'
+    import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
+
+    //custom version of vuemultiselect - stripped down.
     import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
 
@@ -70,13 +72,12 @@
 	    components: {ProductImageSlideshow,Multiselect,productOptionSelect},
 	    data() {
 		    return {
-
 		    }
 	    },
 	    name: 'testcomponent',
 	    computed: {
 
-    },
+	    },
 	    created:function(){
 
 	    	let self = this;
@@ -84,24 +85,22 @@
 			    console.log("DOUFUUODSUOUOSUOsettings are", self.CurrentVariant);
 			    self.CurrentVariant  = self.CurrentVariant ;
 		    })
-
-
 	    },
 	    mounted:function(){
 		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
-    methods:{
-	    variantChanged: function(variant) {
-	    	this.CurrentVariant  = variant;
-		console.log("variant changed!!!!!",variant);
+	    methods:{
+	    	variantChanged: function(variant) {
+	    		this.CurrentVariant  = variant;
+	    		console.log("variant changed!!!!!",variant);
 	    }
      },
-}
-    ;
+};
 </script>
+
 <style lang="scss" type="text/scss">
 
-	</style>
+</style>
 
 
 

@@ -3,6 +3,8 @@ import Vue from 'vue';
 import VuexPersistence from 'vuex-persist';
 const schema = require("schm");
 
+import shopifyAdminApi from "./shopify_admin_api";
+
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
