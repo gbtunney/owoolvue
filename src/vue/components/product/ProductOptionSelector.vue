@@ -8,6 +8,10 @@
         <div class="attribute-panel" v-for="option,index in Options">
         <h3 class="option__name"> {{option.name}}</h3>
 
+            <v-text-field
+                label="Search colors"
+                append-outer-icon="search"
+            ></v-text-field>
 
             <Multiselect :options="option.values" class="--is-open"
                          v-model="selectedOptions[index]"
