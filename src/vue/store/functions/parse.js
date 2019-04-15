@@ -4,7 +4,7 @@ import math from 'mathjs'
 import {Slugify, GDatamapper,normalize} from '@/helpers/main.js'
 import {getSwatchSrc, getColorData} from './meta'
 
-export function parseOptions(inOptions) {
+export function parseOptions(inOptions, showSwatch=false) {
 	
 	const GDataMapOptionValues = {
 			adapters: {
@@ -45,11 +45,18 @@ export function parseOptions(inOptions) {
 		});
 		
 		currentObj = OPTIONS_SCHEMA.parse(currentObj);
+		
+		//temp swatch??
+		var swatchSrc = false;
+		
+		if ( currentObj.slug == showSwatch  ){
+			 swatchSrc = true;
+		}
 		for (var u = 0; u < currentObj.values.length; u++) {
 			var newValueObj = GDatamapper.expandToObject(currentObj.values[u], "title", {
 				slug: Slugify(currentObj.values[u]),
 				color: getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
-				swatch_image: false,//getSwatchData(Slugify(currentObj.values[u])),
+				swatch_image: swatchSrc, //getSwatchData(Slugify(currentObj.values[u])),
 				_index: u,
 				parent_id: normalize(optionsArray[i].id),
 				gillian: "test"

@@ -71,6 +71,9 @@
 		    },
 		    sectionsettings: {
 		    	default: {}
+		    },
+		    swatch:{
+			    default: "color"    ///the slug of the option to show a swatch on.
 		    }
 	    },
 	    mixins: [ProductMixin],
@@ -86,6 +89,8 @@
 	    created:function(){
 
 	    	let self = this;
+
+	    	console.log("PROP FOR SWATCH IS " , this.$props.swatch);
 		    this.loadProduct().then(function(res){
 
 		    self.add_product_to_dictionary({product: res.data.product});

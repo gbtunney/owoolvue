@@ -5,7 +5,7 @@ const schema = require("schm");
 
 import shopifyAdminApi from "./shopify_admin_api";
 import {parseOptions, parseVariants} from './functions/parse'
-import {Slugify, GDatamapper} from '@/helpers/main.js'
+import {Slugify, GDatamapper,filterArrayByValue} from '@/helpers/main.js'
 
 Vue.use(Vuex);
 
@@ -73,10 +73,11 @@ const main_store = {
 		},
 		add_options_to_dictionary(state, payload) {
 			
-			var parsedOptions = parseOptions(payload.options);
-			state.option_dictionary = GDatamapper.parseToDictionary(parsedOptions, "id");
+			var parsedOptions = parseOptions(payload.options,"color");
 			
+			state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
 			
+			//state.option_dictionary=newOptionDictionary;
 			if ( state.variant_dictionary ){
 				var newvariants =  parseVariants(Array.from(state.variant_dictionary.values()),Array.from(state.option_dictionary.values())) ;
 				console.log("parsing options",	state.option_dictionary,newvariants );

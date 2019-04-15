@@ -46,7 +46,7 @@
                     <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
 
                 <template slot="option" class="is-grid-2" slot-scope="props">
-                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if="option.name == 'Color' " class="option__image" >
+                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if=" _getSwatchSrc(props.option)" class="option__image" :src="_getSwatchSrc(props.option)" >
                     </div>
                     <div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
                 </template>
@@ -89,7 +89,7 @@
 
     import {mapGetters,mapState} from 'vuex'
     import store from '@/store'
-    import { ShopifyImgURL} from '@/helpers/main.js'
+    import { ShopifyImgURL, getVariantFromOptions} from '@/helpers/main.js'
 
     export default {
         name: 'HelloWorld',
@@ -97,9 +97,9 @@
             Multiselect
         }, props: {
             searchable: {
-                type: Boolean,
-                default: false
-            },
+                default: false    //an array with options that are searchable
+            }
+
         },
         mounted: function() {
            /* this.$refs.gillian.forEach(function(optionselect) {
@@ -146,6 +146,18 @@
 
         },
         methods: {
+        	_getSwatchSrc: function(option){
+        		if ( option.swatch_image==true || option.swatch_image == "true" ){
+			        var foundVariantArr = getVariantFromOptions([option.id],this.Variants  );
+			        if ( foundVariantArr && foundVariantArr.length>0 && foundVariantArr[0].image_id ){
+			        	var img = this.product_image_dictionary.get( foundVariantArr[0].image_id);
+                        if (  img  ){
+	                        return ShopifyImgURL(img.src,'100x100') ;
+                        }
+                    }
+		        }
+                return false;
+            },
             GetMultiselectClass: function(option) {
                 return `attribute-${option.slug}`;
             },

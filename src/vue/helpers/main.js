@@ -31,11 +31,12 @@ export function normalize(value) {
 }
 
 export function filterArrayByValue(_array, _value, _prop=false) {
-	if (!_array || !_value || _array.lengt <= 0) return;
+	if (!_array || !_value || _array.length <= 0) return;
 	
 	let prop = _prop, value = _value;
 	return _array.filter(function(item) {
 		
+		console.log("the item is " ,prop, item.hasOwnProperty(prop));
 		if (item.hasOwnProperty(prop) && item[prop] == value) return true;
 		return;
 	})
