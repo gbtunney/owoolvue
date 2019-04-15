@@ -143,12 +143,7 @@ CurrentVariant:{
 	    loadProduct:function(){
 		    let self = this;
 		
-		    return this.getProduct({params: {id: this.$props.productid}}).then(function(res) {
-			    self.add_product_to_dictionary({product: res.data.product});
-			    self.add_variants_to_dictionary({variants: res.data.product.variants});
-			    self.add_images_to_dictionary({images: res.data.product.images});
-			    self.add_options_to_dictionary({options: res.data.product.options});
-		    });
+		    return this.getProduct({params: {id: this.$props.productid}});
 		
 	    },
         loadProductMeta:function(productid){

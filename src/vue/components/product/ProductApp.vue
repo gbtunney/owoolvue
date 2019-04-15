@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<adminOptionSelect></adminOptionSelect>
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 			<h1 class="product-single__title" itemprop="name">{{ CurrentProductTitle }}</h1>
@@ -42,6 +43,9 @@
     import ProductImageSlideshow from '@/components/product/ProductImageSlideshow.vue'
     import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
 
+
+    import adminOptionSelect from '@/components/admin/ProductOptionTestComponent.vue';
+
     //custom version of vuemultiselect - stripped down.
   //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
     //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
@@ -70,7 +74,7 @@
 		    }
 	    },
 	    mixins: [ProductMixin],
-	    components: {ProductImageSlideshow,productOptionSelect},
+	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect},
 	    data() {
 		    return {
 		    }
@@ -83,6 +87,12 @@
 
 	    	let self = this;
 		    this.loadProduct().then(function(res){
+
+		    self.add_product_to_dictionary({product: res.data.product});
+		    self.add_variants_to_dictionary({variants: res.data.product.variants});
+		    self.add_images_to_dictionary({images: res.data.product.images});
+		    self.add_options_to_dictionary({options: res.data.product.options});
+
 			    console.log("DOUFUUODSUOUOSUOsettings are", self.CurrentVariant);
 			    self.CurrentVariant  = self.CurrentVariant ;
 		    })

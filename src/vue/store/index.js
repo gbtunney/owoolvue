@@ -47,7 +47,6 @@ const main_store = {
 		add_variants_to_dictionary(state, payload) {
 		    
 		    var variantArr = payload.variants;
-			console.log("parsing",variantArr.length );
 			
 			var newMap = new Map(state.variant_dictionary  );
 			
@@ -56,13 +55,11 @@ const main_store = {
 				newMap.set(item.id,item);
             })
 			state.variant_dictionary = newMap;
-			console.log("parsedsize ",state.variant_dictionary.size );
 			
 		},
 		add_images_to_dictionary(state, payload) {
 			
 			var imagesArr = payload.images;
-			console.log("parsing",imagesArr.length );
 			
 			var newMap = new Map(state.product_image_dictionary  );
 			

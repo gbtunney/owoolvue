@@ -1,7 +1,7 @@
 const schema = require("schm");
 import math from 'mathjs'
 
-import {Slugify, GDatamapper} from '@/helpers/main.js'
+import {Slugify, GDatamapper,normalize} from '@/helpers/main.js'
 import {getSwatchSrc, getColorData} from './meta'
 
 export function parseOptions(inOptions) {
@@ -17,8 +17,8 @@ export function parseOptions(inOptions) {
 }
 },
 	validate: () => schema({
-		id: {type: String, default: Math.round(math.random(11111111111, 999999999999999))},
-		parent_id: {type: String, default: false},
+		id: {type: Number, default: Math.round(math.random(11111111111, 999999999999999))},
+		parent_id: {type: Number, default: false},
 		slug: {type: String, required: true},
 		$isDisabled:  {type: Boolean, default: false},
 		title: {type: String},
@@ -35,12 +35,12 @@ export function parseOptions(inOptions) {
 		var currentObj = optionsArray[i];
 		var OPTIONS_SCHEMA = schema({
 			
-			id: {type: String, default: math.random(11111111111, 999999999999999)},
+			id: {type: Number, default: math.random(11111111111, 999999999999999)},
 			name: {type: String, default: false},
 			slug: {type: String, default: Slugify(currentObj["name"]), required: true},
 			position: {type: Number},
 			_index: {type: Number, default: i, required: true},
-			product_id: {type: String, required: true, default: false},
+			product_id: {type: Number, required: true, default: false},
 			values: {type: Array, default: false}
 		});
 		
@@ -51,7 +51,7 @@ export function parseOptions(inOptions) {
 				color: getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
 				swatch_image: false,//getSwatchData(Slugify(currentObj.values[u])),
 				_index: u,
-				parent_id: optionsArray[i].id,
+				parent_id: normalize(optionsArray[i].id),
 				gillian: "test"
 			})
 			
@@ -89,7 +89,7 @@ export function parseVariants(inVariants, inOptionsArr) {
 				
 				let searchString = Slugify(item[`option${u}`]);
 				
-				console.log("currobk", searchString, inOptionsArr, item);
+				//console.log("currobk", searchString, inOptionsArr, item);
 				
 				var myArr = inOptionsArr[u - 1].values.filter(function(option) {
 					
@@ -106,8 +106,6 @@ export function parseVariants(inVariants, inOptionsArr) {
 				} else {
 					newTargetArray.push(myArr[0]);
 				}
-				//console.log("finsihed array",newTargetArray);}
-				
 			}
 		}
 		item.options = GDatamapper.parseToDictionary(newTargetArray, "parent_id");
