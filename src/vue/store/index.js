@@ -16,6 +16,7 @@ const vuexLocal = new VuexPersistence({
 const main_store = {
     state: {
         count: 0,
+	    layout_toggle:2,
         product_dictionary: new Map(),
 	    variant_dictionary: new Map(),
 	    option_dictionary: new Map(),
@@ -25,6 +26,9 @@ const main_store = {
 	getters: {
 		Count: function(state) {
 			return state.count
+		},
+		LayoutToggle: function(state) {
+			return state.layout_toggle
 		},
 		Variants: function(state) {
 			return Array.from(state.variant_dictionary.values())//state.count
@@ -40,6 +44,9 @@ const main_store = {
 	mutations: {
 		increment(state, payload) {
 			state.count += payload.amount
+		},
+		setlayoutButton(state, payload) {
+			state.layout_toggle = payload.index
 		},
 		add_product_to_dictionary(state, payload) {
 			state.product_dictionary = new Map(state.product_dictionary).set(parseInt(payload.product.id) , payload.product)
@@ -68,26 +75,19 @@ const main_store = {
 			})
    
 			state.product_image_dictionary = newMap;
-			console.log("parsedsize ",state.product_image_dictionary.size );
 			
 		},
 		add_options_to_dictionary(state, payload) {
 			
-			var parsedOptions = parseOptions(payload.options,"color");
+			var parsedOptions = parseOptions(payload.options,["color"]);
 			
 			state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
 			
-			//state.option_dictionary=newOptionDictionary;
 			if ( state.variant_dictionary ){
 				var newvariants =  parseVariants(Array.from(state.variant_dictionary.values()),Array.from(state.option_dictionary.values())) ;
-				console.log("parsing options",	state.option_dictionary,newvariants );
-				//todo, make this commit something
-				//state.variant_dictionary = new
-				
 				var newMap = new Map(state.variant_dictionary  );
 				
 				newvariants.forEach( function(item){
-					
 					newMap.set(item.id,item);
 				})
 				state.variant_dictionary = newMap;

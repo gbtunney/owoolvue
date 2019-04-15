@@ -1,7 +1,7 @@
 const schema = require("schm");
 import math from 'mathjs'
 
-import {Slugify, GDatamapper,normalize} from '@/helpers/main.js'
+import {Slugify, GDatamapper,normalize,filterArrayByValue} from '@/helpers/main.js'
 import {getSwatchSrc, getColorData} from './meta'
 
 export function parseOptions(inOptions, showSwatch=false) {
@@ -49,7 +49,7 @@ export function parseOptions(inOptions, showSwatch=false) {
 		//temp swatch??
 		var swatchSrc = false;
 		
-		if ( currentObj.slug == showSwatch  ){
+		if (  filterArrayByValue(showSwatch,  currentObj.slug ) &&  filterArrayByValue(showSwatch,  currentObj.slug ).length > 0   ){
 			 swatchSrc = true;
 		}
 		for (var u = 0; u < currentObj.values.length; u++) {

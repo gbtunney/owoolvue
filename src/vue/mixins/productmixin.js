@@ -143,7 +143,7 @@ CurrentVariant:{
 	    loadProduct:function(){
 		    let self = this;
 		
-		    return this.getProduct({params: {id: this.$props.productid}});
+		    return this.getProduct({params: {id: this.$props.productid}})
 		
 	    },
         loadProductMeta:function(productid){

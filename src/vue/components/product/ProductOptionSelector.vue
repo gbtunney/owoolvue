@@ -10,7 +10,6 @@
 
 
             <Multiselect :options="option.values" class="--is-open"
-
                          v-model="selectedOptions[index]"
                          @input="_getVariantFromOptions()"
                          :class="GetMultiselectClass(option)"
@@ -46,14 +45,12 @@
                     <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
 
                 <template slot="option" class="is-grid-2" slot-scope="props">
-                    <div class="option__swatch"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img v-if=" _getSwatchSrc(props.option)" class="option__image" :src="_getSwatchSrc(props.option)" >
+                    <div class="option__swatch" v-if=" _getSwatchSrc(props.option)"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img  class="option__image" :src="_getSwatchSrc(props.option)" >
                     </div>
                     <div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
                 </template>
-            </Multiselect>{
+            </Multiselect>
         </div>
-
-
 
         <Multiselect :options="Variants"
                      v-model="selectedVariant"
@@ -152,7 +149,7 @@
 			        if ( foundVariantArr && foundVariantArr.length>0 && foundVariantArr[0].image_id ){
 			        	var img = this.product_image_dictionary.get( foundVariantArr[0].image_id);
                         if (  img  ){
-	                        return ShopifyImgURL(img.src,'100x100') ;
+	                        return ShopifyImgURL(img.src,'150x150') ;
                         }
                     }
 		        }
@@ -294,7 +291,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" type="text/scss" scoped>
+<style lang="scss" type="text/scss" >
 
     @import "product-dependancies";
 
@@ -333,45 +330,57 @@
         position: relative;
     }
 
-    .demo-button {
-        $demo-obj: (
-            color: (
-                scheme: dark,
-                props: (
-                    background: true,
-                    foreground: true,
-                    accent:false,
-                    border:true,
-                    fill:foreground
-                )
-            ),
-            font:(
-                font-key: font-san-serif,
-                scale-key:type,
-                value: xxl
-            ),
-            spacing:(
-                (css-prop: padding,
-                    scale-key: button,
-                    value: (
-                        top: xl,
-                        bottom: xl,
-                        left: xl,
-                        right: xl
-                    ),
-                ), (
-                    css-prop: margin,
-                    scale-key: button,
-                    value: lg
-                ),
-            )
-        );
-    }
-
     .option__swatch {
-        border: 1px solid black;
-        height: 50px;
-        width: 50px;
+
+     //   @include dimensions(100px,100px) ;
+    }
+    .option__image{
+       // height: 60px;
+
+    }
+    .layout-sm{
+        .option__swatch {
+            clip-path: circle(40% at center);
+            /* Also can take single values to make all sides the same, or 2 values (vert/horz), or 3 values (top/horz/bottom). */
+        }
+
+    }
+    .layout-lg{
+        .option__swatch{
+        width: 300px;
+            clip-path: inset(20% 20%);
+            /* Also can take single values to make all sides the same, or 2 values (vert/horz), or 3 values (top/horz/bottom). */
+        }
+
+    }
+    .layout-list{
+
+        .option__image{
+            height: 40px;
+        }
+    }
+    .layout-grid{
+
+        .multiselect__content{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            .option__swatch{
+                //width: 50px;
+                //clip-path: inset(20% 20%);
+                /* Also can take single values to make all sides the same, or 2 values (vert/horz), or 3 values (top/horz/bottom). */
+            }
+.option__image{
+    width: 100%;
+}
+            .option__title{
+                background: red;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    .multiselect__option{
+        display:block;
+    }
     }
 
 </style>

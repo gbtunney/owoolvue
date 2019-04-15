@@ -3,6 +3,7 @@
 		<adminOptionSelect></adminOptionSelect>
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
+
 			<h1 class="product-single__title" itemprop="name">{{ CurrentProductTitle }}</h1>
 
 			<div data-price-container>
@@ -21,8 +22,23 @@
 		</div>
 
 		<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
+		{{Layout}}
+		<v-btn-toggle mandatory @change="testBtn" v-model="LayoutToggle">
+			<v-btn flat>
+				<v-icon>format_grid</v-icon>
+			</v-btn>
+			<v-btn flat>
+				<v-icon>format_list</v-icon>
+			</v-btn>
+			<v-btn flat>
+				<v-icon>format_align_right</v-icon>
+			</v-btn>
+			<v-btn flat>
+				<v-icon>format_align_justify</v-icon>
+			</v-btn>
+		</v-btn-toggle>
 
-		<productOptionSelect class="--is-grid-2" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
+		<productOptionSelect class="--is-grid-2" :class="Layout" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
 
 		multiselect
 
@@ -42,8 +58,24 @@
     import {ProductMixin} from  '@/mixins/productmixin.js';
     import ProductImageSlideshow from '@/components/product/ProductImageSlideshow.vue'
     import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
+    import 'vuetify/dist/vuetify.min.css'
 
+    import Vue from 'vue';
 
+    import Vuetify from 'vuetify'
+
+    Vue.use(Vuetify, {
+	    theme: {
+		    primary: '#ee44aa',
+		    secondary: '#424242',
+		    accent: '#82B1FF',
+		    error: '#FF5252',
+		    info: '#2196F3',
+		    success: '#4CAF50',
+		    warning: '#FFC107'
+	    },
+	    iconfont: 'md',
+    })
     import adminOptionSelect from '@/components/admin/ProductOptionTestComponent.vue';
 
     //custom version of vuemultiselect - stripped down.
@@ -80,11 +112,20 @@
 	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect},
 	    data() {
 		    return {
+		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
+			    toggle_exclusive:2
 		    }
 	    },
 	    name: 'testcomponent',
 	    computed: {
+	    ...mapGetters([
+		    'LayoutToggle'
+	    ]),
+	    Layout:function(){
+return this.$data.toggle_classes[this.LayoutToggle];
 
+
+	    }
 	    },
 	    created:function(){
 
@@ -106,6 +147,12 @@
 		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
 	    methods:{
+	    ...mapMutations(['setlayoutButton']),
+
+			    testBtn:function(target){
+		    	console.log("changed",target);
+		    	this.setlayoutButton({index: target})
+		    },
 	    	variantChanged: function(variant) {
 	    		this.CurrentVariant  = variant;
 	    		console.log("variant changed!!!!!",variant);

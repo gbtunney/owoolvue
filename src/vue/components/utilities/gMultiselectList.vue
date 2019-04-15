@@ -303,6 +303,36 @@
 
 <style lang="scss" type="text/scss" scoped>
 
+	@import "src/styles/g-Patternlab/project-variables";
+	$GENERATE-QUEUE: false;
+	@import "src/styles/g-Patternlab/project-base";
+
+
+	$btn-option-render-disabled: (
+		(
+			description: "color schemes",
+			selector:false,
+			variant-key: light,
+			parent: color-schemes,
+			suffix:false,
+			variants:(
+				options: (
+					obj: (
+						background: true,
+						foreground:  lighten foreground 40%,
+						accent:true,
+						border:  lighten foreground 40%,
+						fill:foreground,
+						hover-background:true,
+						hover-foreground:true
+					)
+				)
+			)
+		)
+	);
+
+
+
 	.multiselect * {
 		box-sizing: border-box;
 	}
@@ -348,19 +378,27 @@
 		display: block;
 	}
 
+
+	.multiselect__option{
+		//@include render-queue(get-collection( $btn-option-render));
+		@include c-button( false,  light font-small-caps sm xxs , color-schemes typography font-size base-padding ) ;
+
+		display: flex;
+
+		//$new-list: get-collection((base-spacing, color-schemes, font-size,typography), $no-selectors`);
+	//	$new-list: overwrite-collections($new-list, (sm, dark, md,font-san-serif), variant-key);
+		// @include render-queue($new-list);
+		//  @include render-queue(get-collection($example-component-render));
+
+		@extend %c-button-static-props;
+text-transform: uppercase;
+	}
+
 	.multiselect__option {
-		display: block;
-		//padding: 12px;
-		//min-height: 40px;
-		//line-height: 16px;
-		//text-decoration: none;
-		//text-transform: none;
-		//	vertical-align: middle;
+
 		position: relative;
 		cursor: pointer;
 		white-space: nowrap;
-
-		//	@include g-simple-component(accent-secondary,font-san-serif,1);
 	}
 
 	.multiselect__option:after {
@@ -387,10 +425,12 @@
 	}
 
 	.multiselect__option--selected {
+		//@include render-queue(get-collection(	$btn-option-render-disabled));
+//background: red!important;
+		@include c-button( false,  dark-accent-default font-san-serif md md , color-schemes typography font-size base-padding ) ;
 
-
-		//@include c-button(dark-accent-default);
-
+	//	@include c-button(dark-accent-default);
+		//$btn-option-render-disabled:
 	}
 
 	.multiselect__option--selected:after {
@@ -416,13 +456,12 @@
 
 	.multiselect--disabled .multiselect__current,
 	.multiselect--disabled .multiselect__select {
-		background: #ededed;
-		color: #a6a6a6;
+
 	}
 
 	.multiselect__option--disabled {
-		background: #ededed !important;
-		color: #a6a6a6 !important;
+		//@include render-queue(get-collection(	$btn-option-render-disabled));
+		opacity:.3;
 		cursor: text;
 		pointer-events: none;
 	}
