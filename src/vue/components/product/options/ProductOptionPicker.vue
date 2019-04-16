@@ -2,13 +2,13 @@
 	<div >
 
 		<div class="attribute-panel" v-for="option,index in Options">
-{{option.values}}
+
 			Option Picker
 			<h3 class="option__name"> {{option.name}}</h3>
-			<v-text-field
-				label="Search colors"
-				append-outer-icon="search"
-			></v-text-field>
+
+			<FuseSearch @fuseResult="fuseFilter" :list="option.values">
+
+			</FuseSearch>
 
 			<Multiselect :options="option.values" class="--is-open"
 			             v-model="selectedOptions"
@@ -64,10 +64,13 @@
 	import store from '@/store'
 	import { ShopifyImgURL, getVariantFromOptions} from '@/helpers/main.js'
 
+	import FuseSearch from '@/components/utilities/g-Fuse-Search.vue';
+
+
 	export default {
 		name: 'HelloWorld',
 		components: {
-			Multiselect
+			Multiselect,FuseSearch
 		}, props: {
 			option: {
 				required:false
@@ -82,6 +85,8 @@
 				 optionselect.isOpen = true;
 			 });*/
 			console.log("restarting");
+
+
 		},
 		watch: {
 			selectedVariant: function(val) {
@@ -237,6 +242,10 @@
 		variantSelectorChanged: function() {
 			console.log("VUEX ::VARIANT CHANGED!!! ", this.$data.selectedVariant);
 			this._setSelectedOptions();
+		},
+		fuseFilter: function(result,query,list, fuse_options ){
+
+console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
 		}
 	},
 	filters: {
@@ -250,6 +259,7 @@
 		return {
 			msg: 'Welcome to Your Vue.js App',
 			totalOptions: 3,
+			searchQuery: false,
 			selectedOptions: [],
 			selectedVariant: [],
 		}
