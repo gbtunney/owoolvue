@@ -2,7 +2,7 @@
 	<div >
 
 		<div class="attribute-panel" v-for="option,index in Options">
-
+{{OptionValues}}
 			Option Picker
 			<h3 class="option__name"> {{option.name}}</h3>
 
@@ -10,7 +10,7 @@
 
 			</FuseSearch>
 
-			<Multiselect :options="option.values" class="--is-open"
+			<Multiselect :options="OptionValues" class="--is-open"
 			             v-model="selectedOptions"
 			             @input="$emit('optionChanged',option, selectedOptions)"
 			             :optionid="option.id"
@@ -81,12 +81,10 @@
 
 		},
 		mounted: function() {
-			/* this.$refs.gillian.forEach(function(optionselect) {
-				 optionselect.isOpen = true;
-			 });*/
-			console.log("restarting");
 
-
+			if ( this.$props.option &&  this.$props.option.values ){
+				this.OptionValues =  this.$props.option.values;
+			}
 		},
 		watch: {
 			selectedVariant: function(val) {
@@ -102,6 +100,15 @@
 			}
 		},
 		computed: {
+			OptionValues: {
+				get: function() {
+					return this.$data._optionValues;
+				},
+				set: function(newVal) {
+					console.log("setting@",newVal);
+					this.$data._optionValues = newVal;  ///this.Variants[this.CurrentVariant._index];
+				}
+			},
 		...mapGetters([
 			'Options'
 		]),
@@ -243,9 +250,9 @@
 			console.log("VUEX ::VARIANT CHANGED!!! ", this.$data.selectedVariant);
 			this._setSelectedOptions();
 		},
-		fuseFilter: function(result,query,list, fuse_options ){
-
-console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
+		fuseFilter: function(result, query, list, fuse_options) {
+			//console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
+			this.OptionValues = result;
 		}
 	},
 	filters: {
@@ -259,6 +266,7 @@ console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
 		return {
 			msg: 'Welcome to Your Vue.js App',
 			totalOptions: 3,
+			_optionValues:[],
 			searchQuery: false,
 			selectedOptions: [],
 			selectedVariant: [],
