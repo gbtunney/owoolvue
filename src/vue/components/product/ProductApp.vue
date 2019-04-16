@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<adminOptionSelect></adminOptionSelect>
+		<productOptionPicker @optionChanged="optionChanged" :option="OptionBySlug('color')"></productOptionPicker>
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 
@@ -38,7 +39,6 @@
 			</v-btn>
 		</v-btn-toggle>
 
-		<productOptionSelect class="--is-grid-2" :class="Layout" :variants="Variants"  :selectedVariant="CurrentVariant" v-on:variant="variantChanged"></productOptionSelect>
 
 		multiselect
 
@@ -58,6 +58,10 @@
     import {ProductMixin} from  '@/mixins/productmixin.js';
     import ProductImageSlideshow from '@/components/product/ProductImageSlideshow.vue'
     import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
+
+    import productOptionPicker from '@/components/product/options/ProductOptionPicker.vue'
+
+
     import 'vuetify/dist/vuetify.min.css'
 
     import Vue from 'vue';
@@ -109,7 +113,7 @@
 		    }
 	    },
 	    mixins: [ProductMixin],
-	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect},
+	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect,productOptionPicker},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -119,7 +123,8 @@
 	    name: 'testcomponent',
 	    computed: {
 	    ...mapGetters([
-		    'LayoutToggle'
+		    'LayoutToggle',
+		    'OptionBySlug'
 	    ]),
 	    Layout:function(){
 return this.$data.toggle_classes[this.LayoutToggle];
@@ -131,7 +136,6 @@ return this.$data.toggle_classes[this.LayoutToggle];
 
 	    	let self = this;
 
-	    	console.log("PROP FOR SWATCH IS " , this.$props.swatch);
 		    this.loadProduct().then(function(res){
 
 		    self.add_product_to_dictionary({product: res.data.product});
@@ -141,6 +145,8 @@ return this.$data.toggle_classes[this.LayoutToggle];
 
 			    console.log("DOUFUUODSUOUOSUOsettings are", self.CurrentVariant);
 			    self.CurrentVariant  = self.CurrentVariant ;
+			    console.log("PROP FOR SWATCH IS " , self.OptionBySlug('color'));
+
 		    })
 	    },
 	    mounted:function(){
@@ -156,7 +162,10 @@ return this.$data.toggle_classes[this.LayoutToggle];
 	    	variantChanged: function(variant) {
 	    		this.CurrentVariant  = variant;
 	    		console.log("variant changed!!!!!",variant);
-	    }
+	    },optionChanged: function(option,value) {
+			   // this.CurrentVariant  = variant;
+			    console.log("OPTRIONq1 changed!!!!!",option,value);
+		    }
      },
 };
 </script>

@@ -2,6 +2,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import VuexPersistence from 'vuex-persist';
 const schema = require("schm");
+import store from '@/store/index';
 
 import shopifyAdminApi from "./shopify_admin_api";
 import {parseOptions, parseVariants} from './functions/parse'
@@ -26,6 +27,10 @@ const main_store = {
 	getters: {
 		Count: function(state) {
 			return state.count
+		},
+		OptionBySlug: (state) => (slug) => {
+			console.log("getting slug !!" , store.getters.Options);
+			return store.getters.Options.find(option => option.slug === slug)
 		},
 		LayoutToggle: function(state) {
 			return state.layout_toggle
