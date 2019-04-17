@@ -1,6 +1,26 @@
 <template>
 	<div>
 		<adminOptionSelect></adminOptionSelect>
+
+		<Multiselect :options="Variants"
+		             v-model="CurrentVariant"
+		             @input="variantChanged"
+		             track-by="title"
+		             label="title"
+		             ref="multiselectmaster"
+		             :taggable="false"
+		             :multiple="false"
+		             :closeOnSelect="false"
+		             placeholder="Select one"
+		             searchable="true"
+		             :allow-empty="false">
+
+			<template slot="singleLabel" slot-scope="{ option }">
+				<strong>{{ option.id }}</strong> ID:<strong>  {{ option.title }}</strong>
+			</template>
+
+		</Multiselect>
+
 		<productOptionPicker @optionChanged="optionChanged" :option="OptionBySlug('color')"></productOptionPicker>
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
@@ -60,6 +80,7 @@
     import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
 
     import productOptionPicker from '@/components/product/options/ProductOptionPicker.vue'
+    import Multiselect from 'vue-multiselect'
 
 
     import 'vuetify/dist/vuetify.min.css'
@@ -113,7 +134,7 @@
 		    }
 	    },
 	    mixins: [ProductMixin],
-	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect,productOptionPicker},
+	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
