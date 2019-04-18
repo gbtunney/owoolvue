@@ -21,7 +21,11 @@
 
 		</Multiselect>
 
-		<productOptionPicker @optionChanged="optionChanged" :option="OptionBySlug('color')"></productOptionPicker>
+		<productOptionPicker searchable="true" @optionChanged="optionChanged" :option="OptionBySlug('color')"></productOptionPicker>
+
+		option 2
+		<productOptionPicker searchable="true" @optionChanged="optionChanged" :option="OptionBySlug('size')"></productOptionPicker>
+
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 

@@ -1,10 +1,7 @@
 <template>
 	<div >
 		FUSE SEARCH
-
-		<div id="sb-search"
-		     :class="{ 'sb-search-open' : $data._active }"
-		     class="sb-search">
+		<div id="sb-search" :class="[ UID, {'sb-search-open' : $data._active}]" class="sb-search">
 			<form>
 				<input class="sb-search-input"
 				       v-model="$data._input_query"
@@ -27,6 +24,7 @@
 	import store from '@/store'
 	import Vue from 'vue';
 	import Fuse from 'fuse.js';
+	import math from 'mathjs'
 
 
 	const fuse_options = {
@@ -89,13 +87,18 @@
 			return {
 				_list: [], //base list to search - the "HAYSTACK"
 				_input_query: "", //search string - the "NEEDLE",
-				_active: true
+				_active: true,
+				_id:  Math.round(math.random(11111111111, 999999999999999))
+
 			}
 		},
 		name: 'fuseSearch',
 		computed: {
 			List: function(){
 				return this.$data._list
+			},
+			UID:function(){
+				return `${this.$options.name}-${this.$data._id}`;
 			}
 		},
 		created:function(){
@@ -111,23 +114,21 @@
 		methods:{
 			_openSearch:function() {
 				this.$data._active = true;
-				document.querySelector(".sb-search-input").focus();
-			}
-		,
+				document.querySelector(`.${this.UID} .sb-search-input`).focus();
+				//UID
+			},
 			_closeSearch:function() {
 				if (this.$props.minimize){
 					this.$data._active = false;
 				}
-			}
-		,
+			},
 			_inputLoseFocus:function(list = this.$props.list) {
 
 				///clear query when looses focus
 				this.$data._input_query = "";
 				this._closeSearch();
 				this.$emit('fuseInactive', this.$props.list, this.$props);
-			}
-		,
+			},
 			_fuseSearch:function(query = this.$data._input_query, list = this.$props.list) {
 
 				if (query.length > 0){
@@ -145,6 +146,39 @@
 </script>
 
 <style lang="scss" type="text/scss" scoped>
+	@import "src/vue/helpers/product-dependancies.scss";
+
+
+	$example-component-render: (
+		(
+			description: "color schemes",
+			selector:false,
+			parent: color-schemes,
+			suffix:false,
+			variant-key: dark,
+			variants:(
+				options: (
+					obj: (
+						background: true,
+						foreground: true,
+						accent:true,
+						border: lighten foreground 10%,
+						fill:foreground,
+						hover-background:true,
+						hover-foreground:true
+					)
+				)
+			)
+		),
+		(
+			description: "font size",
+			selector: false,
+			parent: font-size,
+			variant-key: xl,
+			suffix:false,
+		)
+	);
+
 
 	.sb-search {
 		position: relative;
@@ -175,6 +209,16 @@
 		font-family: inherit;
 		font-size: 20px;
 		color: #2c3e50;
+
+		$props: (
+			background: true,
+			foreground: true,
+			border: true,
+			fill:foreground,
+			hover-background: invert,
+			hover-foreground:invert
+		);
+		@include g-color-scheme(dark, $props...);
 	}
 
 	.sb-search-input::-webkit-input-placeholder {
@@ -219,6 +263,10 @@
 		z-index: -1;
 	}
 
+
+
+
+
 	.sb-icon-search {
 		color: #fff;
 		background: #e67e22;
@@ -231,8 +279,12 @@
 		font-variant: normal;
 		text-transform: none;
 		-webkit-font-smoothing: antialiased;
+		@include render-queue(get-collection($example-component-render));
+
 	}
 
+
+	@include c-button(sb-icon-search,dark);
 
 	/* Open state */
 	.sb-search.sb-search-open,

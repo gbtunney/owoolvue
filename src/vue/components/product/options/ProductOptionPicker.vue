@@ -1,17 +1,16 @@
 <template>
 	<div >
 
-		<div class="attribute-panel" v-for="option,index in Options">
+		<div class="attribute-panel">
 			Option Picker
 			<hr>
 			<h3 class="option__name"> {{option.name}}</h3>
 
 			<FuseSearch
-				v-if="searchable"
+				v-show="searchable"
 				@fuseResult="fuseFilter"
 				@fuseInactive="fuseInactive"
 				:list="option.values">
-
 			</FuseSearch>
 
 			<Multiselect :options="OptionValues" class="--is-open"
