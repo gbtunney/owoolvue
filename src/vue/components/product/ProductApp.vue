@@ -24,7 +24,6 @@
 		<productOptionPicker searchable="true" @optionChanged="optionChanged" :option="OptionBySlug('color')"></productOptionPicker>
 
 		option 2
-		<productOptionPicker searchable="true" @optionChanged="optionChanged" :option="OptionBySlug('size')"></productOptionPicker>
 
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
@@ -86,7 +85,7 @@
     import productOptionPicker from '@/components/product/options/ProductOptionPicker.vue'
     import Multiselect from 'vue-multiselect'
 
-
+    import { getVariantFromOptions} from '@/helpers/main.js'
     import 'vuetify/dist/vuetify.min.css'
 
     import Vue from 'vue';
@@ -186,12 +185,16 @@ return this.$data.toggle_classes[this.LayoutToggle];
 		    },
 	    	variantChanged: function(variant) {
 	    		this.CurrentVariant  = variant;
-	    		console.log("variant changed!!!!!",variant);
-	    },optionChanged: function(option,value) {
-			   // this.CurrentVariant  = variant;
-			    console.log("OPTRIONq1 changed!!!!!",option,value);
+	    		console.log("variant changed!!!!!",variant)
+
+	    },
+		    optionChanged: function(option,value) {
+			    console.log("OPTRIONq1 changed!!!!!",option,value, this._getVariantFromOptions( [value.id], this.Variants));
+		    },
+		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin. 
+			    return   getVariantFromOptions(optionArray, variantsArr);
 		    }
-     },
+	    },
 };
 </script>
 

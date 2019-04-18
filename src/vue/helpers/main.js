@@ -112,6 +112,22 @@ export const GDatamapper = {
 export function getVariantFromOptions(inOptions, inVariants) {
 	let self = this;
 	let optionArray = inOptions;
+	
+	//REMAP TO JUST THE IDS
+	optionArray = optionArray.map(function(item) {
+		if (item.hasOwnProperty('id')){
+			console.log("translating!", item);
+			return item.id;
+		} else if (item.hasOwnProperty('slug')){
+			
+			return item.slug;
+		} else {
+			return item;
+		}
+	})
+	
+	console.log("translatingafter!",optionArray);
+	
 	let variantArray = inVariants;
 	
 	let filteredVariantArray = variantArray;
