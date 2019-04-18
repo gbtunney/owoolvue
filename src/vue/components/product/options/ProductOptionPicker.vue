@@ -80,6 +80,14 @@
 			swatches: {
 				type:Boolean,
 				default: false    //an array with options that are searchable
+			},
+			disabled: {
+				type:Boolean ,
+				default: false   //an array with options that are searchable
+		},
+			disabledOptions: {
+				type:Array ,
+				default: () => []   //an array with options that are searchable
 			}
 		},
 		mounted: function() {
@@ -124,7 +132,7 @@
 			},
 			OptionValues: {
 				get: function() {
-					return this.$data._optionValues;
+					return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
 				},
 				set: function(newVal) {
 					this.$data._optionValues = newVal;  ///this.Variants[this.CurrentVariant._index];
@@ -170,6 +178,31 @@
 		},
 		_getSearchable: function(option) {
 			return ( option.slug == "color") ? true : false;
+		},
+		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
+
+			var newOptionsArr =Array.from(optionvalues);
+			let _disabledArr =disabledOptions;
+
+			newOptionsArr=     newOptionsArr.map(function(optionvalue){
+				let ID = optionvalue.id;
+
+				var result =  _disabledArr.find(function(item){
+					if (ID == item.id ){
+						return true;
+					}else{
+						return false;
+					}
+				})
+
+				if ( result ){
+					return  Object.assign(optionvalue, {$isDisabled :bool })
+				}else{
+					return  Object.assign(optionvalue, {$isDisabled :!bool  })
+				}
+			})
+
+			return newOptionsArr;
 		},
 		_getIsDisabled: function(option) {
 			/*var inverseMap = new Map(this.option_dictionary)  //.delete(option.id);

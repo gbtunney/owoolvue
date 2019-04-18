@@ -2,7 +2,7 @@
 	<div>
 		<adminOptionSelect></adminOptionSelect>
 
-		<Multiselect :options="Variants"
+		<Multiselect :options="VariantArr"
 		             v-model="CurrentVariant"
 		             @input="variantChanged"
 		             track-by="title"
@@ -17,6 +17,10 @@
 
 			<template slot="singleLabel" slot-scope="{ option }">
 				<strong>{{ option.id }}</strong> ID:<strong>  {{ option.title }}</strong>
+			</template>
+
+			<template slot="option" class="is-grid-2" slot-scope="props" disabled="true">
+				<div disabled="true"  class="option__desc"><span class="option__title">qty{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
 			</template>
 
 		</Multiselect>
@@ -150,10 +154,11 @@
 		    'LayoutToggle',
 		    'OptionBySlug'
 	    ]),
+	    VariantArr: function() {
+		    return this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
+	    },
 	    Layout:function(){
 return this.$data.toggle_classes[this.LayoutToggle];
-
-
 	    }
 	    },
 	    created:function(){
@@ -191,12 +196,45 @@ return this.$data.toggle_classes[this.LayoutToggle];
 		    optionChanged: function(option,value) {
 			    console.log("OPTRIONq1 changed!!!!!",option,value, this._getVariantFromOptions( [value.id], this.Variants));
 		    },
-		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin. 
+		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			    return   getVariantFromOptions(optionArray, variantsArr);
+		    },
+		    setVariantsDisabled:function(variantsArr){
+			    if (newFilteredArray.length < 1){
+				    Vue.set(option, '$isDisabled', true);
+			    } else {
+				    Vue.set(option, '$isDisabled', false);
+			    }
+		    },
+		    _mapDisabledVariants:function(variantsArr,flaggedVariants,bool=true){   ///TODO: remap oos too seperate out
+
+			    var newVariantArr =Array.from(variantsArr);
+
+			    let _flaggedVariants =flaggedVariants;
+			    newVariantArr=     newVariantArr.map(function(variant){
+				    let ID = variant.id;
+
+				    var result =  _flaggedVariants.find(function(item){
+					    if (ID == item.id ){
+						    return true;
+					    }else{
+						    return false;
+					    }
+				    })
+				    if ( result || variant.inventory_quantity <=0  ){
+					    return  Object.assign(variant, {$isDisabled :bool })
+				    }else{
+					    return  Object.assign(variant, {$isDisabled :!bool  })
+				    }
+
+			    })
+
+			    return newVariantArr;
 		    }
 	    },
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
 
 <style lang="scss" type="text/scss">
 
