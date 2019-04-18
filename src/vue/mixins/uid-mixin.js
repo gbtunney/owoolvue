@@ -1,6 +1,6 @@
 import math from 'mathjs'
 
-export const ProductMixin = {
+export const UIDMixin = {
 	props: {},
 	components: {},
 	data() {
@@ -14,5 +14,11 @@ export const ProductMixin = {
 			return `${this.$options.name}-${this.$data._id}`;
 		}
 	},
-	methods: {}
+	methods: {
+		/*_openSearch:function() {   //used to target specific selectors in just this component
+			this.$data._active = true;
+			document.querySelector(`.${this.UID} .sb-search-input`).focus();
+			//UID
+		},*/
+	}
 }

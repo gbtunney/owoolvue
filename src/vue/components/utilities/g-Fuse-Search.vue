@@ -1,7 +1,7 @@
 <template>
 	<div >
-		FUSE SEARCH
-		<div id="sb-search" :class="[ UID, {'sb-search-open' : $data._active}]" class="sb-search">
+		FUSE SEARCH {{ UID }}
+		<div id="sb-search" :class="[ UID,{'sb-search-open' : $data._active}]" class="sb-search">
 			<form>
 				<input class="sb-search-input"
 				       v-model="$data._input_query"
@@ -20,6 +20,8 @@
 
 
 <script type="text/javascript">
+
+	import {UIDMixin} from  '@/mixins/uid-mixin.js';
 	import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 	import store from '@/store'
 	import Vue from 'vue';
@@ -41,6 +43,9 @@
 	};
 
 	export default {
+		name: 'fuseSearch',
+		mixins: [UIDMixin],
+		components: {},
 		props: {
 			keys:{
 				type: Array,
@@ -82,23 +87,16 @@
 				default: true
 			}
 		},
-		components: {},
 		data() {
-			return {
-				_list: [], //base list to search - the "HAYSTACK"
-				_input_query: "", //search string - the "NEEDLE",
-				_active: true,
-				_id:  Math.round(math.random(11111111111, 999999999999999))
-
-			}
+				return {
+					_list: [], //base list to search - the "HAYSTACK"
+					_input_query: "", //search string - the "NEEDLE",
+					_active: true,
+				}
 		},
-		name: 'fuseSearch',
 		computed: {
 			List: function(){
 				return this.$data._list
-			},
-			UID:function(){
-				return `${this.$options.name}-${this.$data._id}`;
 			}
 		},
 		created:function(){
@@ -114,6 +112,7 @@
 		methods:{
 			_openSearch:function() {
 				this.$data._active = true;
+				console.log("query selector " , this.UID ,document.querySelector(`.${this.UID}`) )
 				document.querySelector(`.${this.UID} .sb-search-input`).focus();
 				//UID
 			},
@@ -146,7 +145,7 @@
 </script>
 
 <style lang="scss" type="text/scss" scoped>
-	@import "src/vue/helpers/product-dependancies.scss";
+	//@import "src/vue/helpers/product-dependancies.scss";
 
 
 	$example-component-render: (
@@ -218,7 +217,7 @@
 			hover-background: invert,
 			hover-foreground:invert
 		);
-		@include g-color-scheme(dark, $props...);
+	//	@include g-color-scheme(dark, $props...);
 	}
 
 	.sb-search-input::-webkit-input-placeholder {
@@ -279,12 +278,12 @@
 		font-variant: normal;
 		text-transform: none;
 		-webkit-font-smoothing: antialiased;
-		@include render-queue(get-collection($example-component-render));
+	//	@include render-queue(get-collection($example-component-render));
 
 	}
 
 
-	@include c-button(sb-icon-search,dark);
+	//@include c-button(sb-icon-search,dark);
 
 	/* Open state */
 	.sb-search.sb-search-open,

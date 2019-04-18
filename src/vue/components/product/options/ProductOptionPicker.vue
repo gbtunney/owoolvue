@@ -20,7 +20,6 @@
 			             v-on:close=""
 			             v-on:open="selectOpen(option)"
 			             displayMode="vertical"
-			             :key="index"
 			             :taggable="false"
 			             label="title"
 			             ref="gillian"
