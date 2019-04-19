@@ -20,7 +20,8 @@ export const ProductMixin={
 	    name: 'testcomponent',
 	    computed: {
 	    ...mapGetters([
-		    'Variants'
+		    'Variants',
+		    'OptionsArrByProduct'
 	    ]),
 
 	    ...mapState({product_dictionary: state => state.product_dictionary,
@@ -40,6 +41,16 @@ export const ProductMixin={
 		    return "NO TITLE";
 	    }
     },
+	CurrentProductOptions: function() {
+		
+		if ( this.CurrentProduct ){
+			
+			
+			return this.OptionsArrByProduct(this.CurrentProduct.id);
+		}else{
+			return [];
+		}
+	},
     CurrentProductID: function() {
 	
 	    return this.CurrentProduct.id;

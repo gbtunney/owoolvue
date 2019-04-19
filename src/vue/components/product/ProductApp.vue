@@ -24,7 +24,10 @@
 			</template>
 
 		</Multiselect>
-		<productOptionPicker searchable="true" :selectedoptionslug="Slug" @optionChanged="optionChanged" :option="OptionByProp('color')"></productOptionPicker>
+
+
+		<productOptionPicker :inSelectedVariant="CurrentVariant" :options="CurrentProductOptions"></productOptionPicker>
+
 
 		option 2
 
@@ -85,7 +88,11 @@
     import ProductImageSlideshow from '@/components/product/ProductImageSlideshow.vue'
     import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
 
-    import productOptionPicker from '@/components/product/options/ProductOptionPicker.vue'
+    import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue' //single option picker
+
+    import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
+
+
     import Multiselect from 'vue-multiselect'
 
     import { getVariantFromOptions} from '@/helpers/main.js'
@@ -108,7 +115,8 @@
 	    iconfont: 'md',
     })
     import adminOptionSelect from '@/components/admin/ProductOptionTestComponent.vue';
-
+/*		<singleProductOptionPicker searchable="true" :selectedoptionslug="Slug" @optionChanged="optionChanged" :option="OptionByProp('color')"></singleProductOptionPicker>
+*/
     //custom version of vuemultiselect - stripped down.
   //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
     //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
@@ -131,7 +139,7 @@
 		    }
 	    },
 	    mixins: [ProductMixin],
-	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect,productOptionPicker,Multiselect},
+	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect,singleProductOptionPicker,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -143,7 +151,8 @@
 	    ...mapGetters([
 		    'LayoutToggle',
 		    'OptionByProp',
-		    'OptionValueByProp'
+		    'OptionValueByProp',
+		    'OptionsArrByProduct'
 	    ]
     ),
 	    Slug:function(){
@@ -186,6 +195,8 @@
 
 			    ///example - --::
 			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
+			     console.log("arr nby product!!!!!!!!!!",self.OptionsArrByProduct(self.CurrentProduct.id));
+
 
 		    })
 	    },
@@ -262,7 +273,9 @@
 	    },
 };
 </script>
+<!--
 <style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
+-->
 
 <style lang="scss" type="text/scss">
 

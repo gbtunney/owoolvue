@@ -2,9 +2,12 @@
 	<div >
 
 		<div class="attribute-panel">
-			Option Picker{{ OptionName}} || {{ selectedoptionslug }}
+			<h3>Option Picker{{ OptionName}} || {{ selectedoptionvalue }}</h3>
 			<hr>
 			selected: {{selectedOptions}}
+			<code style="display: none">{{option}}</code>
+			<code style="display: none">{{selectedOptions}}</code>
+
 			<h3 class="option__name">name </h3>
 			<FuseSearch
 				v-show="searchable"
@@ -74,7 +77,10 @@
 			option: {
 				required:false
 			},
-			selectedoptionslug: {
+			selectedoptionslug: {   ///TODO:this is acrually an optionvalueslug
+				required:false
+			},
+			selectedoptionvalue: {
 				required:false
 			},
 			searchable: {
@@ -105,9 +111,15 @@
 		},
 		created: function() {
 
-			if ( this.$props.selectedoptionslug ){
+			if ( this.$props.option &&  this.$props.option.values){
+				console.log("!!!!!!TRYING TO SET OPTION DATA",this.$props.option);
+				this.OptionValues = this.$props.option.values;
+				if (this.$props.selectedoptionvalue && this.$props.selectedoptionvalue.id){
 
+					this.$data.selectedOptions=this.$props.selectedoptionvalue;
+				}
 			}
+
 		},
 		watch: {
 			selectedoptionslug: function(val) {
@@ -115,18 +127,23 @@
 			},
 			option: function(val) {
 
-
 				if (val ){
 					if (   val.values ){
 						this.OptionValues = val.values;
-
+/*
 						///todo: why does this have to be here???
+						if (this.$props.selectedoptionvalue && this.$props.selectedoptionvalue.id){
+
+							this.$data.selectedOptions=this.$props.selectedoptionvalue;
+						}
+
+						//JUST THE SLUG ONLY???
 						if ( this.$props.selectedoptionslug ){
 							if ( this.OptionValueByProp(this.$props.selectedoptionslug) ){
 							//	console.log("SELECTED OPTION CHANGED!@!@", this.OptionValueByProp(this.$props.selectedoptionslug))
 								this.$data.selectedOptions= 	this.OptionValueByProp(this.$props.selectedoptionslug)
 							}
-						}
+						}*/
 					}
 
 				}else{
@@ -164,6 +181,10 @@
 
 	},
 	methods: {
+			_setSelectedOptionValues:function(){
+
+
+			},
 		_getSwatchSrc: function(option){
 			/*if ( option.swatch_image==true || option.swatch_image == "true" ){
 				var foundVariantArr = getVariantFromOptions([option.id],this.Variants  );

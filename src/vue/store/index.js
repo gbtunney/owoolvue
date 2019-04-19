@@ -31,6 +31,9 @@ const main_store = {
 		OptionByProp: (state) => (value, prop="slug") => {
 			return  filterArrayByValue( store.getters.Options, value, prop,true);
 		},
+		OptionsArrByProduct: (state) => (id) => {
+			return  (state.product_dictionary.get(id) &&  state.product_dictionary.get(id).options) ?  state.product_dictionary.get(id).options : []// filterArrayByValue( store.getters.Options, value, prop,true);
+		},
 		LayoutToggle: function(state) {
 			return state.layout_toggle
 		},
