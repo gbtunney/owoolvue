@@ -4,6 +4,7 @@
 		<div class="attribute-panel">
 			Option Picker{{ OptionName}} || {{ selectedoptionslug }}
 			<hr>
+			selected: {{selectedOptions}}
 			<h3 class="option__name">name </h3>
 			<FuseSearch
 				v-show="searchable"
@@ -102,27 +103,30 @@
 				selectedVariant: [],
 			}
 		},
-		mounted: function() {
-
-
+		created: function() {
 
 			if ( this.$props.selectedoptionslug ){
-
 
 			}
 		},
 		watch: {
 			selectedoptionslug: function(val) {
-				console.log("SELECTED OPTION CHANGED!@!@", val)
+
 			},
 			option: function(val) {
 
 
 				if (val ){
-
 					if (   val.values ){
 						this.OptionValues = val.values;
-						console.log('!!!!!setting@@@', val, val.values);
+
+						///todo: why does this have to be here???
+						if ( this.$props.selectedoptionslug ){
+							if ( this.OptionValueByProp(this.$props.selectedoptionslug) ){
+							//	console.log("SELECTED OPTION CHANGED!@!@", this.OptionValueByProp(this.$props.selectedoptionslug))
+								this.$data.selectedOptions= 	this.OptionValueByProp(this.$props.selectedoptionslug)
+							}
+						}
 					}
 
 				}else{
@@ -136,22 +140,21 @@
 		},
 		computed: {
 			OptionName: function(){
-
 				if ( this.$props.option ){
 					return this.$props.option.name;
 				}
 			},
 			OptionValues: {
 				get: function() {
-					return this.$data._optionValues;
-					//return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
+					//return this.$data._optionValues;
+					return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
 				},
 				set: function(newVal) {
 					this.$data._optionValues = newVal;  ///this.Variants[this.CurrentVariant._index];
 				}
 			},
 		...mapGetters([
-			'Options'/*,'OptionValueByProp'*/
+			'Options','OptionValueByProp'
 		]),
 	...mapState({
 		variant_dictionary: state => state.variant_dictionary,

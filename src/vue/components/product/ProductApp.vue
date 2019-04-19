@@ -24,7 +24,7 @@
 			</template>
 
 		</Multiselect>
-		<productOptionPicker searchable="true" selectedoptionslug="wild-geranium" @optionChanged="optionChanged" :option="OptionByProp('color')"></productOptionPicker>
+		<productOptionPicker searchable="true" :selectedoptionslug="Slug" @optionChanged="optionChanged" :option="OptionByProp('color')"></productOptionPicker>
 
 		option 2
 
@@ -113,15 +113,6 @@
   //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
     //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
-
-/*    <Multiselect v-model="CurrentVariant"
-    :options="Variants" label="title"
-    track-by="title"
-		             @input="variantChanged"
-    :multiple="false"
-    :show-labels="false"
-    placeholder="Pick a value"></Multiselect>
-    */
     const schema = require("schm");
   //  ProductMixin
     export default {
@@ -153,7 +144,11 @@
 		    'LayoutToggle',
 		    'OptionByProp',
 		    'OptionValueByProp'
-	    ]),
+	    ]
+    ),
+	    Slug:function(){
+		    return "wild-geranium"
+	    },
 	    VariantArr: function() {
 		    return this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
 	    },
@@ -187,12 +182,10 @@
 		    self.add_images_to_dictionary({images: res.data.product.images});
 		    self.add_options_to_dictionary({options: res.data.product.options});
 
-			    console.log("DOUFUUODSUOUOSUOsettings are", self.CurrentVariant);
 			    self.CurrentVariant  = self.CurrentVariant ;
-			    console.log("PROP FOR SWATCH IS " , self.OptionByProp('color'));
 
 			    ///example - --::
-			    console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
+			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
 
 		    })
 	    },

@@ -79,7 +79,7 @@ onError(state, error, axios, { params, data }) {
 	path: ({ productid }) => `/products/${productid}/metafields.json`,
 	onSuccess(state, payload, axios, { params, data }) {
 	// if you define the onSuccess function you have to set the state by yourself
-	console.log(`TWEST  with id ${params} successfully fetched.`,params,payload.data);
+	console.log(`PRODUCT META CALLED`,params,payload.data);
 },
 onError(state, error, axios, { params, data }) {
 	// if you define the onSuccess function you have to set the state by yourself
@@ -93,7 +93,7 @@ onError(state, error, axios, { params, data }) {
 	path: ({ productid ,variantid}) => `/products/${productid}/variants/${variantid}/metafields.json`,
 	onSuccess(state, payload, axios, { params, data }) {
 	// if you define the onSuccess function you have to set the state by yourself
-	console.log(`TVARIANT META CALLED`,params,payload.data);
+	console.log(`VARIANT META CALLED`,params,payload.data);
 },
 onError(state, error, axios, { params, data }) {
 	// if you define the onSuccess function you have to set the state by yourself
