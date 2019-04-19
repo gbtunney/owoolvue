@@ -80,7 +80,7 @@
 				default: 2
 			},
 			list:{
-				default:[] ///base list to search - the "HAYSTACK"
+				default: () => []
 			},
 			minimize:{  ///closes the search when done
 				type:Boolean,

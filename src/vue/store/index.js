@@ -28,9 +28,8 @@ const main_store = {
 		Count: function(state) {
 			return state.count
 		},
-		OptionBySlug: (state) => (slug) => {
-			console.log("getting slug !!" , store.getters.Options);
-			return store.getters.Options.find(option => option.slug === slug)
+		OptionByProp: (state) => (value, prop="slug") => {
+			return  filterArrayByValue( store.getters.Options, value, prop,true);
 		},
 		LayoutToggle: function(state) {
 			return state.layout_toggle
@@ -44,6 +43,16 @@ const main_store = {
 			}else{
 				return [];
 			}
+		},
+		OptionValueByProp: (state) => (value, prop="slug") => {
+			return  filterArrayByValue( store.getters.OptionValuesArr, value, prop,true);
+		},
+		OptionValuesArr: function(state) {
+			let option_value_dictionary  = [];
+			store.getters.Options.forEach(function(option){
+				option_value_dictionary.push(...option.values);
+			})
+			return option_value_dictionary;//store.getters.Options.find(option => option.slug === slug)
 		}
 	},
 	mutations: {

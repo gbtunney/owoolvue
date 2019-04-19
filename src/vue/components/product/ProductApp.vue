@@ -24,8 +24,7 @@
 			</template>
 
 		</Multiselect>
-
-		<productOptionPicker searchable="true" @optionChanged="optionChanged" :option="OptionBySlug('color')"></productOptionPicker>
+		<productOptionPicker searchable="true" selectedoptionslug="wild-geranium" @optionChanged="optionChanged" :option="OptionByProp('color')"></productOptionPicker>
 
 		option 2
 
@@ -152,14 +151,30 @@
 	    computed: {
 	    ...mapGetters([
 		    'LayoutToggle',
-		    'OptionBySlug'
+		    'OptionByProp',
+		    'OptionValueByProp'
 	    ]),
 	    VariantArr: function() {
 		    return this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
 	    },
 	    Layout:function(){
-return this.$data.toggle_classes[this.LayoutToggle];
+			return this.$data.toggle_classes[this.LayoutToggle];
+	    },
+	    SelectedOptions:function(){
+		    return this.$data.toggle_classes[this.LayoutToggle];
 	    }
+	    /*_setSelectedOptions: function() {
+			var selectedArr = new Array()
+
+			if (this.$data.selectedVariant){
+				this.$data.selectedOptions = [];
+				for (var i = 0; i < this.Options.length; i++) {
+					console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
+
+					this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
+				}
+			}
+		},*/
 	    },
 	    created:function(){
 
@@ -174,7 +189,10 @@ return this.$data.toggle_classes[this.LayoutToggle];
 
 			    console.log("DOUFUUODSUOUOSUOsettings are", self.CurrentVariant);
 			    self.CurrentVariant  = self.CurrentVariant ;
-			    console.log("PROP FOR SWATCH IS " , self.OptionBySlug('color'));
+			    console.log("PROP FOR SWATCH IS " , self.OptionByProp('color'));
+
+			    ///example - --::
+			    console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
 
 		    })
 	    },
@@ -205,6 +223,23 @@ return this.$data.toggle_classes[this.LayoutToggle];
 			    } else {
 				    Vue.set(option, '$isDisabled', false);
 			    }
+		    },
+	        getSelectedOptions:function(){
+
+		      //  this.CurrentVariant
+
+		        /*_setSelectedOptions: function() {
+						   var selectedArr = new Array()
+
+						   if (this.$data.selectedVariant){
+							   this.$data.selectedOptions = [];
+							   for (var i = 0; i < this.Options.length; i++) {
+								   console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
+
+								   this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
+							   }
+						   }
+					   },*/
 		    },
 		    _mapDisabledVariants:function(variantsArr,flaggedVariants,bool=true){   ///TODO: remap oos too seperate out
 

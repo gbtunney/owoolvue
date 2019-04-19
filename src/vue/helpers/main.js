@@ -30,21 +30,36 @@ export function normalize(value) {
 	return parseInt(value);
 }
 
-export function filterArrayByValue(_array, _value, _prop=false) {
+export function firstValue(_array, _value, _prop=false, _first = true) {
+	//todo: the first value so it dont break
+}
+
+export function filterArrayByValue(_array, _value, _prop=false, _first = true) {
 	if (!_array || !_value || _array.length <= 0) return;
 	
 	let prop = _prop, value = _value;
-	return _array.filter(function(item) {
-		
-		if (item.hasOwnProperty(prop) && item[prop] == value) return true;
-		
-		if (_prop==false && item == _value ){
-			console.log("!!!!the item is " ,prop, item,_value);
-			return true;
-		}
-		return;
-	})
 	
+	if ( _first ){
+		
+		///TODO: props fix - this needs to return single value
+		return _array.find(function(item){
+			if (item.hasOwnProperty(prop) && item[prop] == value) return true;
+			if (_prop==false && item == _value ){
+				console.log("!!!!the item is " ,prop, item,_value);
+				return true;
+			}
+			return;
+		})
+	}else{
+		return _array.filter(function(item){
+			if (item.hasOwnProperty(prop) && item[prop] == value) return true;
+			if (_prop==false && item == _value ){
+				console.log("!!!!the item is " ,prop, item,_value);
+				return true;
+			}
+			return;
+		})
+	}
 	return;
 	
 }

@@ -2,10 +2,9 @@
 	<div >
 
 		<div class="attribute-panel">
-			Option Picker{{ OptionName}} ||
+			Option Picker{{ OptionName}} || {{ selectedoptionslug }}
 			<hr>
 			<h3 class="option__name">name </h3>
-
 			<FuseSearch
 				v-show="searchable"
 				@fuseResult="fuseFilter"
@@ -74,6 +73,9 @@
 			option: {
 				required:false
 			},
+			selectedoptionslug: {
+				required:false
+			},
 			searchable: {
 				default: true    //an array with options that are searchable
 			},
@@ -90,33 +92,42 @@
 				default: () => []   //an array with options that are searchable
 			}
 		},
+		data() {
+			return {
+				msg: 'Welcome to Your Vue.js App',
+				totalOptions: 3,
+				_optionValues:[],
+		searchQuery: false,
+				selectedOptions: [],
+				selectedVariant: [],
+			}
+		},
 		mounted: function() {
 
-			/*if ( this.$props.option &&  this.$props.option.values ){
-				this.OptionValues =  this.$props.option.values;
-			}*/
+
+
+			if ( this.$props.selectedoptionslug ){
+
+
+			}
 		},
 		watch: {
-			selectedVariant: function(val) {
-				this.$emit("variant", this.$data.selectedVariant);
-				if (val != this.$data.selectedVariant){
-					//this.$data.selectedVariant=val;
-				}
+			selectedoptionslug: function(val) {
+				console.log("SELECTED OPTION CHANGED!@!@", val)
 			},
 			option: function(val) {
 
 
-			if (val ){
+				if (val ){
 
-				if (   val.values ){
-					this.OptionValues = val.values;
-					console.log('!!!!!setting@@@', val);
+					if (   val.values ){
+						this.OptionValues = val.values;
+						console.log('!!!!!setting@@@', val, val.values);
+					}
+
+				}else{
+					throw "the error";
 				}
-
-			}else{
-				throw "the error";
-			}
-
 
 			//	this.$data.selectedVariant = val;
 				//this is the first time thru only.
@@ -132,14 +143,15 @@
 			},
 			OptionValues: {
 				get: function() {
-					return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
+					return this.$data._optionValues;
+					//return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
 				},
 				set: function(newVal) {
 					this.$data._optionValues = newVal;  ///this.Variants[this.CurrentVariant._index];
 				}
 			},
 		...mapGetters([
-			'Options'
+			'Options'/*,'OptionValueByProp'*/
 		]),
 	...mapState({
 		variant_dictionary: state => state.variant_dictionary,
@@ -322,16 +334,7 @@
 			return value;
 		}
 	},
-	data() {
-		return {
-			msg: 'Welcome to Your Vue.js App',
-			totalOptions: 3,
-			_optionValues:[],
-			searchQuery: false,
-			selectedOptions: [],
-			selectedVariant: [],
-		}
-	}
+
 	}
 </script>
 
