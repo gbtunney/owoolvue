@@ -25,7 +25,6 @@
 
 		</Multiselect>
 
-
 		<productOptionPicker :inSelectedVariant="CurrentVariant" :options="CurrentProductOptions"></productOptionPicker>
 
 
@@ -214,7 +213,7 @@
 	    		this.CurrentVariant  = variant;
 	    		console.log("variant changed!!!!!",variant)
 
-	    },
+	        },
 		    optionChanged: function(option,value) {
 			    console.log("OPTRIONq1 changed!!!!!",option,value, this._getVariantFromOptions( [value.id], this.Variants));
 		    },
@@ -227,23 +226,6 @@
 			    } else {
 				    Vue.set(option, '$isDisabled', false);
 			    }
-		    },
-	        getSelectedOptions:function(){
-
-		      //  this.CurrentVariant
-
-		        /*_setSelectedOptions: function() {
-						   var selectedArr = new Array()
-
-						   if (this.$data.selectedVariant){
-							   this.$data.selectedOptions = [];
-							   for (var i = 0; i < this.Options.length; i++) {
-								   console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
-
-								   this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
-							   }
-						   }
-					   },*/
 		    },
 		    _mapDisabledVariants:function(variantsArr,flaggedVariants,bool=true){   ///TODO: remap oos too seperate out
 
@@ -267,7 +249,6 @@
 				    }
 
 			    })
-
 			    return newVariantArr;
 		    }
 	    },

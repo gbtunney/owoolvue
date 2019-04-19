@@ -4,6 +4,10 @@
 		<div class="attribute-panel">
 			<h3>Option Picker{{ OptionName}} || {{ selectedoptionvalue }}</h3>
 			<hr>
+
+			<code>{{selectedoptionvalue}}</code>
+
+
 			selected: {{selectedOptions}}
 			<code style="display: none">{{option}}</code>
 			<code style="display: none">{{selectedOptions}}</code>
@@ -103,56 +107,36 @@
 			return {
 				msg: 'Welcome to Your Vue.js App',
 				totalOptions: 3,
-				_optionValues:[],
-		searchQuery: false,
+				_optionValues: [],
+				searchQuery: false,
 				selectedOptions: [],
 				selectedVariant: [],
 			}
 		},
 		created: function() {
-
 			if ( this.$props.option &&  this.$props.option.values){
-				console.log("!!!!!!TRYING TO SET OPTION DATA",this.$props.option);
 				this.OptionValues = this.$props.option.values;
 				if (this.$props.selectedoptionvalue && this.$props.selectedoptionvalue.id){
-
 					this.$data.selectedOptions=this.$props.selectedoptionvalue;
 				}
 			}
-
 		},
 		watch: {
+			///todo: these miht need to be MIRRORED in a create func for some reason.
 			selectedoptionslug: function(val) {
-
+				if (val && this.OptionValueByProp(val)){
+					this.$data.selectedOptions = this.OptionValueByProp(val);
+				}
+			},
+			selectedoptionvalue:function(val) {
+				if (val && val.hasOwnProperty('id')){
+					this.$data.selectedOptions = val;
+				}
 			},
 			option: function(val) {
-
-				if (val ){
-					if (   val.values ){
-						this.OptionValues = val.values;
-/*
-						///todo: why does this have to be here???
-						if (this.$props.selectedoptionvalue && this.$props.selectedoptionvalue.id){
-
-							this.$data.selectedOptions=this.$props.selectedoptionvalue;
-						}
-
-						//JUST THE SLUG ONLY???
-						if ( this.$props.selectedoptionslug ){
-							if ( this.OptionValueByProp(this.$props.selectedoptionslug) ){
-							//	console.log("SELECTED OPTION CHANGED!@!@", this.OptionValueByProp(this.$props.selectedoptionslug))
-								this.$data.selectedOptions= 	this.OptionValueByProp(this.$props.selectedoptionslug)
-							}
-						}*/
-					}
-
-				}else{
-					throw "the error";
+				if (val && val.values){
+					this.OptionValues = val.values;
 				}
-
-			//	this.$data.selectedVariant = val;
-				//this is the first time thru only.
-				//this._setSelectedOptions();
 			}
 		},
 		computed: {
@@ -163,7 +147,6 @@
 			},
 			OptionValues: {
 				get: function() {
-					//return this.$data._optionValues;
 					return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
 				},
 				set: function(newVal) {
@@ -290,52 +273,6 @@
 		customLabel({title, desc}) {
 			return `${title} – ${desc}`
 		},
-		_getVariantFromOptions: function() {
-
-			console.log("getting variant from options");
-			/*let self = this;
-			let mySelectedOptions = this.$data.selectedOptions;
-			let newFilteredArray = this.Variants;
-
-			for (let i = 0; i < mySelectedOptions.length; i++) {
-
-				newFilteredArray = newFilteredArray.filter(function(variant) {
-
-					var foundArray = [];
-
-					var optionID = mySelectedOptions[i].parent_id;
-					var optionValueID = mySelectedOptions[i].id;
-
-					if (optionValueID == variant.options.get(optionID).id){
-						return true;
-					}
-				})
-			}
-			var arrayAfterFilter = newFilteredArray;
-			if (arrayAfterFilter.length == 1){
-				console.log(" VARIANT THAT MEET CRITERIA FOUND ", this.$data.selectedOptions)
-				if (arrayAfterFilter[0] != this.SelectedVariant){
-					this.SelectedVariant = arrayAfterFilter[0];
-				}
-			} else if (arrayAfterFilter.length >= 1){
-				console.log(` ${arrayAfterFilter.length}MASTER VARIANT THAT MATCHES `, this.$data.selectedOptions)
-			} else {
-				console.log("NO MASTER VARIANT THAT MATCHES ", this.$data.selectedOptions)
-				this._setSelectedOptions();
-			}*/
-		},
-		_setSelectedOptions: function() {
-			var selectedArr = new Array()
-
-			if (this.$data.selectedVariant){
-				this.$data.selectedOptions = [];
-				for (var i = 0; i < this.Options.length; i++) {
-					console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
-
-					this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
-				}
-			}
-		},
 		variantSelectorChanged: function() {
 			console.log("VUEX ::VARIANT CHANGED!!! ", this.$data.selectedVariant);
 			this._setSelectedOptions();
@@ -347,8 +284,6 @@
 		fuseInactive:function( list, fuse_options){
 			console.log("FUSE INACTIVEEE!!!" ,list, fuse_options);
 			this.OptionValues = list;
-
-
 		}
 	},
 	filters: {
@@ -358,7 +293,6 @@
 			return value;
 		}
 	},
-
 	}
 </script>
 

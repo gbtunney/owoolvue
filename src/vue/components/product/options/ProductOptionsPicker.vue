@@ -2,6 +2,7 @@
 	<div>
 
 		<h2  v-for="option,index in options">{{SelectedOptionValue(index)}}</h2>
+
 		<singleProductOptionPicker v-for="option,index in options"
 		                           :option="option"
 		                           :selectedoptionvalue="SelectedOptionValue(option.id)"
@@ -68,7 +69,7 @@
 					return  this.$data._currentVariant;
 			},
 			set: function(newVal) {
-				console.log("setting@");
+				console.log("setting@ variant");
 				this.$data._currentVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
 			}
 		},
@@ -127,11 +128,6 @@
 			testBtn:function(target){
 			console.log("changed",target);
 			this.setlayoutButton({index: target})
-		},
-		variantChanged: function(variant) {
-			this.CurrentVariant  = variant;
-			console.log("variant changed!!!!!",variant)
-
 		},
 		optionChanged: function(option,value) {
 			console.log("OPTRIONq1 changed!!!!!",option,value, this._getVariantFromOptions( [value.id], this.Variants));
