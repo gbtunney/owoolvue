@@ -1,14 +1,13 @@
 <template>
 	<div>
-
-		<h2  v-for="option,index in options">{{SelectedOptionValue(index)}}</h2>
-
 		<singleProductOptionPicker v-for="option,index in options"
 		                           :option="option"
 		                           :selectedoptionvalue="SelectedOptionValue(option.id)"
+		                           :disabledOptions="_remapOptionValuesDisabled(option)"
 		                           :key="index"
-		                           searchable="false"
-		                           @optionChanged="optionChanged" ></singleProductOptionPicker>
+		                           @optionChanged="optionChanged" >
+
+		</singleProductOptionPicker>
 
 
 	</div>
@@ -110,16 +109,16 @@
 	mounted:function(){
 	},
 	methods:{
-		SelectedOptionValue: function( val  /* or id?????*/ ) {
-			console.log("TRYING TO GET INDEX VALUEE",this.OptionsDictionary,val);
+		SelectedOptionValue: function( val ,optionsDictionary =this.SelectedOptionsDictionary  /* or id?????*/ ) {
+			console.log("TRYING TO GET INDEX VALUEE",optionsDictionary,val);
 
 			if ( isNaN(val) && val.hasOwnProperty('id')){    //the whole object
-				return ( this.OptionsDictionary.get(val.id) ) ? this.OptionsDictionary.get(val.id) : false;
-			}else if ( this.OptionsDictionary.get(val) ) {
-				return this.OptionsDictionary.get(val);
-			}else if ( !isNaN(val) &&  Array.from(this.OptionsDictionary).length >= val ){ /*or what ever total amt of optiosn is.  )*/
+				return ( optionsDictionary.get(val.id) ) ? optionsDictionary.get(val.id) : false;
+			}else if ( optionsDictionary.get(val) ) {
+				return optionsDictionary.get(val);
+			}else if ( !isNaN(val) &&  Array.from(optionsDictionary).length >= val ){ /*or what ever total amt of optiosn is.  )*/
 				//its an index
-				return Array.from(this.OptionsDictionary)[val];
+				return Array.from(optionsDictionary)[val];
 			}
 			return "**BUSTED";
 			throw "BUSTED SELECTED OPTION"
@@ -159,13 +158,40 @@
 		_getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			return   getVariantFromOptions(optionArray, variantsArr);
 		},
-		setVariantsDisabled:function(variantsArr){
-			if (newFilteredArray.length < 1){
-				Vue.set(option, '$isDisabled', true);
-			} else {
-				Vue.set(option, '$isDisabled', false);
+		_remapOptionValuesDisabled: function(val) {
+
+			if ( val){
+				let self = this;
+
+				let activeoption = val;//this.SelectedOption(val)
+				console.log("active option!", activeoption);
+
+				let selectedoptionsArr = Array.from(self.SelectedOptionsDictionary.values());
+
+				return activeoption.values.filter(function(activeoptionvalue) {
+
+					let variableOption = activeoptionvalue;
+
+					var testableCombo = selectedoptionsArr.map(function(_optionvalues) {
+						if (_optionvalues.parent_id == activeoptionvalue.parent_id){
+							return activeoptionvalue;
+						} else {
+							return _optionvalues;
+						}
+					})
+
+					var variants = self._getVariantFromOptions(testableCombo, self.Variants);
+					if (variants.length < 1){
+						return true;
+					}
+
+				})
+
 			}
 		},
+
+
+
 		getSelectedOptions:function(){
 
 			//  this.CurrentVariant
@@ -211,7 +237,6 @@
 	},
 	};
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
 
 <style lang="scss" type="text/scss">
 

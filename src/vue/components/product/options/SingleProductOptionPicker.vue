@@ -2,59 +2,58 @@
 	<div >
 
 		<div class="attribute-panel">
-			<h3>Option Picker{{ OptionName}} || {{ selectedoptionvalue }}</h3>
-			<hr>
 
-			<code>{{selectedoptionvalue}}</code>
-
-
-			selected: {{selectedOptions}}
+			<code>{{disabledOptions}}</code>
 			<code style="display: none">{{option}}</code>
 			<code style="display: none">{{selectedOptions}}</code>
 
-			<h3 class="option__name">name </h3>
-			<FuseSearch
-				v-show="searchable"
-				@fuseResult="fuseFilter"
-				@fuseInactive="fuseInactive"
-				:list="OptionValues">
-			</FuseSearch>
+			<div>
+				<FuseSearch
+					v-show="searchable"
+					@fuseResult="fuseFilter"
+					@fuseInactive="fuseInactive"
+					:list="OptionValues">
+				</FuseSearch>
 
-			<Multiselect :options="OptionValues" class="--is-open"
-			             v-model="selectedOptions"
-			             @input="$emit('optionChanged',option, selectedOptions)"
-			             v-on:close=""
-			             v-on:open="selectOpen(option)"
-			             displayMode="vertical"
-			             :taggable="false"
-			             label="title"
-			             ref="gillian"
-			             :multiple="false"
-			             track-by="title"
-			             :closeOnSelect="false"
-			             :allow-empty="false">
+				<h3 class="option__name">{{OptionName}} </h3>
 
-				<template slot="singleLabel"  slot-scope="props">
-					<div>
-						<div v-if="option.slug == 'color'">
+				<Multiselect :options="OptionValues" class="--is-open"
+				             v-model="selectedOptions"
+				             @input="$emit('optionChanged',option, selectedOptions)"
+				             v-on:close=""
+				             v-on:open="selectOpen(option)"
+				             displayMode="vertical"
+				             :taggable="false"
+				             label="title"
+				             ref="gillian"
+				             :multiple="false"
+				             track-by="title"
+				             :closeOnSelect="false"
+				             :allow-empty="true">
+
+					<template slot="singleLabel"  slot-scope="props">
+						<div>
+							<div v-if="option.slug == 'color'">
                             <span class="search-icon c-icon c-icon--light-alt --no-border">
                             <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 32 32"><path fill="#444" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z"/></svg>
                         </span>
+							</div>
 						</div>
-					</div>
-				</template>
-				<template slot="selection" slot-scope="{ values, searchable,search, isOpen }">
-					<div v-if="option.slug == 'color'"></div>
-					<span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span>
-				</template>
+					</template>
+					<template slot="selection" slot-scope="{ values, searchable,search, isOpen }">
+						<div v-if="option.slug == 'color'"></div>
+						<span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span>
+					</template>
 
-				<template slot="option" class="is-grid-2" slot-scope="props">
-					<div class="option__swatch" v-if="_getSwatchSrc(props.option)"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img  class="option__image" :src="_getSwatchSrc(props.option)" >
-					</div>
-					<div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
-				</template>
+					<template slot="option" class="is-grid-2" slot-scope="props">
+						<div class="option__swatch" v-if="_getSwatchSrc(props.option)"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img  class="option__image" :src="_getSwatchSrc(props.option)" >
+						</div>
+						<div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
+					</template>
 
-			</Multiselect>
+				</Multiselect>
+			</div>
+
 		</div>
 	</div>
 </template>
@@ -128,14 +127,29 @@
 					this.$data.selectedOptions = this.OptionValueByProp(val);
 				}
 			},
+			disabledOptions: function(val) {
+
+				if ( val && val.length > 0 ){
+					this.OptionValues=	this.$data._optionValues;//this._mapDisabledOptions(this.$data._optionValues,val)
+					console.log("DISABLED CHANGEEEEEEDDDD!!",this._mapDisabledOptions(this.$props.option,val),val);
+
+				}
+
+				/*if (val && this.OptionValueByProp(val)){
+					this.$data.selectedOptions = this.OptionValueByProp(val);
+				}*/
+			},
 			selectedoptionvalue:function(val) {
 				if (val && val.hasOwnProperty('id')){
 					this.$data.selectedOptions = val;
+
+					this.OptionValues =this.$data._optionValues; //this._mapDisabledOptions(this.$data._optionValues,this.$props.disabledOptions);// val.values;
+					console.log("SELECTED OPTION CHANGED, should update values???",val,this.$props.disabledOptions);
 				}
 			},
 			option: function(val) {
 				if (val && val.values){
-					this.OptionValues = val.values;
+					this.OptionValues = val.values;  //this._mapDisabledOptions(this.$data._optionValues,this.$props.disabledOptions);// val.values;
 				}
 			}
 		},
@@ -147,10 +161,14 @@
 			},
 			OptionValues: {
 				get: function() {
-					return this._mapDisabledOptions(this.$data._optionValues,[]) ;//this.$data._optionValues;
+					return this.$data._optionValues;
+
+
 				},
 				set: function(newVal) {
-					this.$data._optionValues = newVal;  ///this.Variants[this.CurrentVariant._index];
+
+
+					this.$data._optionValues = 	this._mapDisabledOptions(newVal,this.$props.disabledOptions);
 				}
 			},
 		...mapGetters([
@@ -200,26 +218,33 @@
 		},
 		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
 
-			var newOptionsArr =Array.from(optionvalues);
+			let newOptionsArr =Array.from(optionvalues);
 			let _disabledArr =disabledOptions;
 
-			newOptionsArr=     newOptionsArr.map(function(optionvalue){
-				let ID = optionvalue.id;
+				newOptionsArr=     newOptionsArr.map(function(optionvalue){
+					let ID = optionvalue.id;
 
-				var result =  _disabledArr.find(function(item){
-					if (ID == item.id ){
-						return true;
+						var result =  _disabledArr.find(function(item){
+
+							if (ID == item.id ){
+								return true;
+							}else{
+								return false;
+							}
+						})
+
+
+
+					if ( result ){
+							//return true;
+						return  Object.assign(optionvalue, {$isDisabled :bool })
 					}else{
-						return false;
+						return  Object.assign(optionvalue, {$isDisabled :!bool  })
 					}
 				})
 
-				if ( result ){
-					return  Object.assign(optionvalue, {$isDisabled :bool })
-				}else{
-					return  Object.assign(optionvalue, {$isDisabled :!bool  })
-				}
-			})
+
+
 
 			return newOptionsArr;
 		},

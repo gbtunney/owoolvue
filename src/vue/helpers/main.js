@@ -131,7 +131,6 @@ export function getVariantFromOptions(inOptions, inVariants) {
 	//REMAP TO JUST THE IDS
 	optionArray = optionArray.map(function(item) {
 		if (item.hasOwnProperty('id')){
-			console.log("translating!", item);
 			return item.id;
 		} else if (item.hasOwnProperty('slug')){
 			
@@ -140,9 +139,6 @@ export function getVariantFromOptions(inOptions, inVariants) {
 			return item;
 		}
 	})
-	
-	console.log("translatingafter!",optionArray);
-	
 	let variantArray = inVariants;
 	
 	let filteredVariantArray = variantArray;

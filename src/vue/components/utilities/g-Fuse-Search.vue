@@ -1,6 +1,6 @@
 <template>
 	<div >
-		FUSE SEARCH {{ UID }}
+		FUSE SEARCH
 		<div id="sb-search" :class="[ UID,{'sb-search-open' : $data._active}]" class="sb-search">
 			<form>
 				<input class="sb-search-input"
