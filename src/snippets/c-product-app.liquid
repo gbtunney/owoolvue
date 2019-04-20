@@ -5,6 +5,7 @@ This is the full Product App vue component.
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
      prop-variantid="{{ variant_id }}"
+     prop-product_option_meta='{{ product_meta.option | strip_newlines }}'
      prop-sectionsettings='{{   settings | json }}'
      prop-swatch='["color"]'
 ></div>

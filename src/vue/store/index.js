@@ -6,7 +6,7 @@ import store from '@/store/index';
 
 import shopifyAdminApi from "./shopify_admin_api";
 import {parseOptions, parseVariants} from './functions/parse'
-import {Slugify, GDatamapper,filterArrayByValue} from '@/helpers/main.js'
+import {Slugify, GDatamapper,filterArrayByValue,IsJsonString} from '@/helpers/main.js'
 
 Vue.use(Vuex);
 
@@ -51,6 +51,11 @@ const main_store = {
 				return [];
 			}
 		},
+		OptionsByProduct: (state) => (value) => {
+			
+			console.log("")
+			return  filterArrayByValue( state.option_value_dictionary.values(), value, 'product_id',true);
+		},
 		OptionValueByProp: (state) => (value, prop="slug") => {
 			return  filterArrayByValue( store.getters.OptionValuesArr, value, prop,true);
 		},
@@ -89,7 +94,13 @@ const main_store = {
 			state.layout_toggle = payload.index
 		},
 		add_product_to_dictionary(state, payload) {
-			state.product_dictionary = new Map(state.product_dictionary).set(parseInt(payload.product.id) , payload.product)
+			
+			var pendingProduct = payload.product;
+			if ( payload.optionconfig){
+				
+				pendingProduct = Object.assign(pendingProduct, {optionconfig: payload.optionconfig });
+			}
+			state.product_dictionary = new Map(state.product_dictionary).set(parseInt(pendingProduct.id) ,pendingProduct)
 		},
 		add_variants_to_dictionary(state, payload) {
 		    
@@ -136,10 +147,22 @@ const main_store = {
 		},
 		add_metafields_to_dictionary(state, payload) {
 			
-			var meta =payload.metafields;
+			var meta = payload.metafields;
 			
-			state.metafield_dictionary= GDatamapper.parseToDictionary(meta, "id");
 			
+			console.log("METAAA" , meta);
+			
+			var unparsedMeta = payload.metafields;   ///GDatamapper.parseToDictionary(meta, "id");
+			
+			unparsedMeta = unparsedMeta.map(function(metafield) {
+				
+				if (metafield.hasOwnProperty('value') && IsJsonString(metafield['value'])){
+					return Object.assign(metafield, {value:metafield['value']});
+				} else {
+					return metafield;
+				}
+			});
+			state.metafield_dictionary = GDatamapper.parseToDictionary(unparsedMeta, "id");
 			
 			
 		}

@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<adminOptionSelect></adminOptionSelect>
-
 		<Multiselect :options="VariantArr"
 		             v-model="CurrentVariant"
 		             @input="variantChanged"
@@ -25,7 +24,9 @@
 
 		</Multiselect>
 
-		<productOptionPicker :inSelectedVariant="CurrentVariant" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
+		meta
+
+		<productOptionPicker :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
 
 		option 2
@@ -123,16 +124,16 @@
     const schema = require("schm");
 
     const demo_config= [{
-	    slug: 'color',
-	    searchable: true,
-	    value_config_default: {
+	    "slug": "color",
+	    "searchable": true,
+	    "value_config_default": {
 		    "swatch_image": true
 	    }
     },
 	    {
-		    slug: 'size',
-		    searchable: false,
-		    value_config_default: {
+		    "slug": "size",
+		    "searchable": false,
+		    "value_config_default": {
 			    "color": "#ff0000"
 		    }
 	    }
@@ -168,6 +169,9 @@
 		    productid: {
 			    default: false
 		    },
+		    product_option_meta:{
+			    default: () => []
+	    },
 		    sectionsettings: {
 		    	default: {}
 		    },
@@ -180,50 +184,41 @@
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
-			    toggle_exclusive:2
+			    toggle_exclusive:2,
+			    _optionMeta: []
 		    }
 	    },
 	    name: 'testcomponent',
 	    computed: {
-	    ...mapGetters([
-		    'LayoutToggle',
-		    'OptionByProp',
-		    'OptionValueByProp',
-		    'OptionsArrByProduct'
-	    ]
-    ),
-	    Slug:function(){
-		    return "wild-geranium"
-	    },
-	    VariantArr: function() {
-		    return this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
-	    },
-	    Layout:function(){
-			return this.$data.toggle_classes[this.LayoutToggle];
-	    },
-	    SelectedOptions:function(){
-		    return this.$data.toggle_classes[this.LayoutToggle];
-	    }
-	    /*_setSelectedOptions: function() {
-			var selectedArr = new Array()
-
-			if (this.$data.selectedVariant){
-				this.$data.selectedOptions = [];
-				for (var i = 0; i < this.Options.length; i++) {
-					console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
-
-					this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
-				}
-			}
-		},*/
+		    ...mapGetters([
+			    'LayoutToggle',
+			    'OptionByProp',
+			    'OptionValueByProp',
+			    'OptionsArrByProduct',
+			    'OptionsByProduct'
+		    ]
+            ),
+		    Slug:function(){
+			    return "wild-geranium"
+		    },
+		    VariantArr: function() {
+			    return this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
+		    },
+		    Layout:function(){
+				return this.$data.toggle_classes[this.LayoutToggle];
+		    },
+		    SelectedOptions:function(){
+			    return this.$data.toggle_classes[this.LayoutToggle];
+		    }
 	    },
 	    created:function(){
 
 	    	let self = this;
 
 		    this.loadProduct().then(function(res){
-
-		    self.add_product_to_dictionary({product: res.data.product});
+			    if ( self.$props.product_option_meta ){
+				   self.add_product_to_dictionary({product: res.data.product, optionconfig: self.$props.product_option_meta});
+			    }
 		    self.add_variants_to_dictionary({variants: res.data.product.variants});
 		    self.add_images_to_dictionary({images: res.data.product.images});
 		    self.add_options_to_dictionary({options: res.data.product.options});
@@ -233,20 +228,13 @@
 			    ///example - --::
 			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
 			     console.log("arr nby product!!!!!!!!!!",self.OptionsArrByProduct(self.CurrentProduct.id));
-
-
-			    self.getProductMeta({params: {productid:self.CurrentProduct.id}}).then(function(res) {
-
-					self.add_metafields_to_dictionary({metafields: res.data.metafields}) ;
-				    console.log("THE META IS!!!!!", self.MetafieldsByProps({owner_id:self.CurrentProduct.id, namespace:"option" }) );
-			    })
 		    })
 	    },
 	    mounted:function(){
 		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
 	    methods:{
-	    ...mapMutations(['setlayoutButton','add_metafields_to_dictionary']),
+	    ...mapMutations(['setlayoutButton']),
 
 			    testBtn:function(target){
 		    	console.log("changed",target);

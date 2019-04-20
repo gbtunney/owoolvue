@@ -1,5 +1,7 @@
 <template>
 	<div>
+
+
 		<singleProductOptionPicker v-for="option,index in options"
 		                           :option="option"
 		                           :selectedoptionvalue="SelectedOptionValue(option.id)"
@@ -18,7 +20,7 @@
 	import {ProductMixin} from  '@/mixins/productmixin.js';
 
 	import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue'
-	import { getVariantFromOptions} from '@/helpers/main.js'
+	import { getVariantFromOptions,filterArrayByValue} from '@/helpers/main.js'
 	import 'vuetify/dist/vuetify.min.css'
 
 	import Vue from 'vue';
@@ -32,6 +34,9 @@
 			inSelectedVariant: {  ////plural options
 				required:false
 			},
+			meta: {  ////plural options
+				required:false
+			}
 		},
 		mixins: [ProductMixin],
 		components: {singleProductOptionPicker},
@@ -45,7 +50,8 @@
 		computed: {
 		...mapGetters([
 				'OptionByProp',
-				'OptionValueByProp'
+				'OptionValueByProp',
+			'MetafieldsByProps'
 			]
 		),
 		Slug:function(){
@@ -75,11 +81,18 @@
 		inSelectedVariant: function(val) {
 			console.log("app changed variant!!!!!!!!",val);
 			this.CurrentVariant=val;
+		},
+		meta: function(val) {
+			console.log("META SET!!!!!!!!!!!",val);
+			//this.CurrentVariant=val;
 		}
 	},
 	created:function(){
 	},
 	mounted:function(){
+
+
+
 	},
 	methods:{
 		SelectedOptionValue: function( val ,optionsDictionary =this.SelectedOptionsDictionary  /* or id?????*/ ) {

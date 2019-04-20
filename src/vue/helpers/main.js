@@ -34,6 +34,14 @@ export function firstValue(_array, _value, _prop=false, _first = true) {
 	//todo: the first value so it dont break
 }
 
+export function IsJsonString(str) {
+	try {
+		JSON.parse(str);
+	} catch (e) {
+		return false;
+	}
+	return true;
+}
 export function filterArrayByValue(_array, _value, _prop=false, _first = true) {
 	if (!_array || !_value || _array.length <= 0) return;
 	

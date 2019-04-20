@@ -80,6 +80,8 @@ onError(state, error, axios, { params, data }) {
 	onSuccess(state, payload, axios, { params, data }) {
 	// if you define the onSuccess function you have to set the state by yourself
 	console.log(`PRODUCT META CALLED`,params,payload.data);
+	
+	
 },
 onError(state, error, axios, { params, data }) {
 	// if you define the onSuccess function you have to set the state by yourself
