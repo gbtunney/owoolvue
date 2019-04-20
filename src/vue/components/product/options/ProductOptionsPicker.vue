@@ -57,6 +57,7 @@
 			return "wild-geranium"
 		},
 		OptionsDictionary:function(){
+
 			if ( this.CurrentVariant && this.CurrentVariant.options){
 				return this.CurrentVariant.options;
 
@@ -130,8 +131,31 @@
 			this.setlayoutButton({index: target})
 		},
 		optionChanged: function(option,value) {
-			console.log("OPTRIONq1 changed!!!!!",option,value, this._getVariantFromOptions( [value.id], this.Variants));
-		},
+
+				var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
+
+				if ( newOptionDictionaryforPendingVariant.get(option.id) ){
+
+					if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
+						newOptionDictionaryforPendingVariant.set(option.id, value);
+						var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
+							if (option.hasOwnProperty('id')){
+								return option.id;
+							}
+						})
+
+						var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+
+						if (foundVariantArr && foundVariantArr.length==1 ){
+							console.log("emitting!!!",foundVariantArr );
+							this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
+						}else{
+
+							console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+						}
+					}
+				}
+			},
 		_getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			return   getVariantFromOptions(optionArray, variantsArr);
 		},

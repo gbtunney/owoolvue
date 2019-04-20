@@ -25,7 +25,7 @@
 
 		</Multiselect>
 
-		<productOptionPicker :inSelectedVariant="CurrentVariant" :options="CurrentProductOptions"></productOptionPicker>
+		<productOptionPicker :inSelectedVariant="CurrentVariant" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
 
 		option 2
@@ -214,8 +214,9 @@
 	    		console.log("variant changed!!!!!",variant)
 
 	        },
-		    optionChanged: function(option,value) {
-			    console.log("OPTRIONq1 changed!!!!!",option,value, this._getVariantFromOptions( [value.id], this.Variants));
+		    optionChanged: function(requestedVariant,option_dictionary) {
+			    console.log("master option changed!!!!!",requestedVariant,option_dictionary);
+			    this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			    return   getVariantFromOptions(optionArray, variantsArr);
