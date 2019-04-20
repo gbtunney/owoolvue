@@ -21,13 +21,17 @@ export const ProductMixin={
 	    computed: {
 	    ...mapGetters([
 		    'Variants',
-		    'OptionsArrByProduct'
+		    'OptionsArrByProduct',
+		    'Metafields',
+		    'MetafieldsByProp',
+		    'MetafieldsByProps'
 	    ]),
 
 	    ...mapState({product_dictionary: state => state.product_dictionary,
 		    variant_dictionary: state => state.variant_dictionary,
 	    product_image_dictionary: state => state.product_image_dictionary,
 	option_dictionary: state => state.option_dictionary,
+	metafield_dictionary: state => state.metafield_dictionary,
 	    CurrentProduct(state)
     {
 	    return state.product_dictionary.get(this.NormalizedProductID);

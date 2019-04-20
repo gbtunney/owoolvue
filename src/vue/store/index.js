@@ -22,6 +22,7 @@ const main_store = {
 	    variant_dictionary: new Map(),
 	    option_dictionary: new Map(),
 	    product_image_dictionary: new Map(),
+	    metafield_dictionary:new Map()
 	    
     },
 	getters: {
@@ -40,6 +41,9 @@ const main_store = {
 		Variants: function(state) {
 			return Array.from(state.variant_dictionary.values())//state.count
 		},
+		Metafields: function(state) {
+			return Array.from(state.metafield_dictionary.values())//state.count
+		},
 		Options: function(state) {
 			if (state.option_dictionary){
 				return Array.from(state.option_dictionary.values())//state.count
@@ -56,7 +60,26 @@ const main_store = {
 				option_value_dictionary.push(...option.values);
 			})
 			return option_value_dictionary;//store.getters.Options.find(option => option.slug === slug)
+		},
+		MetafieldsByProp: (state) => (value, prop="owner_id") => {
+			return  filterArrayByValue( store.getters.Metafields, value, prop,true);
+		},
+		MetafieldsByProps : (state) => (valueObj) => {
+			
+			let _filterProps = valueObj;
+			return  store.getters.Metafields.find(function(metafield) {
+				
+				var found = false;
+				var keys = Object.keys(_filterProps)
+				for (const key of keys) {
+					found = ((metafield.hasOwnProperty(key) && metafield[key] == _filterProps[key])) ? true : false
+				}
+				
+				if (found) return true;
+				return false;
+			})
 		}
+
 	},
 	mutations: {
 		increment(state, payload) {
@@ -110,6 +133,15 @@ const main_store = {
 				state.variant_dictionary = newMap;
 				
 			}
+		},
+		add_metafields_to_dictionary(state, payload) {
+			
+			var meta =payload.metafields;
+			
+			state.metafield_dictionary= GDatamapper.parseToDictionary(meta, "id");
+			
+			
+			
 		}
 	},
   plugins: [vuexLocal.plugin],

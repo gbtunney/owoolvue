@@ -121,7 +121,45 @@
     //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
 
     const schema = require("schm");
-  //  ProductMixin
+
+    const demo_config= [{
+	    slug: 'color',
+	    searchable: true,
+	    value_config_default: {
+		    "swatch_image": true
+	    }
+    },
+	    {
+		    slug: 'size',
+		    searchable: false,
+		    value_config_default: {
+			    "color": "#ff0000"
+		    }
+	    }
+    ]
+
+    const optionvaluemeta=[
+	    {
+		    "slug" : "alumroot",
+		    "swatch_image": "swatch-alumroot.png",
+		    "color": "#4b1b3f",
+	    },
+	    {
+		    "slug" : "ash",
+		    "swatch_image": "swatch-ash.png",
+		    "color": "#3e404c",
+	    },
+	    {
+		    "slug" : "basswood",
+		    "swatch_image": "swatch-basswood.png",
+		    "color": "#191e2f",
+	    }
+    ]
+
+
+
+
+    //  ProductMixin
     export default {
 	    props: {
 		    variantid: {
@@ -197,13 +235,18 @@
 			     console.log("arr nby product!!!!!!!!!!",self.OptionsArrByProduct(self.CurrentProduct.id));
 
 
+			    self.getProductMeta({params: {productid:self.CurrentProduct.id}}).then(function(res) {
+
+					self.add_metafields_to_dictionary({metafields: res.data.metafields}) ;
+				    console.log("THE META IS!!!!!", self.MetafieldsByProps({owner_id:self.CurrentProduct.id, namespace:"option" }) );
+			    })
 		    })
 	    },
 	    mounted:function(){
 		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
 	    methods:{
-	    ...mapMutations(['setlayoutButton']),
+	    ...mapMutations(['setlayoutButton','add_metafields_to_dictionary']),
 
 			    testBtn:function(target){
 		    	console.log("changed",target);
