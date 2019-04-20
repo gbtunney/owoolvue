@@ -17,7 +17,7 @@
 
 				<h3 class="option__name">{{OptionName}} </h3>
 
-				<Multiselect :options="OptionValues" class="--is-open"
+				<Multiselect :options="FilteredOptionValues" class="--is-open"
 				             v-model="selectedOptions"
 				             @input="$emit('optionChanged',option, selectedOptions)"
 				             v-on:close=""
@@ -48,7 +48,7 @@
 					<template slot="option" class="is-grid-2" slot-scope="props">
 						<div class="option__swatch" v-if="_getSwatchSrc(props.option)"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img  class="option__image" :src="_getSwatchSrc(props.option)" >
 						</div>
-						<div class="option__desc"><span class="option__title">{{_getIsDisabled(props.option)}} {{ props.option.title }}</span></div>
+						<div class="option__desc"><span class="option__title">{{ props.option.title }}</span></div>
 					</template>
 
 				</Multiselect>
@@ -110,6 +110,7 @@
 				searchQuery: false,
 				selectedOptions: [],
 				selectedVariant: [],
+				_filteredOptionValues:false,
 			}
 		},
 		created: function() {
@@ -128,22 +129,15 @@
 				}
 			},
 			disabledOptions: function(val) {
-
 				if ( val && val.length > 0 ){
 					this.OptionValues=	this.$data._optionValues;//this._mapDisabledOptions(this.$data._optionValues,val)
 					console.log("DISABLED CHANGEEEEEEDDDD!!",this._mapDisabledOptions(this.$props.option,val),val);
-
 				}
-
-				/*if (val && this.OptionValueByProp(val)){
-					this.$data.selectedOptions = this.OptionValueByProp(val);
-				}*/
 			},
 			selectedoptionvalue:function(val) {
 				if (val && val.hasOwnProperty('id')){
 					this.$data.selectedOptions = val;
-
-					this.OptionValues =this.$data._optionValues; //this._mapDisabledOptions(this.$data._optionValues,this.$props.disabledOptions);// val.values;
+					this.OptionValues =this.$data._optionValues; // updates disabledthis._mapDisabledOptions(this.$data._optionValues,this.$props.disabledOptions);// val.values;
 					console.log("SELECTED OPTION CHANGED, should update values???",val,this.$props.disabledOptions);
 				}
 			},
@@ -162,13 +156,21 @@
 			OptionValues: {
 				get: function() {
 					return this.$data._optionValues;
-
-
 				},
 				set: function(newVal) {
-
-
 					this.$data._optionValues = 	this._mapDisabledOptions(newVal,this.$props.disabledOptions);
+				}
+			},
+			FilteredOptionValues: {
+				get: function() {
+					if (!this.$data._filteredOptionValues){
+						return this.OptionValues;
+					}else{
+						return this.$data._filteredOptionValues;
+					}
+				},
+				set: function(newVal) {
+					this.$data._filteredOptionValues =newVal; //	this._mapDisabledOptions(newVal,this.$props.disabledOptions);
 				}
 			},
 		...mapGetters([
@@ -182,10 +184,6 @@
 
 	},
 	methods: {
-			_setSelectedOptionValues:function(){
-
-
-			},
 		_getSwatchSrc: function(option){
 			/*if ( option.swatch_image==true || option.swatch_image == "true" ){
 				var foundVariantArr = getVariantFromOptions([option.id],this.Variants  );
@@ -198,117 +196,38 @@
 			}*/
 			return false;
 		},
-		GetMultiselectClass: function(option) {
-			return `attribute-${option.slug}`;
-		},
-		selectOpen: function(option) {
-			if (option.isOpen){
-				Vue.set(option, 'isOpen', !option.isOpen);
-
-			} else {
-				Vue.set(option, 'isOpen', !true);
-
-			}
-		},
-		selectClosed: function(option) {
-			//Vue.set(option, 'isOpen', false);
-		},
-		_getSearchable: function(option) {
-			return ( option.slug == "color") ? true : false;
-		},
 		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
 
 			let newOptionsArr =Array.from(optionvalues);
 			let _disabledArr =disabledOptions;
 
-				newOptionsArr=     newOptionsArr.map(function(optionvalue){
-					let ID = optionvalue.id;
+			newOptionsArr = newOptionsArr.map(function(optionvalue) {
 
-						var result =  _disabledArr.find(function(item){
+				let ID = optionvalue.id;
+				var result = _disabledArr.find(function(item) {
 
-							if (ID == item.id ){
-								return true;
-							}else{
-								return false;
-							}
-						})
-
-
-
-					if ( result ){
-							//return true;
-						return  Object.assign(optionvalue, {$isDisabled :bool })
-					}else{
-						return  Object.assign(optionvalue, {$isDisabled :!bool  })
+					if (ID == item.id){
+						return true;
+					} else {
+						return false;
 					}
 				})
 
-
-
-
-			return newOptionsArr;
-		},
-		_getIsDisabled: function(option) {
-			/*var inverseMap = new Map(this.option_dictionary)  //.delete(option.id);
-			inverseMap.delete(option.parent_id);
-
-			let newFilteredArray = this.Variants;
-			let optionSelf = option;
-
-			newFilteredArray = newFilteredArray.filter(function(variant) {
-
-				var foundArray = [];
-
-				var optionID = optionSelf.parent_id;
-				var optionValueID = optionSelf.id;
-
-				if (optionValueID == variant.options.get(optionID).id){
-					return true;
+				if (result){
+					return Object.assign(optionvalue, {$isDisabled: bool})
+				} else {
+					return Object.assign(optionvalue, {$isDisabled: !bool})
 				}
 			})
-
-			let self = this;
-			inverseMap.forEach(function(value, key, map) {
-				let currentSelectedOption = self.$data.selectedOptions[value._index];
-				if (currentSelectedOption){
-					newFilteredArray = newFilteredArray.filter(function(variant) {
-
-						var foundArray = [];
-
-						var optionID = currentSelectedOption.parent_id;
-						var optionValueID = currentSelectedOption.id;
-
-						if (optionValueID == variant.options.get(optionID).id){
-							return true;
-						}
-					})
-				}
-			});
-
-			if (newFilteredArray.length < 1){
-				Vue.set(option, '$isDisabled', true);
-			} else {
-				Vue.set(option, '$isDisabled', false);
-			}*/
-			return;
-
-		},
-		clickMe: function() {
-		},
-		customLabel({title, desc}) {
-			return `${title} – ${desc}`
-		},
-		variantSelectorChanged: function() {
-			console.log("VUEX ::VARIANT CHANGED!!! ", this.$data.selectedVariant);
-			this._setSelectedOptions();
+			return newOptionsArr;
 		},
 		fuseFilter: function(result, query, list, fuse_options) {
-			//console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
-			this.OptionValues = result;
+			console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
+			this.FilteredOptionValues = result;
 		},
 		fuseInactive:function( list, fuse_options){
 			console.log("FUSE INACTIVEEE!!!" ,list, fuse_options);
-			this.OptionValues = list;
+			this.FilteredOptionValues = list;
 		}
 	},
 	filters: {

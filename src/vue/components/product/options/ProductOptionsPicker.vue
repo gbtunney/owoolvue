@@ -23,10 +23,6 @@
 
 	import Vue from 'vue';
 
-	//custom version of vuemultiselect - stripped down.
-	//  import Multiselect from '@/components/utilities/gMultiselectList.vue'
-	//  import Multiselect from '@/components/utilities/gMultiselectList.vue'
-
 	//  ProductMixin
 	export default {
 		props: {
@@ -55,15 +51,6 @@
 		Slug:function(){
 			return "wild-geranium"
 		},
-		OptionsDictionary:function(){
-
-			if ( this.CurrentVariant && this.CurrentVariant.options){
-				return this.CurrentVariant.options;
-
-			}else{
-				return [];
-			}
-		},
 		CurrentVariant:{
 			get: function() {
 					return  this.$data._currentVariant;
@@ -79,23 +66,10 @@
 		SelectedOptionsDictionary: function() {
 			if (  this.$data._currentVariant &&  this.$data._currentVariant.options){
 				return  this.$data._currentVariant.options;
-
 			}else{
 				return new Map;
 			}
-		},
-		/*_setSelectedOptions: function() {
-			var selectedArr = new Array()
-
-			if (this.$data.selectedVariant){
-				this.$data.selectedOptions = [];
-				for (var i = 0; i < this.Options.length; i++) {
-					console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
-
-					this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
-				}
-			}
-		},*/
+		}
 	},
 	watch: {
 		inSelectedVariant: function(val) {
@@ -104,13 +78,11 @@
 		}
 	},
 	created:function(){
-
 	},
 	mounted:function(){
 	},
 	methods:{
 		SelectedOptionValue: function( val ,optionsDictionary =this.SelectedOptionsDictionary  /* or id?????*/ ) {
-			console.log("TRYING TO GET INDEX VALUEE",optionsDictionary,val);
 
 			if ( isNaN(val) && val.hasOwnProperty('id')){    //the whole object
 				return ( optionsDictionary.get(val.id) ) ? optionsDictionary.get(val.id) : false;
@@ -125,10 +97,6 @@
 		},
 	...mapMutations(['setlayoutButton']),
 
-			testBtn:function(target){
-			console.log("changed",target);
-			this.setlayoutButton({index: target})
-		},
 		optionChanged: function(option,value) {
 
 				var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
@@ -146,10 +114,8 @@
 						var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
 
 						if (foundVariantArr && foundVariantArr.length==1 ){
-							console.log("emitting!!!",foundVariantArr );
 							this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
 						}else{
-
 							console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
 						}
 					}
@@ -188,51 +154,6 @@
 				})
 
 			}
-		},
-
-
-
-		getSelectedOptions:function(){
-
-			//  this.CurrentVariant
-
-			/*_setSelectedOptions: function() {
-					   var selectedArr = new Array()
-
-					   if (this.$data.selectedVariant){
-						   this.$data.selectedOptions = [];
-						   for (var i = 0; i < this.Options.length; i++) {
-							   console.log("selected variant is ",this.$data.selectedVariant,this.Options,this.$data.selectedVariant.options );
-
-							   this.$data.selectedOptions.push(this.$data.selectedVariant.options.get(this.Options[i].id));
-						   }
-					   }
-				   },*/
-		},
-		_mapDisabledVariants:function(variantsArr,flaggedVariants,bool=true){   ///TODO: remap oos too seperate out
-
-			var newVariantArr =Array.from(variantsArr);
-
-			let _flaggedVariants =flaggedVariants;
-			newVariantArr=     newVariantArr.map(function(variant){
-				let ID = variant.id;
-
-				var result =  _flaggedVariants.find(function(item){
-					if (ID == item.id ){
-						return true;
-					}else{
-						return false;
-					}
-				})
-				if ( result || variant.inventory_quantity <=0  ){
-					return  Object.assign(variant, {$isDisabled :bool })
-				}else{
-					return  Object.assign(variant, {$isDisabled :!bool  })
-				}
-
-			})
-
-			return newVariantArr;
 		}
 	},
 	};
