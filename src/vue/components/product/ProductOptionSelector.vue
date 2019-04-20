@@ -295,7 +295,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" type="text/scss" >
+<style lang="scss" type="text/scss" scoped>
 
     @import "product-dependancies";
 

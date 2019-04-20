@@ -7,7 +7,7 @@
 		             @input="variantChanged"
 		             track-by="title"
 		             label="title"
-		             ref="multiselectmaster"
+		             class="multiselectmaster"
 		             :taggable="false"
 		             :multiple="false"
 		             :closeOnSelect="false"
@@ -256,11 +256,27 @@
 };
 </script>
 <!--
+
 <style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
 -->
 
-<style lang="scss" type="text/scss">
 
+<style lang="scss" type="text/scss" >
+
+.multiselectmaster{
+	span.multiselect__option{
+		background: red!important;
+
+	}
+	.multiselect__element{
+		//background: red;
+
+
+
+	}
+
+
+}
 </style>
 
 

@@ -149,6 +149,15 @@
 					var variants = self._getVariantFromOptions(testableCombo, self.Variants);
 					if (variants.length < 1){
 						return true;
+
+					}else if (variants.length == 1){
+
+						if (variants[0].inventory_quantity <=0  ){
+							return true;
+
+						}
+
+
 					}
 
 				})
