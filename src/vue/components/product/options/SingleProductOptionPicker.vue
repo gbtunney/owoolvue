@@ -2,11 +2,9 @@
 	<div >
 
 		<div class="attribute-panel">
-
-			<code>{{disabledOptions}}</code>
+			<code style="display: none">{{disabledOptions}}</code>
 			<code style="display: none">{{option}}</code>
 			<code style="display: none">{{selectedOptions}}</code>
-
 			<div>
 				<FuseSearch
 					v-show="searchable"
@@ -46,7 +44,8 @@
 					</template>
 
 					<template slot="option" class="is-grid-2" slot-scope="props">
-						<div class="option__swatch" v-if="_getSwatchSrc(props.option)"  v-bind:style="{ backgroundColor: props.option.color}"  style=""><img  class="option__image" :src="_getSwatchSrc(props.option)" >
+						<div class="option__swatch" v-if="props.option.color"  v-bind:style="{ backgroundColor: props.option.color}"  style="">
+							<img v-if="props.option.swatch_image" class="option__image" :src="_getSwatchSrc(props.option)" >
 						</div>
 						<div class="option__desc"><span class="option__title">{{ props.option.title }}</span></div>
 					</template>
@@ -78,7 +77,13 @@
 			Multiselect,FuseSearch
 		}, props: {
 			option: {
-				required:false
+				default: false
+			},
+			swatchsize: {
+				required:false,
+				type:String ,
+				default:'150x150'
+
 			},
 			selectedoptionslug: {   ///TODO:this is acrually an optionvalueslug
 				required:false
@@ -174,7 +179,7 @@
 				}
 			},
 		...mapGetters([
-			'Options','OptionValueByProp'
+			'Options','OptionValueByProp','Variants'
 		]),
 	...mapState({
 		variant_dictionary: state => state.variant_dictionary,
@@ -185,15 +190,17 @@
 	},
 	methods: {
 		_getSwatchSrc: function(option){
-			/*if ( option.swatch_image==true || option.swatch_image == "true" ){
-				var foundVariantArr = getVariantFromOptions([option.id],this.Variants  );
-				if ( foundVariantArr && foundVariantArr.length>0 && foundVariantArr[0].image_id ){
-					var img = this.product_image_dictionary.get( foundVariantArr[0].image_id);
-					if (  img  ){
-						return ShopifyImgURL(img.src,'150x150') ;
-					}
+
+			if ( option.swatch_image==true || option.swatch_image == "true" ){
+		var foundVariantArr = getVariantFromOptions([option.id],this.Variants  );
+
+	if ( foundVariantArr && foundVariantArr.length>0 && foundVariantArr[0].image_id ){
+				var img = this.product_image_dictionary.get( foundVariantArr[0].image_id);
+				if (  img  ){
+						return ShopifyImgURL(img.src,this.$props.swatchsize) ;
 				}
-			}*/
+			}
+			}
 			return false;
 		},
 		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
@@ -315,6 +322,7 @@
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 			.option__swatch{
+
 				//width: 50px;
 				//clip-path: inset(20% 20%);
 				/* Also can take single values to make all sides the same, or 2 values (vert/horz), or 3 values (top/horz/bottom). */

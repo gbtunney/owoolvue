@@ -142,24 +142,11 @@ const main_store = {
 			imagesArr.forEach( function(item){
 				newMap.set(parseInt(item.id),item);
 			})
-   
 			state.product_image_dictionary = newMap;
 			
 		},
 		add_options_to_dictionary(state, payload) {
-			var parsedOptions ;
-			
-			if (payload.hasOwnProperty("optionconfig")){
-				parsedOptions= parseOptions(payload.options,payload.optionconfig,["color"]);
-				console.log("PARSED OPTIONS IS",parsedOptions)
-				
-				
-			}else{
-				parsedOptions= parseOptions(payload.options,false,["color"]);
-				
-			}
-			
-			
+			var parsedOptions  = (payload.hasOwnProperty("optionconfig")) ? parseOptions(payload.options,payload.optionconfig) : parseOptions(payload.options,false);
 			state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
 			
 			if ( state.variant_dictionary ){
@@ -170,16 +157,11 @@ const main_store = {
 					newMap.set(item.id,item);
 				})
 				state.variant_dictionary = newMap;
-				
 			}
 		},
 		add_metafields_to_dictionary(state, payload) {
 			
 			var meta = payload.metafields;
-			
-			
-			console.log("METAAA" , meta);
-			
 			var unparsedMeta = payload.metafields;   ///GDatamapper.parseToDictionary(meta, "id");
 			
 			unparsedMeta = unparsedMeta.map(function(metafield) {
@@ -191,8 +173,6 @@ const main_store = {
 				}
 			});
 			state.metafield_dictionary = GDatamapper.parseToDictionary(unparsedMeta, "id");
-			
-			
 		}
 	},
   plugins: [vuexLocal.plugin],

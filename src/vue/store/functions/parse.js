@@ -27,7 +27,6 @@ export function parseOptions(inOptions,option_config =false) {
 		color: {type: String, default: false}
 	})
 }
-	
 	let optionsArray = inOptions;
 	
 	var newArray =[];
@@ -51,7 +50,6 @@ export function parseOptions(inOptions,option_config =false) {
 		//NEW !!! NEED TO MERGE CONFIG PROPS TO PARENT OPTION (like searchable)
 		let configOptionforCurrent  =false;
 		
-		
 		if ( option_config.length > 0){
 			configOptionforCurrent= option_config.find(function(optionconfigval){
 				if (optionconfigval.slug ==currentObj.slug  ) return true;
@@ -59,12 +57,9 @@ export function parseOptions(inOptions,option_config =false) {
 			})
 			if (configOptionforCurrent.hasOwnProperty('searchable') ){    //value_config_default:Object
 				currentObj = Object.assign(currentObj,{searchable: configOptionforCurrent.searchable });
-				console.log(" NEED TO MERGE CONFIG PROPS TO PARENT OPTION (like searchable)",configOptionforCurrent,currentObj,option_config)
 			}
 			
 		}
-		
-		//temp swatch??
 
 		for (var u = 0; u < currentObj.values.length; u++) {
 			var newValueObj = GDatamapper.expandToObject(currentObj.values[u], "title", {
@@ -89,10 +84,7 @@ export function parseOptions(inOptions,option_config =false) {
 		currentObj.valueDictionary = GDatamapper.parseToDictionary(currentObj.values, "id");
 		newArray.push(currentObj);
 	}
-	//throw newArray;
-	console.log("parsed",newArray)
-	
-	return newArray;//GDatamapper.parseToDictionary(newArray, "id")
+	return newArray;
 }
 
 export function parseVariants(inVariants, inOptionsArr) {
@@ -113,9 +105,6 @@ export function parseVariants(inVariants, inOptionsArr) {
 				
 				
 				let searchString = Slugify(item[`option${u}`]);
-				
-				//console.log("currobk", searchString, inOptionsArr, item);
-				
 				var myArr = inOptionsArr[u - 1].values.filter(function(option) {
 					
 					if (option.slug == searchString){

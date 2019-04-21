@@ -21,7 +21,7 @@
 	import {ProductMixin} from  '@/mixins/productmixin.js';
 
 	import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue'
-	import { getVariantFromOptions,filterArrayByValue} from '@/helpers/main.js'
+	import { getVariantFromOptions,filterArrayByValue,isVariantAvailable} from '@/helpers/main.js'
 	import 'vuetify/dist/vuetify.min.css'
 
 	import Vue from 'vue';
@@ -165,13 +165,9 @@
 						return true;
 
 					}else if (variants.length == 1){
-
-						if (variants[0].inventory_quantity <=0  ){
+						if ( !isVariantAvailable(variants[0]) ){
 							return true;
-
 						}
-
-
 					}
 
 				})

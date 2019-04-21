@@ -132,6 +132,18 @@ export const GDatamapper = {
 	}
 };
 
+export function isVariantAvailable(variant) {
+
+	if (variant && variant.hasOwnProperty('inventory_quantity') && variant.hasOwnProperty('inventory_management')){
+		if (variant.inventory_management == null){
+			return true;
+		} else if (variant.inventory_quantity > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
 export function getVariantFromOptions(inOptions, inVariants) {
 	let self = this;
 	let optionArray = inOptions;

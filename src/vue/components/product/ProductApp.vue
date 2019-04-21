@@ -95,7 +95,7 @@
 
     import Multiselect from 'vue-multiselect'
 
-    import { getVariantFromOptions} from '@/helpers/main.js'
+    import { getVariantFromOptions,isVariantAvailable} from '@/helpers/main.js'
     import 'vuetify/dist/vuetify.min.css'
 
     import Vue from 'vue';
@@ -216,27 +216,35 @@
 	    	let self = this;
 
 		    this.loadProduct().then(function(res){
-			    if ( self.$props.product_option_meta ){
+
+			     //***PRODUCT
+			     if ( self.$props.product_option_meta ){
 				   self.add_product_to_dictionary({product: res.data.product, optionconfig: self.$props.product_option_meta});
+			    }else{
+				    self.add_product_to_dictionary({product: res.data.product});
 			    }
-		    self.add_variants_to_dictionary({variants: res.data.product.variants});
-		    self.add_images_to_dictionary({images: res.data.product.images});
-			    self.add_options_to_dictionary({options: res.data.product.options});
-		    if (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0 ){
-		    	console.log("doing it");
-			 self.add_options_to_dictionary({options: res.data.product.options, optionconfig: self.CurrentProduct.optionconfig });
 
-		    }else{
-			  self.add_options_to_dictionary({options: res.data.product.options});
+			    //***VARIANTS
+			    self.add_variants_to_dictionary({variants: res.data.product.variants});
 
-		    }
+			     //***IMAGES
+			    self.add_images_to_dictionary({images: res.data.product.images});
 
+			    //***OPTIONS
+			    if (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0){
+				    self.add_options_to_dictionary({
+					    options: res.data.product.options,
+					    optionconfig: self.CurrentProduct.optionconfig
+				    });
+			    } else {
+				    self.add_options_to_dictionary({options: res.data.product.options});
+			    }
 
+			    ////*****SET VARIANT
 			    self.CurrentVariant  = self.CurrentVariant ;
 
 			    ///example - --::
 			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
-			     console.log("arr nby product!!!!!!!!!!",self.OptionsArrByProduct(self.CurrentProduct.id));
 		    })
 	    },
 	    mounted:function(){
@@ -271,11 +279,10 @@
 		    _mapDisabledVariants:function(variantsArr,flaggedVariants,bool=true){   ///TODO: remap oos too seperate out
 
 			    var newVariantArr =Array.from(variantsArr);
-
 			    let _flaggedVariants =flaggedVariants;
+
 			    newVariantArr=     newVariantArr.map(function(variant){
 				    let ID = variant.id;
-
 				    var result =  _flaggedVariants.find(function(item){
 					    if (ID == item.id ){
 						    return true;
@@ -283,12 +290,12 @@
 						    return false;
 					    }
 				    })
-				    if ( result || variant.inventory_quantity <=0  ){
-					    return  Object.assign(variant, {$isDisabled :bool })
-				    }else{
-					    return  Object.assign(variant, {$isDisabled :!bool  })
-				    }
+				    if (  result || isVariantAvailable(variant) ){
+					   return  Object.assign(variant, {$isDisabled :bool })
 
+				   }else{
+					   return  Object.assign(variant, {$isDisabled :!bool  })
+				   }
 			    })
 			    return newVariantArr;
 		    }
