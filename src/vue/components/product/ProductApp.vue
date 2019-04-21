@@ -85,13 +85,17 @@
 <script type="text/javascript">
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
     import {ProductMixin} from  '@/mixins/productmixin.js';
-    import ProductImageSlideshow from '@/components/product/ProductImageSlideshow.vue'
-    import productOptionSelect from '@/components/product/ProductOptionSelector.vue'
+    import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
+    import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
+
+
+    import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
 
     import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue' //single option picker
 
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
 
+    import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
 
     import Multiselect from 'vue-multiselect'
 
@@ -179,8 +183,8 @@
 			    default: "color"    ///the slug of the option to show a swatch on.
 		    }
 	    },
-	    mixins: [ProductMixin],
-	    components: {ProductImageSlideshow,productOptionSelect,adminOptionSelect,singleProductOptionPicker,productOptionPicker,Multiselect},
+	    mixins: [DictionaryMixin,ProductMixin,ShopifyApiMixin],
+	    components: {ProductImageSlideshow,PendingItemsComponent,adminOptionSelect,singleProductOptionPicker,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],

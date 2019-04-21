@@ -27,11 +27,7 @@ export const ProductMixin={
 		    'MetafieldsByProps'
 	    ]),
 
-	    ...mapState({product_dictionary: state => state.product_dictionary,
-		    variant_dictionary: state => state.variant_dictionary,
-	    product_image_dictionary: state => state.product_image_dictionary,
-	option_dictionary: state => state.option_dictionary,
-	metafield_dictionary: state => state.metafield_dictionary,
+	    ...mapState({
 	    CurrentProduct(state)
     {
 	    return state.product_dictionary.get(this.NormalizedProductID);
@@ -131,10 +127,7 @@ CurrentVariant:{
     }
     },
     methods:{
-    ...mapActions([
-		    'getProduct','getVariant','getProductMeta','getVariantMeta'
-	    ]),
-    ...mapMutations(['increment', 'add_product_to_dictionary','add_variants_to_dictionary','add_images_to_dictionary','add_options_to_dictionary']),
+    ...mapMutations(['increment']),
 		    loadVariant:function(){
 		    let self = this;
 		
