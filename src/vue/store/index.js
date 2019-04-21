@@ -33,7 +33,25 @@ const main_store = {
 			return  filterArrayByValue( store.getters.Options, value, prop,true);
 		},
 		OptionsArrByProduct: (state) => (id) => {
-			return  (state.product_dictionary.get(id) &&  state.product_dictionary.get(id).options) ?  state.product_dictionary.get(id).options : []// filterArrayByValue( store.getters.Options, value, prop,true);
+			
+			let self = this;
+			let optionDictionary = state.option_dictionary;
+			
+			if (state.product_dictionary.get(id) &&  state.product_dictionary.get(id).options){
+				
+				var uncoallatedOptions =   state.product_dictionary.get(id).options;
+				
+				return uncoallatedOptions.map(function(option){
+					if ( option.id && optionDictionary && optionDictionary.get(option.id ) ){
+						return optionDictionary.get(option.id );
+					}else{
+						return false;
+					}
+				})
+			}else{
+			
+			
+			}
 		},
 		LayoutToggle: function(state) {
 			return state.layout_toggle
@@ -129,8 +147,18 @@ const main_store = {
 			
 		},
 		add_options_to_dictionary(state, payload) {
+			var parsedOptions ;
 			
-			var parsedOptions = parseOptions(payload.options,["color"]);
+			if (payload.hasOwnProperty("optionconfig")){
+				parsedOptions= parseOptions(payload.options,payload.optionconfig,["color"]);
+				console.log("PARSED OPTIONS IS",parsedOptions)
+				
+				
+			}else{
+				parsedOptions= parseOptions(payload.options,false,["color"]);
+				
+			}
+			
 			
 			state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
 			

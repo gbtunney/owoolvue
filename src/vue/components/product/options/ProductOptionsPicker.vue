@@ -7,6 +7,7 @@
 		                           :selectedoptionvalue="SelectedOptionValue(option.id)"
 		                           :disabledOptions="_remapOptionValuesDisabled(option)"
 		                           :key="index"
+		                           :searchable="option.searchable"
 		                           @optionChanged="optionChanged" >
 
 		</singleProductOptionPicker>
@@ -97,7 +98,7 @@
 	methods:{
 		SelectedOptionValue: function( val ,optionsDictionary =this.SelectedOptionsDictionary  /* or id?????*/ ) {
 
-			if ( isNaN(val) && val.hasOwnProperty('id')){    //the whole object
+			if ( val && isNaN(val) && val.hasOwnProperty('id')){    //the whole object
 				return ( optionsDictionary.get(val.id) ) ? optionsDictionary.get(val.id) : false;
 			}else if ( optionsDictionary.get(val) ) {
 				return optionsDictionary.get(val);

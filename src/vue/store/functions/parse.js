@@ -4,7 +4,7 @@ import math from 'mathjs'
 import {Slugify, GDatamapper,normalize,filterArrayByValue} from '@/helpers/main.js'
 import {getSwatchSrc, getColorData} from './meta'
 
-export function parseOptions(inOptions, showSwatch=false) {
+export function parseOptions(inOptions,option_config =false) {
 	
 	const GDataMapOptionValues = {
 			adapters: {
@@ -35,28 +35,42 @@ export function parseOptions(inOptions, showSwatch=false) {
 		var currentObj = optionsArray[i];
 		var OPTIONS_SCHEMA = schema({
 			
+			///PARENT OPTION , not value.
 			id: {type: Number, default: math.random(11111111111, 999999999999999)},
 			name: {type: String, default: false},
 			slug: {type: String, default: Slugify(currentObj["name"]), required: true},
 			position: {type: Number},
 			_index: {type: Number, default: i, required: true},
 			product_id: {type: Number, required: true, default: false},
+			searchable: true,
 			values: {type: Array, default: false}
 		});
 		
 		currentObj = OPTIONS_SCHEMA.parse(currentObj);
 		
-		//temp swatch??
-		var swatchSrc = false;
+		//NEW !!! NEED TO MERGE CONFIG PROPS TO PARENT OPTION (like searchable)
+		let configOptionforCurrent  =false;
 		
-		if (  filterArrayByValue(showSwatch,  currentObj.slug ) &&  filterArrayByValue(showSwatch,  currentObj.slug ).length > 0   ){
-			 swatchSrc = true;
+		
+		if ( option_config.length > 0){
+			configOptionforCurrent= option_config.find(function(optionconfigval){
+				if (optionconfigval.slug ==currentObj.slug  ) return true;
+				return false;
+			})
+			if (configOptionforCurrent.hasOwnProperty('searchable') ){    //value_config_default:Object
+				currentObj = Object.assign(currentObj,{searchable: configOptionforCurrent.searchable });
+				console.log(" NEED TO MERGE CONFIG PROPS TO PARENT OPTION (like searchable)",configOptionforCurrent,currentObj,option_config)
+			}
+			
 		}
+		
+		//temp swatch??
+
 		for (var u = 0; u < currentObj.values.length; u++) {
 			var newValueObj = GDatamapper.expandToObject(currentObj.values[u], "title", {
 				slug: Slugify(currentObj.values[u]),
 				color: getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
-				swatch_image: swatchSrc, //getSwatchData(Slugify(currentObj.values[u])),
+				swatch_image: false, //getSwatchData(Slugify(currentObj.values[u])),
 				_index: u,
 				parent_id: normalize(optionsArray[i].id),
 				gillian: "test"
@@ -64,8 +78,11 @@ export function parseOptions(inOptions, showSwatch=false) {
 			
 			// throw newValueObj;
 			newValueObj = GDataMapOptionValues.validate().parse(newValueObj);
-			currentObj.values[u] = newValueObj;
 			
+			if (configOptionforCurrent.hasOwnProperty('value_config_default') ){    //:Object
+				newValueObj = Object.assign(newValueObj,configOptionforCurrent.value_config_default  );
+			}
+			currentObj.values[u] = newValueObj;
 		}
 		
 		
@@ -73,6 +90,7 @@ export function parseOptions(inOptions, showSwatch=false) {
 		newArray.push(currentObj);
 	}
 	//throw newArray;
+	console.log("parsed",newArray)
 	
 	return newArray;//GDatamapper.parseToDictionary(newArray, "id")
 }

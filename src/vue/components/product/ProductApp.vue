@@ -221,7 +221,16 @@
 			    }
 		    self.add_variants_to_dictionary({variants: res.data.product.variants});
 		    self.add_images_to_dictionary({images: res.data.product.images});
-		    self.add_options_to_dictionary({options: res.data.product.options});
+			    self.add_options_to_dictionary({options: res.data.product.options});
+		    if (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0 ){
+		    	console.log("doing it");
+			 self.add_options_to_dictionary({options: res.data.product.options, optionconfig: self.CurrentProduct.optionconfig });
+
+		    }else{
+			  self.add_options_to_dictionary({options: res.data.product.options});
+
+		    }
+
 
 			    self.CurrentVariant  = self.CurrentVariant ;
 
