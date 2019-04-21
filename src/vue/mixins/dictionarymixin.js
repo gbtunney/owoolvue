@@ -7,7 +7,6 @@ export const DictionaryMixin = {
 	data() {
 		return {}
 	},
-	name: 'testcomponent',
 	computed: {
 		...mapState({product_dictionary: state => state.product_dictionary,
 	variant_dictionary: state => state.variant_dictionary,

@@ -7,7 +7,6 @@ export const ShopifyApiMixin = {
 	data() {
 		return {}
 	},
-	name: 'testcomponent',
 	computed: {},
 	methods: {
 	...mapActions([

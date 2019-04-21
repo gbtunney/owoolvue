@@ -53,71 +53,42 @@
 
 		<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
 		{{Layout}}
-		<v-btn-toggle mandatory @change="testBtn" v-model="LayoutToggle">
-			<v-btn flat>
-				<v-icon>format_grid</v-icon>
-			</v-btn>
-			<v-btn flat>
-				<v-icon>format_list</v-icon>
-			</v-btn>
-			<v-btn flat>
-				<v-icon>format_align_right</v-icon>
-			</v-btn>
-			<v-btn flat>
-				<v-icon>format_align_justify</v-icon>
-			</v-btn>
-		</v-btn-toggle>
+		<div @change="testBtn" v-model="LayoutToggle">
+			<span>
+				<span>format_grid</span>
+			</span>
+			<button flat>
+				<span>format_list</span>
+			</button>
+			<button flat>
+				<span>format_align_right</span>
+			</button>
+			<button flat>
+				<span>format_align_justify</span>
+			</button>
+		</div>
 
-
-		multiselect
-
-
-		<span>{{CurrentProductTitle}} {{CurrentVariantTitle}} <button @click="increment">increment</button></span>
-		<p>
-			The count will stay when you will move to different pages, thanks to <a href="https://github.com/championswimmer/vuex-persist">vuex-persist</a>.
-			This is not a template for an SPA and should not be treated as one,
-			make sure you use vue only for stuff you used to do with JQuery and not for generating content/meta tags,
-			because that will hurt your SEO.
-		</p>
 	</div>
 </template>
 
 <script type="text/javascript">
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
     import {ProductMixin} from  '@/mixins/productmixin.js';
+    import {VariantMixin} from  '@/mixins/variantmixin.js';
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
 
 
     import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
-
-    import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue' //single option picker
-
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
-
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
 
     import Multiselect from 'vue-multiselect'
 
     import { getVariantFromOptions,isVariantAvailable} from '@/helpers/main.js'
-    import 'vuetify/dist/vuetify.min.css'
 
     import Vue from 'vue';
 
-    import Vuetify from 'vuetify'
-
-    Vue.use(Vuetify, {
-	    theme: {
-		    primary: '#ee44aa',
-		    secondary: '#424242',
-		    accent: '#82B1FF',
-		    error: '#FF5252',
-		    info: '#2196F3',
-		    success: '#4CAF50',
-		    warning: '#FFC107'
-	    },
-	    iconfont: 'md',
-    })
     import adminOptionSelect from '@/components/admin/ProductOptionTestComponent.vue';
 /*		<singleProductOptionPicker searchable="true" :selectedoptionslug="Slug" @optionChanged="optionChanged" :option="OptionByProp('color')"></singleProductOptionPicker>
 */
@@ -183,8 +154,8 @@
 			    default: "color"    ///the slug of the option to show a swatch on.
 		    }
 	    },
-	    mixins: [DictionaryMixin,ProductMixin,ShopifyApiMixin],
-	    components: {ProductImageSlideshow,PendingItemsComponent,adminOptionSelect,singleProductOptionPicker,productOptionPicker,Multiselect},
+	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
+	    components: {ProductImageSlideshow,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -256,7 +227,6 @@
 	    },
 	    methods:{
 	    ...mapMutations(['setlayoutButton']),
-
 			    testBtn:function(target){
 		    	console.log("changed",target);
 		    	this.setlayoutButton({index: target})
@@ -264,7 +234,6 @@
 	    	variantChanged: function(variant) {
 	    		this.CurrentVariant  = variant;
 	    		console.log("variant changed!!!!!",variant)
-
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
 			    console.log("master option changed!!!!!",requestedVariant,option_dictionary);
