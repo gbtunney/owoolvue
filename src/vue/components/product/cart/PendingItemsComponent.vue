@@ -1,5 +1,23 @@
 <template>
-	<p>{{ greeting }} World!</p>
+	<div>
+
+		<p> PENDING ITEmWorld!
+		{{PendingItems}}</p>
+
+		<button  class="c-button c-button--dark-accent-primary"  :disabled="isDisabled">{{label}}
+			<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
+		</button>
+		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
+		<div v-show="metavisible" class="productMeta" >
+			<h5>Includes: </h5>
+			<ul>
+				<li v-for="pendingCartItem in PendingItems">
+					<PendingCartItem @unavailable="updateAvailability" :item="pendingCartItem"></PendingCartItem>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 </template>
 
 <script>
@@ -7,12 +25,18 @@
 	import Vue from 'vue';
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 	import store from '@/store'
+	const schema = require("schm");
+	import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
+	import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
+
+	import {CartMixin} from  '@/mixins/cartmixin.js';
+
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
 	module.exports = {
 		name: '',
-		mixins: [],
+		mixins: [CartMixin,ShopifyApiMixin,DictionaryMixin],
 		components: {PendingCartItem},
 		data: function() {
 			return {
@@ -27,8 +51,7 @@
 				default: true
 			},
 			addtocartvariants: {
-				type: Array,
-				default: []
+				default: () => []
 			},
 			label: {
 				type: String,
@@ -39,27 +62,128 @@
 				default: false
 			},
 			lineitemmessage: {   ///this is used to give the kit an id
-				type: String,
+				type: Boolean,
 				default: false
 			}
 		},
+		mounted:function(){
+
+			let self = this;
+			this.getCart().then(function(res){
+			})
+
+
+					console.log("cart is props;",this.$props.addtocartvariants	 )
+
+
+	},
+	watch: {
+		addtocartvariants: function(val) {
+			//this.CurrentVariant=val;
+			this.PendingItems = this.PendingItemsChanged(val);
+			console.log("add to cart set@!!!!!!",this.PendingItems);
+
+		}
+	},
 		computed: {
 			...mapGetters([
 				'Variants'
 			]),
-			example: {
+
+				Loading: {
 				get: function() {
-					return;
+					return this.$data._loading;
 				},
 				set: function(newVal) {
-					//=newVal;
+					this.$data._loading = newVal;  ///this.Variants[this.CurrentVariant._index];
 				}
 			},
-			example2: function() {
-				
+			isDisabled: {
+				get: function() {
+					return this.$data._isDisabled;
+				},
+				set: function(newVal) {
+					this.$data._isDisabled = newVal;  ///this.Variants[this.CurrentVariant._index];
+				}
+			},
+			PendingItems: {
+				get: function() {
+					return this.$data._pendingItems;
+				},
+				set: function(newVal) {
+					this.$data._pendingItems = newVal;  ///this.Variants[this.CurrentVariant._index];
+				}
+			},
+			ItemCount: function() {
+				let total = 0;
+
+				this.$props.addtocartvariants.forEach(function(item) {
+					total += item.quantity;
+				})
+				return total;
 			}
 		},
 		methods: {
+			updateAvailability: function(id) {
+
+				//todo: make some way of doing alternate number here.
+				let _id = Number(id);
+
+				console.log("TRYING TO REMOVE@!~!");
+				let self = this;
+				if (this.$props.disableunavailable){
+					this.isDisabled = true;
+				}
+			},
+			addVarianttoPendingItem: function(item , _variant){
+
+				return Object.assign(item, {variant: _variant});
+
+			},
+			PendingItemsChanged: function(itemArr) {
+
+				var requestedItemArr = itemArr;
+				if (requestedItemArr instanceof Array){
+					requestedItemArr = requestedItemArr.map(function(item) {
+
+						const PENDING_ITEM_SCHEMA = schema(
+							{
+								id: {type: Number, required: true},
+								variant: {type: Object},
+								message: {type: String},
+								requested_quantity: {type: Number, required: true, default: item.quantity},
+								quantity: {type: Number, required: true, default: item.requested_quantity}
+							}
+						);
+						return PENDING_ITEM_SCHEMA.parse(item);
+					});
+
+					let self = this;
+					let retrievedDataArr = [];
+
+					requestedItemArr.forEach(function(item) {
+						let _unprocessedItemArr = requestedItemArr;
+
+						if (self.variant_dictionary.get(item.id)){
+							retrievedDataArr.push(self.addVarianttoPendingItem(item, self.variant_dictionary.get(item.id)))
+						} else {
+							self.getVariant({params: {id: item.id}}).then(function(res) {
+
+								let variantData = res.data.variant;
+
+								var myObj = requestedItemArr.find(function(item) {
+									if (item.id == Number(variantData.id))
+										return true;
+								});
+								retrievedDataArr.push(self.addVarianttoPendingItem(myObj, res.data.variant));
+							})
+						}
+					});
+					return retrievedDataArr;
+				} else {
+					//push it?
+				}
+			},
 		}
 	}
 </script>

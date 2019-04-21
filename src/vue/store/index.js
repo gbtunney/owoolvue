@@ -5,6 +5,9 @@ const schema = require("schm");
 import store from '@/store/index';
 
 import shopifyAdminApi from "./shopify_admin_api";
+import shopifyCart from "./shopify-cart.js";
+
+
 import {parseOptions, parseVariants} from './functions/parse'
 import {Slugify, GDatamapper,filterArrayByValue,IsJsonString} from '@/helpers/main.js'
 
@@ -29,6 +32,9 @@ const main_store = {
 		Count: function(state) {
 			return state.count
 		},
+		Cart: state => {
+		return state._cart;
+},
 		OptionByProp: (state) => (value, prop="slug") => {
 			return  filterArrayByValue( store.getters.Options, value, prop,true);
 		},
@@ -177,9 +183,10 @@ const main_store = {
 	},
   plugins: [vuexLocal.plugin],
 }
+main_store.mutations = {...main_store.mutations, ...shopifyAdminApi.mutations,...shopifyCart.mutations}
+main_store.actions = {...main_store.actions, ...shopifyAdminApi.actions,...shopifyCart.actions}
+main_store.state = {...main_store.state, ...shopifyAdminApi.state,...shopifyCart.state}
 
-main_store.mutations = {...main_store.mutations, ...shopifyAdminApi.mutations}
-main_store.actions = {...main_store.actions, ...shopifyAdminApi.actions}
-main_store.state = {...main_store.state, ...shopifyAdminApi.state}
 
+console.log("main store ",shopifyCart,main_store );
 export default new Vuex.Store(main_store);

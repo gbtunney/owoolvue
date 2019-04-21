@@ -15,7 +15,6 @@ total available: {{Variant.inventory_quantity}}
 
     const PromiseQueue = require("easy-promise-queue").default;
 
-    const schema = require("schm");
     const pq_additems = new PromiseQueue({concurrency: 1});
 
     import VueNumericInput from 'vue-numeric-input';
@@ -108,7 +107,7 @@ let self =this;
     }
 
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css" scoped></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss">

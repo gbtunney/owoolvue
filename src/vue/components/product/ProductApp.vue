@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<PendingItemsComponent :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 		<adminOptionSelect></adminOptionSelect>
 		<Multiselect :options="VariantArr"
 		             v-model="CurrentVariant"
@@ -160,7 +161,8 @@
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
 			    toggle_exclusive:2,
-			    _optionMeta: []
+			    _optionMeta: [],
+			    _pendingItems: []
 		    }
 	    },
 	    name: 'testcomponent',
@@ -173,6 +175,9 @@
 			    'OptionsByProduct'
 		    ]
             ),
+		    TestKit: function(){
+		    [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
+	    },
 		    Slug:function(){
 			    return "wild-geranium"
 		    },
@@ -217,6 +222,8 @@
 
 			    ////*****SET VARIANT
 			    self.CurrentVariant  = self.CurrentVariant ;
+
+			    self.$data._pendingItems = [{"quantity": 3, "message":"this is a color way ","id": "18250174595190"}];
 
 			    ///example - --::
 			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
