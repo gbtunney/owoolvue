@@ -263,19 +263,12 @@
 
 			    newVariantArr=     newVariantArr.map(function(variant){
 				    let ID = variant.id;
-				    var result =  _flaggedVariants.find(function(item){
-					    if (ID == item.id ){
-						    return true;
-					    }else{
-						    return false;
-					    }
-				    })
-				    if (  result || isVariantAvailable(variant) ){
-					   return  Object.assign(variant, {$isDisabled :bool })
-
-				   }else{
-					   return  Object.assign(variant, {$isDisabled :!bool  })
-				   }
+				    if ( _flaggedVariants.length > 0 ){
+					    var result =  _flaggedVariants.find(function(item){
+						    return  (ID == item.id )? true : false;
+					    })
+				    }
+				    return  (  result || !isVariantAvailable(variant)  ) ? Object.assign(variant, {$isDisabled :bool }) :  Object.assign(variant, {$isDisabled :!bool  });
 			    })
 			    return newVariantArr;
 		    }
