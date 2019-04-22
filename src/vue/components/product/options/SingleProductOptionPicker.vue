@@ -6,14 +6,16 @@
 			<code style="display: none">{{option}}</code>
 			<code style="display: none">{{selectedOptions}}</code>
 			<div>
+				<h5 class="option__name">{{option.name}} </h5>
+
 				<FuseSearch
+					class="fuseSearchComponent"
 					v-show="searchable"
 					@fuseResult="fuseFilter"
 					@fuseInactive="fuseInactive"
 					:list="OptionValues">
 				</FuseSearch>
 
-				<h3 class="option__name">{{OptionName}} </h3>
 
 				<Multiselect :options="FilteredOptionValues" class="--is-open"
 				             v-model="selectedOptions"
@@ -153,11 +155,6 @@
 			}
 		},
 		computed: {
-			OptionName: function(){
-				if ( this.$props.option ){
-					return this.$props.option.name;
-				}
-			},
 			OptionValues: {
 				get: function() {
 					return this.$data._optionValues;
@@ -250,24 +247,31 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss" >
 
-//	@import "product-dependancies";
+	@import "src/vue/helpers/product-dependancies.scss";
 
 	.multiselect__single{
 		width: 100%;
 	}
 
+
+	.multiselect__content{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+	}
 	.option__name{
-		display: none;
+	///	display: none;
+		padding-bottom: 0;
+		padding-top:  #{get-lookup-prop( base-padding, md)};
+		//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
+
 	}
+.fuseSearchComponent{
+	padding-bottom:  get-lookup-prop( base-padding, md);//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
 
 
-	.search-icon{
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
-
-	.multiselect__tags {
+}
+.multiselect__tags {
 	}
 
 	/*SVG ICON SYSTEM*/
@@ -276,20 +280,8 @@
 		align-self: center;
 	}
 
-	.icon svg, .icon img {
-		height: 1em;
-		width: 1em;
-		fill: currentColor;
-	}
-
-	.icon.baseline svg, .icon img {
-		top: .125em;
-		position: relative;
-	}
-
 	.option__swatch {
 
-		//   @include dimensions(100px,100px) ;
 	}
 	.option__image{
 		// height: 60px;

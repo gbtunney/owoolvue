@@ -1,20 +1,17 @@
 <template>
 	<div >
-		FUSE SEARCH
-		<div id="sb-search" :class="[ UID,{'sb-search-open' : $data._active}]" class="sb-search">
-			<form>
-				<input class="sb-search-input"
+		<div id="sb-search" :class="[ UID,{'sb-search-open' : $data._active}]" class="  sb-search">
+				<input class="sb-search-input c-input--accent-default "
 				       v-model="$data._input_query"
 				       @input="_fuseSearch($data._input_query)"
 				       @blur="_inputLoseFocus"
 				       placeholder="Enter your search term..." type="text" value="" name="search" id="search">
-				<span class="sb-icon-search" @click="_openSearch" >
-					    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 32 32"><path fill="#444" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z"/></svg>
+			<button @click="_openSearch" class="sb-btn-open c-icon--accent-default ">
+				<span class="sb-icon">
+					<svg aria-hidden="true" focusable="false" role="presentation"  viewBox="0 0 32 32"><path fill="#444" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z"/></svg>
 				</span>
-			</form>
+			</button>
 		</div>
-
-		<button @click="_fuseSearch($data._input_query)" >Search btn</button>
 	</div>
 </template>
 
@@ -144,8 +141,77 @@
 	};
 </script>
 
-<style lang="scss" type="text/scss" scoped>
-	//@import "src/vue/helpers/product-dependancies.scss";
+<style lang="scss" type="text/scss" >
+	@import "src/vue/helpers/product-dependancies.scss";
+
+	$search-padding: 5px 0;
+	.sb-icon{
+		height: 1em;
+		width: 1em;
+
+	}
+
+	.sb-btn-open{
+	width:auto;
+		height:100%;
+		display: flex;
+		border: 0px solid black;
+		padding: $search-padding;
+
+	}
+	.sb-search.sb-search-open,
+	.no-js .sb-search {
+		//background:red;
+		width: 100%;
+
+	}
+
+	.sb-search.sb-search-open .sb-icon-search,
+	.no-js .sb-search .sb-icon-search {
+		//background: #da6d0d;
+	//	color: #fff;
+	z-index: 11;
+	}
+
+	.sb-search.sb-search-open .sb-search-submit,
+	.no-js .sb-search .sb-search-submit {
+		z-index: 90;
+	}
+	.sb-search-input {
+		//width: 100%;
+		width: 0px;
+		//height: 60px;
+		margin: 0;
+		padding: $search-padding;
+		z-index: 10;
+		border-width:0px;
+		@include border-single-side(bottom, 1px);
+		-webkit-transition: width 0.3s;
+		-moz-transition: width 0.3s;
+		transition: width 0.3s;
+		-webkit-backface-visibility: hidden;
+
+
+	}
+	.sb-search{
+		display: flex;
+		justify-content: flex-end;
+				align-items: center;
+
+	}
+	.sb-search.sb-search-open{
+		.sb-search-input {
+
+			width: 100%;
+			//height: 60px;
+			margin: 0;
+			z-index: 10;
+			//padding: 10px 0;
+
+
+		}
+	}
+/*
 
 
 	$example-component-render: (
@@ -208,6 +274,7 @@
 		font-family: inherit;
 		font-size: 20px;
 		color: #2c3e50;
+border:1px solid black;
 
 		$props: (
 			background: true,
@@ -238,6 +305,8 @@
 
 	.sb-icon-search,
 	.sb-search-submit  {
+		border:1px solid black;
+
 		width: 60px;
 		height: 60px;
 		display: block;
@@ -252,9 +321,9 @@
 	}
 
 	.sb-search-submit {
-		background: #fff; /* IE needs this */
-		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* IE 8 */
-		filter: alpha(opacity=0); /* IE 5-7 */
+		background: #fff; !* IE needs this *!
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; !* IE 8 *!
+		filter: alpha(opacity=0); !* IE 5-7 *!
 		opacity: 0;
 		color: transparent;
 		border: none;
@@ -263,12 +332,10 @@
 	}
 
 
-
-
-
 	.sb-icon-search {
-		color: #fff;
-		background: #e67e22;
+		border: 1px solid red;
+		//color: #fff;
+		!*background: #e67e22;
 		z-index: 90;
 		font-size: 22px;
 		font-family: 'icomoon';
@@ -276,7 +343,7 @@
 		font-style: normal;
 		font-weight: normal;
 		font-variant: normal;
-		text-transform: none;
+		text-transform: none;*!
 		-webkit-font-smoothing: antialiased;
 	//	@include render-queue(get-collection($example-component-render));
 
@@ -285,23 +352,8 @@
 
 	//@include c-button(sb-icon-search,dark);
 
-	/* Open state */
-	.sb-search.sb-search-open,
-	.no-js .sb-search {
-		background:red;
-		width: 100%;
-	}
+	!* Open state *!
 
-	.sb-search.sb-search-open .sb-icon-search,
-	.no-js .sb-search .sb-icon-search {
-		background: #da6d0d;
-		color: #fff;
-		z-index: 11;
-	}
-
-	.sb-search.sb-search-open .sb-search-submit,
-	.no-js .sb-search .sb-search-submit {
-		z-index: 90;
-	}
+*/
 
 </style>

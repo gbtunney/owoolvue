@@ -178,33 +178,32 @@
 </script>
 
 <style lang="scss" type="text/scss">
+	@import "src/vue/helpers/product-dependancies.scss";
 
-.optionpicker{
+	.optionpicker {
 
-	img{
-		height:auto;
-		width: 100%;
-		max-width: 100%;
-	}
-	.option__swatch{
-		//width: 30px;  clip: rect(10px, 20px, 30px, 40px);
-		//height: 30px;
-		img{
-			object-fit: fill;
-			height: 50px;
+		img {
+			height: auto;
+			width: 100%;
+			max-width: 100%;
 		}
-	}
-	.multiselect__content-wrapper{
-		background: green;
-
-	}
-
-}
-
-
-
-	.span{
+		.option__desc {
+			padding: #{get-lookup-prop( base-padding, md)};
+		}
+		.option__swatch {
+			img {
+				object-fit: cover;
+				height: 100%;
+				width: 100%;
 			}
+			width: 2em;
+			height: 2em;
+		}
+
+	}
+
+	.span {
+	}
 </style>
 
 

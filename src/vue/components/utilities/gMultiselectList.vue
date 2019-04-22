@@ -6,7 +6,6 @@
 		tabindex="-1"
 		@mousedown.prevent
 		ref="list">
-		{{ displayMode }}
 		<ul class="multiselect__content " :style="contentStyle">
 			<slot name="beforeList"></slot>
 			<li v-if="multiple && max === internalValue.length">
@@ -381,8 +380,16 @@
 
 	.multiselect__option{
 		//@include render-queue(get-collection( $btn-option-render));
-		@include c-button( false,  light font-small-caps sm xxs , color-schemes typography font-size base-padding ) ;
+		$collection:color-schemes typography font-size base-padding;
+		$variant-keys: light font-small-caps xs sm;
 
+
+		@include render-queue( get-collection( $collection,$variant-keys) );
+
+
+					@extend %c-button-static-props;
+
+border-width: 0px!important;
 		display: flex;
 
 		//$new-list: get-collection((base-spacing, color-schemes, font-size,typography), $no-selectors`);
@@ -390,7 +397,7 @@
 		// @include render-queue($new-list);
 		//  @include render-queue(get-collection($example-component-render));
 
-		@extend %c-button-static-props;
+
 text-transform: uppercase;
 	}
 
@@ -427,8 +434,8 @@ text-transform: uppercase;
 	.multiselect__option--selected {
 		//@include render-queue(get-collection(	$btn-option-render-disabled));
 //background: red!important;
-		@include c-button( false,  dark-accent-default font-san-serif md md , color-schemes typography font-size base-padding ) ;
-
+		//@include c-button( false,  dark-accent-default font-san-serif md md , color-schemes typography font-size base-padding ) ;
+		border-width: 1px!important;
 	//	@include c-button(dark-accent-default);
 		//$btn-option-render-disabled:
 	}

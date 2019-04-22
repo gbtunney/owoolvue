@@ -30,170 +30,135 @@
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
 			</div>
-<!--
-			<div class="grid__item product-single__meta&#45;&#45;wrapper medium&#45;&#45;five-twelfths large&#45;&#45;five-twelfths">
-				<div class="product-single__meta">
 
+			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
+				<div class="product-single__meta">
 
 					<h1 class="product-single__title" itemprop="name">{{CurrentProductTitle}}</h1>
 
-					<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
-
+					<div>
 						<div data-price-container>
-				<span v-if="CurrentVariantOnSale" class="product-single__price&#45;&#45;wrapper" aria-hidden="false">
-                  <span id="ComparePrice" class="product-single__price&#45;&#45;compare-at">
-                   {{ CurrentVariantCompareAtPrice }}
-                  </span>
-                </span>
+							<span v-if="CurrentVariantOnSale" class="product-single__price wrapper" aria-hidden="false">
+								<span id="ComparePrice" class="product-single__price compare-at">{{ CurrentVariantCompareAtPrice }}</span>
+							</span>
 							<span id="ProductPrice"
 							      class="product-single__price on-sale"
 							      itemprop="price"
-							      :content="CurrentVariantPrice">
-                {{ CurrentVariantPrice }}
-              </span>
+							      :content="CurrentVariantPrice">{{ CurrentVariantPrice }}
+							</span>
 						</div>
 
-						<meta itemprop="priceCurrency" content="USD">
+						<meta itemprop="priceCurrency" v-if="shop" :content="shop.currency ">
+						<link itemprop="availability" href="http://schema.org/|| if product.available || InStock{% else %}OutOfStock{% endif %}">
 						<link itemprop="availability" href="http://schema.org/InStock">
 
 						<productOptionPicker :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
-
-
-						<form method="post" action="/cart/add" id="AddToCartForm&#45;&#45;product-template" accept-charset="UTF-8" class="
-                product-single__form
-" enctype="multipart/form-data" data-children-count="26"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
-
-
+						<form method="post" action="/cart/add"
+						      id="AddToCartForm&#45;&#45;product-template"
+						      accept-charset="UTF-8" class="product-single__form" enctype="multipart/form-data" data-children-count="26">
+							<input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
 							<div class="radio-wrapper js product-form__item">
 								<label class="single-option-radio__label" for="ProductSelect-option-0">
 									Color
 								</label>
-
-
-
 								<fieldset class="single-option-radio" name="color" id="ProductSelect-option-0">
-
-
 
 
 									<input type="radio" value="Alumroot" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Alumroot">
 									<label for="ProductSelect-option-color-Alumroot">Alumroot</label>
 
 
-
 									<input type="radio" value="Ash" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Ash">
 									<label for="ProductSelect-option-color-Ash">Ash</label>
-
 
 
 									<input type="radio" value="Basswood" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Basswood">
 									<label for="ProductSelect-option-color-Basswood">Basswood</label>
 
 
-
 									<input type="radio" value="Bee-Balm" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Bee-Balm">
 									<label for="ProductSelect-option-color-Bee-Balm">Bee-Balm</label>
-
 
 
 									<input type="radio" value="Bluebell" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Bluebell">
 									<label for="ProductSelect-option-color-Bluebell">Bluebell</label>
 
 
-
 									<input type="radio" value="Cresheim Creek" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Cresheim Creek">
 									<label for="ProductSelect-option-color-Cresheim Creek">Cresheim Creek</label>
-
 
 
 									<input type="radio" value="Cedar Berry" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Cedar Berry">
 									<label for="ProductSelect-option-color-Cedar Berry">Cedar Berry</label>
 
 
-
 									<input type="radio" value="Fringetree" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Fringetree">
 									<label for="ProductSelect-option-color-Fringetree">Fringetree</label>
-
 
 
 									<input type="radio" value="Ganoga Falls" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Ganoga Falls">
 									<label for="ProductSelect-option-color-Ganoga Falls">Ganoga Falls</label>
 
 
-
 									<input type="radio" value="Gingko Nut" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Gingko Nut">
 									<label for="ProductSelect-option-color-Gingko Nut">Gingko Nut</label>
-
 
 
 									<input type="radio" value="Gray Birch" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Gray Birch">
 									<label for="ProductSelect-option-color-Gray Birch">Gray Birch</label>
 
 
-
 									<input type="radio" value="Juneberry" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Juneberry">
 									<label for="ProductSelect-option-color-Juneberry">Juneberry</label>
-
 
 
 									<input type="radio" checked="checked" value="Pachysandra" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Pachysandra">
 									<label for="ProductSelect-option-color-Pachysandra">Pachysandra</label>
 
 
-
 									<input type="radio" value="Porcupine" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Porcupine">
 									<label for="ProductSelect-option-color-Porcupine">Porcupine</label>
 
 
-
 									<input type="radio" value="Purple Loosestrife" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Purple Loosestrife">
-									<label for="ProductSelect-option-color-Purple Loosestrife">Purple Loosestrife</label>
-
+									<label for="ProductSelect-option-color-Purple Loosestrife">Purple
+										Loosestrife</label>
 
 
 									<input type="radio" value="Red Squirrel" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Red Squirrel">
 									<label for="ProductSelect-option-color-Red Squirrel">Red Squirrel</label>
 
 
-
 									<input type="radio" value="River Oat" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-River Oat">
 									<label for="ProductSelect-option-color-River Oat">River Oat</label>
-
 
 
 									<input type="radio" value="Scarlet Oak" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Scarlet Oak">
 									<label for="ProductSelect-option-color-Scarlet Oak">Scarlet Oak</label>
 
 
-
 									<input type="radio" value="Steelhead" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Steelhead">
 									<label for="ProductSelect-option-color-Steelhead">Steelhead</label>
-
 
 
 									<input type="radio" value="Wild Geranium" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wild Geranium">
 									<label for="ProductSelect-option-color-Wild Geranium">Wild Geranium</label>
 
 
-
 									<input type="radio" value="Wissahickon" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wissahickon">
 									<label for="ProductSelect-option-color-Wissahickon">Wissahickon</label>
-
 
 
 									<input type="radio" value="Wood Dove" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wood Dove">
 									<label for="ProductSelect-option-color-Wood Dove">Wood Dove</label>
 
 
-
 									<input type="radio" value="Wood Fern" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wood Fern">
 									<label for="ProductSelect-option-color-Wood Fern">Wood Fern</label>
 
 								</fieldset>
-
 							</div>
-
 							<div class="radio-wrapper js product-form__item">
 								<label class="single-option-radio__label" for="ProductSelect-option-1" data-children-count="0">
 									Size
@@ -202,11 +167,8 @@
 								<fieldset class="single-option-radio" name="size" id="ProductSelect-option-1" data-children-count="2">
 
 
-
-
 									<input type="radio" checked="checked" value="Skein" data-index="option2" name="size" class="single-option-selector__radio" id="ProductSelect-option-size-Skein">
 									<label for="ProductSelect-option-size-Skein">Skein</label>
-
 
 
 									<input type="radio" value="MiniSkein" data-index="option2" name="size" class="single-option-selector__radio" id="ProductSelect-option-size-MiniSkein">
@@ -215,177 +177,6 @@
 								</fieldset>
 
 							</div>
-
-
-
-							<select name="id" id="ProductSelect" class="product-single__variants no-js">
-
-
-								<option data-sku="Local:LAlumroot" value="18250174333046">
-									Alumroot / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LAsh" value="18250174365814">
-									Ash / Skein - $19.25 USD
-								</option>
-
-
-
-								<option disabled="disabled">
-									Basswood / Skein - Sold Out
-								</option>
-
-
-
-								<option data-sku="Local:LBee-Balm" value="18250174431350">
-									Bee-Balm / Skein - $19.25 USD
-								</option>
-
-
-
-								<option disabled="disabled">
-									Bluebell / Skein - Sold Out
-								</option>
-
-
-
-								<option data-sku="Local:LCresheimCreek" value="18250174496886">
-									Cresheim Creek / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LCedarBerry" value="18250174529654">
-									Cedar Berry / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LFringetree" value="18250174562422">
-									Fringetree / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LGanogaFalls" value="18250174595190">
-									Ganoga Falls / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LGingkoNut" value="18250174627958">
-									Gingko Nut / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LGrayBirch" value="18250174660726">
-									Gray Birch / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LJuneberry" value="18250174693494">
-									Juneberry / Skein - $19.25 USD
-								</option>
-
-
-
-								<option selected="selected" data-sku="Local:LPachysandra" value="18250174726262">
-									Pachysandra / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LPorcupine" value="18250174759030">
-									Porcupine / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LPurpleLoosestrife" value="18250174791798">
-									Purple Loosestrife / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LRedSquirrel" value="18250174824566">
-									Red Squirrel / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LRiverOat" value="18250174857334">
-									River Oat / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LScarletOak" value="18250174890102">
-									Scarlet Oak / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LSteelhead" value="18250174922870">
-									Steelhead / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LWildGeranium" value="18250174955638">
-									Wild Geranium / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LWissahickon" value="18250174988406">
-									Wissahickon / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LWoodDove" value="18250175021174">
-									Wood Dove / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LWoodFern" value="18250175053942">
-									Wood Fern / Skein - $19.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LAlumroot" value="20653347864694">
-									Alumroot / MiniSkein - $9.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LAsh" value="20653351960694">
-									Ash / MiniSkein - $9.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LCedarBerry" value="20653354221686">
-									Cedar Berry / MiniSkein - $9.25 USD
-								</option>
-
-
-
-								<option data-sku="Local:LBee-Balm" value="20653356023926">
-									Bee-Balm / MiniSkein - $9.25 USD
-								</option>
-
-
-							</select>
-
-
-
 							<div class="product-single__add-to-cart">
 								<button type="submit" name="add" id="AddToCart&#45;&#45;product-template" class="btn btn&#45;&#45;add-to-cart">
                   <span class="btn__text">
@@ -447,7 +238,6 @@
 
 				</div>
 			</div>
--->
 		</div>
 
 		<div class="product-single__meta">
@@ -576,6 +366,9 @@
 		    },
 	        updatehistory:{
 		        default: true
+	        },
+	        shop:{
+		        default: false
 	        }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],

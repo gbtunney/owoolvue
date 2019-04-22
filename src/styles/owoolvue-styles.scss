@@ -6,4 +6,13 @@ $GENERATE-QUEUE: true;
 @import "brooklyn/brooklyn";
 @import "custom/site";
 
+@import "g-Patternlab/generator";
+@import "g-Patternlab/project-components";
+
+
+.test{
+	@include border-single-side(bottom,2px);
+}
+
+
 
