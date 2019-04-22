@@ -28,52 +28,10 @@
 
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
-
-
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
-
-
-
-				<div class="product-single__photos">
-
-
-
-
-
-
-
-					<div class="product-single__photo--flex-wrapper">
-						<div class="product-single__photo--flex">
-
-							<div id="ProductImageWrapper-5622246473846" class="product-single__photo--container">
-								<div class="product-single__photo-wrapper" style="padding-top:150.03663%;">
-
-									<img class="product-single__photo lazyload product-single__photo-5622246473846" src="//cdn.shopify.com/s/files/1/0084/4044/7094/products/LGanogaFalls_300x.jpg?v=1532980795" data-src="//cdn.shopify.com/s/files/1/0084/4044/7094/products/LGanogaFalls_{width}x.jpg?v=1532980795" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="0.66650390625" data-sizes="auto" data-image-id="5622246473846" alt="Ganoga Falls">
-
-									<noscript>
-										<img class="product-single__photo" src="//cdn.shopify.com/s/files/1/0084/4044/7094/products/LGanogaFalls.jpg?v=1532980795"
-
-										     alt="Ganoga Falls"
-										     data-image-id="5622246473846">
-									</noscript>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-
-
-
-
-
-
-
-
-
 			</div>
-			</div>
-			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
+<!--
+			<div class="grid__item product-single__meta&#45;&#45;wrapper medium&#45;&#45;five-twelfths large&#45;&#45;five-twelfths">
 				<div class="product-single__meta">
 
 
@@ -82,8 +40,8 @@
 					<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
 
 						<div data-price-container>
-				<span v-if="CurrentVariantOnSale" class="product-single__price--wrapper" aria-hidden="false">
-                  <span id="ComparePrice" class="product-single__price--compare-at">
+				<span v-if="CurrentVariantOnSale" class="product-single__price&#45;&#45;wrapper" aria-hidden="false">
+                  <span id="ComparePrice" class="product-single__price&#45;&#45;compare-at">
                    {{ CurrentVariantCompareAtPrice }}
                   </span>
                 </span>
@@ -102,7 +60,7 @@
 
 
 
-						<form method="post" action="/cart/add" id="AddToCartForm--product-template" accept-charset="UTF-8" class="
+						<form method="post" action="/cart/add" id="AddToCartForm&#45;&#45;product-template" accept-charset="UTF-8" class="
                 product-single__form
 " enctype="multipart/form-data" data-children-count="26"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
 
@@ -429,7 +387,7 @@
 
 
 							<div class="product-single__add-to-cart">
-								<button type="submit" name="add" id="AddToCart--product-template" class="btn btn--add-to-cart">
+								<button type="submit" name="add" id="AddToCart&#45;&#45;product-template" class="btn btn&#45;&#45;add-to-cart">
                   <span class="btn__text">
 
 	                    Add to Cart
@@ -455,7 +413,7 @@
 					</div>
 
 
-					<!-- /snippets/social-sharing.liquid -->
+					&lt;!&ndash; /snippets/social-sharing.liquid &ndash;&gt;
 
 
 					<div class="social-sharing clean">
@@ -489,13 +447,8 @@
 
 				</div>
 			</div>
+-->
 		</div>
-
-		meta
-
-
-
-		option 2
 
 		<div class="product-single__meta">
 			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
