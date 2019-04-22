@@ -2,8 +2,8 @@
 	<div ref="MYCART" class="cart-wrapper">
 		<span v-show="NoStockAlert">NO STOCK AVAILABLE!!</span>
 		--{{Message}} <img class="thumbnail" :src="Image.src" :alt="Image.alt" > {{VariantName}} // Count: {{RequestedQuantity}} at {{VariantPrice | toUSD }} <strong>Total:</strong> {{VariantTotalPrice |toUSD}}
-		<vue-numeric-input class="quantity-selector__input"  v-show="false" v-model="item.requested_quantity" :min="1" :max="1000" :step="1"></vue-numeric-input>
-total available: {{Variant.inventory_quantity}}
+		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
+		total available: {{Variant.inventory_quantity}}
 	</div>
 </template>
 
@@ -28,7 +28,8 @@ total available: {{Variant.inventory_quantity}}
 
     export default {
         name: 'Cart',
-        components: {VueNumericInput}, props: {
+        components: {VueNumericInput},
+	    props: {
             item: {
                 type: Object,
                 required: true
@@ -117,6 +118,10 @@ total available: {{Variant.inventory_quantity}}
             }
         },
         methods: {
+	        quantityChanged:function(item){
+		        this.$emit('requested_quantity_change', item)
+		        console.log("QUATITY CHANGEDDDDD!!!!",item)
+	        },
             ...mapActions([
                 'getVariantDefaultImage'
             ]),

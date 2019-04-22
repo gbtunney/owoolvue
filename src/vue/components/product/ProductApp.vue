@@ -5,11 +5,12 @@
 		<Multiselect :options="VariantArr"
 		             v-model="CurrentVariant"
 		             @input="variantChanged"
+		             v-show="showmasterselect"
 		             track-by="title"
 		             label="title"
 		             class="multiselectmaster"
 		             :taggable="false"
-		             :multiple="false"
+		             :multiple="allowmultiple"
 		             :closeOnSelect="false"
 		             placeholder="Select one"
 		             searchable="true"
@@ -151,8 +152,11 @@
 		    sectionsettings: {
 		    	default: {}
 		    },
-		    swatch:{
-			    default: "color"    ///the slug of the option to show a swatch on.
+		    allowmultiple: {
+			    default: false
+		    },
+		    showmasterselect: {
+			    default: false
 		    }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
@@ -240,14 +244,23 @@
 		    },
 	    	variantChanged: function(variant) {
 			    console.log("variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
+			    this.$data._currentVariant   = variant;
 
+			    if (variant instanceof Array &&variant.length>0 ){
+			    	var variantArr  =variant;
+			    	var newPending  = variantArr.map(function(_variant){
 
-	    		this.$data._currentVariant   = variant;
-			   this.$data._pendingItems = [{ quantity: 1,variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+			    		return { requested_quantity: 1,quantity_editable: true, variant: _variant, id: _variant.id }
+				    })
+				    this.$data._pendingItems =newPending;
+			    }else{
+				    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+			    }
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
-			    console.log("master option changed!!!!!",requestedVariant,option_dictionary);
-			   this.variantChanged(requestedVariant);
+
+			    console.log("!!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
+				    this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			    return   getVariantFromOptions(optionArray, variantsArr);

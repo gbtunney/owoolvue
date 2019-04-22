@@ -144,8 +144,6 @@
 				let self = this;
 
 				let activeoption = val;//this.SelectedOption(val)
-				console.log("active option!", activeoption);
-
 				let selectedoptionsArr = Array.from(self.SelectedOptionsDictionary.values());
 
 				return activeoption.values.filter(function(activeoptionvalue) {

@@ -1,10 +1,6 @@
 <template>
 	<div>
-
-		<p> PENDING ITEmWorld!
-		{{PendingItems}}</p>
-
-		<button  class="c-button c-button--dark-accent-primary"  @click="addMultipletoCart" :disabled="isDisabled">{{label}}
+		<button  class="c-button c-button--dark-accent-primary"  @click="addMultipletoCart(PendingItems)" :disabled="isDisabled">{{label}}
 			<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
 		</button>
 		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
@@ -12,7 +8,7 @@
 			<h5>Includes: </h5>
 			<ul>
 				<li v-for="pendingCartItem in PendingItems">
-					<PendingCartItem @unavailable="updateAvailability" :item="pendingCartItem"></PendingCartItem>
+					<PendingCartItem @unavailable="updateAvailability" @requested_quantity_change="updateQuantity" :item="pendingCartItem"></PendingCartItem>
 				</li>
 			</ul>
 		</div>
@@ -32,7 +28,6 @@
 	import {CartMixin} from  '@/mixins/cartmixin.js';
 
 	const PromiseQueue = require("easy-promise-queue").default;
-	const pq_additems = new PromiseQueue({concurrency: 1});
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
@@ -82,8 +77,8 @@
 	watch: {
 		addtocartvariants: function(val) {
 			//this.CurrentVariant=val;
-			console.log("add to cart set@!!!!!!",val,this.PendingItemsChanged(val));
-			this.$data._pendingItems = this.PendingItemsChanged(val)
+			console.log("add to cart set@!!!!!!",val,this.parsePendingItems(val));
+			this.$data._pendingItems = this.parsePendingItems(val)
 			;
 
 		}
@@ -120,8 +115,8 @@
 			ItemCount: function() {
 				let total = 0;
 
-				this.$props.addtocartvariants.forEach(function(item) {
-					total += item.quantity;
+				this.$data._pendingItems.forEach(function(item) {
+					total += item.requested_quantity;
 				})
 				return total;
 			}
@@ -154,9 +149,9 @@
 					return {params, data};
 				});
 			} ,
-			addMultipletoCart: function(_dataObj) {
-				
-				let dataObj  = transformItemArray(_dataObj, this.$props.lineitemmessage)
+			addMultipletoCart: function(_pendingItems) {
+
+				let pendingItems  = this.transformItemArray(_pendingItems, this.$props.lineitemmessage)
 
 				let self = this;
 				let pq = new PromiseQueue({concurrency: 1});
@@ -171,25 +166,29 @@
 							resolve();
 						}, 1000)
 					});
-			}, ...dataObjArray.map(function(item) {
-					return () => {
-						return self.addItem(item);
-					}}), () => {
-					return new Promise(function(resolve, reject) {
-						setTimeout(function() {
-							console.log('QUEUE COMPLETE', pq, self);
-							self.Loading = self.isDisabled = false;
-							resolve();
-						}, 5)
-					});
-				}]);
+				}, ...pendingItems.map(function(item) {
+						return () => {
+							return self.addItem(item);
+						}}), () => {
+						return new Promise(function(resolve, reject) {
+							setTimeout(function() {
+								console.log('QUEUE COMPLETE', pq, self);
+								self.Loading = self.isDisabled = false;
+								resolve();
+							}, 5)
+						});
+					}]);
+			},
+			updateQuantity:function(item ){
+				console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);
+
+
 			},
 			updateAvailability: function(id) {
 
 				//todo: make some way of doing alternate number here.
 				let _id = Number(id);
 
-				console.log("TRYING TO REMOVE@!~!");
 				let self = this;
 				if (this.$props.disableunavailable){
 					this.isDisabled = true;
@@ -200,27 +199,33 @@
 				return Object.assign(item, {variant: _variant});
 
 			},
-			PendingItemsChanged: function(itemArr) {
+			parsePendingItemsSchema:function(itemArr){
 
-				var requestedItemArr = itemArr;
-				if (requestedItemArr instanceof Array){
-					requestedItemArr = requestedItemArr.map(function(item) {
+				return itemArr.map(function(item) {
 
-						const PENDING_ITEM_SCHEMA = schema(
-							{
-								id: {type: Number, required: true},
-								variant: {type: Object},
-								message: {type: String},
-								requested_quantity: {type: Number, required: true, default: item.quantity},
-								quantity: {type: Number, required: true, default: item.requested_quantity}
-							}
-						);
-						return PENDING_ITEM_SCHEMA.parse(item);
-					});
+					const PENDING_ITEM_SCHEMA = schema(
+						{
+							id: {type: Number, required: true},
+							variant: {type: Object},
+							message: {type: String},
+							requested_quantity: {type: Number, required: true, default: 1},
+							quantity_editable: {type:Boolean, default:false}
+						}
+					);
+					return PENDING_ITEM_SCHEMA.parse(item);
+				});
 
-					let self = this;
+
+			},
+			parsePendingItems: function(itemArr) {
+				let self = this;
+
+				var requestedItemArr = this.parsePendingItemsSchema(itemArr);
+
+				///todo: update and make more sense making
+				if (requestedItemArr instanceof Array &&requestedItemArr.length>0 ){
+
 					let retrievedDataArr = [];
-
 					requestedItemArr.forEach(function(item) {
 						let _unprocessedItemArr = requestedItemArr;
 
@@ -232,8 +237,7 @@
 								let variantData = res.data.variant;
 
 								var myObj = requestedItemArr.find(function(item) {
-									if (item.id == Number(variantData.id))
-										return true;
+									return (item.id == Number(variantData.id)) ? true : false;
 								});
 								retrievedDataArr.push(self.addVarianttoPendingItem(myObj, res.data.variant));
 							})
