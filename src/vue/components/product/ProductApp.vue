@@ -26,9 +26,473 @@
 
 		</Multiselect>
 
+		<div class="grid product-single">
+			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
+
+
+				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
+
+
+
+				<div class="product-single__photos">
+
+
+
+
+
+
+
+					<div class="product-single__photo--flex-wrapper">
+						<div class="product-single__photo--flex">
+
+							<div id="ProductImageWrapper-5622246473846" class="product-single__photo--container">
+								<div class="product-single__photo-wrapper" style="padding-top:150.03663%;">
+
+									<img class="product-single__photo lazyload product-single__photo-5622246473846" src="//cdn.shopify.com/s/files/1/0084/4044/7094/products/LGanogaFalls_300x.jpg?v=1532980795" data-src="//cdn.shopify.com/s/files/1/0084/4044/7094/products/LGanogaFalls_{width}x.jpg?v=1532980795" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="0.66650390625" data-sizes="auto" data-image-id="5622246473846" alt="Ganoga Falls">
+
+									<noscript>
+										<img class="product-single__photo" src="//cdn.shopify.com/s/files/1/0084/4044/7094/products/LGanogaFalls.jpg?v=1532980795"
+
+										     alt="Ganoga Falls"
+										     data-image-id="5622246473846">
+									</noscript>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+			</div>
+			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
+				<div class="product-single__meta">
+
+
+					<h1 class="product-single__title" itemprop="name">{{CurrentProductTitle}}</h1>
+
+					<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+
+						<div data-price-container>
+				<span v-if="CurrentVariantOnSale" class="product-single__price--wrapper" aria-hidden="false">
+                  <span id="ComparePrice" class="product-single__price--compare-at">
+                   {{ CurrentVariantCompareAtPrice }}
+                  </span>
+                </span>
+							<span id="ProductPrice"
+							      class="product-single__price on-sale"
+							      itemprop="price"
+							      :content="CurrentVariantPrice">
+                {{ CurrentVariantPrice }}
+              </span>
+						</div>
+
+						<meta itemprop="priceCurrency" content="USD">
+						<link itemprop="availability" href="http://schema.org/InStock">
+
+						<productOptionPicker :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
+
+
+
+						<form method="post" action="/cart/add" id="AddToCartForm--product-template" accept-charset="UTF-8" class="
+                product-single__form
+" enctype="multipart/form-data" data-children-count="26"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
+
+
+							<div class="radio-wrapper js product-form__item">
+								<label class="single-option-radio__label" for="ProductSelect-option-0">
+									Color
+								</label>
+
+
+
+								<fieldset class="single-option-radio" name="color" id="ProductSelect-option-0">
+
+
+
+
+									<input type="radio" value="Alumroot" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Alumroot">
+									<label for="ProductSelect-option-color-Alumroot">Alumroot</label>
+
+
+
+									<input type="radio" value="Ash" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Ash">
+									<label for="ProductSelect-option-color-Ash">Ash</label>
+
+
+
+									<input type="radio" value="Basswood" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Basswood">
+									<label for="ProductSelect-option-color-Basswood">Basswood</label>
+
+
+
+									<input type="radio" value="Bee-Balm" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Bee-Balm">
+									<label for="ProductSelect-option-color-Bee-Balm">Bee-Balm</label>
+
+
+
+									<input type="radio" value="Bluebell" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Bluebell">
+									<label for="ProductSelect-option-color-Bluebell">Bluebell</label>
+
+
+
+									<input type="radio" value="Cresheim Creek" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Cresheim Creek">
+									<label for="ProductSelect-option-color-Cresheim Creek">Cresheim Creek</label>
+
+
+
+									<input type="radio" value="Cedar Berry" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Cedar Berry">
+									<label for="ProductSelect-option-color-Cedar Berry">Cedar Berry</label>
+
+
+
+									<input type="radio" value="Fringetree" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Fringetree">
+									<label for="ProductSelect-option-color-Fringetree">Fringetree</label>
+
+
+
+									<input type="radio" value="Ganoga Falls" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Ganoga Falls">
+									<label for="ProductSelect-option-color-Ganoga Falls">Ganoga Falls</label>
+
+
+
+									<input type="radio" value="Gingko Nut" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Gingko Nut">
+									<label for="ProductSelect-option-color-Gingko Nut">Gingko Nut</label>
+
+
+
+									<input type="radio" value="Gray Birch" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Gray Birch">
+									<label for="ProductSelect-option-color-Gray Birch">Gray Birch</label>
+
+
+
+									<input type="radio" value="Juneberry" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Juneberry">
+									<label for="ProductSelect-option-color-Juneberry">Juneberry</label>
+
+
+
+									<input type="radio" checked="checked" value="Pachysandra" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Pachysandra">
+									<label for="ProductSelect-option-color-Pachysandra">Pachysandra</label>
+
+
+
+									<input type="radio" value="Porcupine" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Porcupine">
+									<label for="ProductSelect-option-color-Porcupine">Porcupine</label>
+
+
+
+									<input type="radio" value="Purple Loosestrife" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Purple Loosestrife">
+									<label for="ProductSelect-option-color-Purple Loosestrife">Purple Loosestrife</label>
+
+
+
+									<input type="radio" value="Red Squirrel" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Red Squirrel">
+									<label for="ProductSelect-option-color-Red Squirrel">Red Squirrel</label>
+
+
+
+									<input type="radio" value="River Oat" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-River Oat">
+									<label for="ProductSelect-option-color-River Oat">River Oat</label>
+
+
+
+									<input type="radio" value="Scarlet Oak" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Scarlet Oak">
+									<label for="ProductSelect-option-color-Scarlet Oak">Scarlet Oak</label>
+
+
+
+									<input type="radio" value="Steelhead" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Steelhead">
+									<label for="ProductSelect-option-color-Steelhead">Steelhead</label>
+
+
+
+									<input type="radio" value="Wild Geranium" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wild Geranium">
+									<label for="ProductSelect-option-color-Wild Geranium">Wild Geranium</label>
+
+
+
+									<input type="radio" value="Wissahickon" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wissahickon">
+									<label for="ProductSelect-option-color-Wissahickon">Wissahickon</label>
+
+
+
+									<input type="radio" value="Wood Dove" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wood Dove">
+									<label for="ProductSelect-option-color-Wood Dove">Wood Dove</label>
+
+
+
+									<input type="radio" value="Wood Fern" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wood Fern">
+									<label for="ProductSelect-option-color-Wood Fern">Wood Fern</label>
+
+								</fieldset>
+
+							</div>
+
+							<div class="radio-wrapper js product-form__item">
+								<label class="single-option-radio__label" for="ProductSelect-option-1" data-children-count="0">
+									Size
+								</label>
+
+								<fieldset class="single-option-radio" name="size" id="ProductSelect-option-1" data-children-count="2">
+
+
+
+
+									<input type="radio" checked="checked" value="Skein" data-index="option2" name="size" class="single-option-selector__radio" id="ProductSelect-option-size-Skein">
+									<label for="ProductSelect-option-size-Skein">Skein</label>
+
+
+
+									<input type="radio" value="MiniSkein" data-index="option2" name="size" class="single-option-selector__radio" id="ProductSelect-option-size-MiniSkein">
+									<label for="ProductSelect-option-size-MiniSkein">MiniSkein</label>
+
+								</fieldset>
+
+							</div>
+
+
+
+							<select name="id" id="ProductSelect" class="product-single__variants no-js">
+
+
+								<option data-sku="Local:LAlumroot" value="18250174333046">
+									Alumroot / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LAsh" value="18250174365814">
+									Ash / Skein - $19.25 USD
+								</option>
+
+
+
+								<option disabled="disabled">
+									Basswood / Skein - Sold Out
+								</option>
+
+
+
+								<option data-sku="Local:LBee-Balm" value="18250174431350">
+									Bee-Balm / Skein - $19.25 USD
+								</option>
+
+
+
+								<option disabled="disabled">
+									Bluebell / Skein - Sold Out
+								</option>
+
+
+
+								<option data-sku="Local:LCresheimCreek" value="18250174496886">
+									Cresheim Creek / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LCedarBerry" value="18250174529654">
+									Cedar Berry / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LFringetree" value="18250174562422">
+									Fringetree / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LGanogaFalls" value="18250174595190">
+									Ganoga Falls / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LGingkoNut" value="18250174627958">
+									Gingko Nut / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LGrayBirch" value="18250174660726">
+									Gray Birch / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LJuneberry" value="18250174693494">
+									Juneberry / Skein - $19.25 USD
+								</option>
+
+
+
+								<option selected="selected" data-sku="Local:LPachysandra" value="18250174726262">
+									Pachysandra / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LPorcupine" value="18250174759030">
+									Porcupine / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LPurpleLoosestrife" value="18250174791798">
+									Purple Loosestrife / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LRedSquirrel" value="18250174824566">
+									Red Squirrel / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LRiverOat" value="18250174857334">
+									River Oat / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LScarletOak" value="18250174890102">
+									Scarlet Oak / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LSteelhead" value="18250174922870">
+									Steelhead / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LWildGeranium" value="18250174955638">
+									Wild Geranium / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LWissahickon" value="18250174988406">
+									Wissahickon / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LWoodDove" value="18250175021174">
+									Wood Dove / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LWoodFern" value="18250175053942">
+									Wood Fern / Skein - $19.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LAlumroot" value="20653347864694">
+									Alumroot / MiniSkein - $9.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LAsh" value="20653351960694">
+									Ash / MiniSkein - $9.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LCedarBerry" value="20653354221686">
+									Cedar Berry / MiniSkein - $9.25 USD
+								</option>
+
+
+
+								<option data-sku="Local:LBee-Balm" value="20653356023926">
+									Bee-Balm / MiniSkein - $9.25 USD
+								</option>
+
+
+							</select>
+
+
+
+							<div class="product-single__add-to-cart">
+								<button type="submit" name="add" id="AddToCart--product-template" class="btn btn--add-to-cart">
+                  <span class="btn__text">
+
+	                    Add to Cart
+
+                  </span>
+								</button>
+
+							</div>
+						</form>
+
+					</div>
+
+					<div class="product-single__description rte" itemprop="description">
+						<p><strong></strong>After one adventurous drive in a minivan brimming with alpaca fiber, O-WoolΩLocal was born. Since then, I've visited farms all around the Philadelphia area collecting fiber. Local is processed in the Northeastern USA. It is squishy and soft, and still has that alpaca smell and some lanolin left in the fiber. It is a truly rustic, minimally processed yarn - if that's your thing, you're going to love this yarn</p>
+						<p>How about <a href="/collections/yarns/products/local-natural-dyes" class="text-link">Local dyed with Natural Dyes</a>!?</p>
+						<p>Click <a href="/collections/byyarn-local" class="text-link">here</a> for patterns in Local</p>
+						<p>Want to see all of the colors in person before ordering? <a href="https://o-wool.myshopify.com/collections/yarns/products/color-cards" class="text-link">Order a Shade Card.</a></p>
+						<meta charset="utf-8">
+						<p><span>Want your yarn wound into balls?&nbsp;</span><span></span><a href="/collections/yarns/products/wind-yarn-into-balls" class="text-link">Look here.</a></p>
+						<p>&nbsp;</p>
+						<p>Hand wash in cold water with gentle detergent. Lay flat to dry.</p>
+						<p>&nbsp;</p>
+					</div>
+
+
+					<!-- /snippets/social-sharing.liquid -->
+
+
+					<div class="social-sharing clean">
+
+
+						<a target="_blank" href="//www.facebook.com/sharer.php?u=https://o-wool-stage.myshopify.com/products/local" class="share-facebook" title="Share on Facebook">
+							<span class="icon icon-facebook" aria-hidden="true"></span>
+							<span class="share-title" aria-hidden="true">Share</span>
+							<span class="visually-hidden">Share on Facebook</span>
+						</a>
+
+
+
+						<a target="_blank" href="//twitter.com/share?text=Local%20(worsted)&amp;url=https://o-wool-stage.myshopify.com/products/local" class="share-twitter" title="Tweet on Twitter">
+							<span class="icon icon-twitter" aria-hidden="true"></span>
+							<span class="share-title" aria-hidden="true">Tweet</span>
+							<span class="visually-hidden">Tweet on Twitter</span>
+						</a>
+
+
+
+						<a target="_blank" href="//pinterest.com/pin/create/button/?url=https://o-wool-stage.myshopify.com/products/local&amp;media=//cdn.shopify.com/s/files/1/0084/4044/7094/products/LSteelhead2_1024x1024.jpg?v=1532980795&amp;description=Local%20(worsted)" class="share-pinterest" title="Pin on Pinterest">
+							<span class="icon icon-pinterest" aria-hidden="true"></span>
+							<span class="share-title" aria-hidden="true">Pin it</span>
+							<span class="visually-hidden">Pin on Pinterest</span>
+						</a>
+
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
 		meta
 
-		<productOptionPicker :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
 
 		option 2
@@ -53,7 +517,6 @@
 			</div>
 		</div>
 
-		<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
 		{{Layout}}
 		<div @change="testBtn" v-model="LayoutToggle">
 			<span>
@@ -87,7 +550,7 @@
 
     import Multiselect from 'vue-multiselect'
 
-    import { getVariantFromOptions,isVariantAvailable} from '@/helpers/main.js'
+    import { getVariantFromOptions,isVariantAvailable,updateHistory} from '@/helpers/main.js'
 
     import Vue from 'vue';
 
@@ -156,8 +619,11 @@
 			    default: false
 		    },
 		    showmasterselect: {
-			    default: false
-		    }
+			    default: true
+		    },
+	        updatehistory:{
+		        default: true
+	        }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
 	    components: {ProductImageSlideshow,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
@@ -186,7 +652,7 @@
 			    return "wild-geranium"
 		    },
 		    VariantArr: function() {
-			    return this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
+			    return this.Variants; //this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
 		    },
 		    Layout:function(){
 				return this.$data.toggle_classes[this.LayoutToggle];
@@ -234,7 +700,7 @@
 		    })
 	    },
 	    mounted:function(){
-		    this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
+		  //  this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
 	    methods:{
 	    ...mapMutations(['setlayoutButton']),
@@ -254,13 +720,19 @@
 				    })
 				    this.$data._pendingItems =newPending;
 			    }else{
+
+			    	if ( this.$props.updatehistory ){
+					    updateHistory(variant);
+				    }
+
+
 				    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
 			    }
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
 
 			    console.log("!!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
-				    this.variantChanged(requestedVariant);
+				   this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			    return   getVariantFromOptions(optionArray, variantsArr);

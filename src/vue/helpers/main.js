@@ -20,6 +20,18 @@ export function ShopifyImgURL(src, size) {
 		;
 }
 
+export function updateHistory(variant) {
+	var newurl =
+		window.location.protocol +
+		'//' +
+		window.location.host +
+		window.location.pathname +
+		'?variant=' +
+		variant.id;
+	window.history.replaceState({path: newurl}, '', newurl);
+}
+
+
 export function setQueryStringParameter(name, value) {
 	const params = new URLSearchParams(location.search);
 	params.set(name, value);

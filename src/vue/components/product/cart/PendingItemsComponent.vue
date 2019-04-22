@@ -8,7 +8,7 @@
 			<h5>Includes: </h5>
 			<ul>
 				<li v-for="pendingCartItem in PendingItems">
-					<PendingCartItem @unavailable="updateAvailability" @requested_quantity_change="updateQuantity" :item="pendingCartItem"></PendingCartItem>
+					<PendingCartItem @available="updateAvailability" @requested_quantity_change="updateQuantity" :item="pendingCartItem"></PendingCartItem>
 				</li>
 			</ul>
 		</div>
@@ -26,6 +26,7 @@
 	import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
 
 	import {CartMixin} from  '@/mixins/cartmixin.js';
+
 
 	const PromiseQueue = require("easy-promise-queue").default;
 
@@ -52,11 +53,11 @@
 			},
 			label: {
 				type: String,
-				default: "nottt setAdd to Cart"
+				default: "Add to Cart"
 			},
 			disableunavailable: {
 				type: Boolean,
-				default: false
+				default: true
 			},
 			lineitemmessage: {   ///this is used to give the kit an id
 				type: Boolean,
@@ -69,18 +70,13 @@
 			this.getCart().then(function(res){
 			})
 
-
-					console.log("cart is props;",this.$props.addtocartvariants	 )
+		console.log("cart is props;",this.$props.addtocartvariants	 )
 
 
 	},
 	watch: {
 		addtocartvariants: function(val) {
-			//this.CurrentVariant=val;
-			console.log("add to cart set@!!!!!!",val,this.parsePendingItems(val));
 			this.$data._pendingItems = this.parsePendingItems(val)
-			;
-
 		}
 	},
 		computed: {
@@ -180,18 +176,16 @@
 					}]);
 			},
 			updateQuantity:function(item ){
-				console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);
-
-
+			//	console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);
 			},
-			updateAvailability: function(id) {
+			updateAvailability: function(bool) {
 
 				//todo: make some way of doing alternate number here.
-				let _id = Number(id);
-
+				console.log("UPDATE AVAIABILITY")
 				let self = this;
+
 				if (this.$props.disableunavailable){
-					this.isDisabled = true;
+					this.isDisabled = !bool;
 				}
 			},
 			addVarianttoPendingItem: function(item , _variant){

@@ -7,6 +7,7 @@
 		                           :selectedoptionvalue="SelectedOptionValue(option.id)"
 		                           :disabledOptions="_remapOptionValuesDisabled(option)"
 		                           :key="index"
+		                           class="optionpicker"
 		                           :searchable="option.searchable"
 		                           @optionChanged="optionChanged" >
 
@@ -178,6 +179,32 @@
 
 <style lang="scss" type="text/scss">
 
+.optionpicker{
+
+	img{
+		height:auto;
+		width: 100%;
+		max-width: 100%;
+	}
+	.option__swatch{
+		//width: 30px;  clip: rect(10px, 20px, 30px, 40px);
+		//height: 30px;
+		img{
+			object-fit: fill;
+			height: 50px;
+		}
+	}
+	.multiselect__content-wrapper{
+		background: green;
+
+	}
+
+}
+
+
+
+	.span{
+			}
 </style>
 
 

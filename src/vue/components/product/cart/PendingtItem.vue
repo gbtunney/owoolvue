@@ -1,6 +1,6 @@
 <template>
 	<div ref="MYCART" class="cart-wrapper">
-		<span v-show="NoStockAlert">NO STOCK AVAILABLE!!</span>
+		<span v-show="!Availability">NO STOCK AVAILABLE!!</span>
 		--{{Message}} <img class="thumbnail" :src="Image.src" :alt="Image.alt" > {{VariantName}} // Count: {{RequestedQuantity}} at {{VariantPrice | toUSD }} <strong>Total:</strong> {{VariantTotalPrice |toUSD}}
 		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
 		total available: {{Variant.inventory_quantity}}
@@ -14,9 +14,7 @@
     import {mapState, mapGetters, mapActions} from "vuex";
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
 
-    const PromiseQueue = require("easy-promise-queue").default;
-
-    const pq_additems = new PromiseQueue({concurrency: 1});
+    import { isVariantAvailable} from '@/helpers/main.js'
 
     import VueNumericInput from 'vue-numeric-input';
 
@@ -53,6 +51,7 @@
 			        self.Image= res.data.image;
 		        });
 	        }
+
         },
 	    watch: {
 		    item: function(val) {
@@ -66,13 +65,22 @@
 					    self.Image= res.data.image;
 				    });
 			    }
+
+			    console.log("WATCH WM _ __ ",isVariantAvailable(this.Variant))
+
+			    this.$emit('available', this.Availability)
+
+
 		    }
 	    },
         mounted: function() {
-            if (this.NoStockAlert){
-                this.$emit('unavailable', this.Variant.id)
-            }
 
+	       // if (Availability){
+
+		        console.log("mount EM IS ",this.Availability )
+		        this.$emit('available', this.Availability)
+
+	       // }
         }, computed: {
             RequestedQuantity: function() {
                 return this.$props.item.requested_quantity;
@@ -109,12 +117,17 @@
             VariantName: function() {
                 return this.Variant.title;
             },
-            NoStockAlert: function() {
-                if (Number(this.RequestedQuantity) > Number(this.Variant.inventory_quantity)){
-                    return true;
-                } else {
-                    return false;
-                }
+            Availability: function() {
+
+	            if ( isVariantAvailable(this.Variant) ){
+		            if (Number(this.RequestedQuantity) <= Number(this.Variant.inventory_quantity)){
+			            return true;
+		            }
+
+	            } else {
+		            return false;
+	            }
+
             }
         },
         methods: {
