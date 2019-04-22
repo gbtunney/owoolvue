@@ -4,7 +4,7 @@
 		<p> PENDING ITEmWorld!
 		{{PendingItems}}</p>
 
-		<button  class="c-button c-button--dark-accent-primary"  :disabled="isDisabled">{{label}}
+		<button  class="c-button c-button--dark-accent-primary"  @click="addMultipletoCart" :disabled="isDisabled">{{label}}
 			<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
 		</button>
 		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
@@ -31,6 +31,8 @@
 
 	import {CartMixin} from  '@/mixins/cartmixin.js';
 
+	const PromiseQueue = require("easy-promise-queue").default;
+	const pq_additems = new PromiseQueue({concurrency: 1});
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
@@ -80,8 +82,9 @@
 	watch: {
 		addtocartvariants: function(val) {
 			//this.CurrentVariant=val;
-			this.PendingItems = this.PendingItemsChanged(val);
-			console.log("add to cart set@!!!!!!",this.PendingItems);
+			console.log("add to cart set@!!!!!!",val,this.PendingItemsChanged(val));
+			this.$data._pendingItems = this.PendingItemsChanged(val)
+			;
 
 		}
 	},
@@ -124,6 +127,63 @@
 			}
 		},
 		methods: {
+			transformItemArray:function(pendingItems , lineItemMessage =false){
+				///transform the pending item array for ajax cart.
+
+				let line_props = {};
+
+				if (lineItemMessage){
+					line_props = Object.assign(line_props, {message: lineItemMessage} );
+				}
+				///TODO THIS IS SOME DUMB BULLSHITTTTTT
+				return pendingItems.map(function(item) {
+
+					const ITEM_SCHEMA = schema(
+						{
+							id: {type: Number, required: true},
+							quantity: {type: Number, default: 1},
+							properties: {type: Number, default: line_props},
+						});
+
+					if (item.message){
+						line_props = Object.assign(line_props ,{message2: item.message } );
+					}
+
+					const data = ITEM_SCHEMA.parse(item);
+					const params = {}
+					return {params, data};
+				});
+			} ,
+			addMultipletoCart: function(_dataObj) {
+				
+				let dataObj  = transformItemArray(_dataObj, this.$props.lineitemmessage)
+
+				let self = this;
+				let pq = new PromiseQueue({concurrency: 1});
+
+				this.Loading = this.isDisabled = true;
+
+
+				pq.add([() => {
+					return new Promise(function(resolve, reject) {
+						setTimeout(function() {
+							console.log('task 1');
+							resolve();
+						}, 1000)
+					});
+			}, ...dataObjArray.map(function(item) {
+					return () => {
+						return self.addItem(item);
+					}}), () => {
+					return new Promise(function(resolve, reject) {
+						setTimeout(function() {
+							console.log('QUEUE COMPLETE', pq, self);
+							self.Loading = self.isDisabled = false;
+							resolve();
+						}, 5)
+					});
+				}]);
+			},
 			updateAvailability: function(id) {
 
 				//todo: make some way of doing alternate number here.

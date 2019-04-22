@@ -13,7 +13,7 @@ export const ProductMixin={
 	    components: {},
 	    data() {
 		    return {
-		    	_currentVariant: false,
+		    	_currentVariant: [],
 	          _currentProduct: false
 		    }
 	    },

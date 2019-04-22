@@ -12,6 +12,7 @@ total available: {{Variant.inventory_quantity}}
     import Vue from 'vue';
     import store from '@/store'
     import {mapState, mapGetters, mapActions} from "vuex";
+    import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
 
     const PromiseQueue = require("easy-promise-queue").default;
 
@@ -33,37 +34,53 @@ total available: {{Variant.inventory_quantity}}
                 required: true
             }
         },
+	    mixins:[DictionaryMixin],
         data() {
             return {
                 _variant:false,
+	            _item:[],
 	            _image:false
             }
         },
         created: function() {
-
+	      /*  this.Variant = ;
+	       */
+	        if ( this.product_image_dictionary.get(this.Variant.image_id) ){
+		        this.Image =this.product_image_dictionary.get(this.Variant.image_id);
+	        }else{
+		        this.getVariantDefaultImage(  {params: {productid:this.Variant.product_id, imageid:this.Variant.image_id}}).then(function(res){
+			        self.Image= res.data.image;
+		        });
+	        }
         },
+	    watch: {
+		    item: function(val) {
+			    console.log("NEW ITEM SSETTTT",this.Variant);
+			    let self =this;
+
+			    if ( this.product_image_dictionary.get(this.Variant.image_id) ){
+			    	this.Image =this.product_image_dictionary.get(this.Variant.image_id);
+			    }else{
+				    this.getVariantDefaultImage(  {params: {productid:this.Variant.product_id, imageid:this.Variant.image_id}}).then(function(res){
+					    self.Image= res.data.image;
+				    });
+			    }
+		    }
+	    },
         mounted: function() {
             if (this.NoStockAlert){
                 this.$emit('unavailable', this.Variant.id)
             }
-let self =this;
-            this.Variant = this.$props.item.variant;
-            this.getVariantDefaultImage(  {params: {productid:this.Variant.product_id, imageid:this.Variant.image_id}}).then(function(res){
-                self.Image= res.data.image;
-            });
+
         }, computed: {
             RequestedQuantity: function() {
                 return this.$props.item.requested_quantity;
             },
-            Variant: {
-                get: function() {
-	                return     this.$data._variant ;
-                },
-                set: function(newVal) {
-
-                    this.$data._variant = newVal;  ///this.Variants[this.CurrentVariant._index];
-                }
+            Variant:
+            function(){
+	            return     this.$props.item.variant;//this.$data._variant ;
             },
+
             Image: {
                 get: function() {
                     return     this.$data._image ;
@@ -107,7 +124,7 @@ let self =this;
     }
 
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css" scoped></style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss">

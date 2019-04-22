@@ -162,7 +162,7 @@
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
 			    toggle_exclusive:2,
 			    _optionMeta: [],
-			    _pendingItems: []
+			    _pendingItems:  "Hello there"// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
 		    }
 	    },
 	    name: 'testcomponent',
@@ -221,9 +221,9 @@
 			    }
 
 			    ////*****SET VARIANT
-			    self.CurrentVariant  = self.CurrentVariant ;
-
-			    self.$data._pendingItems = [{"quantity": 3, "message":"this is a color way ","id": "18250174595190"}];
+			   //self.CurrentVariant  = self.variant_dictionary.get(self.NormalizedVariantID) ;
+			 self.variantChanged( self.variant_dictionary.get(self.NormalizedVariantID) )
+			  //  console.log("variany",self.CurrentVariant, [{ quantity: 1, id:  self.CurrentVariant }]);
 
 			    ///example - --::
 			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
@@ -239,12 +239,15 @@
 		    	this.setlayoutButton({index: target})
 		    },
 	    	variantChanged: function(variant) {
-	    		this.CurrentVariant  = variant;
-	    		console.log("variant changed!!!!!",variant)
+			    console.log("variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
+
+
+	    		this.$data._currentVariant   = variant;
+			   this.$data._pendingItems = [{ quantity: 1,variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
 			    console.log("master option changed!!!!!",requestedVariant,option_dictionary);
-			    this.variantChanged(requestedVariant);
+			   this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
 			    return   getVariantFromOptions(optionArray, variantsArr);
