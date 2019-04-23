@@ -1,14 +1,67 @@
 <template>
 	<div>
 
-
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
 			</div>
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
-				<div class="product-single__meta">
+
+				<div v-show="loading" class="product-app-loading">
+					<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(30 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(60 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(90 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(120 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(150 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(180 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(210 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(240 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(270 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(300 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+						</rect>
+					</g><g transform="rotate(330 50 50)">
+						<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+							<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+						</rect>
+					</g></svg>
+				</div>
+
+
+				<div v-show="!loading" class="product-single__meta">
 					<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 
 					<h1 class="product-single__title" itemprop="name">{{CurrentProductTitle}}</h1>
@@ -320,7 +373,8 @@
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
 			    toggle_exclusive:2,
 			    _optionMeta: [],
-			    _pendingItems:  "Hello there"// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
+			    _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
+		        loading: false
 		    }
 	    },
 	    name: 'testcomponent',
@@ -351,6 +405,7 @@
 	    },
 	    created:function(){
 
+	    	this.$data.loading=true;
 	    	let self = this;
 
 		    this.loadProduct().then(function(res){
@@ -382,6 +437,7 @@
 			   //self.CurrentVariant  = self.variant_dictionary.get(self.NormalizedVariantID) ;
 			 self.variantChanged( self.variant_dictionary.get(self.NormalizedVariantID) )
 			  //  console.log("variany",self.CurrentVariant, [{ quantity: 1, id:  self.CurrentVariant }]);
+			    self.$data.loading=false;
 
 			    ///example - --::
 			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
@@ -461,6 +517,24 @@
 
 	@import "src/vue/helpers/product-dependancies.scss";
 
+	.product-app-loading{
+		//	@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
+		//background: red;
+		$props: (
+			background: true,
+			foreground: true,
+			border: false,
+			fill:foreground,
+			hover-background:rgba(color(accent-default, background), .7),
+			hover-foreground:rgba(color(accent-default, foreground), .7)
+		);
+		@include g-color-scheme(accent-default, $props...);
+		@include u-icon-svg(false, 10%);
+		margin:0 auto;
+		svg rect{
+			//fill: red;
+		}
+	}
 	.divider{
 		@include u-leader-padding(lg);
 		@include u-trailer-padding(md);

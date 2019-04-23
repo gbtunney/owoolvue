@@ -1,7 +1,57 @@
 <template>
 	<div class="pending-items-component --productApp">
 		<button  class="btn-add-to-cart"  @click="addMultipletoCart(PendingItems)" :disabled="isDisabled">{{label}}
-			<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
+			<div v-show="Loading" class="aspinner">
+				<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(30 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(60 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(90 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(120 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(150 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rot ate(180 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(210 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(240 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(270 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(300 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+					</rect>
+				</g><g transform="rotate(330 50 50)">
+					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+					</rect>
+				</g></svg>
+			</div>
 		</button>
 		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
 		<div v-show="metavisible" class="productMeta" >
@@ -256,7 +306,10 @@
 
 	$my-default-spacing-variant: xl;
 
+
 	.pending-items-component{
+
+
 
 		ul{
 			padding: 0;
@@ -268,10 +321,30 @@
 			flex-direction: column-reverse;
 			align-items: center;
 
+
+			.aspinner{
+			//	@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
+//background: red;
+
+				@include u-icon-svg(false, 3em);
+				svg rect{
+					//fill: red;
+				}
+			}
 			.btn-add-to-cart{
 				@include 	rhythm-margin(md);
-				@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
 
+				@include c-button( false, font-small-caps md sm ,  typography font-size base-padding ) ;
+
+				$props: (
+					background: true,
+					foreground: true,
+					border: true,
+					fill:foreground,
+					hover-background:rgba(color(dark-accent-primary, background), .7),
+					hover-foreground:rgba(color(dark-accent-primary, foreground), .7)
+				);
+				@include g-color-scheme(dark-accent-primary, $props...);
 			}
 			.pending-item-name{
 				@include 	rhythm-padding(md);
@@ -306,7 +379,7 @@
 				//@include g-color-scheme(dark);
 					&:before, &:after{
 					height: auto;
-					background-color: red;
+				//	background-color: red;
 						position: relative;
 						transform: none;
 						/* position: absolute; */

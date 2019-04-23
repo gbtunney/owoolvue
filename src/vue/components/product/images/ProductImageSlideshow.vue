@@ -4,9 +4,8 @@
 			<!-- slides -->
 			<swiper-slide v-for="image,index in ImageArray" :key="index">
 				<div class="swiper-zoom-container">
-					<img  :src="image.src" :alt="image.alt">
-
-
+					<img class="swiper-lazy" :data-src="image.src" :alt="image.alt">
+					<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 				</div>
 			</swiper-slide>
 

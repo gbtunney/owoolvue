@@ -57,6 +57,7 @@
     "zip": "slate-tools build && slate-tools zip",
     "pattern-test": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/pattern-lab-test.scss src/styles/pattern-lab-test.css",
     "styles": "node-sass  -r --importer=node_modules/node-sass-tilde-importer  --watch -rw src/styles/owoolvue-styles.scss src/assets/owoolvue-styles.css"
+    "deploy prod": "yarn deploy  --env=production"
   },
   "dependencies": {
     "easy-promise-queue": "^0.5.4",
