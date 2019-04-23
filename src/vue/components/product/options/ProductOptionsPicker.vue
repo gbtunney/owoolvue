@@ -1,7 +1,5 @@
 <template>
 	<div>
-
-
 		<singleProductOptionPicker v-for="option,index in options"
 		                           :option="option"
 		                           :selectedoptionvalue="SelectedOptionValue(option.id)"

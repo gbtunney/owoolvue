@@ -12,6 +12,9 @@ $GENERATE-QUEUE: true;
 
 .test{
 	@include border-single-side(bottom,2px);
+@include dimensions(2em, 4em);
+//	@include 	rhythm-padding(xl);
+
 }
 
 

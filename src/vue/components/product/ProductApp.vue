@@ -1,30 +1,6 @@
 <template>
 	<div>
-		<PendingItemsComponent :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
-		<adminOptionSelect></adminOptionSelect>
-		<Multiselect :options="VariantArr"
-		             v-model="CurrentVariant"
-		             @input="variantChanged"
-		             v-show="showmasterselect"
-		             track-by="title"
-		             label="title"
-		             class="multiselectmaster"
-		             :taggable="false"
-		             :multiple="allowmultiple"
-		             :closeOnSelect="false"
-		             placeholder="Select one"
-		             searchable="true"
-		             :allow-empty="false">
 
-			<template slot="singleLabel" slot-scope="{ option }">
-				<strong>{{ option.id }}</strong> ID:<strong>  {{ option.title }}</strong>
-			</template>
-
-			<template slot="option" class="is-grid-2" slot-scope="props" disabled="true">
-				<div disabled="true"  class="option__desc"><span class="option__title">qty{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
-			</template>
-
-		</Multiselect>
 
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
@@ -33,6 +9,7 @@
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
 				<div class="product-single__meta">
+					<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 
 					<h1 class="product-single__title" itemprop="name">{{CurrentProductTitle}}</h1>
 
@@ -52,9 +29,11 @@
 						<link itemprop="availability" href="http://schema.org/|| if product.available || InStock{% else %}OutOfStock{% endif %}">
 						<link itemprop="availability" href="http://schema.org/InStock">
 
+						<kabob class="divider" scheme="accent-default" componentclass="c-kabob"></kabob>
+
 						<productOptionPicker :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
-						<form method="post" action="/cart/add"
+						<form  v-show="false" method="post" action="/cart/add"
 						      id="AddToCartForm&#45;&#45;product-template"
 						      accept-charset="UTF-8" class="product-single__form" enctype="multipart/form-data" data-children-count="26">
 							<input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
@@ -189,79 +168,40 @@
 							</div>
 						</form>
 
-					</div>
 
-					<div class="product-single__description rte" itemprop="description">
-						<p><strong></strong>After one adventurous drive in a minivan brimming with alpaca fiber, O-WoolΩLocal was born. Since then, I've visited farms all around the Philadelphia area collecting fiber. Local is processed in the Northeastern USA. It is squishy and soft, and still has that alpaca smell and some lanolin left in the fiber. It is a truly rustic, minimally processed yarn - if that's your thing, you're going to love this yarn</p>
-						<p>How about <a href="/collections/yarns/products/local-natural-dyes" class="text-link">Local dyed with Natural Dyes</a>!?</p>
-						<p>Click <a href="/collections/byyarn-local" class="text-link">here</a> for patterns in Local</p>
-						<p>Want to see all of the colors in person before ordering? <a href="https://o-wool.myshopify.com/collections/yarns/products/color-cards" class="text-link">Order a Shade Card.</a></p>
-						<meta charset="utf-8">
-						<p><span>Want your yarn wound into balls?&nbsp;</span><span></span><a href="/collections/yarns/products/wind-yarn-into-balls" class="text-link">Look here.</a></p>
-						<p>&nbsp;</p>
-						<p>Hand wash in cold water with gentle detergent. Lay flat to dry.</p>
-						<p>&nbsp;</p>
-					</div>
-
-
-					&lt;!&ndash; /snippets/social-sharing.liquid &ndash;&gt;
-
-
-					<div class="social-sharing clean">
-
-
-						<a target="_blank" href="//www.facebook.com/sharer.php?u=https://o-wool-stage.myshopify.com/products/local" class="share-facebook" title="Share on Facebook">
-							<span class="icon icon-facebook" aria-hidden="true"></span>
-							<span class="share-title" aria-hidden="true">Share</span>
-							<span class="visually-hidden">Share on Facebook</span>
-						</a>
-
-
-
-						<a target="_blank" href="//twitter.com/share?text=Local%20(worsted)&amp;url=https://o-wool-stage.myshopify.com/products/local" class="share-twitter" title="Tweet on Twitter">
-							<span class="icon icon-twitter" aria-hidden="true"></span>
-							<span class="share-title" aria-hidden="true">Tweet</span>
-							<span class="visually-hidden">Tweet on Twitter</span>
-						</a>
-
-
-
-						<a target="_blank" href="//pinterest.com/pin/create/button/?url=https://o-wool-stage.myshopify.com/products/local&amp;media=//cdn.shopify.com/s/files/1/0084/4044/7094/products/LSteelhead2_1024x1024.jpg?v=1532980795&amp;description=Local%20(worsted)" class="share-pinterest" title="Pin on Pinterest">
-							<span class="icon icon-pinterest" aria-hidden="true"></span>
-							<span class="share-title" aria-hidden="true">Pin it</span>
-							<span class="visually-hidden">Pin on Pinterest</span>
-						</a>
-
+									<PendingItemsComponent :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
 					</div>
-
-
 				</div>
 			</div>
 		</div>
 
-		<div class="product-single__meta">
-			<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
+		<Multiselect :options="VariantArr"
+		             v-model="CurrentVariant"
+		             @input="variantChanged"
+		             v-show="showmasterselect"
+		             track-by="title"
+		             label="title"
+		             class="multiselectmaster"
+		             :taggable="false"
+		             :multiple="allowmultiple"
+		             :closeOnSelect="false"
+		             placeholder="Select one"
+		             searchable="true"
+		             :allow-empty="false">
 
-			<h1 class="product-single__title" itemprop="name">{{ CurrentProductTitle }}</h1>
+			<template slot="singleLabel" slot-scope="{ option }">
+				<strong>{{ option.id }}</strong> ID:<strong>  {{ option.title }}</strong>
+			</template>
 
-			<div data-price-container>
-				<span v-if="CurrentVariantOnSale" class="product-single__price--wrapper" aria-hidden="false">
-                  <span id="ComparePrice" class="product-single__price--compare-at">
-                   {{ CurrentVariantCompareAtPrice }}
-                  </span>
-                </span>
-				<span id="ProductPrice"
-				      class="product-single__price on-sale"
-				      itemprop="price"
-				      :content="CurrentVariantPrice">
-                {{ CurrentVariantPrice }}
-              </span>
-			</div>
-		</div>
+			<template slot="option" class="is-grid-2" slot-scope="props" disabled="true">
+				<div disabled="true"  class="option__desc"><span class="option__title">qty{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
+			</template>
 
-		{{Layout}}
-		<div @change="testBtn" v-model="LayoutToggle">
+		</Multiselect>
+
+		<div @change="testBtn" v-show="false" v-model="LayoutToggle">
+			{{Layout}}
 			<span>
 				<span>format_grid</span>
 			</span>
@@ -285,6 +225,8 @@
     import {VariantMixin} from  '@/mixins/variantmixin.js';
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
+
+    import kabob from '@/components/utilities/kabob';
 
 
     import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
@@ -362,7 +304,7 @@
 			    default: false
 		    },
 		    showmasterselect: {
-			    default: true
+			    default: false
 		    },
 	        updatehistory:{
 		        default: true
@@ -372,7 +314,7 @@
 	        }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-	    components: {ProductImageSlideshow,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
+	    components: {ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -517,6 +459,17 @@
 
 <style lang="scss" type="text/scss" >
 
+	@import "src/vue/helpers/product-dependancies.scss";
+
+	.divider{
+		@include u-leader-padding(lg);
+		@include u-trailer-padding(md);
+		font-size: 12px;
+		width: 99%;
+		margin: 0 auto;
+		opacity: .5;
+		//@include rhythm-margin(md);
+	}
 .multiselectmaster{
 	span.multiselect__option{
 		background: red!important;
@@ -528,6 +481,7 @@
 
 
 	}
+
 
 
 }

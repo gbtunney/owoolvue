@@ -1,14 +1,14 @@
 <template>
-	<div>
-		<button  class="c-button c-button--dark-accent-primary"  @click="addMultipletoCart(PendingItems)" :disabled="isDisabled">{{label}}
+	<div class="pending-items-component --productApp">
+		<button  class="btn-add-to-cart"  @click="addMultipletoCart(PendingItems)" :disabled="isDisabled">{{label}}
 			<div v-show="Loading" class="aspinner">LOADING SPINNER</div>
 		</button>
 		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
 		<div v-show="metavisible" class="productMeta" >
-			<h5>Includes: </h5>
+			<h5 v-show="kit">Includes: </h5>
 			<ul>
 				<li v-for="pendingCartItem in PendingItems">
-					<PendingCartItem @available="updateAvailability" @requested_quantity_change="updateQuantity" :item="pendingCartItem"></PendingCartItem>
+					<PendingCartItem @available="updateAvailability" @requested_quantity_change="updateQuantity" :item="pendingCartItem" :kit="kit"></PendingCartItem>
 				</li>
 			</ul>
 		</div>
@@ -62,7 +62,11 @@
 			lineitemmessage: {   ///this is used to give the kit an id
 				type: Boolean,
 				default: false
-			}
+			},
+		kit: {   ///this is used to give the kit an id
+			type: Boolean,
+			default: false
+		}
 		},
 		mounted:function(){
 
@@ -246,9 +250,129 @@
 	}
 </script>
 
-<style lang="scss" type="text/scss" scoped>
-	p {
-		font-size: 2em;
-		text-align: center;
+<style lang="scss" type="text/scss" >
+
+	@import "src/vue/helpers/product-dependancies.scss";
+
+	$my-default-spacing-variant: xl;
+
+	.pending-items-component{
+
+		ul{
+			padding: 0;
+		}
+//@include u-trailer-padding($my-default-spacing-variant);
+
+		&.--productApp{
+			display: flex;
+			flex-direction: column-reverse;
+			align-items: center;
+
+			.btn-add-to-cart{
+				@include 	rhythm-margin(md);
+				@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
+
+			}
+			.pending-item-name{
+				@include 	rhythm-padding(md);
+
+			}
+			.pending-item-available{
+
+				$collection: typography font-size ;
+				$variant-keys: font-small-caps xs;
+				@include render-queue( get-collection( $collection,$variant-keys) );
+				@include 	u-leader-padding(md);
+
+
+				//TODO: replace w font function
+
+			}
+
+			.vue-numeric-input .btn-decrement	.btn-icon:before{
+
+				content: "G";
+			}
+
+
+			.vue-numeric-input .btn-increment	.btn-icon:before{
+
+				content: "+";
+			}
+
+			.btn-icon{
+				display: none;
+
+				//@include g-color-scheme(dark);
+					&:before, &:after{
+					height: auto;
+					background-color: red;
+						position: relative;
+						transform: none;
+						/* position: absolute; */
+						/* visibility: visible; */
+						/* background-color: #111; */
+						/* content: ""; */
+						/* left: 50%; */
+						/* top: 50%; */
+						/* -webkit-transform: translate(-50%,-50%); */
+						/* xf: translate(-50%,-50%); */
+
+
+
+						content: "TTG";
+
+					}
+
+
+			}
+			button.btn{
+				box-shadow:initial!important;
+				border-radius:0;
+				$collection:color-schemes typography font-size ;
+				$variant-keys: dark-accent-primary   font-small-caps lg ;
+				@include render-queue( get-collection( $collection,$variant-keys) );
+
+				display: flex;
+				flex-direction: row;
+				border-width: 2px;
+				//justify-content: center;
+
+				&:disabled{
+					opacity: .7;
+				}
+				&:before{
+					//margin-left: -7px;
+					content: "+";
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 2px;
+					left: 0;
+				}
+
+				&.btn-decrement{
+					&:before{
+						//margin-right: -7px;
+						content: "-";
+					}
+				}
+
+			}
+			.numeric-input{
+				border-radius:0;
+
+				$collection:color-schemes typography font-size ;
+				$variant-keys: accent-default  font-small-caps lg ;
+				@include render-queue( get-collection( $collection,$variant-keys) );
+				border-width: 1px;
+				border-color: color(accent-primary,border);
+			}
+		}
+
+		//background: red;
+
 	}
+
+
 </style>

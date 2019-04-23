@@ -1,7 +1,5 @@
 <template>
 	<div>
-<button @click="clicky(12)" >clickme</button>
-		<button @click="clicky(22)" >click</button>
 		<swiper :options="swiperOption" ref="mySwiper"  >
 			<!-- slides -->
 			<swiper-slide v-for="image,index in ImageArray" :key="index">
@@ -121,27 +119,16 @@
             return {
             	idle: false,
                 swiperOption: {
-	                effect: 'coverflow',
-	                grabCursor: true,
+	                grabCursor: false,
 	                centeredSlides: true,
-	                slidesPerView: 'auto',
-	                coverflowEffect: {
-		                rotate: 0,
-		                stretch: 0,
-		                depth: 100,
-		                opacity: 0,
-		                modifier: 1,
-		                slideShadows : true,
-	                },
-	                slidesPerView: 3,
-	                spaceBetween: 30,
-                    lazy: false,
+	                scrollbar:false,
+	                zoom:true,
+	                slidesPerView: 1,
+	                spaceBetween: 0,
+                    lazy: true,
                     navigation: {
                         nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev',
-                    },
-                    pagination: {
-                        el: '.swiper-pagination'
                     }
                 }
             }
@@ -152,7 +139,11 @@
 <style src="swiper/dist/css/swiper.css"></style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" type="text/scss"  >
+	@import "src/vue/helpers/product-dependancies.scss";
 
+	.swiper-scrollbar{
+		display: none;
+	}
 	.swiper-slide-shadow-left{
 		background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.9))!important;
 
@@ -203,5 +194,16 @@
 		-ms-flex-align: center;
 		-webkit-align-items: center;
 		align-items: center;*/
+	}
+	.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
+		//background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D 'http%3A%2F%2Fwww.w3.org%…19.9L22%2C44L0%2C22L0%2C22L0%2C22z' %20fill%3D '%23007aff' %2F%3E%3C%2Fsvg%3E);
+
+		&:before{
+			//content: "<";
+			//@include triangle(left,$square/2 ,$square*3,$color);
+		}
+		background-image: none;
+		left: 10px;
+		right: auto;
 	}
 </style>

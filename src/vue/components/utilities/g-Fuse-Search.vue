@@ -146,8 +146,7 @@
 
 	$search-padding: 5px 0;
 	.sb-icon{
-		height: 1em;
-		width: 1em;
+		@include dimensions(1.5em);
 
 	}
 

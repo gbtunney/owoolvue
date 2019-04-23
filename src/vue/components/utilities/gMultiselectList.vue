@@ -382,10 +382,14 @@
 		//@include render-queue(get-collection( $btn-option-render));
 		$collection:color-schemes typography font-size base-padding;
 		$variant-keys: light font-small-caps xs sm;
-
-
 		@include render-queue( get-collection( $collection,$variant-keys) );
 
+		@include breakpoint-range(xs){
+			$collection:color-schemes typography font-size base-padding;
+			$variant-keys: light font-small-caps xxs xs;
+			@include render-queue( get-collection( $collection,$variant-keys) );
+
+		}
 
 					@extend %c-button-static-props;
 

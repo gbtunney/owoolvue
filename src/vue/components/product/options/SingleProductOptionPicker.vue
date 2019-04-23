@@ -53,6 +53,8 @@
 					</template>
 
 				</Multiselect>
+				<kabob class="divider" scheme="accent-default" componentclass="c-kabob"></kabob>
+
 			</div>
 
 		</div>
@@ -65,6 +67,7 @@
 	//    import Multiselect from 'vue-multiselect'
 	import Multiselect from '@/components/utilities/gMultiselectList.vue'
 	//import Multiselect from 'vue-multiselect'
+	import kabob from '@/components/utilities/kabob';
 
 	import {mapGetters,mapState} from 'vuex'
 	import store from '@/store'
@@ -76,7 +79,7 @@
 	export default {
 		name: 'ProductOptionPicker',
 		components: {
-			Multiselect,FuseSearch
+			Multiselect,FuseSearch,kabob
 		}, props: {
 			option: {
 				default: false
@@ -253,6 +256,12 @@
 		width: 100%;
 	}
 
+	.divider{
+		font-size: 10px;
+		width: 60%;
+		margin: 0 auto;
+		opacity:.5;
+	}
 
 	.multiselect__content{
 		display: flex;
@@ -267,8 +276,9 @@
 
 	}
 .fuseSearchComponent{
+	padding-top: 0;
 	padding-bottom:  get-lookup-prop( base-padding, md);//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
-
+margin-top:-20px;
 
 }
 .multiselect__tags {
