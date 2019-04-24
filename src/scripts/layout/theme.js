@@ -1,3 +1,6 @@
+import "../../styles/slate/layout/theme.scss";
+import "../../styles/slate/layout/theme.scss.liquid";
+
 import {mountVue} from "../../vue/mountVue";
 /*import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
