@@ -1,6 +1,6 @@
 <template>
 	<div>
-
+<basecomponent font="san-serif" padding="lg"></basecomponent>
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
@@ -281,6 +281,8 @@
 
     import kabob from '@/components/utilities/kabob';
 
+    import basecomponent from '@/components/utilities/g-base-component.vue';
+
 
     import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
@@ -367,7 +369,7 @@
 	        }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-	    components: {ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
+	    components: {basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -515,7 +517,7 @@
 
 <style lang="scss" type="text/scss" >
 
-	@import "src/vue/helpers/product-dependancies.scss";
+/*	@import "src/vue/helpers/product-dependancies.scss";
 
 	.product-app-loading{
 		//	@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
@@ -558,7 +560,7 @@
 
 
 
-}
+}*/
 </style>
 
 

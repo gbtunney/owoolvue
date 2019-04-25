@@ -175,6 +175,7 @@
 	};
 </script>
 
+<!--
 <style lang="scss" type="text/scss">
 	@import "src/vue/helpers/product-dependancies.scss";
 
@@ -203,6 +204,7 @@
 	.span {
 	}
 </style>
+-->
 
 
 

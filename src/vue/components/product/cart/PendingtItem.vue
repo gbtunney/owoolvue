@@ -157,6 +157,7 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css" scoped></style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--
 <style lang="scss" type="text/scss">
 	.thumbnail{
 
@@ -166,3 +167,4 @@
 
 
 </style>
+-->

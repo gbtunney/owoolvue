@@ -141,6 +141,7 @@
 	};
 </script>
 
+<!--
 <style lang="scss" type="text/scss" >
 	@import "src/vue/helpers/product-dependancies.scss";
 
@@ -355,4 +356,4 @@ border:1px solid black;
 
 */
 
-</style>
+</style>-->

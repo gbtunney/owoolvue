@@ -137,6 +137,7 @@
 </script>
 <style src="swiper/dist/css/swiper.css"></style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--
 <style lang="scss" type="text/scss"  >
 	@import "src/vue/helpers/product-dependancies.scss";
 
@@ -206,3 +207,4 @@
 		right: auto;
 	}
 </style>
+-->

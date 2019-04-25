@@ -55,9 +55,11 @@
     "build": "slate-tools build",
     "deploy": "slate-tools build && slate-tools deploy",
     "zip": "slate-tools build && slate-tools zip",
-    "pattern-test": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/pattern-lab-test.scss src/styles/pattern-lab-test.css",
-    "styles": "node-sass  -r --importer=node_modules/node-sass-tilde-importer --include-path node_modules  --watch -rw src/styles/pattern-lab-generator.scss src/assets/pattern-lab-generator.css",
-    "deploy prod": "yarn deploy  --env=production"
+    "pattern-test": "node-sass  -r --watch -rw --include-path node_modules  --watch -rw src/styles/pattern-lab-test.scss src/styles/pattern-lab-test.css   src/assets/pattern-lab-generator.css",
+    "styles": "node-sass  -r --importer=node_modules/node-sass-tilde-importer --include-path node_modules  --watch -rw src/styles/pattern-lab-generator.scss src/styles/pattern-lab-generator.css",
+    "deploy prod": "yarn deploy  --env=production",
+    "auditstyles": "list-selectors src/styles/pattern-lab-generator.css > src/styles/__pattern-lab-generator.json -pretty"
+
   },
   "dependencies": {
     "easy-promise-queue": "^0.5.4",

@@ -300,6 +300,7 @@
 	}
 </script>
 
+<!--
 <style lang="scss" type="text/scss" >
 
 	@import "src/vue/helpers/product-dependancies.scss";
@@ -316,7 +317,7 @@
 		}
 //@include u-trailer-padding($my-default-spacing-variant);
 
-		&.--productApp{
+		&.&#45;&#45;productApp{
 			display: flex;
 			flex-direction: column-reverse;
 			align-items: center;
@@ -448,4 +449,4 @@
 	}
 
 
-</style>
+</style>-->

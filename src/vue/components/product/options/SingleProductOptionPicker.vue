@@ -248,6 +248,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--
 <style lang="scss" type="text/scss" >
 
 	@import "src/vue/helpers/product-dependancies.scss";
@@ -344,3 +345,4 @@ margin-top:-20px;
 	}
 
 </style>
+-->

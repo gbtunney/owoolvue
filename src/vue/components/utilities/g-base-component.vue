@@ -1,0 +1,313 @@
+<template>
+	<div>
+		<button :class="Styles"><span>NASE COMPOENT</span>
+		<span  class="icon icon--md">
+			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(30 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(60 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(90 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(120 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(150 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(180 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(210 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(240 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(270 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(300 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(330 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+				</rect>
+			</g></svg>
+		</span>
+	</button>
+
+		<button v-if="showpicker" v-for="myscheme in $data._schemes" @click="Scheme = myscheme ">{{myscheme}}</button>
+
+	</div>
+
+</template>
+
+<script>
+	
+	import Vue from 'vue';
+    import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
+	import store from '@/store'
+
+
+	const values  = [
+        ".font--base",
+        ".font--lg",
+        ".font--md",
+        ".font--sm",
+        ".font--xl",
+        ".font--xs",
+        ".font--xxl",
+        ".font--xxs",
+        ".font--xxxl",
+        "g",
+        ".icon--base",
+        ".icon--lg",
+        ".icon--md",
+        ".icon--sm",
+        ".icon--xl",
+        ".margin--lg",
+        ".margin--md",
+        ".margin--sm",
+        ".margin--xl",
+        ".margin--xs",
+        ".margin--xxs",
+        ".padding--lg",
+        ".padding--md",
+        ".padding--sm",
+        ".padding--xl",
+        ".padding--xs",
+        ".padding--xxs",
+        "path",
+        "rect",
+        ".scheme--accent-default",
+        ".scheme--accent-primary",
+        ".scheme--accent-secondary",
+        ".scheme--alt-light",
+        ".scheme--dark",
+        ".scheme--dark-accent-default",
+        ".scheme--dark-accent-primary",
+        ".scheme--dark-accent-secondary",
+        ".scheme--functional",
+        ".scheme--invert-functional",
+        ".scheme--light",
+        ".scheme--light-alt",
+        ".type--default",
+        ".type--font-san-serif",
+        ".type--font-serif",
+        ".type--font-serif-bold",
+        ".type--font-serif-italic",
+        ".type--font-small-caps",
+        ".type--font-test"
+	]
+	module.exports = {
+		name: '',
+		mixins: [],
+		components: {},
+		data: function() {
+			return {
+				_scheme: false,
+                _schemes: [  "accent-default",
+                    "accent-primary",
+                    "accent-secondary",
+                    "alt-light",
+                    "dark",
+                    "dark-accent-default",
+                    "dark-accent-primary",
+                    "dark-accent-secondary",
+                    "functional",
+                    "invert-functional",
+                    "light",
+                    "light-alt"]
+
+            }
+		},
+		props: {
+			exampleprop: {
+				type: String,
+				default: 'not set',
+				required: false
+			},
+            margin:{
+                default:false
+            },
+			padding:{
+			    default:false
+			},
+            scheme:{
+                default: 'dark',
+            },
+            font:{
+                default: 'serif'
+            },
+            fontsize:{
+                default: 'xl'
+            },
+            showpicker:{
+                default: true
+            }
+		},
+
+
+		computed: {
+			...mapGetters([
+				'Variants'
+			]),
+            Padding: function() {
+			    if ( this.$props.padding){
+			        return `padding--${this.$props.padding}`
+			    }
+            },
+            Margin: function() {
+                if ( this.$props.margin){
+                    return `margin--${this.$props.margin}`
+                }
+            },
+            FontSize: function() {
+                if ( this.$props.fontsize){
+                    return `font--${this.$props.fontsize}`
+                }
+            },
+            Font: function() {
+                if ( this.$props.fontsize){
+                    return `type--font-${this.$props.font}`
+                }
+            },
+            Scheme: {
+                get: function() {
+                    if (!this.$data._scheme){
+                        return `scheme--${this.$props.scheme}`
+                    } else {
+                        return `scheme--${this.$data._scheme}`
+                    }
+                },
+                set: function(newVal) {
+                    //=newVal;
+                    this.$data._scheme = newVal;
+                }
+            },
+            Styles:function(){
+			   return [this.Scheme,this.FontSize,this.Margin,this.Padding,'button','--border'] ;
+			},
+			example: {
+				get: function() {
+					return;
+				},
+				set: function(newVal) {
+					//=newVal;
+				}
+			},
+			example2: function() {
+				
+			}
+		},
+		methods: {
+		}
+	}
+</script>
+
+<style lang="scss" type="text/scss" scoped>
+	@import "src/vue/helpers/product-dependancies.scss";
+	$vue-component-render-objects: (
+		(
+			key: vue-generator-typography,
+			parent: typography,
+			selector: '.type',
+			suffix: true, //if it is to be generated, use a class suffix before,
+		),
+		(
+			key: vue-generator-font-size,
+			parent: font-size,
+			selector: '.font',
+			description: "Demo: modularscale size operation.",
+			suffix: true, //if it is to be generated, use a class suffix before,
+		),
+		(
+			key: vue-generator-padding,
+			parent: base-padding,
+			selector: '.padding',
+			description: "padding.",
+			suffix: true, //if it is to be generated, use a class suffix before,
+		),
+		(
+			key: vue-generator-margin,
+			parent: base-margin,
+			selector: '.margin',
+			description: "-margin.",
+			suffix: true, //if it is to be generated, use a class suffix before,
+		),
+		(
+			key: vue-icon-sizes,
+			parent: icon-sizes,
+			selector: '.icon',
+			description: "-margin.",
+			suffix: true, //if it is to be generated, use a class suffix before,
+		),
+		(
+			key: vue-generator-color-schemes,
+			description: "color schemes",
+			selector: '.scheme',
+			parent: color-schemes,
+			suffix: true,
+			variants:(
+				options: (
+					obj: (
+						background: true,
+						foreground: true,
+						accent:false,
+						border: lighten foreground 10%,
+						fill:foreground,
+						hover-background:lighten background 20%,
+						hover-foreground:lighten foreground 20%,
+					)
+				)
+			)
+		)
+	);
+
+	$patternlab: batch-add-to-style-dictionary(clean-collection(get-collection($vue-component-render-objects), parent));
+
+
+	//	@include render-queue(get-collection(font-size-spacing));
+
+
+	@include render-queue(get-collection(vue-generator-color-schemes));
+
+	/***-----MARGIN-----****/
+	@include render-queue(get-collection(vue-generator-color-schemes vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
+
+	.button {
+		display: flex;
+		align-items: center;
+		@include u-transition(background-color, 0.5s, ease);
+	}
+
+	.icon{
+		@include u-icon-svg(false,false,false);
+	}
+
+	.--border{
+		border-width: 1px;
+		border-style: solid;
+	}
+
+
+
+</style>

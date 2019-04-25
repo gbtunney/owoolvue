@@ -300,6 +300,7 @@
 	}
 </script>
 
+<!--
 <style lang="scss" type="text/scss" scoped>
 
 	@import "src/styles/g-Patternlab/project-variables";
@@ -341,11 +342,11 @@
 	}
 
 	.multiselect{
-		&--disabled{
+		&&#45;&#45;disabled{
 			pointer-events: none;
 			opacity: 0.6;
 		}
-		&--active {
+		&&#45;&#45;active {
 			z-index: 0;
 		}
 
@@ -354,7 +355,7 @@
 	.multiselect__content-wrapper {
 
 	}
-	.multiselectlist--horizontal{
+	.multiselectlist&#45;&#45;horizontal{
 		width: fit-content;
 		.multiselect__content{
 			display: flex;
@@ -423,19 +424,19 @@ text-transform: uppercase;
 		font-size: 13px;*/
 	}
 
-	.multiselect__option--highlight {
+	.multiselect__option&#45;&#45;highlight {
 		//background: #41b883;
 		outline: none;
 		//color: white;
 	}
 
-	.multiselect__option--highlight:after {
+	.multiselect__option&#45;&#45;highlight:after {
 		content: attr(data-select);
 		//background: #41b883;
 		//color: white;
 	}
 
-	.multiselect__option--selected {
+	.multiselect__option&#45;&#45;selected {
 		//@include render-queue(get-collection(	$btn-option-render-disabled));
 //background: red!important;
 		//@include c-button( false,  dark-accent-default font-san-serif md md , color-schemes typography font-size base-padding ) ;
@@ -444,63 +445,63 @@ text-transform: uppercase;
 		//$btn-option-render-disabled:
 	}
 
-	.multiselect__option--selected:after {
+	.multiselect__option&#45;&#45;selected:after {
 		content: attr(data-selected);
 		color: silver;
 	}
 
-	.multiselect__option--selected.multiselect__option--highlight {
+	.multiselect__option&#45;&#45;selected.multiselect__option&#45;&#45;highlight {
 		//background: #ff6a6a;
 		//color: #fff;
 	}
 
-	.multiselect__option--selected.multiselect__option--highlight:after {
+	.multiselect__option&#45;&#45;selected.multiselect__option&#45;&#45;highlight:after {
 		//background: #ff6a6a;
 		content: attr(data-deselect);
 		//color: #fff;
 	}
 
-	.multiselect--disabled {
+	.multiselect&#45;&#45;disabled {
 		background: #ededed;
 		pointer-events: none;
 	}
 
-	.multiselect--disabled .multiselect__current,
-	.multiselect--disabled .multiselect__select {
+	.multiselect&#45;&#45;disabled .multiselect__current,
+	.multiselect&#45;&#45;disabled .multiselect__select {
 
 	}
 
-	.multiselect__option--disabled {
+	.multiselect__option&#45;&#45;disabled {
 		//@include render-queue(get-collection(	$btn-option-render-disabled));
 		opacity:.3;
 		cursor: text;
 		pointer-events: none;
 	}
 
-	.multiselect__option--group {
+	.multiselect__option&#45;&#45;group {
 		background: #ededed;
 		color: #35495e;
 	}
 
-	.multiselect__option--group.multiselect__option--highlight {
+	.multiselect__option&#45;&#45;group.multiselect__option&#45;&#45;highlight {
 		background: #35495e;
 		color: #fff;
 	}
 
-	.multiselect__option--group.multiselect__option--highlight:after {
+	.multiselect__option&#45;&#45;group.multiselect__option&#45;&#45;highlight:after {
 		background: #35495e;
 	}
 
-	.multiselect__option--disabled.multiselect__option--highlight {
+	.multiselect__option&#45;&#45;disabled.multiselect__option&#45;&#45;highlight {
 		background: #dedede;
 	}
 
-	.multiselect__option--group-selected.multiselect__option--highlight {
+	.multiselect__option&#45;&#45;group-selected.multiselect__option&#45;&#45;highlight {
 		//background: #ff6a6a;
 		color: #fff;
 	}
 
-	.multiselect__option--group-selected.multiselect__option--highlight:after {
+	.multiselect__option&#45;&#45;group-selected.multiselect__option&#45;&#45;highlight:after {
 		//background: #ff6a6a;
 		content: attr(data-deselect);
 		color: #fff;
@@ -564,3 +565,4 @@ text-transform: uppercase;
 		}
 	}
 </style>
+-->
