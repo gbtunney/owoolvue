@@ -249,7 +249,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
-<style lang="scss" type="text/scss" scoped>
+<style lang="scss" type="text/scss" >
 
 	@import "src/vue/helpers/product-dependancies.scss";
 
@@ -261,7 +261,6 @@
 		opacity:.5;
 	}
 	h5{
-		background: red;
 	}
 	.multiselect__single{
 		width: 100%;
@@ -272,33 +271,17 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-evenly;
+
 	}
-	.option__name{
-		padding-bottom: 0;
-		padding-top:  #{get-lookup-prop( base-padding, md)};
-	}
+
 .fuseSearchComponent{
 	padding-top: 0;
 	padding-bottom:  get-lookup-prop( base-padding, md);//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
 margin-top:-20px;
-
 }
-.multiselect__tags {
-	}
 
-	/*SVG ICON SYSTEM*/
-	.icon {
-		display: inline-flex;
-		align-self: center;
-	}
 
-	.option__swatch {
 
-	}
-	.option__image{
-		// height: 60px;
-
-	}
 	.layout-sm{
 		.option__swatch {
 			clip-path: circle(40% at center);

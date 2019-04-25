@@ -1,0 +1,82 @@
+//@import "g-Patternlab/project-variables";
+$GENERATE-QUEUE: false;
+@import "g-Patternlab/project-base";
+@import "g-Patternlab/generator";
+
+
+$vue-component-render-objects: (
+	(
+		key: vue-generator-typography,
+		parent: typography,
+		selector: '.type',
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+	(
+		key: vue-generator-font-size,
+		parent: font-size,
+		selector: '.font',
+		description: "Demo: modularscale size operation.",
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+	(
+		key: vue-generator-padding,
+		parent: base-padding,
+		selector: '.padding',
+		description: "padding.",
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+	(
+		key: vue-generator-margin,
+		parent: base-margin,
+		selector: '.margin',
+		description: "-margin.",
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+	(
+		key: vue-generator-margin-sides,
+		parent: margin-sides,
+		selector: '.margin-sides',
+		description: "-margin.",
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+
+	(
+		key: vue-icon-sizes,
+		parent: icon-sizes,
+		selector: '.icon',
+		description: "-margin.",
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+	(
+		key: vue-generator-color-schemes,
+		description: "color schemes",
+		selector: '.scheme',
+		parent: color-schemes,
+		suffix: true,
+		variants:(
+			options: (
+				obj: (
+					background: true,
+					foreground: true,
+					accent:false,
+					border: lighten foreground 10%,
+					fill:foreground,
+					hover-background:darken background 20%,
+					hover-foreground:true
+				)
+			)
+		)
+	)
+);
+
+
+$patternlab: batch-add-to-style-dictionary(clean-collection(get-collection($vue-component-render-objects), parent));
+
+@include render-queue(get-collection(vue-generator-color-schemes));
+
+/***-----MARGIN-----****/
+@include render-queue(get-collection(vue-generator-margin-sides vue-generator-color-schemes vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
+
+pattern-lab-generator.scss.rendertest{
+	@include g-typeset(xl, font-san-serif);
+}

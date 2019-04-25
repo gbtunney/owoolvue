@@ -519,7 +519,7 @@
 
 <style lang="scss" type="text/scss" >
 
-/*	@import "src/vue/helpers/product-dependancies.scss";
+	@import "src/vue/helpers/product-dependancies.scss";
 
 	.product-app-loading{
 		//	@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
@@ -532,7 +532,7 @@
 			hover-background:rgba(color(accent-default, background), .7),
 			hover-foreground:rgba(color(accent-default, foreground), .7)
 		);
-		@include g-color-scheme(accent-default, $props...);
+		@include g-color-scheme(accent-default, $props);
 		@include u-icon-svg(false, 10%);
 		margin:0 auto;
 		svg rect{
@@ -562,7 +562,7 @@
 
 
 
-}*/
+}
 </style>
 
 

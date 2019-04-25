@@ -52,7 +52,7 @@
 				</rect>
 			</g></svg>
 		</span>
-			<span v-if="text">NASE COMPOENT</span>
+			<span v-if="text">{{text}}</span>
 			<span :class="IconSize"  class="icon icon-right icon--md">
 			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
 				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">

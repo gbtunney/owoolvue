@@ -141,13 +141,13 @@
 	};
 </script>
 
-<!--
+
 <style lang="scss" type="text/scss" >
 	@import "src/vue/helpers/product-dependancies.scss";
 
 	$search-padding: 5px 0;
 	.sb-icon{
-		@include dimensions(1.5em);
+		@include u-dimensions(1.5em);
 
 	}
 
@@ -356,4 +356,4 @@ border:1px solid black;
 
 */
 
-</style>-->
+</style>
