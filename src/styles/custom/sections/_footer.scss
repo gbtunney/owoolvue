@@ -20,7 +20,7 @@ footer {
         border: false,
         accent:color(dark-accent-primary, foreground)
     );
-    @include g-color-scheme(dark-accent-primary, $props...);
+    @include g-color-scheme(dark-accent-primary, $props);
 
     @include set-type(md, font-serif);
 

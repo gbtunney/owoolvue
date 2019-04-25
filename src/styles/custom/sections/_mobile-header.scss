@@ -99,7 +99,7 @@ $show-guides: false;
 			border: false,
 			accent:foreground
 		);
-		@include g-color-scheme($chroma-active-scheme, $props...);
+		@include g-color-scheme($chroma-active-scheme, $props);
 
 		// font-style: italic;
 
@@ -198,7 +198,7 @@ $show-guides: false;
 		border: false,
 		accent:true
 	);
-	@include g-color-scheme(light, $props...);
+	@include g-color-scheme(light, $props);
 
 	&__item {
 		$parent: &;

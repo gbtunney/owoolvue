@@ -1,6 +1,8 @@
 <template>
 	<div>
-<basecomponent font="san-serif" padding="lg"></basecomponent>
+<basecomponent text="Add To Cart" :flags="['--icon-right','test']" scheme="light"
+               font="san-serif"
+               padding="md"></basecomponent>
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>

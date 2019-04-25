@@ -248,21 +248,25 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<!--
-<style lang="scss" type="text/scss" >
+
+<style lang="scss" type="text/scss" scoped>
 
 	@import "src/vue/helpers/product-dependancies.scss";
 
-	.multiselect__single{
-		width: 100%;
-	}
-
+	//TODO DIX THIS
 	.divider{
 		font-size: 10px;
 		width: 60%;
 		margin: 0 auto;
 		opacity:.5;
 	}
+	h5{
+		background: red;
+	}
+	.multiselect__single{
+		width: 100%;
+	}
+
 
 	.multiselect__content{
 		display: flex;
@@ -270,11 +274,8 @@
 		justify-content: space-evenly;
 	}
 	.option__name{
-	///	display: none;
 		padding-bottom: 0;
 		padding-top:  #{get-lookup-prop( base-padding, md)};
-		//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
-
 	}
 .fuseSearchComponent{
 	padding-top: 0;
@@ -345,4 +346,3 @@ margin-top:-20px;
 	}
 
 </style>
--->

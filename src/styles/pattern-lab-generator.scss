@@ -33,6 +33,14 @@ $vue-component-render-objects: (
 		suffix: true, //if it is to be generated, use a class suffix before,
 	),
 	(
+		key: vue-generator-margin-sides,
+		parent: margin-sides,
+		selector: '.margin-sides',
+		description: "-margin.",
+		suffix: true, //if it is to be generated, use a class suffix before,
+	),
+
+	(
 		key: vue-icon-sizes,
 		parent: icon-sizes,
 		selector: '.icon',
@@ -64,13 +72,11 @@ $vue-component-render-objects: (
 
 $patternlab: batch-add-to-style-dictionary(clean-collection(get-collection($vue-component-render-objects), parent));
 
-
-//	@include render-queue(get-collection(font-size-spacing));
-
-
 @include render-queue(get-collection(vue-generator-color-schemes));
 
 /***-----MARGIN-----****/
-@include render-queue(get-collection(vue-generator-color-schemes vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
+@include render-queue(get-collection(vue-generator-margin-sides vue-generator-color-schemes vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
 
-
+.rendertest{
+	@include g-typeset(xl, font-san-serif);
+}

@@ -1,7 +1,59 @@
 <template>
 	<div>
-		<button :class="Styles"><span>NASE COMPOENT</span>
-		<span  class="icon icon--md">
+		<button :class="Styles">
+			<span  class="icon icon-left icon--md">
+			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(30 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(60 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(90 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(120 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(150 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(180 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(210 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(240 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(270 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(300 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+				</rect>
+			</g><g transform="rotate(330 50 50)">
+				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
+					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+				</rect>
+			</g></svg>
+		</span>
+			<span v-if="text">NASE COMPOENT</span>
+			<span :class="IconSize"  class="icon icon-right icon--md">
 			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
 				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
 					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
@@ -124,6 +176,7 @@
 		data: function() {
 			return {
 				_scheme: false,
+				_flags:['button','--border'],
                 _schemes: [  "accent-default",
                     "accent-primary",
                     "accent-secondary",
@@ -140,27 +193,39 @@
             }
 		},
 		props: {
-			exampleprop: {
-				type: String,
-				default: 'not set',
-				required: false
-			},
-            margin:{
-                default:false
+            exampleprop: {
+                type: String,
+                default: 'not set',
+                required: false
             },
-			padding:{
-			    default:false
-			},
-            scheme:{
+            text: {
+                type: String,
+
+                default: false
+            },
+            flags: {
+                type: [Array, Boolean],
+                default: false
+            },
+            margin: {
+                default: false
+            },
+            padding: {
+                default: false
+            },
+            scheme: {
                 default: 'dark',
             },
-            font:{
+            font: {
                 default: 'serif'
             },
-            fontsize:{
-                default: 'xl'
+            fontsize: {
+                default: 'base'
             },
-            showpicker:{
+            iconsize: {
+                default: 'base'
+            },
+            showpicker: {
                 default: true
             }
 		},
@@ -190,6 +255,11 @@
                     return `type--font-${this.$props.font}`
                 }
             },
+            IconSize: function() {
+                if ( this.$props.iconsize){
+                    return `icon--${this.$props.iconsize}`
+                }
+            },
             Scheme: {
                 get: function() {
                     if (!this.$data._scheme){
@@ -203,8 +273,16 @@
                     this.$data._scheme = newVal;
                 }
             },
+			Flags:function(){
+			    if ( this.$props.flags){
+			        return [...this.$props.flags,...this.$data._flags];
+			    }else{
+                    return  this.$data._flags;
+
+                }
+			},
             Styles:function(){
-			   return [this.Scheme,this.FontSize,this.Margin,this.Padding,'button','--border'] ;
+			   return [this.Scheme,this.FontSize,this.Font,this.Margin,this.Padding,...this.Flags] ;
 			},
 			example: {
 				get: function() {
@@ -296,16 +374,34 @@
 	.button {
 		display: flex;
 		align-items: center;
-		@include u-transition(background-color, 0.5s, ease);
+		@include u-transition(background-color, 0.3s, ease);
 	}
 
 	.icon{
 		@include u-icon-svg(false,false,false);
+
+		&.icon-left{
+			display:none;
+		}
+		&.icon-right{
+			display:none;
+		}
 	}
 
 	.--border{
 		border-width: 1px;
 		border-style: solid;
+	}
+
+	.--icon-right{
+		.icon-right{
+			display: block;
+		}
+	}
+	.--icon-left{
+		.icon-left{
+			display: block;
+		}
 	}
 
 

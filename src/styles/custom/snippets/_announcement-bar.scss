@@ -1,4 +1,4 @@
-$announcement-bar-scheme: dark!default;
+$announcement-bar-scheme: dark !default;
 
 .announcement-bar {
 
@@ -19,9 +19,9 @@ $announcement-bar-scheme: dark!default;
 	);
 	@include set-type(md);
 	@include render-queue(get-collection(base-padding, md));
-	@include g-color-scheme($announcement-bar-scheme, $props...);
+	@include g-color-scheme($announcement-bar-scheme, $props);
 
-	@include breakpoint-range(sm,"<="){
+	@include breakpoint-range(sm, "<=") {
 		@include set-type(base);
 	}
 
@@ -37,6 +37,5 @@ $announcement-bar-scheme: dark!default;
 	&__icon {
 		@include u-icon-svg(false, 1em);
 	}
-
 
 }
