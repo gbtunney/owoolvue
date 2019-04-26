@@ -41,6 +41,10 @@ const main_store = {
 		OptionsArrByProduct: (state) => (id) => {
 			
 			let self = this;
+            
+            if ( state.option_dictionary && state.option_dictionary.values().length > 0){
+				
+			}
 			let optionDictionary = state.option_dictionary;
 			
 			if (state.product_dictionary.get(id) &&  state.product_dictionary.get(id).options){
@@ -70,9 +74,14 @@ const main_store = {
 		},
 		Options: function(state) {
 			if (state.option_dictionary){
-				return Array.from(state.option_dictionary.values())//state.count
+				if ( Array.from(state.option_dictionary.values()).length > 0 ){
+                    return Array.from(state.option_dictionary.values())//state.count
+                    
+                }else{
+					return false;
+				}
 			}else{
-				return [];
+				return false;
 			}
 		},
 		OptionsByProduct: (state) => (value) => {
@@ -85,6 +94,8 @@ const main_store = {
 		},
 		OptionValuesArr: function(state) {
 			let option_value_dictionary  = [];
+			
+			if ( !store.getters.Options  ) return option_value_dictionary;
 			store.getters.Options.forEach(function(option){
 				option_value_dictionary.push(...option.values);
 			})

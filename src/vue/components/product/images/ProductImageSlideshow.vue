@@ -131,7 +131,16 @@
 			        	return false;
 			        }
 		        } )
-	            this.swiper.slideTo(tester, 0, false)
+
+	            console.log("IMAGE SEARCH IS ", tester);
+        		if ( tester < 0 ){
+
+                    this.swiper.slideTo(1, 0, false)
+
+                }else{
+                    this.swiper.slideTo(tester, 0, false)
+
+                }
             }
         },
         watch: {
@@ -214,7 +223,7 @@
 	.swiper-lazy-loaded{
 		opacity:1;
 
-		@include u-transition(opacity, 33.2s, ease,32.5s);
+		@include u-transition(opacity, .4s, ease,.5s);
 		+ .lazy-preloader{
 			display: none;
 			background: red;

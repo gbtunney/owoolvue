@@ -9,8 +9,9 @@ import {Slugify,GDatamapper} from '@/helpers/main.js'
 const SHOPIFY_API = new ShopifyApi({
 	baseURL: "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/",
 	state: {
-        _product:[]
-	}
+        _product:[],
+        _shop: false
+    }
 	
 })
 //**** SINGLE PRODUCT
@@ -102,8 +103,25 @@ onError(state, error, axios, { params, data }) {
 	state.post = null;
 }
 })
+.get({    //	        this.getProductMeta({params: {productid: 1919136071798}});
+    
+    action: "getShop",
+    property: "_shop",
+    path: ({ }) => `shop.json`,
+    onSuccess(state, payload, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        console.log(`SHOP CALLED`,state,payload.data);
+        state._shop = payload.data.shop;
+        
+    },
+    onError(state, error, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        state.post = null;
+    }
+})
 .getStore();
 
 export default SHOPIFY_API;
 
 ///admin/products/#{id}/variants/#{id}/metafields.json
+//https://o-wool-stage.myshopify.com/admin/shop.json

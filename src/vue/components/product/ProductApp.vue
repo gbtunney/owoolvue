@@ -86,7 +86,7 @@
 
 						<kabob class="divider" scheme="accent-default" componentclass="c-kabob"></kabob>
 
-						<productOptionPicker :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
+						<productOptionPicker v-if="Options" :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
 						<form  v-show="false" method="post" action="/cart/add"
 						      id="AddToCartForm&#45;&#45;product-template"
@@ -357,6 +357,11 @@
 			    'OptionsByProduct'
 		    ]
             ),
+            ...mapState({shop: state => state._shop
+             })
+        ,
+
+
 		    TestKit: function(){
 		    [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
 	    },
@@ -378,6 +383,9 @@
 	    	this.$data.loading=true;
 	    	let self = this;
 
+	    	this.getShop().then(function(res){
+	    	    console.log("SHOP FOUDN!!!!",res)
+		    })
 		    this.loadProduct().then(function(res){
 
 			     //***PRODUCT
@@ -387,23 +395,32 @@
 				    self.add_product_to_dictionary({product: res.data.product});
 			    }
 
-			    //***VARIANTS
-			    self.add_variants_to_dictionary({variants: res.data.product.variants});
+                //***IMAGES
+                self.add_images_to_dictionary({images: res.data.product.images});
+                /********/
+				 //***VARIANTS
+				 self.add_variants_to_dictionary({variants: res.data.product.variants});
 
-			     //***IMAGES
-			    self.add_images_to_dictionary({images: res.data.product.images});
+				  if (  self.Variants && self.Variants.length >1 ){
+                      //!***OPTIONS
+                      var payload = {
+                          options: res.data.product.options,
+                      optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
+                          option_value_overrides: (self.$props.product_option_value_meta && self.$props.product_option_value_meta.length > 1 ) ? self.$props.product_option_value_meta : false
+                      };
+                      self.add_options_to_dictionary(payload);
 
-                //***OPTIONS
-                var payload = {
-                    options: res.data.product.options,
-                    optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
-                    option_value_overrides: (self.$props.product_option_value_meta && self.$props.product_option_value_meta.length > 1 ) ? self.$props.product_option_value_meta : false
-                };
-                self.add_options_to_dictionary(payload);
+                      ////!*****SET VARIANT
+                      self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
 
-                ////*****SET VARIANT
-                self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
-                self.$data.loading = false;
+				  }else{
+                      console.log("VARIANAT COUNT", self.Variants, self.Options);
+
+                      ////!*****SET VARIANT
+					  self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
+                      //single variant
+				  }
+				 self.$data.loading = false;
 		    })
 	    },
 	    mounted:function(){

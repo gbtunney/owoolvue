@@ -20,7 +20,8 @@ export const ProductMixin={
 	    name: 'testcomponent',
 	    computed: {
 	    ...mapGetters([
-		    'Variants'
+		    'Variants',
+		    'Options'
 	    ]),
 
 	    ...mapState({

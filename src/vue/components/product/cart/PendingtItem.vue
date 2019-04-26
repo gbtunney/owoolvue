@@ -7,9 +7,9 @@
 		<span>total available: {{Variant.inventory_quantity}}</span>
 		</span>
 		<span v-else>
-			<h3  class="pending-item-name">{{VariantName}} </h3>
-		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
-		<div class="pending-item-available" >available: {{Variant.inventory_quantity}}</div>
+			<h3  v-if=" ManageQuantity"  class="pending-item-name">{{VariantName}} </h3>
+		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable && ManageQuantity" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
+		<div class="pending-item-available" v-if=" ManageQuantity" >available: {{Variant.inventory_quantity}}</div>
 		</span>
 
 	</div>
@@ -89,7 +89,7 @@
 
 	       // if (Availability){
 
-		        console.log("mount EM IS ",this.Availability )
+		        console.log("mount EM IS ",this.Availability, isVariantAvailable(this.Variant) )
 		        this.$emit('available', this.Availability)
 
 	       // }
@@ -129,13 +129,17 @@
             VariantName: function() {
                 return this.Variant.title;
             },
-            Availability: function() {
+		   //
+		    ManageQuantity : function(){
+            	return (this.Variant.inventory_management  == null ) ? false : true;
+		    },
+	    Availability: function() {
 
 	            if ( isVariantAvailable(this.Variant) ){
-		            if (Number(this.RequestedQuantity) <= Number(this.Variant.inventory_quantity)){
+		          //TODO: templaray - might need to switch this back for kits
+		            // if (Number(this.RequestedQuantity) <= Number(this.Variant.inventory_quantity)){
 			            return true;
-		            }
-
+		          //  }
 	            } else {
 		            return false;
 	            }

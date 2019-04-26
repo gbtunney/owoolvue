@@ -10,7 +10,7 @@ export const ShopifyApiMixin = {
 	computed: {},
 	methods: {
 	...mapActions([
-		'getProduct','getVariant','getProductMeta','getVariantMeta'
+		'getProduct','getVariant','getProductMeta','getVariantMeta','getShop'
 	])
 	}
 }
