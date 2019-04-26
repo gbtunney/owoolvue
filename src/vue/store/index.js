@@ -152,8 +152,9 @@ const main_store = {
 			
 		},
 		add_options_to_dictionary(state, payload) {
-			var parsedOptions  = (payload.hasOwnProperty("optionconfig")) ? parseOptions(payload.options,payload.optionconfig) : parseOptions(payload.options,false);
-			state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
+           
+            var parsedOptions  = parseOptions(payload.options,payload.optionconfig,payload.option_value_overrides);
+            state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
 			
 			if ( state.variant_dictionary ){
 				var newvariants =  parseVariants(Array.from(state.variant_dictionary.values()),Array.from(state.option_dictionary.values())) ;

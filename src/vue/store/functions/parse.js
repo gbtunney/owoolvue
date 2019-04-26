@@ -3,8 +3,9 @@ import math from 'mathjs'
 
 import {Slugify, GDatamapper,normalize,filterArrayByValue} from '@/helpers/main.js'
 import {getSwatchSrc, getColorData} from './meta'
+//            var exampleArr = [{ "slug": "alumroot", "swatch_image": "swatch-alumroot.png", "color": "#4b1b3f", "color_story": "A glorious maroon", "tags": ["maroon", "red", "warm"] }, { "slug": "ash", "swatch_image": "swatch-ash.png", "color": "#3e404c", "color_story": "A nice grey", "tags": ["neutral", "grey"] }, { "slug": "basswood", "swatch_image": "swatch-basswood.png", "color": "#191e2f", "color_story": "Dark blue", "tags": ["blue", "cool"] }];
 
-export function parseOptions(inOptions,option_config =false) {
+export function parseOptions(inOptions,option_config =false, option_value_overrides=false) {
 	
 	const GDataMapOptionValues = {
 			adapters: {
@@ -23,9 +24,11 @@ export function parseOptions(inOptions,option_config =false) {
 		$isDisabled:  {type: Boolean, default: false},
 		title: {type: String},
 		_index: {type: Number, required: true},
-		swatch_image: {type: String, default: false},
-		color: {type: String, default: false}
-	})
+		swatch_image: {type:Boolean,String, default: false},
+		color: {type: String, default: false},
+		color_story:{type:String, default:false},
+        tags:{type:Array, default:[]}
+    })
 }
 	let optionsArray = inOptions;
 	
@@ -64,22 +67,34 @@ export function parseOptions(inOptions,option_config =false) {
 		for (var u = 0; u < currentObj.values.length; u++) {
 			var newValueObj = GDatamapper.expandToObject(currentObj.values[u], "title", {
 				slug: Slugify(currentObj.values[u]),
-				color: getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
+				color: 'none',//getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
 				swatch_image: false, //getSwatchData(Slugify(currentObj.values[u])),
 				_index: u,
 				parent_id: normalize(optionsArray[i].id),
 				gillian: "test"
 			})
 			
-			// throw newValueObj;
 			newValueObj = GDataMapOptionValues.validate().parse(newValueObj);
 			
 			if (configOptionforCurrent.hasOwnProperty('value_config_default') ){    //:Object
 				newValueObj = Object.assign(newValueObj,configOptionforCurrent.value_config_default  );
 			}
-			currentObj.values[u] = newValueObj;
+            
+            if (option_value_overrides && option_value_overrides.length > 0){
+                
+                let valueSeekingOut = Slugify(currentObj.values[u]);
+                
+                var filteredExampleArr = option_value_overrides.find(function(optionvalueconfigitem) {
+                    if (optionvalueconfigitem.slug == valueSeekingOut) return true;
+                    return false;
+                })
+                if (filteredExampleArr && filteredExampleArr.hasOwnProperty('slug')){
+                    newValueObj = Object.assign(newValueObj, filteredExampleArr)
+                }
+            }
+			
+            currentObj.values[u] = newValueObj;
 		}
-		
 		
 		currentObj.valueDictionary = GDatamapper.parseToDictionary(currentObj.values, "id");
 		newArray.push(currentObj);

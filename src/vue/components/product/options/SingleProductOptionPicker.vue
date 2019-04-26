@@ -6,13 +6,14 @@
 			<code style="display: none">{{option}}</code>
 			<code style="display: none">{{selectedOptions}}</code>
 			<div>
-				<h5 class="option__name">{{option.name}} </h5>
-
+				<h5 class="option__name">{{option.name}}<span v-if="selectedOptions.title"> : {{selectedOptions.title}}</span> </h5>
+				<h5 class="option__color-story" v-if="selectedOptions.color_story">{{selectedOptions.color_story}}</h5>
 				<FuseSearch
 					class="fuseSearchComponent"
 					v-show="searchable"
 					@fuseResult="fuseFilter"
 					@fuseInactive="fuseInactive"
+					:keys='["title","tags","color_story"]'
 					:list="OptionValues">
 				</FuseSearch>
 
@@ -46,7 +47,7 @@
 					</template>
 
 					<template slot="option" class="is-grid-2" slot-scope="props">
-						<div class="option__swatch" v-if="props.option.color"  v-bind:style="{ backgroundColor: props.option.color}"  style="">
+						<div class="option__swatch"  v-bind:style="OptionSwatchCSS(props.option)"  style="">
 							<img v-if="props.option.swatch_image" class="option__image" :src="_getSwatchSrc(props.option)" >
 						</div>
 						<div class="option__desc"><span class="option__title">{{ props.option.title }}</span></div>
@@ -74,6 +75,7 @@
 	import { ShopifyImgURL, getVariantFromOptions} from '@/helpers/main.js'
 
 	import FuseSearch from '@/components/utilities/g-Fuse-Search.vue';
+    import isColor from 'is-color';
 
 
 	export default {
@@ -189,19 +191,31 @@
 
 	},
 	methods: {
+        OptionSwatchCSS: function(option) {
+            var color = option.color;
+            if (isColor(color)){
+                return {backgroundColor: color, 'border-width': '1px','border-style' :'solid'}
+            } else {
+                if (!option.swatch_image){
+                    return {display: 'none'}
+                }else{
+                    return {'border-width': '1px','border-style' :'solid'}
+                }
+            }
+        },
 		_getSwatchSrc: function(option){
 
-			if ( option.swatch_image==true || option.swatch_image == "true" ){
-		var foundVariantArr = getVariantFromOptions([option.id],this.Variants  );
+			if (option.swatch_image == true || option.swatch_image == "true"){
+                var foundVariantArr = getVariantFromOptions([option.id], this.Variants);
 
-	if ( foundVariantArr && foundVariantArr.length>0 && foundVariantArr[0].image_id ){
-				var img = this.product_image_dictionary.get( foundVariantArr[0].image_id);
-				if (  img  ){
-						return ShopifyImgURL(img.src,this.$props.swatchsize) ;
-				}
-			}
-			}
-			return false;
+                if (foundVariantArr && foundVariantArr.length > 0 && foundVariantArr[0].image_id){
+                    var img = this.product_image_dictionary.get(foundVariantArr[0].image_id);
+                    if (img){
+                        return ShopifyImgURL(img.src, this.$props.swatchsize);
+                    }
+                }
+            }
+            return false;
 		},
 		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
 
@@ -262,6 +276,21 @@
 	}
 	h5{
 	}
+
+	.option {
+
+		&__color-story {
+			@include g-typeset(xs, font-small-caps);
+			@include g-color-scheme(accent-default);
+		//	background: red;
+		}
+
+	}
+//	.option__color-story{}
+
+
+
+
 	.multiselect__single{
 		width: 100%;
 	}

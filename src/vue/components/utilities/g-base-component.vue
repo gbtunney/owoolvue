@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button :class="Styles">
+		<button :disabled="$props.disabled" @click="$emit('click')" :class="Styles">
 			<span  class="icon icon-left icon--md">
 			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
 				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
@@ -54,55 +54,7 @@
 		</span>
 			<span v-if="text">{{text}}</span>
 			<span :class="IconSize"  class="icon icon-right icon--md">
-			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(30 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(60 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(90 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(120 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(150 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(180 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(210 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(240 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(270 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(300 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(330 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-				</rect>
-			</g></svg>
+				    <slot name="right-icon"></slot>
 		</span>
 	</button>
 
@@ -198,6 +150,10 @@
                 default: 'not set',
                 required: false
             },
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
             text: {
                 type: String,
 
@@ -274,8 +230,14 @@
                 }
             },
 			Flags:function(){
+
+			    var disabledClass = "--enabled";
+
+			    if ( this.$props.disabled){
+                    disabledClass="--disabled";
+			    }
 			    if ( this.$props.flags){
-			        return [...this.$props.flags,...this.$data._flags];
+			        return [...this.$props.flags,...this.$data._flags,disabledClass];
 			    }else{
                     return  this.$data._flags;
 
@@ -350,10 +312,25 @@
 						background: true,
 						foreground: true,
 						accent:false,
-						border: lighten foreground 10%,
-						fill:foreground,
-						hover-background:lighten background 20%,
-						hover-foreground:lighten foreground 20%,
+						border: true,
+						fill:foreground
+					)
+				)
+			)
+		),
+		(
+			key: vue-generator-color-schemes-hover,
+			description: "color schemes",
+			selector: '.--enabled.scheme',
+			parent: color-schemes,
+			suffix: true,
+			variants:(
+				options: (
+					obj: (
+						background: true,
+						foreground: true,
+						hover-background:lighten background 8%,
+						hover-foreground:lighten foreground 8%,
 					)
 				)
 			)
@@ -369,7 +346,7 @@
 	@include render-queue(get-collection(vue-generator-color-schemes));
 
 	/***-----MARGIN-----****/
-	@include render-queue(get-collection(vue-generator-color-schemes vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
+	@include render-queue(get-collection(vue-generator-color-schemes vue-generator-color-schemes-hover vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
 
 	.button {
 		display: flex;
@@ -380,13 +357,14 @@
 	.icon{
 		@include u-icon-svg(false,false,false);
 
-		&.icon-left{
-			display:none;
+
+		&.icon-right,&.icon-left{
+			//width:0;
+			visibility: hidden;
 		}
-		&.icon-right{
-			display:none;
-		}
+
 	}
+
 
 	.--border{
 		border-width: 1px;
@@ -396,14 +374,29 @@
 	.--icon-right{
 		.icon-right{
 			display: block;
+			visibility: visible;
+
 		}
 	}
 	.--icon-left{
 		.icon-left{
 			display: block;
+			visibility: visible;
+
 		}
 	}
 
+	.--no-icon{
+		.icon-left,.icon-right{
+			display: none;
+//			visibility: visible;
+
+		}
+	}
+
+	.--disabled{
+	opacity:.6;
+	}
 
 
 </style>

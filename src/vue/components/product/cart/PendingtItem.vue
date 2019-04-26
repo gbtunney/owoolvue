@@ -7,7 +7,7 @@
 		<span>total available: {{Variant.inventory_quantity}}</span>
 		</span>
 		<span v-else>
-			<h3  class="pending-item-name">{{VariantName}}</h3>
+			<h3  class="pending-item-name">{{VariantName}} </h3>
 		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
 		<div class="pending-item-available" >available: {{Variant.inventory_quantity}}</div>
 		</span>

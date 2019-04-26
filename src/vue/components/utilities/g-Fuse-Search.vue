@@ -35,7 +35,7 @@
 		minMatchCharLength: 1,
 		keys: [
 			"title",
-			"author.firstName"
+			"tags"
 		]
 	};
 

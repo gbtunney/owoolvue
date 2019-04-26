@@ -305,43 +305,6 @@
 
     const schema = require("schm");
 
-    const demo_config= [{
-	    "slug": "color",
-	    "searchable": true,
-	    "value_config_default": {
-		    "swatch_image": true
-	    }
-    },
-	    {
-		    "slug": "size",
-		    "searchable": false,
-		    "value_config_default": {
-			    "color": "#ff0000"
-		    }
-	    }
-    ]
-
-    const optionvaluemeta=[
-	    {
-		    "slug" : "alumroot",
-		    "swatch_image": "swatch-alumroot.png",
-		    "color": "#4b1b3f",
-	    },
-	    {
-		    "slug" : "ash",
-		    "swatch_image": "swatch-ash.png",
-		    "color": "#3e404c",
-	    },
-	    {
-		    "slug" : "basswood",
-		    "swatch_image": "swatch-basswood.png",
-		    "color": "#191e2f",
-	    }
-    ]
-
-
-
-
     //  ProductMixin
     export default {
 	    props: {
@@ -354,6 +317,9 @@
 		    product_option_meta:{
 			    default: () => []
 	    },
+            product_option_value_meta:{
+                default: () => []
+            },
 		    sectionsettings: {
 		    	default: {}
 		    },
@@ -427,24 +393,17 @@
 			     //***IMAGES
 			    self.add_images_to_dictionary({images: res.data.product.images});
 
-			    //***OPTIONS
-			    if (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0){
-				    self.add_options_to_dictionary({
-					    options: res.data.product.options,
-					    optionconfig: self.CurrentProduct.optionconfig
-				    });
-			    } else {
-				    self.add_options_to_dictionary({options: res.data.product.options});
-			    }
+                //***OPTIONS
+                var payload = {
+                    options: res.data.product.options,
+                    optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
+                    option_value_overrides: (self.$props.product_option_value_meta && self.$props.product_option_value_meta.length > 1 ) ? self.$props.product_option_value_meta : false
+                };
+                self.add_options_to_dictionary(payload);
 
-			    ////*****SET VARIANT
-			   //self.CurrentVariant  = self.variant_dictionary.get(self.NormalizedVariantID) ;
-			 self.variantChanged( self.variant_dictionary.get(self.NormalizedVariantID) )
-			  //  console.log("variany",self.CurrentVariant, [{ quantity: 1, id:  self.CurrentVariant }]);
-			    self.$data.loading=false;
-
-			    ///example - --::
-			   // console.log("kjkkhhkhkhhkhkOPTIN!!!!!!!!!!",self.OptionValueByProp("gray-birch"));
+                ////*****SET VARIANT
+                self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
+                self.$data.loading = false;
 		    })
 	    },
 	    mounted:function(){
