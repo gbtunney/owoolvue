@@ -1,7 +1,7 @@
 <template>
 	<div ref="MYCART" class="cart-wrapper">
-		<span v-show="!Availability">NO STOCK AVAILABLE!!</span>
 		<span v-if="kit">
+					<span v-show="!Availability">NO STOCK AVAILABLE!!</span>
 			--{{Message}} <img class="thumbnail"  v-if="kit" :src="Image.src" :alt="Image.alt" > {{VariantName}} // Count: {{RequestedQuantity}} at {{VariantPrice | toUSD }} <strong>Total:</strong> {{VariantTotalPrice |toUSD}}
 		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
 		<span>total available: {{Variant.inventory_quantity}}</span>

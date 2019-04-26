@@ -60,7 +60,7 @@
 			</template>
 		</basecomponent>
 
-		<span v-show="disableunavailable && isDisabled">Product Unavailble </span>
+		<span v-show="!availablity">Product Unavailble </span>
 		<div v-show="metavisible" class="productMeta" >
 			<h5 v-show="kit">Includes: </h5>
 			<ul>
@@ -99,6 +99,7 @@
 				_loading: false,
 				_pendingItems: [],
 				_isDisabled: false,
+				availablity:true
 			}
 		},
 		props: {
@@ -252,8 +253,10 @@
 			updateAvailability: function(bool) {
 
 				//todo: make some way of doing alternate number here.
-				console.log("UPDATE AVAIABILITY")
+				console.log("UPDATE AVAIABILITY",bool)
 				let self = this;
+
+				this.$data.availablity= bool;
 
 				if (this.$props.disableunavailable){
 					this.isDisabled = !bool;
@@ -322,135 +325,33 @@
 
 	@import "src/vue/helpers/product-dependancies.scss";
 
-	$my-default-spacing-variant: xl;
+	$my-default-spacing-variant: md;
 
 
 	.pending-items-component{
 
-
-
 		ul{
 			padding: 0;
 		}
-//@include u-trailer-padding($my-default-spacing-variant);
 
 		&.--productApp{
 			display: flex;
 			flex-direction: column-reverse;
 			align-items: center;
 
-
-			.aspinner{
-			//	@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
-//background: red;
-
-				@include u-icon-svg(false, 3em);
-				svg rect{
-					//fill: red;
-				}
-			}
-			.btn-add-to-cart{
-				@include 	rhythm-margin(md);
-
-				@include c-button( false, font-small-caps md sm ,  typography font-size base-padding ) ;
-
-				$props: (
-					background: true,
-					foreground: true,
-					border: true,
-					fill:foreground,
-					hover-background:rgba(color(dark-accent-primary, background), .7),
-					hover-foreground:rgba(color(dark-accent-primary, foreground), .7)
-				);
-				@include g-color-scheme(dark-accent-primary, $props);
-			}
 			.pending-item-name{
-				@include 	rhythm-padding(md);
+				@include 	rhythm-padding($my-default-spacing-variant);
 
 			}
 			.pending-item-available{
 
-				$collection: typography font-size ;
-				$variant-keys: font-small-caps xs;
-				@include render-queue( get-collection( $collection,$variant-keys) );
-				@include 	u-leader-padding(md);
-
-
-				//TODO: replace w font function
+				@include 	u-leader-padding($my-default-spacing-variant);
+				@include g-typeset(xs,font-small-caps )
 
 			}
 
-			.vue-numeric-input .btn-decrement	.btn-icon:before{
-
-				content: "G";
-			}
-
-
-			.vue-numeric-input .btn-increment	.btn-icon:before{
-
-				content: "+";
-			}
-
-			.btn-icon{
-				display: none;
-
-				//@include g-color-scheme(dark);
-					&:before, &:after{
-					height: auto;
-				//	background-color: red;
-						position: relative;
-						transform: none;
-						/* position: absolute; */
-						/* visibility: visible; */
-						/* background-color: #111; */
-						/* content: ""; */
-						/* left: 50%; */
-						/* top: 50%; */
-						/* -webkit-transform: translate(-50%,-50%); */
-						/* xf: translate(-50%,-50%); */
-
-
-
-						content: "TTG";
-
-					}
-
-
-			}
-			button.btn{
-				box-shadow:initial!important;
-				border-radius:0;
-				$collection:color-schemes typography font-size ;
-				$variant-keys: dark-accent-primary   font-small-caps lg ;
-				@include render-queue( get-collection( $collection,$variant-keys) );
-
-				display: flex;
-				flex-direction: row;
-				border-width: 2px;
-				//justify-content: center;
-
-				&:disabled{
-					opacity: .7;
-				}
-				&:before{
-					//margin-left: -7px;
-					content: "+";
-					width: 100%;
-					height: 100%;
-					position: absolute;
-					top: 2px;
-					left: 0;
-				}
-
-				&.btn-decrement{
-					&:before{
-						//margin-right: -7px;
-						content: "-";
-					}
-				}
-
-			}
-			.numeric-input{
+			////CUSTOMIZED OVERRIDE OF VUE NUMERIC INPUT
+			.vue-numeric-input{
 				border-radius:0;
 
 				$collection:color-schemes typography font-size ;
@@ -458,11 +359,50 @@
 				@include render-queue( get-collection( $collection,$variant-keys) );
 				border-width: 1px;
 				border-color: color(accent-primary,border);
+
+				.btn-icon{
+					display: none;
+					&:before, &:after{
+						height: auto;
+						position: relative;
+						transform: none;
+						content: "TTG";
+					}
+
+
+				}
+				button.btn {
+					box-shadow: initial !important;
+					border-radius: 0;
+					$collection: color-schemes typography font-size;
+					$variant-keys: dark-accent-primary font-small-caps lg;
+					@include render-queue(get-collection($collection, $variant-keys));
+
+					display: flex;
+					flex-direction: row;
+					border-width: 2px;
+
+					&:disabled {
+						opacity: .7;
+					}
+					&:before {
+						content: "+";
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						top: 2px;
+						left: 0;
+					}
+
+					&.btn-decrement {
+						&:before {
+							content: "-";
+						}
+					}
+
+				}
 			}
 		}
-
-		//background: red;
-
 	}
 
 
