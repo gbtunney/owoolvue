@@ -202,7 +202,7 @@
 					const ITEM_SCHEMA = schema(
 						{
 							id: {type: Number, required: true},
-							quantity: {type: Number, default: 1},
+							quantity: {type: Number, default: item.requested_quantity },
 							properties: {type: Number, default: line_props},
 						});
 
@@ -247,7 +247,7 @@
 					}]);
 			},
 			updateQuantity:function(item ){
-			//	console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);
+			console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);
 			},
 			updateAvailability: function(bool) {
 
