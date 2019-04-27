@@ -85,6 +85,8 @@
 	import {CartMixin} from  '@/mixins/cartmixin.js';
     import basecomponent from '@/components/utilities/g-base-component.vue';
 
+    import Toasted from 'vue-toasted';
+    Vue.use(Toasted)
 
 	const PromiseQueue = require("easy-promise-queue").default;
 
@@ -140,7 +142,7 @@
 	watch: {
 		addtocartvariants: function(val) {
 			this.$data._pendingItems = this.parsePendingItems(val)
-		}
+        }
 	},
 		computed: {
 			...mapGetters([
@@ -218,7 +220,6 @@
 			} ,
 			addMultipletoCart: function(_pendingItems) {
 
-			    console.log('CLIKING@');
 				let pendingItems  = this.transformItemArray(_pendingItems, this.$props.lineitemmessage)
 
 				let self = this;
@@ -243,7 +244,15 @@
 							setTimeout(function() {
 								console.log('QUEUE COMPLETE', pq, self);
 								self.Loading = self.isDisabled = false;
-								resolve();
+                                let toast = self.$toasted.show(`${self.ItemCount} Items added to cart`, {
+                                    theme: "toasted-custom",
+                                    position: "top-right",
+                                    duration : 2000
+
+                                });
+
+
+                                resolve();
 							}, 5)
 						});
 					}])
@@ -330,8 +339,24 @@
 
 	$my-default-spacing-variant: md;
 
+	toasted .primary, .toasted.toasted-custom {
+
+		@include g-color-scheme(dark-accent-secondary)
+		border-radius: 0px;
+		min-height: 38px;
+		@include g-typeset(lg, font-small-caps);
+	//line-height: 1.1em;
+	//	background-color: #353535;
+	//	padding: 0 20px;
+		//font-size: 15px;
+	//	font-weight: 300;
+		//color: #fff;
+		//box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+	}
+
 
 	.pending-items-component{
+
 
 		ul{
 			padding: 0;

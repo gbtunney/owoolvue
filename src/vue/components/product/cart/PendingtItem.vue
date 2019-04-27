@@ -1,8 +1,19 @@
 <template>
 	<div ref="MYCART" class="cart-wrapper">
 		<span v-if="kit">
-					<span v-show="!Availability">NO STOCK AVAILABLE!!</span>
-			--{{Message}} <img class="thumbnail"  v-if="kit" :src="Image.src" :alt="Image.alt" > {{VariantName}} // Count: {{RequestedQuantity}} at {{VariantPrice | toUSD }} <strong>Total:</strong> {{VariantTotalPrice |toUSD}}
+
+			 <div class="kit_container">
+				 <span>
+					 <img class="thumbnail"  v-if="kit && Image" :src="ShopifyImgURL(Image.src, $props.swatchsize)" :alt="Image.alt" >
+				 </span>
+				 <span>
+					 <p v-show="!Availability">NO STOCK AVAILABLE!!</p>
+					 <p>--{{Message}}</p>
+					 <p>{{RequestedQuantity}}x {{VariantName}}</p>
+				 </span>
+			 </div>
+
+			 // Count: {{RequestedQuantity}} at {{VariantPrice | toUSD }} <strong>Total:</strong> {{VariantTotalPrice |toUSD}}
 		<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
 		<span>total available: {{Variant.inventory_quantity}}</span>
 		</span>
@@ -25,6 +36,7 @@
     import { isVariantAvailable} from '@/helpers/main.js'
 
     import VueNumericInput from 'vue-numeric-input';
+    import { ShopifyImgURL} from '@/helpers/main.js'
 
     ///TODO  - figure out how to do this 4 reals.
     
@@ -43,7 +55,13 @@
 		    kit: {   ///this is used to give the kit an id
 			    type: Boolean,
 			    default: false
-		    }
+		    },
+            swatchsize: {
+                required:false,
+                type:String ,
+                default:'100x100'
+
+            }
         },
 	    mixins:[DictionaryMixin],
         data() {
@@ -56,12 +74,16 @@
         created: function() {
 	      /*  this.Variant = ;
 	       */
+	      let self = this;
 	        if ( this.product_image_dictionary.get(this.Variant.image_id) ){
 		        this.Image =this.product_image_dictionary.get(this.Variant.image_id);
 	        }else{
 		        this.getVariantDefaultImage(  {params: {productid:this.Variant.product_id, imageid:this.Variant.image_id}}).then(function(res){
-			        self.Image= res.data.image;
-		        });
+			      //  self.Image= res.data.image;
+                    console.log("FOUND!!!!!!! _ __ ", res.data.image,isVariantAvailable(res))
+
+                    self.Image = res.data.image;
+                });
 	        }
 
         },
@@ -73,12 +95,15 @@
 			    if ( this.product_image_dictionary.get(this.Variant.image_id) ){
 			    	this.Image =this.product_image_dictionary.get(this.Variant.image_id);
 			    }else{
-				    this.getVariantDefaultImage(  {params: {productid:this.Variant.product_id, imageid:this.Variant.image_id}}).then(function(res){
-					    self.Image= res.data.image;
-				    });
+                    console.log("WATCH WM _ __ ",isVariantAvailable(this.Variant))
+
+                    this.getVariantDefaultImage(  {params: {productid:this.Variant.product_id, imageid:this.Variant.image_id}}).then(function(res){
+					  //  self.Image= res.data.image;
+                        console.log("FOUND!!!!!!! _ __ ", res.data.image,isVariantAvailable(res))
+
+                    });
 			    }
 
-			    console.log("WATCH WM _ __ ",isVariantAvailable(this.Variant))
 
 			    this.$emit('available', this.Availability)
 
@@ -101,9 +126,10 @@
             function(){
 	            return     this.$props.item.variant;//this.$data._variant ;
             },
-
             Image: {
+
                 get: function() {
+                    ShopifyImgURL
                     return     this.$data._image ;
                 },
                 set: function(newVal) {
@@ -147,9 +173,9 @@
             }
         },
         methods: {
+            ShopifyImgURL,
 	        quantityChanged:function(item){
 		        this.$emit('requested_quantity_change', item)
-		        console.log("QUATITY CHANGEDDDDD!!!!",item)
 	        },
             ...mapActions([
                 'getVariantDefaultImage'
@@ -158,7 +184,14 @@
     }
 
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css" scoped></style>
+<style type="text/scss" >
+
+	.kit_container{
+		display:flex;align-items: center;
+	}
+
+</style>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <!--

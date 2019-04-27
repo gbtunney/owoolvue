@@ -36,6 +36,7 @@ if ( vueelements && vueelements.length>0){
            // mountVue(`#${uid}`, ProductVariantLinker);
         }
         else if (component == "ProductApp"){
+           // alert();
           mountVue(`#${uid}`, ProductApp);
         }
         else if (component == "AdminProductApp"){

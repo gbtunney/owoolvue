@@ -183,7 +183,9 @@
 	                zoom:true,
 	                slidesPerView: 1,
 	                spaceBetween: 0,
-                    lazy: true,
+                    lazy: {
+                        loadPrevNext: true,
+                    },
                     navigation: {
                         nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev',
@@ -289,14 +291,14 @@
 	}
 	.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
 		//background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D 'http%3A%2F%2Fwww.w3.org%…19.9L22%2C44L0%2C22L0%2C22L0%2C22z' %20fill%3D '%23007aff' %2F%3E%3C%2Fsvg%3E);
-
+background: red;
 		&:before{
-			//content: "<";
+			content: "<";
 			//@include triangle(left,$square/2 ,$square*3,$color);
 		}
-		background-image: none;
-		left: 10px;
-		right: auto;
+		//background-image: none;
+		//left: 10px;
+		//right: auto;
 	}
 </style>
 

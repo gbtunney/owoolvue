@@ -69,6 +69,7 @@
     "vue": "^2.5.21",
     "vue-fuse": "^2.0.2",
     "vue-router": "^3.0.2",
+    "vue-toasted": "^1.1.26",
     "vuetify": "^1.5.7",
     "vuex": "^3.0.1",
     "vuex-persist": "^2.0.0"

@@ -1,5 +1,21 @@
 <template>
-	<div>
+	<div><code>{{CurrentVariant}}</code>
+
+		<Multiselect :options="VariantArr"
+		             v-model="CurrentVariant"
+		             @input="variantChanged"
+
+		             track-by="title"
+		             label="title"
+		             class="multiselectmaster"
+		             :taggable="false"
+		             :multiple="true"
+		             :closeOnSelect="false"
+		             placeholder="Select one"
+		             :searchable="true"
+		             :allow-empty="false">
+		</Multiselect>
+
 <basecomponent text="Add To Cart" :flags="['--icon-right','test']" scheme="light"
                font="san-serif"
                padding="md"></basecomponent>
@@ -226,8 +242,7 @@
 							</div>
 						</form>
 
-
-									<PendingItemsComponent :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
+						<PendingItemsComponent :kit="false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
 					</div>
 				</div>
@@ -245,7 +260,7 @@
 		             :multiple="allowmultiple"
 		             :closeOnSelect="false"
 		             placeholder="Select one"
-		             searchable="true"
+		             :searchable="true"
 		             :allow-empty="false">
 
 			<template slot="singleLabel" slot-scope="{ option }">
@@ -340,6 +355,26 @@
 	        },
             subtitle:{
 	            default:false
+            },
+            metavisible: {
+                type: Boolean,
+                default: true
+            },
+            addtocartvariants: {
+                type: Array,
+                default: []
+            },
+            label: {
+                type: String,
+                default: "nottt setAdd to Cart"
+            },
+            disableunavailable: {
+                type: Boolean,
+                default: false
+            },
+            lineitemmessage: {   ///this is used to give the kit an id
+                type: String,
+                default: false
             }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
@@ -350,7 +385,8 @@
 			    toggle_exclusive:2,
 			    _optionMeta: [],
 			    _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
-		        loading: false
+		        loading: false,
+			    convertedVariants:[],
 		    }
 	    },
 	    name: 'testcomponent',
@@ -470,8 +506,11 @@
 					    updateHistory(variant);
 				    }
 
+                //TODO: figure this out
+                   // this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
 
-				    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+
+                    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
 			    }
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
@@ -508,11 +547,8 @@
 	    },
 };
 </script>
-<!--
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
--->
-
 
 <style lang="scss" type="text/scss" >
 
