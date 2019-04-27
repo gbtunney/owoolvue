@@ -24,7 +24,12 @@ export const VariantMixin = {
 		},
 		CurrentVariantPrice:function(){
 			if ( this.CurrentVariant && this.CurrentVariant.price ){
-				return Numeral(this.CurrentVariant.price).format('$ 0,0[.]00');
+				if (this.CurrentVariant.price ==  "0.00"){
+					return "FREE"
+				} else{
+					return Numeral(this.CurrentVariant.price).format('$ 0,0[.]00');
+					
+				}
 			}else{
 				return false;
 			}
