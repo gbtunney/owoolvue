@@ -224,6 +224,7 @@
 				let self = this;
 				let pq = new PromiseQueue({concurrency: 1});
 
+
 				this.Loading = this.isDisabled = true;
 
 
@@ -245,7 +246,9 @@
 								resolve();
 							}, 5)
 						});
-					}]);
+					}])
+
+
 			},
 			updateQuantity:function(item ){
 			console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);

@@ -28,7 +28,7 @@ const SHOPIFY_API = new ShopifyApi({
         
         //let product_id = params.product_id;
         
-        state._cart = payload.data;        console.log(`Post with id ${data} successfully fetched.`, state._cart);
+        state._cart = payload.data;        console.log(`Post with id ${data} successfully fetched.`, data,state._cart);
     
     
         //console.log("STATE", params);

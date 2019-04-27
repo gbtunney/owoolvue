@@ -35,9 +35,18 @@ export const ProductMixin={
 	    if ( this.CurrentProduct ){
 		    return this.CurrentProduct.title;
 	    }else{
-		    return "NO TITLE";
+		    return false;
 	    }
     },
+    CurrentProductSubtitle: function() {
+	
+	if ( this.CurrentProduct &&  this.CurrentProduct.subtitle ){
+		return this.CurrentProduct.subtitle;
+	}else{
+		return false;
+	}
+},
+
 	CurrentProductOptions: function() {
 		
 		if ( this.CurrentProduct ){

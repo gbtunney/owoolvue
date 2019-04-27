@@ -4,12 +4,15 @@
 		<div class="attribute-panel">
 			<code style="display: none">{{disabledOptions}}</code>
 			<code style="display: none">{{option}}</code>
-			<code style="">{{selectedOptions}}</code>
+			<div v-show="false">
+				<code style="">{{selectedOptions}}</code>
 
-			<ul>
-				<li v-for="value,key  in selectedOptions">{{key}} : <input class="vue-form-test" v-model="selectedOptions[key]" type="text"> </input></li>
+				<ul>
+					<li v-for="value,key  in selectedOptions">{{key}} : <input class="vue-form-test" v-model="selectedOptions[key]" type="text"> </input></li>
 
-			</ul><button @click="transformOptions">TRANSFORM ARRAY</button>
+				</ul><button @click="transformOptions">TRANSFORM ARRAY</button>
+
+			</div>
 			<div>
 				<h5 class="option__name">{{option.name}}<span v-if="selectedOptions.title"> : {{selectedOptions.title}}</span> </h5>
 				<h5 class="option__color-story" v-if="selectedOptions.color_story">{{selectedOptions.color_story}}</h5>
@@ -206,33 +209,6 @@
 						tags:option.tags,
 						color:option.color
 					}
-
-				/*var newmap = this.FilteredOptionValues.map(function(option){
-
-					 var obj ={
-							slug: option.slug,
-					}
-					if ( option.tags && option.tags.length>0){
-						obj = Object.assign(obj,{tags:option.tags })
-					}
-					if ( option.color_story ){
-						obj = Object.assign(obj,{color_story:option.color_story })
-					}
-					if ( option.color =="none" ){
-						//obj = Object.assign(obj,{color:option.color })
-					}else{
-						obj = Object.assign(obj,{color:option.color })
-					}
-
-					if ( Object.keys(obj).length <=1 ){
-						return {};
-					}
-
-					//if (option.tags)							tags:option.tags,
-					return obj;
-
-				})
-			//	"slug": "alumroot", "swatch_image": "swatch-alumroot.png", "color": "#4b1b3f", "color_story": "A glorious maroon", "tags":*/
 			},
         OptionSwatchCSS: function(option) {
             var color = option.color;

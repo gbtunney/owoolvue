@@ -5,9 +5,13 @@ This is the full Product App vue component.
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
      prop-variantid="{{ variant_id }}"
-     prop-product_option_meta='{{ product_meta.option | strip_newlines }}'
-     prop-product_option_value_meta='{{ product_meta.optionvalue | strip_newlines }}'
+     prop-product_option_meta='{{ product_meta.optionmeta.option | strip_newlines }}'
+     prop-product_option_value_meta='{{ product_meta.optionmeta.optionvalue | strip_newlines }}'
      prop-sectionsettings='{{   settings | json }}'
-     prop-shop=''
+
+		{% if product_meta.productdata.subtitle %}
+     prop-subtitle="{{ product_meta.productdata.subtitle }}"
+		{% end if %}
+
 ></div>
 

@@ -131,10 +131,11 @@ const main_store = {
 		add_product_to_dictionary(state, payload) {
 			
 			var pendingProduct = payload.product;
-			if ( payload.optionconfig){
-				
-				pendingProduct = Object.assign(pendingProduct, {optionconfig: payload.optionconfig });
+			if ( payload.additionalProps){
+				pendingProduct = Object.assign(pendingProduct, payload.additionalProps);
 			}
+			console.log("additional props", pendingProduct)
+			
 			state.product_dictionary = new Map(state.product_dictionary).set(parseInt(pendingProduct.id) ,pendingProduct)
 		},
 		add_variants_to_dictionary(state, payload) {

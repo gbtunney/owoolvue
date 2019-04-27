@@ -3,6 +3,7 @@
 <basecomponent text="Add To Cart" :flags="['--icon-right','test']" scheme="light"
                font="san-serif"
                padding="md"></basecomponent>
+
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
@@ -66,7 +67,8 @@
 				<div v-show="!loading" class="product-single__meta">
 					<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 
-					<h1 class="product-single__title" itemprop="name">{{CurrentProductTitle}}</h1>
+					<h1 class="product-single__title" v-if="CurrentProductTitle" itemprop="name">{{CurrentProductTitle}}</h1>
+					<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
 					<div>
 						<div data-price-container>
@@ -74,7 +76,8 @@
 								<span id="ComparePrice" class="product-single__price compare-at">{{ CurrentVariantCompareAtPrice }}</span>
 							</span>
 							<span id="ProductPrice"
-							      class="product-single__price on-sale"
+							      v-bind:class="{ 'on-sale' : IsOnSale }"
+							      class="product-single__price "
 							      itemprop="price"
 							      :content="CurrentVariantPrice">{{ CurrentVariantPrice }}
 							</span>
@@ -86,7 +89,7 @@
 
 						<kabob class="divider" scheme="accent-default" componentclass="c-kabob"></kabob>
 
-						<productOptionPicker v-if="Options" :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
+						<productOptionPicker v-show="Options" :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
 						<form  v-show="false" method="post" action="/cart/add"
 						      id="AddToCartForm&#45;&#45;product-template"
@@ -334,7 +337,10 @@
 	        },
 	        shop:{
 		        default: false
-	        }
+	        },
+            subtitle:{
+	            default:false
+            }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
 	    components: {basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
@@ -376,7 +382,19 @@
 		    },
 		    SelectedOptions:function(){
 			    return this.$data.toggle_classes[this.LayoutToggle];
-		    }
+		    },
+	    IsOnSale :function(){
+
+		    	if (  this.$data._currentVariant   ){
+
+		    		if (this.$data._currentVariant.compare_at_price  == null) return false;
+		    		if (  this.$data._currentVariant.compare_at_price  >  this.$data._currentVariant.price  ){
+		    			return true;
+				    }
+
+			    }
+		    return false;
+	    }
 	    },
 	    created:function(){
 
@@ -388,12 +406,15 @@
 		    })
 		    this.loadProduct().then(function(res){
 
+
+		    	var additionalProductProps = {optionconfig: self.$props.product_option_meta, subtitle: self.$props.subtitle };
+
 			     //***PRODUCT
-			     if ( self.$props.product_option_meta ){
-				   self.add_product_to_dictionary({product: res.data.product, optionconfig: self.$props.product_option_meta});
-			    }else{
-				    self.add_product_to_dictionary({product: res.data.product});
-			    }
+			   ///  if ( self.$props.product_option_meta ){
+				   self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
+			   /// }else{
+				  //  self.add_product_to_dictionary({product: res.data.product});
+			    //}
 
                 //***IMAGES
                 self.add_images_to_dictionary({images: res.data.product.images});
