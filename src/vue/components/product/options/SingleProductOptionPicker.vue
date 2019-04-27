@@ -107,7 +107,7 @@
 				required:false
 			},
 			searchable: {
-				default: true    //an array with options that are searchable
+				default: false    //an array with options that are searchable
 			},
 			swatches: {
 				type:Boolean,

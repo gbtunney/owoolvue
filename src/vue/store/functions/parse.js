@@ -44,7 +44,7 @@ export function parseOptions(inOptions,option_config =false, option_value_overri
 			position: {type: Number},
 			_index: {type: Number, default: i, required: true},
 			product_id: {type: Number, required: true, default: false},
-			searchable: true,
+			searchable: false,
 			values: {type: Array, default: false}
 		});
 		
