@@ -11,6 +11,9 @@ export const VariantMixin = {
 		...mapGetters([
 			'Variants'
 		]),
+        NormalizedVariantID: function() {
+            return parseInt(this.$props.variantid);
+        },
 		CurrentVariantID: function() {
 			return this.CurrentVariant.id;
 		},

@@ -17,7 +17,7 @@ const SHOPIFY_API = new ShopifyApi({
 //**** SINGLE PRODUCT
 .get({
     action: "getProduct",
-    property: "_products",
+    property: "_product",
     path: ({ id }) => `/products/${id}.json`,
     onSuccess({state}, payload, axios, { params, data }) {
     
@@ -43,6 +43,37 @@ onError(state, error, axios, { params, data }) {
     // if you define the onSuccess function you have to set the state by yourself
     state.post = null;
 }
+})
+//**** SINGLE PRODUCT
+
+.get({
+    action: "getProducts",
+    property: "_products",
+    path: ({ limit = 150 }) => `/products.json?limit=${limit}&product_type=yarns`,
+    onSuccess({state}, payload, axios, { params, data }) {
+        
+        console.log(`!!Product with id: ${params.id} successfully fetched.`,payload.data);
+        
+        // if you define the onSuccess function you have to set the state by yourself
+        // /  state.current_product = payload.data.product;
+        
+        //todo:this is wierd
+        /* if (!state.product_dictionary ){
+             state.product_dictionary= new Map();
+             state.product_dictionary =     state.product_dictionary.set(payload.data.product.id, payload.data.product);
+         }else if (state.product_dictionary.set) {
+             console.log(state.product_dictionary);
+             state.product_dictionary =     state.product_dictionary.set(payload.data.product.id, payload.data.product);
+         
+         }*/
+        
+        // state.products = [ payload.data.product ]//state.products.push(payload.data.product);
+        
+    },
+    onError(state, error, axios, { params, data }) {
+        // if you define the onSuccess function you have to set the state by yourself
+        state.post = null;
+    }
 })
 .get({
     action: "getVariantDefaultImage",

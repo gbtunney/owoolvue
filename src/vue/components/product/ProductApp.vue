@@ -1,25 +1,5 @@
 <template>
-	<div><code>{{CurrentVariant}}</code>
-
-		<Multiselect :options="VariantArr"
-		             v-model="CurrentVariant"
-		             @input="variantChanged"
-
-		             track-by="title"
-		             label="title"
-		             class="multiselectmaster"
-		             :taggable="false"
-		             :multiple="true"
-		             :closeOnSelect="false"
-		             placeholder="Select one"
-		             :searchable="true"
-		             :allow-empty="false">
-		</Multiselect>
-
-<basecomponent text="Add To Cart" :flags="['--icon-right','test']" scheme="light"
-               font="san-serif"
-               padding="md"></basecomponent>
-
+	<div>
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
@@ -561,8 +541,6 @@
 	    },
 };
 </script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
 
 <style lang="scss" type="text/scss" >
 

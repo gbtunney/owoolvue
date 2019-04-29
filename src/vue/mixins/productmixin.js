@@ -70,9 +70,6 @@ export const ProductMixin={
 	},
     NormalizedProductID: function() {
 	    return parseInt(this.$props.productid);
-    },
-    NormalizedVariantID: function() {
-	    return parseInt(this.$props.variantid);
     }
     },
     methods:{
@@ -82,6 +79,12 @@ export const ProductMixin={
 		    return this.getProduct({params: {id: this.$props.productid}})
 		
 	    },
+        loadProducts:function(){
+            let self = this;
+        console.log("loading products!");
+            return this.getProducts();
+        
+        },
         loadProductMeta:function(productid){
 	      //  getProductMeta
 	        this.getProductMeta({params: {productid:productid}}).then(function(res) {

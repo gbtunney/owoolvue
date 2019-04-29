@@ -8,6 +8,8 @@ import ProductApp from "../../vue/components/shopify/product/Product.vue";
 
 */
 import ProductApp from "../../vue/components/product/ProductApp.vue";
+import KitEditorApp from "../../vue/components/admin/KitEditor.vue";
+
 //import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
 //import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 //import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
@@ -38,6 +40,10 @@ if ( vueelements && vueelements.length>0){
         else if (component == "ProductApp"){
            // alert();
           mountVue(`#${uid}`, ProductApp);
+        }
+        else if (component == "KitEditorApp"){
+            // alert();
+            mountVue(`#${uid}`, KitEditorApp);
         }
         else if (component == "AdminProductApp"){
            // mountVue(`#${uid}`, AdminProductApp);

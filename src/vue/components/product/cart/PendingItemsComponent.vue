@@ -88,7 +88,7 @@
     import Toasted from 'vue-toasted';
     Vue.use(Toasted)
 
-	const PromiseQueue = require("easy-promise-queue").default;
+	const PromiseQueue = require("easy-promise-queue");
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
