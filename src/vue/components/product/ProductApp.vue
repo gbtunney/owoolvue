@@ -489,6 +489,20 @@
 		    	console.log("changed",target);
 		    	this.setlayoutButton({index: target})
 		    },
+		    remapVariants:function(variantArr){
+
+			    	let baseObj= {
+			    		requested_quantity: 1,
+						    message: "not set"
+			    };
+
+			 /*   variantArr.map(function(variant) {
+
+				    //	return
+
+			    })*/
+
+		    },
 	    	variantChanged: function(variant) {
 			    console.log("variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
 			    this.$data._currentVariant   = variant;
