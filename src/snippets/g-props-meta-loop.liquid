@@ -1,0 +1,25 @@
+{% if  meta_namespace != blank  %}
+
+	{% if   meta_namespace[meta_namespace_prop] != blank  %}
+		prop-{{meta_namespace_prop}}='{{ meta_namespace[meta_namespace_prop]  | strip_newlines }}'
+		{% else %}
+
+
+	{% capture meta_namespace_value %}
+	{
+	{% for meta in meta_namespace %}
+
+		{% capture key %}{{ meta | first }}{% endcapture %}
+		{% capture value %}{{ meta | last }}{% endcapture %}
+
+		"{{ key }}" : "{{ value }}"
+		{% if forloop.last != true %}
+			,
+		{% endif %}
+	{% endfor %}
+	}
+	{% endcapture %}
+
+	prop-{{meta_namespace_prop}}='{{ meta_namespace_value | strip_newlines }}'
+	{%  endif %}
+{%  endif %}
