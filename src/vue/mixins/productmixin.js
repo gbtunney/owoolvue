@@ -68,6 +68,15 @@ export const ProductMixin={
 			return false;
 		}
 	},
+        
+            CurrentProductDesc:function(){
+    
+                if ( this.CurrentProduct && this.CurrentProduct.body_html ){
+                    return this.CurrentProduct.body_html;
+                }else{
+                    return false;
+                }
+            }	,
     NormalizedProductID: function() {
 	    return parseInt(this.$props.productid);
     }

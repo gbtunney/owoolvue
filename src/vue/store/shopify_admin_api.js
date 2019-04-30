@@ -45,11 +45,11 @@ onError(state, error, axios, { params, data }) {
 }
 })
 //**** SINGLE PRODUCT
-
+//&product_type=yarns
 .get({
     action: "getProducts",
     property: "_products",
-    path: ({ limit = 150 }) => `/products.json?limit=${limit}&product_type=yarns`,
+    path: ({ limit = 150 }) => `/products.json?limit=${limit}`,
     onSuccess({state}, payload, axios, { params, data }) {
         
         console.log(`!!Product with id: ${params.id} successfully fetched.`,payload.data);

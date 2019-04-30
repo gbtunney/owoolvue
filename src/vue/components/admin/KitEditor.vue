@@ -16,6 +16,9 @@
 		             :allow-empty="false">
 		</Multiselect>
 
+		<p v-if="$data._selectedProduct">{{$data._selectedProduct.tags}}</p>
+
+
 		<Multiselect :options="$data._variants"
 		             v-model="$data._selectedVariant"
 		             @input="productChanged"
@@ -50,6 +53,19 @@
 		<basecomponent text="DUMP Kit META>>> " :flags="['--icon-right','test']" scheme="light"
 		              @click="remapVariants" font="san-serif"
 		               padding="md"></basecomponent>
+
+
+		<FuseSearch
+			class="fuseSearchComponent"
+
+			@fuseResult="fuseFilter"
+			@fuseInactive="fuseInactive"
+			:keys='["tags","title"]'
+			:list="FilteredProducts">
+		</FuseSearch>
+		<ul>
+		<li v-for="product in FilteredProducts">{{product.title}}{{product.tags}}</li>
+		</ul>
 	</div>
 </template>
 
@@ -60,14 +76,11 @@
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
 
-    import kabob from '@/components/utilities/kabob';
 
     import basecomponent from '@/components/utilities/g-base-component.vue';
 
+    import FuseSearch from '@/components/utilities/g-Fuse-Search.vue';
 
-    import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
-    import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
-    import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
 
     import Multiselect from 'vue-multiselect'
 
@@ -91,7 +104,7 @@
 
         },
         mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-        components: {basecomponent,VueNumericInput,Multiselect},
+        components: {FuseSearch,basecomponent,VueNumericInput,Multiselect},
         data() {
             return {
                _products: [],
@@ -101,6 +114,7 @@
                 _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
                 loading: false,
                 convertedVariants:[],
+	            _filteredProductValues:false,
             }
         },
         name: 'testcomponent',
@@ -113,10 +127,22 @@
                     'OptionsByProduct'
                 ]
             ),
+
             ...mapState({shop: state => state._shop
             })
             ,
-
+            FilteredProducts: {
+                get: function() {
+                    if (!this.$data._filteredProductValues){
+                        return this.$data._products;
+                    }else{
+                        return this.$data._filteredProductValues;
+                    }
+                },
+                set: function(newVal) {
+                    this.$data._filteredProductValues =newVal; //	this._mapDisabledOptions(newVal,this.$props.disabledOptions);
+                }
+            },
 
             TestKit: function(){
                 [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
@@ -169,6 +195,14 @@
             testBtn:function(target){
                 console.log("changed",target);
                 this.setlayoutButton({index: target})
+            },
+            fuseFilter: function(result, query, list, fuse_options) {
+                console.log("FUSE FILTERED OPTION" , result,query,list, fuse_options);
+                this.FilteredProducts = result;
+            },
+            fuseInactive:function( list, fuse_options){
+                console.log("FUSE INACTIVEEE!!!" ,list, fuse_options);
+                this.FilteredProducts = this.$data._products;
             },
             remapVariants:function(){
 
@@ -227,7 +261,6 @@
     };
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css" ></style>
 
 <style lang="scss" type="text/scss" >
 

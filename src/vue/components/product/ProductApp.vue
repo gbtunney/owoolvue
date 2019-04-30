@@ -224,6 +224,9 @@
 
 						<PendingItemsComponent :kit="false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
+						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -339,6 +342,9 @@
             metavisible: {
                 type: Boolean,
                 default: true
+            },
+            download: {
+                default:false
             },
             addtocartvariants: {
                 type: Array,
@@ -574,8 +580,7 @@
 		//@include rhythm-margin(md);
 	}
 .multiselectmaster{
-	span.multiselect__option{
-		background: red!important;
+	span.multiselect__option{;
 
 	}
 	.multiselect__element{

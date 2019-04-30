@@ -144,6 +144,13 @@ const main_store = {
                 
                 
                 productArr.forEach( function(item){
+                	
+                	if ( item.hasOwnProperty('tags')){
+                        var tags = String(item.tags).split(',');
+                        item = Object.assign(item, {tags:tags })
+                    }
+                	
+                	
                     newMap.set(item.id,item);
                 })
                 state.product_dictionary = newMap;
@@ -171,7 +178,9 @@ const main_store = {
 			var newMap = new Map(state.product_image_dictionary  );
 			
 			imagesArr.forEach( function(item){
-				newMap.set(parseInt(item.id),item);
+				
+				
+				newMap.set(parseInt(item.id),Object.assign(item , {aspect_ratio : parseInt(item.width) / parseInt(item.height)}));
 			})
 			state.product_image_dictionary = newMap;
 			

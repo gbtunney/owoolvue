@@ -2,9 +2,6 @@
 This is the full Product App vue component.
 {% endcomment %}
 
-
-
-
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
      prop-variantid="{{ variant_id }}"
@@ -12,19 +9,22 @@ This is the full Product App vue component.
      prop-product_option_value_meta='{{ product_meta.optionmeta.optionvalue | strip_newlines }}'
      prop-sectionsettings='{{   settings | json }}'
 
-		{% if product_meta.productdata.subtitle %}
-     prop-subtitle="{{ product_meta.productdata.subtitle }}"
-		{% endif %}
+	{% include 'g-props-meta-loop' with meta_namespace : product_meta.download,  meta_namespace_prop : 'download'  %}
+	{% include 'g-props-meta-loop' with meta_namespace : product_meta.productdata ,  meta_namespace_prop : 'subtitle'  %}
 
-		{% for kitmeta in current_variant.metafields.kit %}
+	{% for kitmeta in current_variant.metafields.kit %}
 
 			{% capture key %}{{ kitmeta | first }}{% endcapture %}
 			{% capture value %}{{ kitmeta | last }}{% endcapture %}
 			{% capture  prop %} prop-{{ kitmeta | first }}='{{ kitmeta | last }}' {% endcapture %}
 			{{ prop }}
 
-		{% endfor %}
+	{% endfor %}
 
-></div>
+>
 
-
+	<div slot="productdescription">
+		<h1>Here might be a page title
+		TESTING GILLIAN</h1>
+	</div>
+</div>

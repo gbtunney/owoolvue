@@ -1,3 +1,6 @@
+
+import KitEditorApp from "vue-multiselect/dist/vue-multiselect.min.css";
+
 /*
 
 import {mountVue} from "../../vue/mountVue";
