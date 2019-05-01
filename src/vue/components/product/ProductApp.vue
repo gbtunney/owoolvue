@@ -315,10 +315,7 @@
 		    productid: {
 			    default: false
 		    },
-		    product_option_meta:{
-			    default: () => []
-	    },
-            product_option_value_meta:{
+            productdata: {
                 default: () => []
             },
 		    sectionsettings: {
@@ -428,15 +425,9 @@
 		    })
 		    this.loadProduct().then(function(res){
 
-
-		    	var additionalProductProps = {optionconfig: self.$props.product_option_meta, subtitle: self.$props.subtitle };
-
-			     //***PRODUCT
-			   ///  if ( self.$props.product_option_meta ){
-				   self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
-			   /// }else{
-				  //  self.add_product_to_dictionary({product: res.data.product});
-			    //}
+			    //***PRODUCT
+                var additionalProductProps =self.$props.productdata;
+                self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
 
                 //***IMAGES
                 self.add_images_to_dictionary({images: res.data.product.images});
@@ -449,7 +440,7 @@
                       var payload = {
                           options: res.data.product.options,
                       optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
-                          option_value_overrides: (self.$props.product_option_value_meta && self.$props.product_option_value_meta.length > 1 ) ? self.$props.product_option_value_meta : false
+                          option_value_overrides: (self.CurrentProduct.optionvalues && self.CurrentProduct.optionvalues.length > 0) ? self.CurrentProduct.optionvalues  : false
                       };
                       self.add_options_to_dictionary(payload);
 
@@ -457,8 +448,6 @@
                       self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
 
 				  }else{
-                      console.log("VARIANAT COUNT", self.Variants, self.Options);
-
                       ////!*****SET VARIANT
 					  self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
                       //single variant
@@ -472,7 +461,6 @@
 	    methods:{
 	    ...mapMutations(['setlayoutButton']),
 			    testBtn:function(target){
-		    	console.log("changed",target);
 		    	this.setlayoutButton({index: target})
 		    },
 		    remapVariants:function(variantArr){
@@ -516,6 +504,17 @@
 		    optionChanged: function(requestedVariant,option_dictionary) {
 
 			    console.log("!!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
+
+                let tally = [];
+                console.log("tally", this.option_dictionary );
+
+                Array.from(this.option_dictionary.values()).forEach(function(option){
+                    console.log("tally", option );
+
+                    tally =[...tally,...option.values];
+			    })
+
+			    console.log("tally last", tally );
 				   this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.

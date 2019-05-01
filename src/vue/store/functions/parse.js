@@ -4,6 +4,43 @@ import math from 'mathjs'
 import {Slugify, GDatamapper,normalize,filterArrayByValue} from '@/helpers/main.js'
 import {getSwatchSrc, getColorData} from './meta'
 //            var exampleArr = [{ "slug": "alumroot", "swatch_image": "swatch-alumroot.png", "color": "#4b1b3f", "color_story": "A glorious maroon", "tags": ["maroon", "red", "warm"] }, { "slug": "ash", "swatch_image": "swatch-ash.png", "color": "#3e404c", "color_story": "A nice grey", "tags": ["neutral", "grey"] }, { "slug": "basswood", "swatch_image": "swatch-basswood.png", "color": "#191e2f", "color_story": "Dark blue", "tags": ["blue", "cool"] }];
+/*
+
+const demo_config= [{
+    "slug": "color",
+    "searchable": true,
+    "value_config_default": {
+        "swatch_image": true
+    }
+},
+    {
+        "slug": "size",
+        "searchable": false,
+        "value_config_default": {
+            "color": "#ff0000"
+        }
+    }
+]
+
+const optionvaluemeta=[
+    {
+        "slug" : "alumroot",
+        "swatch_image": "swatch-alumroot.png",
+        "color": "#4b1b3f",
+    },
+    {
+        "slug" : "ash",
+        "swatch_image": "swatch-ash.png",
+        "color": "#3e404c",
+    },
+    {
+        "slug" : "basswood",
+        "swatch_image": "swatch-basswood.png",
+        "color": "#191e2f",
+    }
+]
+*/
+
 
 export function parseOptions(inOptions,option_config =false, option_value_overrides=false) {
 	

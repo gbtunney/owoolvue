@@ -5,14 +5,14 @@ This is the full Product App vue component.
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
      prop-variantid="{{ variant_id }}"
-     prop-product_option_meta='{{ product_meta.optionmeta.option | strip_newlines }}'
      prop-product_option_value_meta='{{ product_meta.optionmeta.optionvalue | strip_newlines }}'
      prop-sectionsettings='{{   settings | json }}'
 
 	{% include 'g-props-meta-loop' with meta_namespace : product_meta.download,  meta_namespace_prop : 'download'  %}
-	{% include 'g-props-meta-loop' with meta_namespace : product_meta.productdata ,  meta_namespace_prop : 'subtitle'  %}
+	{% include 'g-props-meta-loop' with meta_namespace : product_meta.productdata ,  meta_namespace_prop : 'productdata'  %}
+	{% include 'g-props-meta-loop' with prop_single: true, meta_namespace : product_meta.productdata ,  meta_namespace_prop : 'subtitle'  %}
 
-	{% for kitmeta in current_variant.metafields.kit %}
+		{% for kitmeta in current_variant.metafields.kit %}
 
 			{% capture key %}{{ kitmeta | first }}{% endcapture %}
 			{% capture value %}{{ kitmeta | last }}{% endcapture %}

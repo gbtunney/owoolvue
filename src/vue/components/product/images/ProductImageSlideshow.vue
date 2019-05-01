@@ -213,8 +213,7 @@
 		display: block;
 //background:purple;
 
-		@include g-color-scheme(dark);
-
+		@include g-color-scheme(accent-default, (background:true, foreground:true,border:false,fill:true ));
 
 	}
 
@@ -228,7 +227,7 @@
 		@include u-transition(opacity, .4s, ease,.5s);
 		+ .lazy-preloader{
 			display: none;
-			background: red;
+
 			//	height: 100%;
 			//	width: 100%;
 		}
@@ -291,7 +290,7 @@
 	}
 	.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
 		//background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D 'http%3A%2F%2Fwww.w3.org%…19.9L22%2C44L0%2C22L0%2C22L0%2C22z' %20fill%3D '%23007aff' %2F%3E%3C%2Fsvg%3E);
-background: red;
+//background: red;
 		&:before{
 			content: "<";
 			//@include triangle(left,$square/2 ,$square*3,$color);

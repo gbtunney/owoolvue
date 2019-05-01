@@ -88,7 +88,7 @@
     import Toasted from 'vue-toasted';
     Vue.use(Toasted)
 
-	const PromiseQueue = require("easy-promise-queue");
+	const PromiseQueue = require("easy-promise-queue").default;
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
@@ -247,11 +247,9 @@
                                 let toast = self.$toasted.show(`${self.ItemCount} Items added to cart`, {
                                     theme: "toasted-custom",
                                     position: "top-right",
-                                    duration : 2000
+                                    duration : 700
 
                                 });
-
-
                                 resolve();
 							}, 5)
 						});
