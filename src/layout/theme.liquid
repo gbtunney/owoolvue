@@ -29,6 +29,9 @@
     {% include 'style-tags', layout: 'theme' %}
     {% include 'script-tags', layout: 'theme' %}
 
+	{% section 'filter-menu-settings' %}
+
+  
   <!-- CSS ================================================== -->
   {{ 'pattern-lab-generator.css' | asset_url | stylesheet_tag }}
     {{ 'fonts.css' | asset_url | stylesheet_tag }}

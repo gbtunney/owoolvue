@@ -86,7 +86,12 @@
 
 {% if section.settings.collection_products_grid == 'collage' %}
   <div class="grid grid-collage">
-    {% comment %}
+
+      <div class="grid__item medium--one-whole large--one-quarter">
+		  {% include 'filter-menu' %}
+      </div>
+      <div class="grid__item medium--one-whole large--three-quarters">
+      {% comment %}
       Loop through our products in the current collection.
       See the snippet 'snippets/product-grid-collage.liquid'.
 
