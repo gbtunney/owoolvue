@@ -1,6 +1,6 @@
 <template>
 	<div>
-
+	<formgenerator :products="$data._products"></formgenerator>
 		<Multiselect :options="$data._products"
 		             v-model="$data._selectedProduct"
 		             @input="productChanged($data._selectedProduct)"
@@ -80,6 +80,7 @@
     import basecomponent from '@/components/utilities/g-base-component.vue';
 
     import FuseSearch from '@/components/utilities/g-Fuse-Search.vue';
+    import formgenerator from '@/components/admin/VueFormGenerator.vue';
 
 
     import Multiselect from 'vue-multiselect'
@@ -104,7 +105,7 @@
 
         },
         mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-        components: {FuseSearch,basecomponent,VueNumericInput,Multiselect},
+        components: {formgenerator,FuseSearch,basecomponent,VueNumericInput,Multiselect},
         data() {
             return {
                _products: [],
