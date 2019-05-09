@@ -325,7 +325,7 @@
 			    default: false
 		    },
 		    showmasterselect: {
-			    default: false
+			    default: true
 		    },
 	        updatehistory:{
 		        default: true

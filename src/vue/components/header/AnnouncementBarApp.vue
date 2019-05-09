@@ -50,6 +50,10 @@
                     }
 			],
                 swiperOption: {
+                    effect: 'fade',
+			        fadeEffect: {
+                        crossFade: true
+                    },
                     grabCursor: false,
                     centeredSlides: true,
                     scrollbar:false,
