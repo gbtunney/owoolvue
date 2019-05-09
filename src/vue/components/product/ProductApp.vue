@@ -297,6 +297,7 @@
 
     import Vue from 'vue';
 
+
     import adminOptionSelect from '@/components/admin/ProductOptionTestComponent.vue';
 /*		<singleProductOptionPicker searchable="true" :selectedoptionslug="Slug" @optionChanged="optionChanged" :option="OptionByProp('color')"></singleProductOptionPicker>
 */

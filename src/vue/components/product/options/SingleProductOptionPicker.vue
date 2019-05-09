@@ -1,5 +1,7 @@
 <template>
 	<div >
+		<v-app id="inspire" light>
+
 
 		<div class="attribute-panel">
 			<code style="display: none">{{disabledOptions}}</code>
@@ -55,10 +57,16 @@
 					</template>
 
 					<template slot="option" class="is-grid-2" slot-scope="props">
-						<div class="option__swatch"  v-bind:style="OptionSwatchCSS(props.option)"  style="">
-							<img v-if="props.option.swatch_image" class="option__image" :src="_getSwatchSrc(props.option)" >
-						</div>
-						<div class="option__desc"><span class="option__title">{{ props.option.title }}</span></div>
+
+						<v-tooltip bottom>
+							<template v-slot:activator="{ on }">
+								<div class="option__swatch" v-on="on" v-bind:style="OptionSwatchCSS(props.option)"  style="">
+									<img v-if="props.option.swatch_image" class="option__image" :src="_getSwatchSrc(props.option)" >
+								</div>
+							</template>
+							<div class="option__desc"><span class="option__title">{{ props.option.title }}</span></div>
+						</v-tooltip>
+
 					</template>
 
 				</Multiselect>
@@ -67,7 +75,9 @@
 			</div>
 
 		</div>
+		</v-app>
 	</div>
+
 </template>
 
 <script type="text/javascript">
@@ -84,6 +94,11 @@
 
 	import FuseSearch from '@/components/utilities/g-Fuse-Search.vue';
     import isColor from 'is-color';
+
+    import 'vuetify/dist/vuetify.min.css'
+    import Vuetify from 'vuetify';
+
+    Vue.use(Vuetify);
 
 
 	export default {
@@ -299,7 +314,15 @@
 	@include g-color-scheme(dark, (background:true, foreground:true, border:true));
 
 }
-
+	.option__swatch {
+		img {
+			object-fit: cover;
+			height: 100%;
+			width: 100%;
+		}
+		width: 5em;
+		height: 5em;
+	}
 
 	.option {
 
@@ -328,7 +351,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-evenly;
-
 	}
 
 .fuseSearchComponent{

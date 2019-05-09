@@ -21,7 +21,6 @@
 
 	import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue'
 	import { getVariantFromOptions,filterArrayByValue,isVariantAvailable} from '@/helpers/main.js'
-	import 'vuetify/dist/vuetify.min.css'
 
 	import Vue from 'vue';
 
@@ -194,8 +193,8 @@
 				height: 100%;
 				width: 100%;
 			}
-			width: 2em;
-			height: 2em;
+			width: 5em;
+			height: 5em;
 		}
 
 	}
