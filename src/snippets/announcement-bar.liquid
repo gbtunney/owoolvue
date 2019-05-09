@@ -1,21 +1,9 @@
 {% if section.settings.show_announcement %}
 	{% if section.settings.home_page_only == false or template.name == 'index' %}
-		{% if section.settings.link == blank %}
-			<div class="active announcement-bar">
-		{% else %}
-			<a href="{{ section.settings.link }}" class="announcement-bar announcement-bar--link">
-		{% endif %}
 
-		<span class="announcement-bar__message">{{ section.settings.text | escape }}</span>
-		<span class="announcement-bar__icon announcement-bar__close js-close">
-                {% include 'svg-definitions' with 'close' %}
-            </span>
-
-		{% if section.settings.link == blank %}
-			</div>
-		{% else %}
-			</a>
-		{% endif %}
+		<div js-mount-vue="AnnouncementBarApp"
+		     prop-sectionsettings='{{   section.settings | json }}'
+		></div>
 
 	{% endif %}
 {% endif %}

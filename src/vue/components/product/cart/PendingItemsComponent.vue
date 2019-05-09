@@ -88,7 +88,7 @@
     import Toasted from 'vue-toasted';
     Vue.use(Toasted)
 
-	const PromiseQueue = require("easy-promise-queue");
+	const PromiseQueue = require("easy-promise-queue").default;
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
@@ -194,13 +194,19 @@
 			transformItemArray:function(pendingItems , lineItemMessage =false){
 				///transform the pending item array for ajax cart.
 
-				let line_props = {};
-
-				if (lineItemMessage){
-					line_props = Object.assign(line_props, {message: lineItemMessage} );
-				}
 				///TODO THIS IS SOME DUMB BULLSHITTTTTT
 				return pendingItems.map(function(item) {
+
+
+                    let line_props = {};
+
+                    if (lineItemMessage){
+                    line_props = Object.assign(line_props, {message: lineItemMessage} );
+                    }
+
+                    if (item.message){
+                        line_props = Object.assign(line_props ,{message2: item.message } );
+                    }
 
 					const ITEM_SCHEMA = schema(
 						{
@@ -209,11 +215,10 @@
 							properties: {type: Number, default: line_props},
 						});
 
-					if (item.message){
-						line_props = Object.assign(line_props ,{message2: item.message } );
-					}
+
 
 					const data = ITEM_SCHEMA.parse(item);
+                    console.log("ITEM TRANSFORMED IS " ,data,item ,item.message );
 					const params = {}
 					return {params, data};
 				});
@@ -247,11 +252,9 @@
                                 let toast = self.$toasted.show(`${self.ItemCount} Items added to cart`, {
                                     theme: "toasted-custom",
                                     position: "top-right",
-                                    duration : 2000
+                                    duration : 700
 
                                 });
-
-
                                 resolve();
 							}, 5)
 						});

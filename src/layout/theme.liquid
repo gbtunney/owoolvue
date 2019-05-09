@@ -33,6 +33,11 @@
   {{ 'pattern-lab-generator.css' | asset_url | stylesheet_tag }}
     {{ 'fonts.css' | asset_url | stylesheet_tag }}
 
+
+  <!--begin-bc-sf-filter-css-->
+	{% include 'bc-sf-filter-style' %}
+  <!--end-bc-sf-filter-css-->
+</head>
   <!-- Sections ================================================== -->
   <script>
     window.theme = window.theme || {};
@@ -158,6 +163,26 @@
   <div id="SearchModal" class="mfp-hide">
     {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--modal' %}
   </div>
+
+  {% comment %}
+PLEASE MOVE THE FOLLOWING@@
+  {% endcomment %}
+
+  <!--begin-bc-sf-filter-js-->
+  {% include 'bc-sf-filter' %}
+  <!--end-bc-sf-filter-js-->
+  {% comment %} Init BC Action List {% endcomment %}
+  <!--start-bc-al-init-->
+  {% include 'bc-al-init' %}
+  <!--end-bc-al-init-->
+  {% comment %} Init Recently Viewed Products {% endcomment %}
+  <!-- start-bc-recently-viewed-product-init -->
+  {% include 'bc-recently-viewed-product-init' %}
+  <!-- end-bc-recently-viewed-product-init -->
+  {% comment %} Init Most Popular Widgets {% endcomment %}
+  <!--start-bc-most-popular-product-init-->
+  {% include 'bc-most-popular-product-init' %}
+  <!--end-bc-most-popular-product-init-->
 
 </body>
 </html>

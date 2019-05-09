@@ -186,7 +186,9 @@ const main_store = {
 			
 		},
 		add_options_to_dictionary(state, payload) {
-           
+   
+			
+			console.log("OPTION TEST TEST:  ",payload.option_value_overrides)
             var parsedOptions  = parseOptions(payload.options,payload.optionconfig,payload.option_value_overrides);
             state.option_dictionary= GDatamapper.parseToDictionary(parsedOptions, "id");
 			
@@ -222,6 +224,4 @@ main_store.mutations = {...main_store.mutations, ...shopifyAdminApi.mutations,..
 main_store.actions = {...main_store.actions, ...shopifyAdminApi.actions,...shopifyCart.actions}
 main_store.state = {...main_store.state, ...shopifyAdminApi.state,...shopifyCart.state}
 
-
-console.log("main store ",shopifyCart,main_store );
 export default new Vuex.Store(main_store);

@@ -4,6 +4,7 @@
 footer {
 }
 
+$my-default-spacing-variant: lg;
 
 .Owool_Footer {
    // @include u-full-width-container;
@@ -33,19 +34,21 @@ footer {
         font-size: inherit;
     }
     &__divider {
-        @include margin-leader(1);
+        @include 	rhythm-padding($my-default-spacing-variant);
+
     }
     &__meta {
-        @include margin-leader(1);
-
+        @include 	rhythm-padding($my-default-spacing-variant);
        text-align: center;
-        @include trailer(1);
     }
 
     &__social {
-        @include leader();
+        @include 	rhythm-padding($my-default-spacing-variant);
         @include u-horizontal-list;
-        width: 80%;
+        @include breakpoint-range(sm,"<="){
+            @include u-make-container(70%);
+        }
+
     }
     &__grid {
         display: grid;

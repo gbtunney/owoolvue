@@ -222,7 +222,7 @@
 							</div>
 						</form>
 
-						<PendingItemsComponent :kit="false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
+						<PendingItemsComponent :kit="$data._kit" lineitemmessage="this is my test phrase" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
 						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
 						</div>
@@ -315,10 +315,7 @@
 		    productid: {
 			    default: false
 		    },
-		    product_option_meta:{
-			    default: () => []
-	    },
-            product_option_value_meta:{
+            productdata: {
                 default: () => []
             },
 		    sectionsettings: {
@@ -328,7 +325,7 @@
 			    default: false
 		    },
 		    showmasterselect: {
-			    default: false
+			    default: true
 		    },
 	        updatehistory:{
 		        default: true
@@ -371,7 +368,8 @@
 			    toggle_exclusive:2,
 			    _optionMeta: [],
 			    _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
-		        loading: false,
+		        _kit: false,
+			    loading: false,
 			    convertedVariants:[],
 		    }
 	    },
@@ -428,15 +426,9 @@
 		    })
 		    this.loadProduct().then(function(res){
 
-
-		    	var additionalProductProps = {optionconfig: self.$props.product_option_meta, subtitle: self.$props.subtitle };
-
-			     //***PRODUCT
-			   ///  if ( self.$props.product_option_meta ){
-				   self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
-			   /// }else{
-				  //  self.add_product_to_dictionary({product: res.data.product});
-			    //}
+			    //***PRODUCT
+                var additionalProductProps =self.$props.productdata;
+                self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
 
                 //***IMAGES
                 self.add_images_to_dictionary({images: res.data.product.images});
@@ -449,16 +441,18 @@
                       var payload = {
                           options: res.data.product.options,
                       optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
-                          option_value_overrides: (self.$props.product_option_value_meta && self.$props.product_option_value_meta.length > 1 ) ? self.$props.product_option_value_meta : false
+                          option_value_overrides: (self.CurrentProduct.optionvalues && self.CurrentProduct.optionvalues.length > 0) ? self.CurrentProduct.optionvalues  : false
                       };
                       self.add_options_to_dictionary(payload);
 
+
+                      if ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
+                          self.$data._kit = true;
+                      }
                       ////!*****SET VARIANT
                       self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
 
 				  }else{
-                      console.log("VARIANAT COUNT", self.Variants, self.Options);
-
                       ////!*****SET VARIANT
 					  self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
                       //single variant
@@ -472,7 +466,6 @@
 	    methods:{
 	    ...mapMutations(['setlayoutButton']),
 			    testBtn:function(target){
-		    	console.log("changed",target);
 		    	this.setlayoutButton({index: target})
 		    },
 		    remapVariants:function(variantArr){
@@ -507,15 +500,28 @@
 				    }
 
                 //TODO: figure this out
-                   // this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
 
-
-                    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+				    if ( this.$data._kit ){
+                        this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+                    }else{
+                        this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+                    }
 			    }
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
 
 			    console.log("!!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
+
+                let tally = [];
+                console.log("tally", this.option_dictionary );
+
+                Array.from(this.option_dictionary.values()).forEach(function(option){
+                    console.log("tally", option );
+
+                    tally =[...tally,...option.values];
+			    })
+
+			    console.log("tally last", tally );
 				   this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.

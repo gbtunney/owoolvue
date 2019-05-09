@@ -1,147 +1,112 @@
 {% comment %}
-  Collection template, used on collection.liquid and collection.image.liquid
+Collection template, used on collection.liquid and collection.image.liquid
 {% endcomment %}
 
-{% paginate collection.products by 12 %}
+{% assign products_per_page = 12 %}
+{% paginate collection.products by products_per_page %}
 
 <header class="section-header text-center">
-  <h1>{{ collection.title }}</h1>
-  <hr class="hr--small">
-  {% if collection.description != blank %}
-    <div class="grid">
-      <div class="grid__item">
-        <div class="rte">
-          {{ collection.description }}
+    <h1 id="bc-sf-filter-collection-header">{{ collection.title }}</h1>
+    <hr class="hr--small">
+	{% if collection.description != blank %}
+        <div class="grid">
+            <div class="grid__item">
+                <div id="bc-sf-filter-collection-description" class="rte">
+					{{ collection.description }}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  {% endif %}
+	{% endif %}
 
-    <div class="grid--full collection-sorting{% if section.settings.collection_sort_enable %} collection-sorting--enabled{% endif %}">
-      {% if section.settings.collection_sort_enable %}
-        {% include 'collection-sorting' %}
-      {% endif %}
-    </div>
-
-  {% if section.settings.collection_tags_enable %}
-    {% if collection.all_tags.size > 0 %}
-      {% if section.settings.collection_sort_enable %}
-        <hr class="hr--small">
-      {% endif %}
-      {% comment %}
-        To provide a 'catch-all' link at the top of the list,
-        check against the collection.handle, product type, and vendor.
-      {% endcomment %}
-      <ul class="tags tags--collection inline-list">
-        <li{% unless current_tags %} class="tag--active"{% endunless %}>
-          {% comment %}
-            Good for /collections/all collection and regular collections
-          {% endcomment %}
-          {% if collection.handle %}
-            <a href="/collections/{{ collection.handle }}">
-              {{ 'collections.general.all_of_collection' | t }}
-            </a>
-
-          {% comment %}
-            Good for automatic type collections
-          {% endcomment %}
-          {% elsif collection.current_type %}
-            <a href="{{ collection.current_type | url_for_type }}">
-              {{ 'collections.general.all_of_collection' | t }}
-            </a>
-
-          {% comment %}
-            Good for automatic vendor collections
-          {% endcomment %}
-          {% elsif collection.current_vendor %}
-            <a href="{{ collection.current_vendor | url_for_vendor }}">
-              {{ 'collections.general.all_of_collection' | t }}
-            </a>
-          {% endif %}
-        </li>
-
-        {% for tag in collection.all_tags %}
-          {% if current_tags contains tag %}
-            <li class="tag--active">
-              {{ tag | link_to_remove_tag: tag }}
-            </li>
-          {% else %}
-            <li>
-              {% comment %}
-                Use link_to_add_tag if you want to allow filtering
-                by multiple tags
-              {% endcomment %}
-              {{ tag | link_to_tag: tag }}
-            </li>
-          {% endif %}
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endif %}
-
-  {% if section.settings.collection_tags_enable %}
     <hr class="hr--small hr--clear">
-  {% endif %}
+
+    <div id="bc-sf-filter-tree-mobile"></div>
 </header>
 
-{% if section.settings.collection_products_grid == 'collage' %}
-  <div class="grid grid-collage">
-    {% comment %}
-      Loop through our products in the current collection.
-      See the snippet 'snippets/product-grid-collage.liquid'.
+<div id="bc-sf-filter-tree"></div>
 
-      `is_reverse_row__product`, `three_row_index__product`, `collection_product_count`, and `divisible_by_three__product` are
-      all used by 'snippets/product-grid-collage.liquid'
-    {% endcomment %}
-    {% assign is_reverse_row__product = false %}
-    {% assign three_row_index__product = 0 %}
-    {% assign collection_product_count__product = collection.products.size %}
-    {% assign divisible_by_three__product = collection_product_count__product | modulo:3 %}
-    {% for product in collection.products %}
-      {% include 'product-grid-collage' %}
-    {% else %}
+<div id="bc-sf-filter-right">
+	{% if section.settings.collection_products_grid == 'collage' %}
 
-      {% if shop.products_count == 0 %}
-        {% comment %}
-          Add default products to help with onboarding for collections/all only
-        {% endcomment %}
-        {% include 'onboarding-featured-products' %}
-      {% else %}
-        {% comment %}
-          If collection exists but is empty, display message
-        {% endcomment %}
-        <div class="grid__item text-center">
-          <p>{{ 'collections.general.no_matches' | t }}</p>
+        <div id="bc-sf-filter-products" class="grid grid-collage" data-bc-sort="{{ collection.default_sort_by }}">
+			{% comment %}
+            Loop through our products in the current collection.
+            See the snippet 'snippets/product-grid-collage.liquid'.
+
+            `is_reverse_row__product`, `three_row_index__product`, `collection_product_count`, and `divisible_by_three__product` are
+            all used by 'snippets/product-grid-collage.liquid'
+			{% endcomment %}
+			{% assign is_reverse_row__product = false %}
+			{% assign three_row_index__product = 0 %}
+			{% assign collection_product_count__product = collection.products.size %}
+			{% assign divisible_by_three__product = collection_product_count__product | modulo:3 %}
+			{% for product in collection.products %}
+				{% include 'product-grid-collage' %}
+			{% endfor %}
         </div>
-      {% endif %}
-    {% endfor %}
 
-  </div>
-{% elsif section.settings.collection_products_grid == 'grid' %}
-  <div class="grid-uniform">
-    {% assign grid_item_width = 'medium--one-half large--one-third' %}
-    {% for product in collection.products %}
-      {% include 'product-grid-item' %}
-    {% else %}
-      {% if collection.handle == 'all' %}
-        {% comment %}
-          Add default products to help with onboarding for collections/all only
-        {% endcomment %}
-        {% include 'onboarding-featured-products' %}
-      {% else %}
-        {% comment %}
-          If collection exists but is empty, display message
-        {% endcomment %}
-        <div class="grid__item text-center">
-          <p>{{ 'collections.general.no_matches' | t }}</p>
+		{% elsif section.settings.collection_products_grid == 'grid' %}
+
+        <div id="bc-sf-filter-products" class="grid-uniform" data-bc-sort="{{ collection.default_sort_by }}">
+			{% if collection.default_sort_by != 'best-selling' %}
+				{% assign grid_item_width = 'medium--one-half large--one-third' %}
+				{% for product in collection.products %}
+					{% include 'product-grid-item' %}
+				{% endfor %}
+			{% endif %}
         </div>
-      {% endif %}
-    {% endfor %}
-  </div>
-{% endif %}
 
-{% if paginate.pages > 1 %}
-  {% include 'pagination' %}
-{% endif %}
+	{% endif %}
+
+    <div id="bc-sf-filter-bottom-pagination">
+		{% include 'pagination' %}
+    </div>
+    <div id="bc-sf-filter-load-more"></div>
+</div>
+
+<div class="bc-sf-filter-clearfix"></div>
 
 {% endpaginate %}
+
+<script>
+    // Declare bcSfFilterConfig variable
+    var bcSfFilterConfig = {
+        label: {
+            sorting: {% assign temp = 'collections.sorting.title' | t  %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Sorting" {% endunless %},
+            sorting_best_selling: {% assign temp = 'collections.sorting.best_selling' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Best Selling" {% endunless %},
+            sorting_featured: {% assign temp = 'collections.sorting.featured' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Featured" {% endunless %},
+            sorting_title_ascending: {% assign temp = 'collections.sorting.az' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Alphabetically, A-Z" {% endunless %},
+            sorting_title_descending: {% assign temp = 'collections.sorting.za' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Alphabetically, Z-A" {% endunless %},
+            sorting_price_ascending: {% assign temp = 'collections.sorting.price_ascending' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Lowest Price" {% endunless %},
+            sorting_price_descending: {% assign temp = 'collections.sorting.price_descending' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Highest Price" {% endunless %},
+            sorting_date_ascending: {% assign temp = 'collections.sorting.date_ascending' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Date, Old to New" {% endunless %},
+            sorting_date_descending: {% assign temp = 'collections.sorting.date_descending' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Date, New to Old" {% endunless %},
+            sorting_sale_descending: {% assign temp = 'collections.sorting.sale_descending' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "% Off" {% endunless %},
+            sorting_relevance: {% assign temp = 'collections.sorting.relevance' | t %} {% unless temp contains 'translation missing'  %} {{ temp | json }} {% else %} "Relevance" {% endunless %},
+
+            sold_out: {{ 'products.product.sold_out_html' | t | json }},
+            regular_price: {{ 'products.general.regular_price' | t | json }},
+            sale_price: {{ 'products.general.sale_price' | t | json }},
+            save_price: {{ 'products.general.save_html' | t | json }},
+        },
+        custom: {
+            products_per_page : {% if products_per_page %} {{ products_per_page | json }} {% else %} 24 {% endif %},
+            vendor_enable: {% if settings.product_vendor_enable %} {{ settings.product_vendor_enable | json }} {% else %} false {% endif %},
+            layout: {% if section.settings.collection_products_grid %} {{ section.settings.collection_products_grid | json }} {% else %} "grid" {% endif %},
+            max_width: 310,
+            max_height: 415
+        }
+    };
+</script>
+
+{% comment %} start-bc-most-popular-template {% endcomment %}
+<div class="bc-sf-most-popular-products-wrapper bc-sf-widget-slider-wrapper">
+    <div class="bc-sf-most-popular-products bc-sf-widget-products owl-carousel"></div>
+</div>
+{% comment %} end-bc-most-popular-template {% endcomment %}
+
+{% comment %} start-bc-recently-viewed-template {% endcomment %}
+<div class="bc-sf-recent-products-wrapper bc-sf-widget-slider-wrapper">
+    <div class="bc-sf-recent-products bc-sf-widget-products owl-carousel"></div>
+</div>
+{% comment %} end-bc-recently-viewed-template {% endcomment %}

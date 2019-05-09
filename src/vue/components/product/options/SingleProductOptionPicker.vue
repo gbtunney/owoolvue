@@ -4,7 +4,7 @@
 		<div class="attribute-panel">
 			<code style="display: none">{{disabledOptions}}</code>
 			<code style="display: none">{{option}}</code>
-			<div v-show="false">
+			<div v-show="false" >
 				<code style="">{{selectedOptions}}</code>
 
 				<ul>
