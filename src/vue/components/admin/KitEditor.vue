@@ -1,6 +1,41 @@
 <template>
 	<div>
 	<formgenerator :products="$data._products"></formgenerator>
+	KIT PRODUCT
+			<Multiselect :options="$data._products"
+		             v-model="$data._selectedProduct"
+		             @input="productChanged($data._selectedProduct)"
+
+		             track-by="title"
+		             label="title"
+		             class="multiselectmaster"
+		             :taggable="false"
+		             :multiple="false"
+		             :closeOnSelect="true"
+		             placeholder="Select one"
+		             :searchable="true"
+		             :allow-empty="false">
+		</Multiselect>
+
+		<p v-if="$data._selectedProduct">{{$data._selectedProduct.tags}}</p>
+
+
+		<Multiselect :options="$data._variants"
+		             v-model="$data._selectedVariant"
+		             @input="productChanged"
+
+		             track-by="title"
+		             label="title"
+		             class="multiselectmaster"
+		             :taggable="false"
+		             :multiple="true"
+		             :closeOnSelect="true"
+		             placeholder="Select one"
+		             :searchable="true"
+		             :allow-empty="false">
+		</Multiselect>
+
+		Kit Contents :
 		<Multiselect :options="$data._products"
 		             v-model="$data._selectedProduct"
 		             @input="productChanged($data._selectedProduct)"
@@ -33,6 +68,8 @@
 		             :searchable="true"
 		             :allow-empty="false">
 		</Multiselect>
+
+
 
 <h2>KIT</h2>
 
@@ -112,6 +149,8 @@
 	            _variants:[],
 	            _selectedProduct: false,
 	            _selectedVariant: false,
+                _kitproducts: [],
+                _kitvariants:[],
                 _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
                 loading: false,
                 convertedVariants:[],

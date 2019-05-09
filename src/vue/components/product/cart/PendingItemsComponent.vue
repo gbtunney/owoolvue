@@ -194,13 +194,19 @@
 			transformItemArray:function(pendingItems , lineItemMessage =false){
 				///transform the pending item array for ajax cart.
 
-				let line_props = {};
-
-				if (lineItemMessage){
-					line_props = Object.assign(line_props, {message: lineItemMessage} );
-				}
 				///TODO THIS IS SOME DUMB BULLSHITTTTTT
 				return pendingItems.map(function(item) {
+
+
+                    let line_props = {};
+
+                    if (lineItemMessage){
+                    line_props = Object.assign(line_props, {message: lineItemMessage} );
+                    }
+
+                    if (item.message){
+                        line_props = Object.assign(line_props ,{message2: item.message } );
+                    }
 
 					const ITEM_SCHEMA = schema(
 						{
@@ -209,11 +215,10 @@
 							properties: {type: Number, default: line_props},
 						});
 
-					if (item.message){
-						line_props = Object.assign(line_props ,{message2: item.message } );
-					}
+
 
 					const data = ITEM_SCHEMA.parse(item);
+                    console.log("ITEM TRANSFORMED IS " ,data,item ,item.message );
 					const params = {}
 					return {params, data};
 				});

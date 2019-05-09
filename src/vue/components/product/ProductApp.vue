@@ -222,7 +222,7 @@
 							</div>
 						</form>
 
-						<PendingItemsComponent :kit="false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
+						<PendingItemsComponent :kit="$data._kit" lineitemmessage="this is my test phrase" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
 						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
 						</div>
@@ -368,7 +368,8 @@
 			    toggle_exclusive:2,
 			    _optionMeta: [],
 			    _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
-		        loading: false,
+		        _kit: false,
+			    loading: false,
 			    convertedVariants:[],
 		    }
 	    },
@@ -444,6 +445,10 @@
                       };
                       self.add_options_to_dictionary(payload);
 
+
+                      if ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
+                          self.$data._kit = true;
+                      }
                       ////!*****SET VARIANT
                       self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
 
@@ -495,10 +500,12 @@
 				    }
 
                 //TODO: figure this out
-                   // this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
 
-
-                    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+				    if ( this.$data._kit ){
+                        this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+                    }else{
+                        this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+                    }
 			    }
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
