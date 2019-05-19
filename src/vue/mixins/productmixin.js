@@ -1,5 +1,6 @@
 import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 const Numeral = require('numeral');
+import {UIDMixin} from  '@/mixins/uid-mixin.js';
 
 export const ProductMixin={
 	    props: {
@@ -21,7 +22,8 @@ export const ProductMixin={
 	    computed: {
 	    ...mapGetters([
 		    'Variants',
-		    'Options'
+		    'Options',
+		    'ImagesByProduct'
 	    ]),
 
 	    ...mapState({
@@ -60,7 +62,13 @@ export const ProductMixin={
     CurrentProductID: function() {
 	
 	    return this.CurrentProduct.id;
-    },
+    }, CurrentProductImages:function(){
+                if ( this.CurrentProduct && this.ImagesByProduct(this.CurrentProduct)){
+                    return this.ImagesByProduct(this.CurrentProduct);
+                }else{
+                    return [];
+                }
+            },
 	CurrentProductVendor:function(){
 		if ( this.CurrentProduct && this.CurrentProduct.vendor ){
 			return this.CurrentProduct.vendor;

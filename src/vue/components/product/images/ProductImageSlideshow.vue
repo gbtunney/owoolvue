@@ -1,10 +1,11 @@
 <template>
-	<div class="productImageSlideshow">
-		<swiper :options="swiperOption" ref="mySwiper"  >
+	<div :class="$options.name">
+		sd{{Ref}}
+		<swiper :options="swiperOption"  :ref="Ref"  >
 			<!-- slides -->
-			<swiper-slide v-for="image,index in ImageArray" :key="index">
+			<swiper-slide v-for="image,index in ImageArray"  :key="index">
 				<div class="swiper-zoom-container">
-					<img class="swiper-lazy" :data-src="image.src" :alt="image.alt">
+					<img class="swiper-lazy" :data-src="getShopifyImageURL(image)" :alt="image.alt">
 					<div class="lazy-preloader">
 						<svg  class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
 							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
@@ -78,11 +79,15 @@
     import {mapGetters,mapState,mapActions} from 'vuex'
     import { normalize} from '@/helpers/main.js'
 
+    import {UIDMixin} from  '@/mixins/uid-mixin.js';
 
+    import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
+    import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
 
     //:options="swiperOption" ref="mySwiper"
     export default {
-        name: 'ProductImages',
+        name: 'ProductImageSlideshow',
+        mixins: [DictionaryMixin,UIDMixin,ProductImageSlideshowMixin],
         components: {
             swiper,
             swiperSlide
@@ -106,10 +111,6 @@
                // this.swiper.slideTo(currentImage._index, 1000, false)
             },
             GetVariantSlideMatch: function(variantid) {
-
-	           // this.$data.idle = setTimeout(function(){ alert("Hello"); }, 3000);
-
-
 	            let _variantid = variantid;
 
         		let tester = this.ImageArray.findIndex(function(item){
@@ -133,15 +134,12 @@
 			        	return false;
 			        }
 		        } )
-
-	            console.log("IMAGE SEARCH IS ", tester);
-        		if ( tester < 0 ){
+	            if ( tester < 0 ){
 
                     this.swiper.slideTo(1, 0, false)
 
                 }else{
                     this.swiper.slideTo(tester, 0, false)
-
                 }
             }
         },
@@ -150,49 +148,12 @@
 		        if (this.ImageArray){
 			       this.GetVariantSlideMatch(val.id);
 		        }
-
 	        }
         },
         computed: {
-        ...mapState({
-	        product_image_dictionary: state => state.product_image_dictionary
-    }),
-        ImageArray:function(){
 
-        	var imgArr =Array.from(this.product_image_dictionary.values());
-	        return imgArr.map(function(item,index){
-	        	return Object.assign(item, {_index: index});
-	        });
-	         //Array.from(this.product_image_dictionary.values());
-        },
-            TrackIdle: function() {
-
-            },
-            swiper: function() {
-                return this.$refs.mySwiper.swiper;
-            }
     },
-        data() {
 
-            return {
-            	idle: false,
-                swiperOption: {
-	                grabCursor: false,
-	                centeredSlides: true,
-	                scrollbar:false,
-	                zoom:true,
-	                slidesPerView: 1,
-	                spaceBetween: 0,
-                    lazy: {
-                        loadPrevNext: true,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    }
-                }
-            }
-        }
     }
 
 </script>
@@ -201,7 +162,9 @@
 
 <style lang="scss" type="text/scss"  >
 	@import "src/vue/helpers/product-dependancies.scss";
-.productImageSlideshow{
+
+	.ProductImageSlideshow{
+
 	.swiper-lazy{
 		opacity:0;
 	}
@@ -252,7 +215,6 @@
 	}
 	.swiper-slide-shadow-left{
 		background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.9))!important;
-
 		//linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0))!important;
 	}
 	.slide-image {

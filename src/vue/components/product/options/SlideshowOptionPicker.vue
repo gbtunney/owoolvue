@@ -281,8 +281,6 @@ background: white	;
 		.swiper-scrollbar-drag{
 			@include g-color-scheme(light, (background:true, foreground:true,border:false,fill:true ));
 			opacity: 1;
-
-
 		}
 	}
 	.tooltip {

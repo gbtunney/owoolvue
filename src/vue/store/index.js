@@ -34,7 +34,21 @@ const main_store = {
 		},
 		Cart: state => {
 		return state._cart;
-},
+		},
+		ImagesByProduct: (state) => (product) => {
+			let _state = state;
+			let _product = product;
+            return product.images.map(function(image){
+            	if ( image && image.variant_ids.length > 0 ){
+                    var VariantsArr = image.variant_ids.map(function(variant_id){
+                        return  _state.variant_dictionary.get(variant_id)
+                    })
+		            return  Object.assign(image,  { variants: VariantsArr})
+                }else{
+                    return _state.product_image_dictionary.get(image.id);
+	            }
+            	    })
+		},
 		OptionByProp: (state) => (value, prop="slug") => {
 			return  filterArrayByValue( store.getters.Options, value, prop,true);
 		},

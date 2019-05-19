@@ -1,9 +1,11 @@
 <template>
 	<div class="component-productApp">
+
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
-				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
-<SlideshowOptionPicker  :inSelectedVariant="CurrentVariant"  @optionChanged="optionChanged" :option="OptionByProp('color')"></SlideshowOptionPicker>
+				<ProductImageSlideshow :currentimage="$data._currentImageSlideshow" :imagearray="CurrentProductImages" :imagesize="'1250x1250'"></ProductImageSlideshow>
+				<ProductImageThumbailPicker :option="OptionByProp('color')" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
+				<SlideshowOptionPicker  :inSelectedVariant="CurrentVariant"  @optionChanged="optionChanged" :option="OptionByProp('color')"></SlideshowOptionPicker>
 			</div>
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
@@ -281,6 +283,9 @@
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
 import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionPicker.vue'
+
+    import ProductImageThumbailPicker from '@/components/product/images/ProductImageThumbailPicker.vue'
+
     import Multiselect from 'vue-multiselect'
 
     import { getVariantFromOptions,isVariantAvailable,updateHistory} from '@/helpers/main.js'
@@ -351,7 +356,7 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
             }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-	    components: {basecomponent,SlideshowOptionPicker,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
+	    components: {ProductImageThumbailPicker,basecomponent,SlideshowOptionPicker,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -361,6 +366,7 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
 		        _kit: false,
 			    loading: false,
 			    convertedVariants:[],
+			    _currentImageSlideshow: false
 		    }
 	    },
 	    name: 'testcomponent',
@@ -420,11 +426,16 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
                 var additionalProductProps =self.$props.productdata;
                 self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
 
+                //***VARIANTS
+                self.add_variants_to_dictionary({variants: res.data.product.variants});
+
                 //***IMAGES
                 self.add_images_to_dictionary({images: res.data.product.images});
                 /********/
-				 //***VARIANTS
-				 self.add_variants_to_dictionary({variants: res.data.product.variants});
+
+				 //todo, MOVE THIS PLS.
+                self.$data.currentProductImages=  self.ImagesByProduct(self.CurrentProduct);
+
 
 				  if (  self.Variants && self.Variants.length >1 ){
                       //!***OPTIONS
@@ -435,13 +446,11 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
                       };
                       self.add_options_to_dictionary(payload);
 
-
                       if ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
                           self.$data._kit = true;
                       }
                       ////!*****SET VARIANT
                       self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
-
 				  }else{
                       ////!*****SET VARIANT
 					  self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
@@ -458,19 +467,44 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
 			    testBtn:function(target){
 		    	this.setlayoutButton({index: target})
 		    },
+            imageUpdated: function(product_image) {
+              //  this.$emit(this.$props.updateMode, product_image);
+            console.log("THE IMAGE IS UPDSYD",product_image);
+
+            this.$data._currentImageSlideshow= product_image;
+                //@click="$emit('optionChanged',$props.option, optionvalue)"
+                /*
+						var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
+						console.log("******OPTION HANGED!!", newOptionDictionaryforPendingVariant, value)
+
+						if ( newOptionDictionaryforPendingVariant.get(option.id) ){
+
+							if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
+								newOptionDictionaryforPendingVariant.set(option.id, value);
+								var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
+									if (option.hasOwnProperty('id')){
+										return option.id;
+									}
+								})
+
+								var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+
+								console.log("******OPTION HANGED!!", foundVariantArr, value)
+
+
+								if (foundVariantArr && foundVariantArr.length==1 ){
+									this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
+								}else{
+									console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+								}
+							}*/
+            },
 		    remapVariants:function(variantArr){
 
 			    	let baseObj= {
 			    		requested_quantity: 1,
 						    message: "not set"
 			    };
-
-			 /*   variantArr.map(function(variant) {
-
-				    //	return
-
-			    })*/
-
 		    },
 	    	variantChanged: function(variant) {
 			    console.log("variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
