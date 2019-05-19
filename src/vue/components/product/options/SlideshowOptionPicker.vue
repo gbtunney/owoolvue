@@ -162,8 +162,8 @@
             optionChanged: function(option,value) {
                 //@click="$emit('optionChanged',$props.option, optionvalue)"
 
-	            console.log("******OPTION HANGED!!", option, value)
                 var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
+                console.log("******OPTION HANGED!!", newOptionDictionaryforPendingVariant, value)
 
                 if ( newOptionDictionaryforPendingVariant.get(option.id) ){
 
@@ -176,6 +176,9 @@
                         })
 
                         var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+
+                        console.log("******OPTION HANGED!!", foundVariantArr, value)
+
 
                         if (foundVariantArr && foundVariantArr.length==1 ){
                             this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )

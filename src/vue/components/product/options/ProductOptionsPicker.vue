@@ -38,6 +38,7 @@
 				required:false
 			}
 		},
+
 		mixins: [ProductMixin],
 		components: {singleProductOptionPicker},
 		data() {
