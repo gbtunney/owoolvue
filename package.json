@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "easy-promise-queue": "^0.5.4",
+    "jquery": "^3.4.1",
     "json-loader": "^0.5.7",
     "numeral": "^2.0.6",
     "uniqid": "^5.0.3",

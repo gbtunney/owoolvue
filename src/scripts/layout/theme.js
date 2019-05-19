@@ -1,6 +1,7 @@
 import "../../styles/slate/layout/theme.scss";
 import "../../styles/slate/layout/theme.scss.liquid";
 
+
 import {mountVue} from "../../vue/mountVue";
 /*import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
@@ -11,6 +12,9 @@ import ProductApp from "../../vue/components/product/ProductApp.vue";
 import KitEditorApp from "../../vue/components/admin/KitEditor.vue";
 
 import AnnouncementBarApp from "../../vue/components/header/AnnouncementBarApp.vue";
+
+//import ThemeJS from "../../assets/theme";
+
 //import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
 //import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 //import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
