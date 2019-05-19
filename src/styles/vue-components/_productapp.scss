@@ -1,0 +1,102 @@
+div{
+}
+
+$my-default-spacing-variant: sm;
+
+
+.component-productApp{
+
+	toasted .primary, .toasted.toasted-custom {
+
+		@include g-color-scheme(dark-accent-secondary)
+		border-radius: 0px;
+		min-height: 38px;
+		@include g-typeset(lg, font-small-caps);
+		//line-height: 1.1em;
+		//	background-color: #353535;
+		//	padding: 0 20px;
+		//font-size: 15px;
+		//	font-weight: 300;
+		//color: #fff;
+		//box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+	}
+
+	.pending-items-component{
+		.kit_container{
+			display:flex;
+			align-items: center;
+		}
+
+		ul{
+			padding: 0;
+		}
+
+		&.--productApp{
+			display: flex;
+			flex-direction: column-reverse;
+			align-items: center;
+
+			.pending-item-name{
+				//@include 	rhythm-padding($my-default-spacing-variant);
+			}
+			.pending-item-available,.pending-item-price{
+				//@include 	u-leader-padding($my-default-spacing-variant);
+				@include g-typeset(xs,font-small-caps )
+			}
+
+			////CUSTOMIZED OVERRIDE OF VUE NUMERIC INPUT
+			.vue-numeric-input{
+				border-radius:0;
+				border-width: 1px;
+				border-color: color(accent-primary,border);
+
+				$collection:color-schemes typography font-size ;
+				$variant-keys: accent-default  font-small-caps lg ;
+				@include render-queue( get-collection( $collection,$variant-keys) );
+
+				.btn-icon{
+					display: none;
+					&:before, &:after{
+						height: auto;
+						position: relative;
+						transform: none;
+						content: "TTG";
+					}
+				}
+				button.btn {
+					box-shadow: initial !important;
+					border-radius: 0;
+					display: flex;
+					flex-direction: row;
+					border-width: 2px;
+
+					$collection: color-schemes typography font-size;
+					$variant-keys: dark-accent-primary font-small-caps lg;
+					@include render-queue(get-collection($collection, $variant-keys));
+
+					&:disabled {
+						opacity: .7;
+					}
+					&:before {
+						content: "+";
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						top: 2px;
+						left: 0;
+					}
+					&.btn-decrement {
+						&:before {
+							content: "-";
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.pending-item-price{
+
+
+	}
+}

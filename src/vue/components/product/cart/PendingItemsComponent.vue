@@ -134,10 +134,6 @@
 			let self = this;
 			this.getCart().then(function(res){
 			})
-
-		console.log("cart is props;",this.$props.addtocartvariants	 )
-
-
 	},
 	watch: {
 		addtocartvariants: function(val) {
@@ -297,8 +293,6 @@
 					);
 					return PENDING_ITEM_SCHEMA.parse(item);
 				});
-
-
 			},
 			parsePendingItems: function(itemArr) {
 				let self = this;
@@ -337,104 +331,5 @@
 
 
 <style lang="scss" type="text/scss" >
-
-	@import "src/vue/helpers/product-dependancies.scss";
-
-	$my-default-spacing-variant: md;
-
-	toasted .primary, .toasted.toasted-custom {
-
-		@include g-color-scheme(dark-accent-secondary)
-		border-radius: 0px;
-		min-height: 38px;
-		@include g-typeset(lg, font-small-caps);
-	//line-height: 1.1em;
-	//	background-color: #353535;
-	//	padding: 0 20px;
-		//font-size: 15px;
-	//	font-weight: 300;
-		//color: #fff;
-		//box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
-	}
-
-
-	.pending-items-component{
-
-
-		ul{
-			padding: 0;
-		}
-
-		&.--productApp{
-			display: flex;
-			flex-direction: column-reverse;
-			align-items: center;
-
-			.pending-item-name{
-				@include 	rhythm-padding($my-default-spacing-variant);
-
-			}
-			.pending-item-available{
-
-				@include 	u-leader-padding($my-default-spacing-variant);
-				@include g-typeset(xs,font-small-caps )
-
-			}
-
-			////CUSTOMIZED OVERRIDE OF VUE NUMERIC INPUT
-			.vue-numeric-input{
-				border-radius:0;
-
-				$collection:color-schemes typography font-size ;
-				$variant-keys: accent-default  font-small-caps lg ;
-				@include render-queue( get-collection( $collection,$variant-keys) );
-				border-width: 1px;
-				border-color: color(accent-primary,border);
-
-				.btn-icon{
-					display: none;
-					&:before, &:after{
-						height: auto;
-						position: relative;
-						transform: none;
-						content: "TTG";
-					}
-
-
-				}
-				button.btn {
-					box-shadow: initial !important;
-					border-radius: 0;
-					$collection: color-schemes typography font-size;
-					$variant-keys: dark-accent-primary font-small-caps lg;
-					@include render-queue(get-collection($collection, $variant-keys));
-
-					display: flex;
-					flex-direction: row;
-					border-width: 2px;
-
-					&:disabled {
-						opacity: .7;
-					}
-					&:before {
-						content: "+";
-						width: 100%;
-						height: 100%;
-						position: absolute;
-						top: 2px;
-						left: 0;
-					}
-
-					&.btn-decrement {
-						&:before {
-							content: "-";
-						}
-					}
-
-				}
-			}
-		}
-	}
-
 
 </style>

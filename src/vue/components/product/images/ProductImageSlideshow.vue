@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="productImageSlideshow">
 		<swiper :options="swiperOption" ref="mySwiper"  >
 			<!-- slides -->
 			<swiper-slide v-for="image,index in ImageArray" :key="index">
@@ -60,10 +60,12 @@
 			</swiper-slide>
 
 			<!-- Optional controls -->
-			<div class="swiper-pagination"  slot="pagination"></div>
-			<div class="swiper-button-prev" slot="button-prev"></div>
-			<div class="swiper-button-next" slot="button-next"></div>
-			<div class="swiper-scrollbar"   slot="scrollbar"></div>
+			<div class="swiper-button-prev" slot="button-prev">
+				<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-left" viewBox="0 0 32 32"><path fill="#444" d="M24.333 28.205l-1.797 1.684L7.666 16l14.87-13.889 1.797 1.675L11.269 16z"/></svg>
+			</div>
+			<div class="swiper-button-next" slot="button-next">
+				<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-right" viewBox="0 0 32 32"><path fill="#444" d="M7.667 3.795l1.797-1.684L24.334 16 9.464 29.889l-1.797-1.675L20.731 16z"/></svg>
+			</div>
 		</swiper>
 	</div>
 </template>
@@ -201,24 +203,41 @@
 
 <style lang="scss" type="text/scss"  >
 	@import "src/vue/helpers/product-dependancies.scss";
-
+.productImageSlideshow{
 	.swiper-lazy{
 		opacity:0;
 	}
 
 	.lazy-preloader{
-	//	background: red;
-	//	height: 100%;
-	//	width: 100%;
 		display: block;
-//background:purple;
-
 		@include g-color-scheme(accent-default, (background:true, foreground:true,border:false,fill:true ));
-
 	}
 
 	.swiper-zoom-container{
 
+	}
+
+	.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
+
+		@include g-color-scheme(accent-primary, (background:false, foreground:true,border:false,fill:true ));
+		@include u-icon-svg(false,30px,150px);
+		opacity: .9;
+		margin:0;
+		left:none;
+		top:0;
+		background-image: none;
+		width: 8%;
+		height: 100%;
+		&:before{
+			content: "";
+		}
+	}
+
+	.swiper-button-prev{
+		left: 0;
+	}
+	.swiper-button-next{
+		right: 0;
 	}
 
 	.swiper-lazy-loaded{
@@ -227,11 +246,7 @@
 		@include u-transition(opacity, .4s, ease,.5s);
 		+ .lazy-preloader{
 			display: none;
-
-			//	height: 100%;
-			//	width: 100%;
 		}
-
 	}
 
 	.swiper-scrollbar{
@@ -288,16 +303,8 @@
 		-webkit-align-items: center;
 		align-items: center;*/
 	}
-	.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
-		//background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D 'http%3A%2F%2Fwww.w3.org%…19.9L22%2C44L0%2C22L0%2C22L0%2C22z' %20fill%3D '%23007aff' %2F%3E%3C%2Fsvg%3E);
-//background: red;
-		&:before{
-			content: "<";
-			//@include triangle(left,$square/2 ,$square*3,$color);
-		}
-		//background-image: none;
-		//left: 10px;
-		//right: auto;
-	}
+}
+
+
 </style>
 

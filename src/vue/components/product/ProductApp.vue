@@ -1,8 +1,9 @@
 <template>
-	<div>
+	<div class="component-productApp">
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentvariant="CurrentVariant"></ProductImageSlideshow>
+<SlideshowOptionPicker  :inSelectedVariant="CurrentVariant"  @optionChanged="optionChanged" :option="OptionByProp('color')"></SlideshowOptionPicker>
 			</div>
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
@@ -67,17 +68,6 @@
 					<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
 					<div>
-						<div data-price-container>
-							<span v-if="CurrentVariantOnSale" class="product-single__price wrapper" aria-hidden="false">
-								<span id="ComparePrice" class="product-single__price compare-at">{{ CurrentVariantCompareAtPrice }}</span>
-							</span>
-							<span id="ProductPrice"
-							      v-bind:class="{ 'on-sale' : IsOnSale }"
-							      class="product-single__price "
-							      itemprop="price"
-							      :content="CurrentVariantPrice">{{ CurrentVariantPrice }}
-							</span>
-						</div>
 
 						<meta itemprop="priceCurrency" v-if="shop" :content="shop.currency ">
 						<link itemprop="availability" href="http://schema.org/|| if product.available || InStock{% else %}OutOfStock{% endif %}">
@@ -290,7 +280,7 @@
     import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
-
+import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionPicker.vue'
     import Multiselect from 'vue-multiselect'
 
     import { getVariantFromOptions,isVariantAvailable,updateHistory} from '@/helpers/main.js'
@@ -361,7 +351,7 @@
             }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-	    components: {basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
+	    components: {basecomponent,SlideshowOptionPicker,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 	
 	import Vue from 'vue';
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';

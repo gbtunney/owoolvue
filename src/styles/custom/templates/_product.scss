@@ -76,6 +76,10 @@
         }
     }
 
+   .pending-item-price{
+       background: red;
+       @include set-type(md,font-small-caps);
+   }
 
 &__featured-image{
    img{
