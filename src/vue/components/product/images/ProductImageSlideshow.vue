@@ -165,15 +165,13 @@
 	        });
 	         //Array.from(this.product_image_dictionary.values());
         },
-    TrackIdle:function(){
+            TrackIdle: function() {
 
-
+            },
+            swiper: function() {
+                return this.$refs.mySwiper.swiper;
+            }
     },
-    swiper: function() {
-	    return this.$refs.mySwiper.swiper;
-    }
-
-        },
         data() {
 
             return {
