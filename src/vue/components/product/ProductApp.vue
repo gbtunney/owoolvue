@@ -369,6 +369,13 @@
              })
         ,
 
+            SelectedOptionsDictionary: function() {
+                if (  this.$data._currentVariant &&  this.$data._currentVariant.options){
+                    return  this.$data._currentVariant.options;
+                }else{
+                    return new Map;
+                }
+            },
 
 		    TestKit: function(){
 		    [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
@@ -453,8 +460,59 @@
 			    testBtn:function(target){
 		    	this.setlayoutButton({index: target})
 		    },
-            imageOptionUpdated: function(product_image, option) {
+            imageOptionUpdated: function(product_image,option,value) {
 
+              //  var optionMap = this.SelectedOptionsDictionary;//this.CurrentVariant.options;
+               console.log("*********UPDATING THE OPTION",product_image,option,value);
+
+
+                var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
+              ///  console.log("******new OPTION HANGED!!", newOptionDictionaryforPendingVariant, value)
+
+                if ( newOptionDictionaryforPendingVariant.get(option.id) ){
+
+                    if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
+                        newOptionDictionaryforPendingVariant.set(option.id, value);
+                        var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
+                            if (option.hasOwnProperty('id')){
+                                return option.id;
+                            }
+                        })
+
+                        var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+
+                        //console.log("******OPTION after!!", foundVariantArr, value)
+
+
+                        if (foundVariantArr && foundVariantArr.length==1 && isVariantAvailable(foundVariantArr[0]) ){
+
+
+                            console.log("variant FOUND&&&&&&&&&&&&",foundVariantArr[0],newOptionDictionaryforPendingVariant )
+
+                            this.variantChanged(foundVariantArr[0]);
+                            //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
+                        }else{
+                            this.imageUpdated(product_image);
+                            console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+                        }
+                    }
+                }
+
+                /*
+                optionMap.set(option.id,optionvalue );
+
+                var newArr = Array.from(optionMap.values());
+                newArr = newArr.map(function(optionvalue){
+                    return optionvalue.id;
+                })
+               var result =  this._getVariantFromOptions(newArr,this.Variants );*/
+              ///  console.log("*********optionMap THE OPTION",optionMap,newArr,result);
+
+
+
+            },
+            _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
+                return   getVariantFromOptions(optionArray, variantsArr);
             },
             imageUpdated: function(product_image) {
               //  this.$emit(this.$props.updateMode, product_image);
@@ -496,10 +554,15 @@
 			    };
 		    },
 	    	variantChanged: function(variant) {
-			    console.log("variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
+			    console.log("!!!!!!!!!variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
 			    this.$data._currentVariant   = variant;
 
-			    if (variant instanceof Array &&variant.length>0 ){
+			    if ( this.product_image_dictionary.get(this.CurrentVariant.image_id)){
+                    this.$data._currentImageSlideshow= this.product_image_dictionary.get(this.CurrentVariant.image_id);
+
+                }
+
+                if (variant instanceof Array &&variant.length>0 ){
 			    	var variantArr  =variant;
 			    	var newPending  = variantArr.map(function(_variant){
 
@@ -523,7 +586,7 @@
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
 
-			    console.log("!!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
+			    console.log("!**************!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
 
                 let tally = [];
                 console.log("tally", this.option_dictionary );
