@@ -5,6 +5,7 @@
       <span class="filter-dropdown__label--active"></span>
     </label>
     {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
     <select name="sortBy" id="sortBy" class="filter-dropdown__select">
       <option value="manual"{% if sort_by == "manual" %} selected="selected"{% endif %}>{{ 'collections.sorting.featured' | t }}</option>
       <option value="best-selling"{% if sort_by == "best-selling" %} selected="selected"{% endif %}>{{ 'collections.sorting.best_selling' | t }}</option>

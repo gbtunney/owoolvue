@@ -1,5 +1,10 @@
-import "../../styles/slate/layout/theme.scss";
-import "../../styles/slate/layout/theme.scss.liquid";
+
+import "../../styles/custom/layout/theme.scss";
+import "../../styles/brooklyn/brooklyn-icons.scss.liquid";
+import "../../styles/brooklyn/_brooklyn.scss";
+import "../../styles/pattern-lab-generator.scss";
+
+
 
 import {mountVue} from "../../vue/mountVue";
 /*import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";

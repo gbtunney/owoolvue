@@ -23,13 +23,14 @@ Collection template, used on collection.liquid and collection.image.liquid
     <div id="bc-sf-filter-tree-mobile"></div>
 </header>
 
+
 <div id="bc-sf-filter-tree"></div>
 
 <div id="bc-sf-filter-right">
 	{% if section.settings.collection_products_grid == 'collage' %}
+	sorting: 	{{ sort_by }}
+        <div id="bc-sf-filter-products" class="grid grid-collage" data-bc-sort="{{ sort_by }}">
 
-        <div id="bc-sf-filter-products" class="grid grid-collage" data-bc-sort="{{ collection.default_sort_by }}">
-			{% comment %}
             Loop through our products in the current collection.
             See the snippet 'snippets/product-grid-collage.liquid'.
 

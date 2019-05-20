@@ -1,4 +1,10 @@
+@import "../g-Patternlab/project-variables";
+$GENERATE-QUEUE: false;
+@import "../g-Patternlab/project-base";
 @import "variables";
+@import "custom-variables";
+
+
 @import "mixins";
 @import "theme";
 @import "timber";

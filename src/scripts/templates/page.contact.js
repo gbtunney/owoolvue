@@ -1,4 +1,4 @@
-import "../../styles/slate/templates/page.contact.scss";
+import "../../styles/custom/templates/page.contact.scss";
 
 alert();
 
