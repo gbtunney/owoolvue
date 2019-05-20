@@ -1,22 +1,14 @@
 <template>
 		<div :class="$options.name">
-			{{option}}
 			<swiper :options="swiperOption" :id="[ UID]" ref="mySwiper"  >
 				<!-- slides -->
 				<swiper-slide v-for="image,index in ImageArray" :key="index">
 					<div>
-						<img @click="imageChanged(image)"  :src="getShopifyImageURL(image)" alt="image.alt">
+						{{getImageTooltip(image)}}
+						<img @click="imageChanged(image)"  v-tooltip.top-start="getImageTooltip(image)" :src="getShopifyImageURL(image)" alt="image.alt">
 					</div>
 				</swiper-slide>
-
 				<!-- Optional controls -->
-				<div class="swiper-pagination"  slot="pagination"></div>
-				<!--	<div class="swiper-button-prev" slot="button-prev">
-						<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-left" viewBox="0 0 32 32"><path fill="#444" d="M24.333 28.205l-1.797 1.684L7.666 16l14.87-13.889 1.797 1.675L11.269 16z"/></svg>
-					</div>
-					<div class="swiper-button-next" slot="button-next">
-						<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-right" viewBox="0 0 32 32"><path fill="#444" d="M7.667 3.795l1.797-1.684L24.334 16 9.464 29.889l-1.797-1.675L20.731 16z"/></svg>
-					</div>-->
 				<div class="swiper-scrollbar"   slot="scrollbar"></div>
 			</swiper>
 		</div>
@@ -36,6 +28,9 @@
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
 
+    import { VTooltip } from 'v-tooltip'
+
+    Vue.directive('tooltip', VTooltip)
     //:options="swiperOption" ref="mySwiper"
     export default {
         name: 'ProductImageThumbailPicker',
@@ -51,6 +46,10 @@
 		    option:{
                 type: [Boolean,Object],
                 default:false
+            },
+            tooltipAlt:{
+                type: [Boolean],
+                default:true
             }
         },
         data() {
@@ -79,8 +78,41 @@
             }
         },
         methods: {
+            getImageTooltip: function(product_image) {
+                if (this.getProductImageOptionValue(product_image)){
+                    return this.getProductImageOptionValue(product_image).title;
+                } else if (this.$props.tooltipAlt){
+                    return product_image.alt
+                }
+                return false;
+            },
+            getProductImageOptionValue: function(product_image) {
+                if (product_image.variants && product_image.variants.length > 0){
+                    var variant = product_image.variants[0];
+                    console.log("OPTIONsssss", variant.options.get(this.OptionID))
+                    return variant.options.get(this.OptionID);
+                }
+                return false;
+            },
             imageChanged: function(product_image) {
-                this.$emit(this.$props.updateMode, product_image);
+                //this.$emit(this.$props.updateMode, product_image);
+
+                if ( this.$props.option ){
+                    if ( product_image.variants &&  product_image.variants.length> 0 ){
+
+                       var  variantList = product_image.variants.find(function(variant){
+
+
+                       })
+
+                        this.$emit("UPDATE_OPTION", product_image,this.$props.option);
+                    } else{
+                        this.$emit(this.$props.updateMode, product_image);
+                    }
+                }else{
+                    this.$emit(this.$props.updateMode, product_image);
+                }
+
 
                 //@click="$emit('optionChanged',$props.option, optionvalue)"
         /*
@@ -147,7 +179,9 @@
 
         },
         computed: {
-
+            OptionID:function(){
+                return (this.$props.option && this.$props.option.id )? this.$props.option.id : false;
+            }
         }
 
     }

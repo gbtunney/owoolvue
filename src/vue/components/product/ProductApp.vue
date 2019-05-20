@@ -4,8 +4,7 @@
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentimage="$data._currentImageSlideshow" :imagearray="CurrentProductImages" :imagesize="'1250x1250'"></ProductImageSlideshow>
-				<ProductImageThumbailPicker :option="OptionByProp('color')" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
-				<SlideshowOptionPicker  :inSelectedVariant="CurrentVariant"  @optionChanged="optionChanged" :option="OptionByProp('color')"></SlideshowOptionPicker>
+				<ProductImageThumbailPicker :option="OptionByProp('color')" @UPDATE_OPTION="imageOptionUpdated" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
 			</div>
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
@@ -269,37 +268,24 @@
 
 <script type="text/javascript">
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
+    const schema = require("schm");
+    import { getVariantFromOptions,isVariantAvailable,updateHistory} from '@/helpers/main.js'
+    import Multiselect from 'vue-multiselect'
+    import Vue from 'vue';
+
     import {ProductMixin} from  '@/mixins/productmixin.js';
     import {VariantMixin} from  '@/mixins/variantmixin.js';
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
 
     import kabob from '@/components/utilities/kabob';
-
     import basecomponent from '@/components/utilities/g-base-component.vue';
 
-
+    import ProductImageThumbailPicker from '@/components/product/images/ProductImageThumbailPicker.vue'
     import ProductImageSlideshow from '@/components/product/images/ProductImageSlideshow.vue'
+
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
-import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionPicker.vue'
-
-    import ProductImageThumbailPicker from '@/components/product/images/ProductImageThumbailPicker.vue'
-
-    import Multiselect from 'vue-multiselect'
-
-    import { getVariantFromOptions,isVariantAvailable,updateHistory} from '@/helpers/main.js'
-
-    import Vue from 'vue';
-
-    import adminOptionSelect from '@/components/admin/ProductOptionTestComponent.vue';
-/*		<singleProductOptionPicker searchable="true" :selectedoptionslug="Slug" @optionChanged="optionChanged" :option="OptionByProp('color')"></singleProductOptionPicker>
-*/
-    //custom version of vuemultiselect - stripped down.
-  //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
-    //  import Multiselect from '@/components/utilities/gMultiselectList.vue'
-
-    const schema = require("schm");
 
     //  ProductMixin
     export default {
@@ -356,7 +342,7 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
             }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-	    components: {ProductImageThumbailPicker,basecomponent,SlideshowOptionPicker,ProductImageSlideshow,kabob,PendingItemsComponent,adminOptionSelect,productOptionPicker,Multiselect},
+	    components: {ProductImageThumbailPicker,basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -467,6 +453,9 @@ import SlideshowOptionPicker from '@/components/product/options/SlideshowOptionP
 			    testBtn:function(target){
 		    	this.setlayoutButton({index: target})
 		    },
+            imageOptionUpdated: function(product_image, option) {
+
+            },
             imageUpdated: function(product_image) {
               //  this.$emit(this.$props.updateMode, product_image);
             console.log("THE IMAGE IS UPDSYD",product_image);

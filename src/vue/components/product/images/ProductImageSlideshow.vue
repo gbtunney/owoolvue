@@ -1,6 +1,5 @@
 <template>
 	<div :class="$options.name">
-		sd{{Ref}}
 		<swiper :options="swiperOption"  :ref="Ref"  >
 			<!-- slides -->
 			<swiper-slide v-for="image,index in ImageArray"  :key="index">
