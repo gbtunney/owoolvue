@@ -42,7 +42,7 @@
 <div class="grid__item grid-product {{ grid_item_width }}{% if sold_out %} is-sold-out{% endif %}">
   <div class="grid-product__wrapper">
     <div class="grid-product__image-wrapper">
-      <a class="grid-product__image-link" href="{{ product.url | within: collection }}">
+      <a class="grid-product__image-link" href="{{ product.url  }}">
         {% if product.featured_image.src == blank %}
           <img class="grid-product__image" src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">
         {% else %}
@@ -96,9 +96,7 @@
           {% endif %}
         </span>
       </span>
-      {% if section.settings.product_vendor_enable %}
-        <p class="grid-product__vendor">{{ product.vendor }}</p>
-      {% endif %}
+        <p class="grid-product__vendor">{{ product.type }} - {{ product.vendor }}</p>
     </a>
   </div>
 </div>

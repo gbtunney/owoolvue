@@ -1,0 +1,4 @@
+{%- capture defaults_optionconfig -%}
+{%  include  'settings.optionconfig.json' %}
+{%- endcapture -%}
+{{- defaults_optionconfig['yarns'] | strip_newlines -}}

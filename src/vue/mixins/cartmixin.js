@@ -7,7 +7,6 @@ export const CartMixin = {
 	data() {
 		return {}
 	},
-	name: 'testcomponent',
 	computed: {
 	...mapGetters([
 		'Cart'
@@ -16,7 +15,7 @@ export const CartMixin = {
 	},
 	methods: {
 ...mapActions([
-		'getCart', 'addItem','getVariantDefaultImage'
+		'updateCartItem','getCart', 'addItem','getVariantDefaultImage'
 	])
 }
 }

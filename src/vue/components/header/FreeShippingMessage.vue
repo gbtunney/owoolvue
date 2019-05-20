@@ -1,13 +1,12 @@
 <template>
 	<div class="c-freeshipping-message">
+		<div class="c-freeshipping-message__message" v-if="!MinRequirementMet">Add {{DiffFormatted}} more to your cart
+			for FREE shipping!
+		</div>
 		<div class=" c-freeshipping-message__chart" v-if="!MinRequirementMet">
 			<span :style="InnerStyleObj " class="c-freeshipping-message__chart-inner"></span>
 		</div>
 		<span class="c-freeshipping-message__byline" v-if="!MinRequirementMet"> (USA customers only)</span>
-		<div class="c-freeshipping-message__message" v-if="!MinRequirementMet">Add {{DiffFormatted}} more to your cart
-			for FREE shipping!
-		</div>
-
 		<div class="c-freeshipping-message__qualified" v-if="MinRequirementMet">
 			You have qualified for free shipping!!
 		</div>
@@ -96,7 +95,7 @@
 
 	.c-freeshipping-message {
 
-		@include u-make-container(80%);
+		@include u-make-container(100%);
 		@include g-color-scheme(dark-accent-primary, (foreground:true, background: false, border:false));
 		position: relative;
 

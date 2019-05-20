@@ -856,12 +856,13 @@ var ajaxCart = (function(module, $) {
     }
 
     // Run this function in case we're using the quantity selector outside of the cart
+    // Run this function in case we're using the quantity selector outside of the cart
     adjustCart();
   };
 
   loadCart = function() {
-    $body.addClass('drawer--is-loading');
-    ShopifyAPI.getCart(cartUpdateCallback);
+  ///  $body.addClass('drawer--is-loading');
+  //  ShopifyAPI.getCart(cartUpdateCallback);
   };
 
   updateCountPrice = function(cart) {

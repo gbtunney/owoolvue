@@ -100,11 +100,20 @@
       </div>
     </div>
     <div class="drawer__inner">
-      <div id="CartContainer" class="drawer__cart"></div>
+      <div id="CartContainer" class="drawer__cart">
+        <div js-mount-vue="CartPanel" class="add-to-cart-multiple"  prop-label="Kit #2"  prop-productid prop-variantid></div>
+      </div>
     </div>
   </div>
 
-  <div id="PageContainer" class="page-container">
+  <div id="PageContainer"  class="page-container">
+
+    <div id="hookwrap">
+
+      <h1>WRAPPER
+        <div id="hook-arguments-example" v-demo="{ color: 'white', text: 'hello!' }">hi example</div>
+        </h1>
+    </div>
 
     {% if template.name == "index" %}
       {% section 'slideshow' %}

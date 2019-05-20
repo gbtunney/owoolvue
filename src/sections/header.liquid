@@ -82,7 +82,7 @@
 							<div class="{{ menu_name }}__cart-item-count">
 								<a class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
 									{{ 'layout.cart.title' | t }}
-									({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
+									<div js-mount-vue="CartIndicator"></div>
 								</a>
 							</div>
 						</div>

@@ -18,20 +18,35 @@ const SHOPIFY_API = new ShopifyApi({
         _cart: {"no cart": "set yet"}
     },
 })
+.post({
+    action: "updateCartItem",
+    property: "_cart",
+    // data: $('#'+form_id).serialize(),
+    path: "/cart/change.js",
+    dataType: "json",
+    contentType: "application/json;charset=UTF-8",
+    
+    onSuccess(state, payload, axios, {params, data}) {
+        // if you define the onSuccess function you have to set the state by yourself
+        
+        //let product_id = params.product_id;
+        // state._cart = payload.data;
+        state._cart = payload.data;
+        console.log(`add to  cart successfully done.`, payload,data,state._cart);
+    },
+    onError(state, error, axios, {params, data}) {
+        // if you define the onSuccess function you have to set the state by yourself
+        //	state.post = null;
+        throw "REST ERROR"
+    }
+})
 .get({
     action: "getCart",
     property: "_cart",
     path: "/cart.js",
     
     onSuccess(state, payload, axios, {params, data}) {
-        // if you define the onSuccess function you have to set the state by yourself
-        
-        //let product_id = params.product_id;
-        
-        state._cart = payload.data;        console.log(`Post with id ${data} successfully fetched.`, data,state._cart);
-    
-    
-        //console.log("STATE", params);
+       state._cart = payload.data;        console.log(` cart successfully fetched.`, data,state._cart);
     },
     onError(state, error, axios, {params, data}) {
         // if you define the onSuccess function you have to set the state by yourself
@@ -46,13 +61,14 @@ const SHOPIFY_API = new ShopifyApi({
    // data: $('#'+form_id).serialize(),
     path: "/cart/add.js",
     
-    onSuccess(state, payload, axios, {params, data}) {
+   
+onSuccess(state, payload, axios, {params, data}) {
         // if you define the onSuccess function you have to set the state by yourself
         
         //let product_id = params.product_id;
         // state._cart = payload.data;
-        console.log(`Post with id ${data} successfully fetched.`, payload.data, state._cart);
-        //console.log("STATE", params);
+    state._cart = payload.data;
+    console.log(`add to  cart successfully done.`, payload,data,state._cart);
     },
     onError(state, error, axios, {params, data}) {
         // if you define the onSuccess function you have to set the state by yourself

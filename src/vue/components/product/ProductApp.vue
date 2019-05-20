@@ -213,7 +213,7 @@
 							</div>
 						</form>
 
-						<PendingItemsComponent :kit="$data._kit" lineitemmessage="this is my test phrase" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
+						<PendingItemsComponent :kit="$data._kit" :lineitemmessage="( CurrentProduct && $data._kit) ? CurrentProduct.title : false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
 						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
 						</div>

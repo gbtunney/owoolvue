@@ -1,6 +1,9 @@
 import "../../styles/slate/layout/theme.scss";
 import "../../styles/slate/layout/theme.scss.liquid";
 
+import Vue from 'vue';
+
+
 import {mountVue} from "../../vue/mountVue";
 /*import AddToCart from "../../vue/components/shopify/product/AddToCartMultiple.vue";
 import ProductVariantSelector from "../../vue/components/shopify/product/Product-Variant-Selector.vue";
@@ -8,6 +11,10 @@ import ProductApp from "../../vue/components/shopify/product/Product.vue";
 
 */
 import ProductApp from "../../vue/components/product/ProductApp.vue";
+import CartIndicator from "../../vue/components/product/cart/CartIndicator.vue";
+
+import CartPanel from "../../vue/components/product/cart/CartPanel.vue";
+
 import KitEditorApp from "../../vue/components/admin/KitEditor.vue";
 
 import AnnouncementBarApp from "../../vue/components/header/AnnouncementBarApp.vue";
@@ -35,8 +42,8 @@ if ( vueelements && vueelements.length>0){
         ///TODO : replace with something sane
         if (component == "AddToCart"){
 //            mountVue(`#${uid}`, AddToCart);
-        } else if (component == "ProductVariantLinker"){
-           // mountVue(`#${uid}`, ProductVariantLinker);
+        } else if (component == "CartPanel"){
+            mountVue(`#${uid}`, CartPanel);
         }
         else if (component == "ProductApp"){
            // alert();
@@ -52,8 +59,8 @@ if ( vueelements && vueelements.length>0){
         }
         else if (component == "AdminProductApp"){
            // mountVue(`#${uid}`, AdminProductApp);
-        }else if (component=="TestApp"){
-           // mountVue(`#${uid}`, NewProduct);
+        }else if (component=="CartIndicator"){
+           mountVue(`#${uid}`, CartIndicator);
     
     
         }

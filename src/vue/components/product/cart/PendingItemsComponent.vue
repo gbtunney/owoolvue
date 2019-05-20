@@ -243,14 +243,20 @@
 						}}), () => {
 						return new Promise(function(resolve, reject) {
 							setTimeout(function() {
-								console.log('QUEUE COMPLETE', pq, self);
-								self.Loading = self.isDisabled = false;
+                                console.log('QUEUE COMPLETE', pq, self);
+
+                                self.Loading = self.isDisabled = false;
                                 let toast = self.$toasted.show(`${self.ItemCount} Items added to cart`, {
                                     theme: "toasted-custom",
                                     position: "top-right",
                                     duration : 700
 
                                 });
+                                self.getCart().then(function(res){
+                                    console.log('cart COMPLETE', store,res,self.Cart);
+
+                                })
+
                                 resolve();
 							}, 5)
 						});
