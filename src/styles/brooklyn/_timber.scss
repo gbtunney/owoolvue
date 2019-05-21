@@ -2033,18 +2033,15 @@ $socialIconFontStack: 'icons';
 
   .icon-arrow-down {
     position: relative;
-    top: -2px;
-    padding-left: $gutter / 4;
-    font-size: 10px;
+  //  font-size: 10px;
   }
 }
 
 .site-nav__dropdown-link {
   .icon-arrow-down {
-    position: absolute;
-    top: 50%;
+
     right: $gutter / 2;
-    font-size: 10px;
+   // font-size: 10px;
     @include transform("translateY(-50%) rotate(-90deg)");
   }
   .site-nav__dropdown-grandchild & {
@@ -2063,12 +2060,12 @@ $socialIconFontStack: 'icons';
   pointer-events: none;
 
   a {
-    background-color: $colorNav;
-    text-align: left;
+   // background-color: $colorNav;
+  //  text-align: left;
 
     &:hover,
     &:active {
-      background-color: darken($colorNav, 10%);
+      //background-color: darken($colorNav, 10%);
     }
   }
 
@@ -2153,7 +2150,7 @@ $socialIconFontStack: 'icons';
  // font-size: 22px;
   .mobile-nav__subsublist & {
     padding-left: 45px;
-    font-size: 16px;
+   // font-size: 16px;
   }
 }
 

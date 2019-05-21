@@ -37,7 +37,7 @@ Set the default button style if not defined
 
 <form action="/search" method="get" class=" search-bar {{ search_bar_location }}" role="search">
 	{% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
-	<input autofocus  class="{{ input_component_name }} {{input_component_name}}--{{ input_style_modifier }} {{ input_flags }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ searchplaceholder | default:defaultplaceholder }}" aria-label="{{ 'general.search.placeholder' | t }}">
+	<input   class="{{ input_component_name }} {{input_component_name}}--{{ input_style_modifier }} {{ input_flags }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ searchplaceholder | default:defaultplaceholder }}" aria-label="{{ 'general.search.placeholder' | t }}">
 
 
 	<label for="q" class="{{ button_component_name }} {{ button_component_name }}--{{button_style_modifier}} {{ button_flags }}  icon-fallback-text">

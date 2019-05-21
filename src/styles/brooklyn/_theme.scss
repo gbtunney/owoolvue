@@ -2205,11 +2205,11 @@ $slick-opacity-not-active: 0.25;
 
 /*================ Dropdown Animation ================*/
 .site-nav__dropdown {
-  background-color: $colorNav;
+  //background-color: $colorNav;
   min-width: 100%;
-  padding: ($gutter / 3) 0;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.09);
-  @include transform(translate3d(0px, -12px, 0px));
+ // padding: ($gutter / 3) 0;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.06);
+ // @include transform(translate3d(0px, -12px, 0px));
 
   .supports-no-touch .site-nav--has-dropdown:hover &,
   .site-nav--has-dropdown.nav-hover &,
@@ -2251,23 +2251,20 @@ $slick-opacity-not-active: 0.25;
 /*================ Submenu items ================*/
 .site-nav__dropdown a,
 .site-nav__grandchild-dropdown a {
-  background-color: transparent;
-  color: $colorTextBody;
+ // background-color: transparent;
+  //color: $colorTextBody;
 
   &:hover,
   &:active,
   &:focus {
-    background-color: transparent;
-    color: $colorSecondary;
+   // background-color: transparent;
+   // color: $colorSecondary;
   }
 }
 
 .site-nav__dropdown-link {
-  @include bodyFontItalic;
-  display: block;
   white-space: nowrap;
-  padding: 5px 15px;
-  font-size: em(16px);
+
   .site-nav--has-grandchildren & {
     padding-right: $gutter * 1.5;
   }

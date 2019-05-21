@@ -28,6 +28,11 @@
 
 
 		width: 60%;
+
+		@include breakpoint-range(sm,"<=") {
+			width: 90%;
+
+		}
 		margin: 0 auto;
 
 		input[type="search"]{
@@ -44,6 +49,7 @@
 
 		@include breakpoint-range(sm,"<=") {
 			@include set-type(lg, font-san-serif);
+			border-width: 0px ;
 
 		}
 
@@ -57,7 +63,7 @@
 			border-width: 0px ;
 			&:focus{
 				box-shadow:none;
-				border-bottom-width: 1px;
+			//	border-bottom-width: 1px;
 			}
 		}
 		label{

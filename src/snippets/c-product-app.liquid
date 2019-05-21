@@ -2,6 +2,14 @@
 This is the full Product App vue component.
 {% endcomment %}
 
+	{% include 'g-props-meta-loop' with meta_namespace : product_meta.productdata ,  meta_namespace_prop : 'productdata'  %}
+
+{% capture datafile %}
+{% include 'settings.optionconfig.json'  %}
+{% endcapture %}
+
+{{  datafile }}
+
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
      prop-variantid="{{ variant_id }}"

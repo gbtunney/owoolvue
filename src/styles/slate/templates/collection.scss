@@ -1,0 +1,12 @@
+@import "../../g-Patternlab/project-variables";
+$GENERATE-QUEUE: false;
+@import "../../g-Patternlab/project-base";
+
+
+.bc-sf-filter-option-block .bc-sf-filter-block-title{
+	//background: red!important;
+	h3{
+		@include g-typeset(base, font-small-caps);
+	}
+}
+

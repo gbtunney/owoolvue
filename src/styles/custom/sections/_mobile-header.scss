@@ -18,6 +18,10 @@ $show-guides: false;
 	position: relative;
 	display: block;
 
+	&__divider{
+		//background: red;
+		@include rhythm-padding-sides(bottom,lg);
+	}
 	&__nav-trigger {
 		padding-left: rhythm(1);
 		//  background: red;
@@ -199,6 +203,8 @@ $show-guides: false;
 		accent:true
 	);
 	@include g-color-scheme(light, $props);
+
+
 
 	&__item {
 		$parent: &;

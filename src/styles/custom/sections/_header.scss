@@ -13,13 +13,20 @@ $show-guides: false;
 		display: none;
 	}
 	@include u-default-container;
-	@extend %u-reset-link-color;
+//	@extend %u-reset-link-color;
 
 	padding-top: rhythm(1);
 
 	position: relative;
 	display: block;
 
+	&__divider{
+			@include rhythm-padding(md);
+
+		@include breakpoint-range(sm,"<="){
+			display: none;
+		}
+	}
 	&__wrapper {
 
 		display: grid;
@@ -106,7 +113,7 @@ $show-guides: false;
 		}
 		&-item-count {
 
-			@include set-type(base, font-serif-italic);
+			@include g-typeset(sm, font-serif-italic);
 			a {
 				color: color(accent) !important;
 			}
@@ -125,7 +132,7 @@ $show-guides: false;
 	&__customer {
 		width: auto;
 
-		@include set-type(base, font-serif-italic);
+		@include g-typeset(sm, font-serif-italic);
 
 		a {
 			color: color(accent) !important;
@@ -164,26 +171,19 @@ $show-guides: false;
 	height: auto;
 	$parent: &;
 
-	$props: (
-		background: true,
-		foreground: true,
-		border: false,
-		accent:true
-	);
-	@include g-color-scheme(light, $props);
-
 	&__item {
 		$parent: &;
 		@include u-transition(opacity);
 		$props: (
 			background: false,
-			foreground: true,
+			foreground: true,accent:false,
 			border: false,
 			fill:accent,
 			hover-foreground:false,
 			hover-fill: false
 		);
-		@include c-kabob(light-alt, $props, $reflect: true, $type-collection: ((font-size typography), (lg font-san-serif))) {
+		//font-size typography), (lg font-san-serif)
+		@include c-kabob(light-alt, $props, true,false) {
 			&__left, &__right {
 				opacity: 0;
 				@include u-transition(opacity);
@@ -193,9 +193,105 @@ $show-guides: false;
 					opacity: 1;
 				}
 			}
+			&__center{
+				@include rhythm-margin-sides( left right,sm);
+
+			}
 		}
 		a {
+			//@extend %u-reset-link-color;
+		}
+
+
+
+	}
+
+	.site-nav__item{
+
+
+		.site-nav__link{
+
+			@include g-typeset(lg,font-san-serif);
 			@extend %u-reset-link-color;
+
+		}
+		.site-nav__dropdown-link{
+
+			@include g-typeset(base,font-serif);
+//			@extend %u-reset-link-color;
+
+			&__icon{
+				//background: red;
+				@include rhythm-margin-sides( right,sm);
+				@include u-icon-svg(false,1.2em);
+
+
+				opacity: 0;
+				@include u-transition(opacity);
+
+
+			}
+
+
+		}
+
+.site-nav__dropdown{
+
+	$props: (
+		background: true,
+		foreground: true,
+		border: false,
+		fill:foreground
+	);
+	@include g-color-scheme(dark-accent-default,$props);
+
+	u{
+		padding: 0;
+	}
+  li{
+@include u-vcenter;
+	  &:hover{
+		  .site-nav__dropdown-link__icon {
+			  opacity: 1;
+		  }
+	  }
+
+  }
+	@include rhythm-padding(xl,true);
+	//@include u-leader(md)
+}
+
+		&.site-nav--has-dropdown{
+			$props: (
+				background: true,
+				foreground: true,
+				border: false,
+				fill:accent,
+				hover-foreground:false,
+				hover-fill: false
+			);
+			//@include g-color-scheme(dark,$props);
+
+			.icon-arrow-down{
+				@include g-typeset(sm,font-san-serif);
+
+			}
+
+		}
+		&.site-nav--active{
+
+			$props: (
+				background: false,
+				foreground: true,
+				border: false,
+				fill:accent,
+				hover-foreground:false,
+				hover-fill: false
+			);
+			@include g-color-scheme(light,$props);
+			.Owool_Main-Menu__item__left{
+				opacity: 1;
+			}
 		}
 	}
 }

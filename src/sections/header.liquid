@@ -21,8 +21,6 @@
 
 			{% include 'announcement-bar' %}
 
-
-
 			{% assign header_style_modifier = 'light' %}
 			{% assign header_style_modifier__social = 'dark-accent-default' %}
 			{% assign header_style_modifier__cart = 'accent-primary' %}
@@ -117,6 +115,11 @@
 														<li
 																class="site-nav__item site-nav--has-dropdown site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
 																aria-haspopup="true">
+
+															<div class="icon__left">
+																{% include 'svg-definitions' with 'leaves-b' %}
+															</div>
+
 															<a
 																	href="{{ childlink.url }}"
 																	class="site-nav__dropdown-link"
@@ -124,7 +127,9 @@
 																	data-meganav-type="parent"
 																	{% unless template.name == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless %}
 																	tabindex="-1">
+
 																{{ childlink.title | escape }}
+
 																<span class="icon icon-arrow-down" aria-hidden="true"></span>
 															</a>
 															<div class="site-nav__dropdown-grandchild">
@@ -148,14 +153,19 @@
 														</li>
 													{% else %}
 														<li{% if childlink.active %} class="site-nav--active"{% endif %}>
-															<a
-																	href="{{ childlink.url }}"
-																	class="site-nav__dropdown-link"
-																	data-meganav-type="child"
-																	{% if childlink.active %}aria-current="page"{% endif %}
-																	tabindex="-1">
+															<span class="site-nav__dropdown-link__icon">
+																{% include 'svg-definitions' with 'leaves-b' %}
+															</span>
+															<span><a
+																		href="{{ childlink.url }}"
+																		class="site-nav__dropdown-link"
+																		data-meganav-type="child"
+																		{% if childlink.active %}aria-current="page"{% endif %}
+																		tabindex="-1">
 																{{ childlink.title | escape }}
-															</a>
+															</a></span>
+
+
 														</li>
 													{% endif %}
 												{% endfor %}
@@ -208,7 +218,9 @@
 								{% endif %}
 
 							</ul>
-							{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header', searchplaceholder: ' ',input_flags: '',button_flags:' --no-border' %}
+							<div class="{{ menu_name }}__search" >
+								{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header', searchplaceholder: ' ',input_flags: '',button_flags:' --no-border' %}
+							</div>
 
 						</nav>
 
@@ -216,20 +228,18 @@
 					<div>
 
 					</div>
-					<div class="{{ menu_name }}__search" >
-						</div>
+
 
 					</div>
 				</div>
 
 
-
+		<div class="{{ menu_name }}__divider --leader --trailer">
+			{% include 'c-divider'   with  style_modifier: header_style_modifier__divider %}
+		</div>
 			</header>
-			{% include 'mobile-header' %}
 
-			<header class="site-header" role="banner">
-
-		</header>
+		{% include 'mobile-header' %}
 	</div>
 </div>
 </div>
