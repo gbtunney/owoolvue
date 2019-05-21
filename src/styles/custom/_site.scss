@@ -12,11 +12,21 @@
 
 @import "sections/sections";
 @import "snippets/hero";
+@import "snippets/search-bar";
 @import "snippets/announcement-bar";
 @import "snippets/email-list-form";
 //@import "snippets/pagination";
 
+.main-content .wrapper{
+	@include breakpoint-range(sm,"<="){
+		padding: 0;
+	}
+}
 
+.do-touch-manipulation{
+	touch-action: manipulation;
+	-ms-touch-action: manipulation;
+}
 #preview-bar-iframe{
 	display: none;
 }

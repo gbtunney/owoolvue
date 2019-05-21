@@ -159,8 +159,8 @@ $show-guides: false;
 	}
 
 	&__search {
-		background: red;
-		display: none;
+		//background: red;
+		//display: none;
 	}
 
 	//Owool_Mobile-Header__nav-trigger
@@ -238,9 +238,7 @@ $show-guides: false;
 .drawer__inner {
 
 	.search-bar {
-		input {
-			@include g-color-scheme(accent-primary);
-		}
+
 		// padding: get-spacing();
 	}
 	.leaves-deco {
@@ -279,23 +277,26 @@ $show-guides: false;
 
 .mobile-nav__item {
 	padding: get-spacing(1, lg);
+	@include set-type(base, font-serif);
+
 	a {
 		padding-left: get-spacing(1, sm);
-		@include set-type(md, font-san-serif);
+		@include set-type(md, font-serif);
 		color: color($nav-drawer-scheme, foreground); //adaptive-color($colorDrawerText, 25%);
 	}
 
-	&--search{
-		padding: get-spacing(1, lg) get-spacing(1, sm) ;
+	&--search {
+		@include rhythm-margin(xl);
+		padding: 0;
 	}
 }
 
 .mobile-nav__sublist {
 	background: darken(color($nav-drawer-scheme, background), 5%);
-	@include set-type(sm, font-san-serif);
-	//margin-top: get-spacing(2);
 	> .mobile-nav__item {
-		padding: get-spacing(2);
+		//padding: get-spacing(2);
+		@include set-type(sm, font-san-serif);
+
 		&:after {
 			content: none;
 		}

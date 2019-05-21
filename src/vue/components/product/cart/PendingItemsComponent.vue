@@ -233,7 +233,6 @@
 				pq.add([() => {
 					return new Promise(function(resolve, reject) {
 						setTimeout(function() {
-							console.log('task 1');
 							resolve();
 						}, 1000)
 					});
@@ -243,18 +242,9 @@
 						}}), () => {
 						return new Promise(function(resolve, reject) {
 							setTimeout(function() {
-                                console.log('QUEUE COMPLETE', pq, self);
-
                                 self.Loading = self.isDisabled = false;
-                                let toast = self.$toasted.show(`${self.ItemCount} Items added to cart`, {
-                                    theme: "toasted-custom",
-                                    position: "top-right",
-                                    duration : 700
-
-                                });
                                 self.getCart().then(function(res){
-                                    console.log('cart COMPLETE', store,res,self.Cart);
-
+                                    $('.js-drawer-open-button').click()
                                 })
 
                                 resolve();
@@ -270,7 +260,6 @@
 			updateAvailability: function(bool) {
 
 				//todo: make some way of doing alternate number here.
-				console.log("UPDATE AVAIABILITY",bool)
 				let self = this;
 
 				this.$data.availablity= bool;

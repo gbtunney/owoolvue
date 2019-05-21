@@ -41,12 +41,11 @@
 		data: function() {
 			return {
 			    slides:[
-				    {
-				        component: "freeshipping",
-				        message: "test1",
-				    },
                     {
-                        message: "test2",
+                        message: "Free shipping in the US!",
+                    },
+                    {
+                        message: "I am a test message!!!!!!!!",
                     }
 			],
                 swiperOption: {

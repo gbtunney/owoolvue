@@ -14,6 +14,10 @@ To return only products in results:
 
 {% endcomment %}
 
+{% assign default_component_id = 'icon' %}
+
+{% assign defaultplaceholder= 'Search Our Store' %}
+
 {% assign input_group_component_name= 'c-input-group' %}
 {% assign input_component_name= 'c-input' %}
 {% assign button_component_name= 'c-button' %}
@@ -31,14 +35,45 @@ Set the default button style if not defined
   {% assign search_btn_style = 'btn--secondary' %}
 {% endunless %}
 
-<form action="/search" method="get" class="{{ input_group_component_name }} search-bar {{ search_bar_location }}" role="search">
+<form action="/search" method="get" class=" search-bar {{ search_bar_location }}" role="search">
 	{% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
-	<input autofocus style="border-style:solid!important;" class="{{ input_component_name }} {{input_component_name}}--{{ input_style_modifier }} {{ input_group_component_name }}__input {{ input_flags }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
-	<button type="submit" class="{{ button_component_name }} {{ button_component_name }}--{{button_style_modifier}} {{ button_flags }}  icon-fallback-text">
-		<div class="c-button__icon">
+	<input autofocus  class="{{ input_component_name }} {{input_component_name}}--{{ input_style_modifier }} {{ input_flags }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ searchplaceholder | default:defaultplaceholder }}" aria-label="{{ 'general.search.placeholder' | t }}">
+
+
+	<label for="q" class="{{ button_component_name }} {{ button_component_name }}--{{button_style_modifier}} {{ button_flags }}  icon-fallback-text">
+				<div class="c-button__icon">
 			{% include 'svg-definitions' with search_icon_name %}
 		</div>
 		<span class="fallback-text">{{ 'general.search.submit' | t }}</span>
-	</button>
+
+	</label>
+	<script>
+
+        var CLICKDONE =false;
+
+        $( document ).ready(function() {
+
+            if (!CLICKDONE){
+                $('.mobile-nav__item--search .js-mobile-search-button-trigger').click(function() {
+                   // event.preventDefault();
+
+                    console.log( "CLICKEDD!",$('.mobile-nav__item--search .js-mobile-search-button-trigger').data('events') , $('bc-sf-search-suggestion-mobile-top-panel'));
+
+                    $('.bc-sf-search-suggestion-mobile-top-panel').css('display','block')  ;
+
+	                // document.querySelector('#bc-sf-search-box-mobile').focus();
+
+                });
+            }
+
+
+            CLICKDONE = true;
+
+        });
+	</script>
 </form>
+{% assign searchplaceholder= nil %}
+{% assign search_bar_location= nil %}
+
+
 

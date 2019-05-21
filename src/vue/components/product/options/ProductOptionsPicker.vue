@@ -127,7 +127,6 @@
 
 						var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
 
-						console.log("FOUNDARRAY ", idmap,foundVariantArr)
 						if (foundVariantArr && foundVariantArr.length==1 ){
 							this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
 						}else{

@@ -26,7 +26,7 @@ export const ProductOptionPickerMixin = {
                 return  this.$data._currentVariant;
             },
             set: function(newVal) {
-                console.log("setting@ variant");
+                //console.log("setting@ variant");
                 this.$data._currentVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
             }
         },

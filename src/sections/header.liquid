@@ -22,7 +22,6 @@
 			{% include 'announcement-bar' %}
 
 
-			{% include 'mobile-header' %}
 
 			{% assign header_style_modifier = 'light' %}
 			{% assign header_style_modifier__social = 'dark-accent-default' %}
@@ -193,7 +192,7 @@
 								header menu
 								is displayed inline.
 								<li class="site-nav__item site-nav--search__bar medium-down--hide">
-									{% include 'search-bar', search_btn_style: 'c-button--accent-primary', search_bar_location: 'search-bar--header' %}
+									{% include 'search-bar', search_btn_style: 'c-button--accent-primary', search_bar_location: 'search-bar--mobile-header' %}
 								</li>
 								{% endcomment %}
 
@@ -205,45 +204,28 @@
 									{% endif %}
 									<li class="site-nav__item">
 
-
-										<a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
-											<div class="{{ menu_name }}__cart-icon">
-												{% include 'c-ui-icon' with icon_name: 'search' ,style_modifier: 'light' , flags: header_flags__icon %}
-											</div>
-										</a>
 									</li>
 								{% endif %}
 
 							</ul>
+							{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header', searchplaceholder: ' ',input_flags: '',button_flags:' --no-border' %}
+
 						</nav>
+
 					</div>
 					<div>
-						<div class="{{ menu_name }}__search">
 
-							<form action="/search" method="get" role="search">
-								<label for="Search" class="label-hidden">
-									{{ 'general.search.placeholder' | t }}
-								</label>
-								<input type="search"
-								       name="q"
-								       id="Search"
-								       value="{{ search.terms | escape }}"
-								       placeholder="{{ 'general.search.placeholder' | t }}">
-								<button type="submit" class="c-button">
-									{% include 'icon-search' %}
-									<span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-								</button>
-							</form>
+					</div>
+					<div class="{{ menu_name }}__search" >
 						</div>
 
 					</div>
 				</div>
 
-				<div class="{{ menu_name }}__divider --leader --trailer">
-					{% include 'c-divider'   with  style_modifier: header_style_modifier__divider %}
-				</div>
+
 
 			</header>
+			{% include 'mobile-header' %}
 
 			<header class="site-header" role="banner">
 

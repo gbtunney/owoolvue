@@ -1,0 +1,70 @@
+.search-bar {
+	//background: red;
+	position: relative;
+	width: 100%;
+
+	@include set-type(xl, font-serif);
+
+	label{
+		position: absolute;
+		font-size: 1.2em;
+		right: 0;
+		height: 100%;
+		top:0;
+		pointer-events: none;
+
+	}
+
+	input[type="search"]{
+		font-size: inherit;
+		font-family: inherit;
+		//@include set-type(sm, font-san-serif);
+		//	@include g-color-scheme(accent-primary, (foreground:red,background:red));
+	}
+	padding:0;
+
+	&.search-bar--page{
+		max-width: initial;
+
+
+		width: 60%;
+		margin: 0 auto;
+
+		input[type="search"]{
+			width: 100%;
+		}
+	}
+
+	&.search-bar--header{
+		@include set-type(md, font-san-serif);
+
+		display: flex;
+		justify-content: flex-end;
+		@include set-type(md, font-san-serif);
+
+		@include breakpoint-range(sm,"<=") {
+			@include set-type(lg, font-san-serif);
+
+		}
+
+
+		input[type="search"]{
+			width: 30%;
+			@include breakpoint-range(sm,"<="){
+				width: 100%;
+				margin: 0 auto;
+			}
+			border-width: 0px ;
+			&:focus{
+				box-shadow:none;
+				border-bottom-width: 1px;
+			}
+		}
+		label{
+			font-size: 1em;
+
+		}
+		//display:none;
+	}
+}
+

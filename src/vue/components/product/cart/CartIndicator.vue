@@ -1,5 +1,5 @@
 <template>
-	<span >
+	<span class="js-drawer-open-button">
 	{{ItemText}}
 	</span>
 </template>
@@ -11,8 +11,6 @@
     import {mapState,mapGetters, mapActions} from "vuex";
 
     import {CartMixin} from  '@/mixins/cartmixin.js';
-
-
     export default {
         name: 'Cart',
         components: {

@@ -30,7 +30,6 @@
     {% include 'script-tags', layout: 'theme' %}
 
   <!-- CSS ================================================== -->
-  {{ 'pattern-lab-generator.css' | asset_url | stylesheet_tag }}
     {{ 'fonts.css' | asset_url | stylesheet_tag }}
 
 
@@ -107,13 +106,6 @@
   </div>
 
   <div id="PageContainer"  class="page-container">
-
-    <div id="hookwrap">
-
-      <h1>WRAPPER
-        <div id="hook-arguments-example" v-demo="{ color: 'white', text: 'hello!' }">hi example</div>
-        </h1>
-    </div>
 
     {% if template.name == "index" %}
       {% section 'slideshow' %}

@@ -2,7 +2,7 @@
 	<div class="component-productApp">
 
 		<div class="grid product-single">
-			<div class="grid__item large--seven-twelfths medium--seven-twelfths text-center">
+			<div class="grid__item large--seven-twelfths do-touch-manipulation medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentimage="$data._currentImageSlideshow" :imagearray="CurrentProductImages" :imagesize="'1250x1250'"></ProductImageSlideshow>
 				<ProductImageThumbailPicker :option="OptionByProp('color')" @UPDATE_OPTION="imageOptionUpdated" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
 			</div>
@@ -462,12 +462,7 @@
 		    },
             imageOptionUpdated: function(product_image,option,value) {
 
-              //  var optionMap = this.SelectedOptionsDictionary;//this.CurrentVariant.options;
-               console.log("*********UPDATING THE OPTION",product_image,option,value);
-
-
-                var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
-              ///  console.log("******new OPTION HANGED!!", newOptionDictionaryforPendingVariant, value)
+			        var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
 
                 if ( newOptionDictionaryforPendingVariant.get(option.id) ){
 
@@ -481,9 +476,6 @@
 
                         var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
 
-                        //console.log("******OPTION after!!", foundVariantArr, value)
-
-
                         if (foundVariantArr && foundVariantArr.length==1 && isVariantAvailable(foundVariantArr[0]) ){
 
 
@@ -493,7 +485,18 @@
                             //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
                         }else{
                             this.imageUpdated(product_image);
-                            console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+
+                            var newFoundVariantArr = this._getVariantFromOptions( [value.id], this.Variants);
+
+							if ( newFoundVariantArr && newFoundVariantArr.length==1 &&  isVariantAvailable(newFoundVariantArr[0])){
+                                console.log("&&&&&&& ALTERNATE!!!",newFoundVariantArr,newOptionDictionaryforPendingVariant )
+
+                                this.variantChanged(newFoundVariantArr[0]);
+                            }else{
+                                console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+
+                            }
+
                         }
                     }
                 }
@@ -516,8 +519,6 @@
             },
             imageUpdated: function(product_image) {
               //  this.$emit(this.$props.updateMode, product_image);
-            console.log("THE IMAGE IS UPDSYD",product_image);
-
             this.$data._currentImageSlideshow= product_image;
                 //@click="$emit('optionChanged',$props.option, optionvalue)"
                 /*

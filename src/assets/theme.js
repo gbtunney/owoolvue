@@ -1406,9 +1406,7 @@ timber.accessibleNav = function() {
 timber.drawersInit = function() {
   timber.LeftDrawer = new timber.Drawers('NavDrawer', 'left');
   if (theme.settings.cartType === 'drawer') {
-    timber.RightDrawer = new timber.Drawers('CartDrawer', 'right', {
-      onDrawerOpen: ajaxCart.load
-    });
+    timber.RightDrawer = new timber.Drawers('CartDrawer', 'right');
   }
 };
 
@@ -1473,7 +1471,7 @@ timber.resetPasswordSuccess = function() {
   Drawer modules
   - Docs http://shopify.github.io/Timber/#drawers
 ==============================================================================*/
-timber.Drawers = (function() {
+ timber.Drawers = (function() {
   var Drawer = function(id, position, options) {
     var defaults = {
       close: '.js-drawer-close',
@@ -1741,6 +1739,7 @@ timber.Drawers = (function() {
 // Initialize Timber's JS on docready
 $(timber.init);
 
+window.timber =timber;
 /*
  * Shopify JS for customizing Slick.js
  *   http://kenwheeler.github.io/slick/
