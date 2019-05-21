@@ -1,10 +1,9 @@
 <template>
 	<div class="component-productApp">
-
 		<div class="grid product-single">
 			<div class="grid__item large--seven-twelfths do-touch-manipulation medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentimage="$data._currentImageSlideshow" :imagearray="CurrentProductImages" :imagesize="'1250x1250'"></ProductImageSlideshow>
-				<ProductImageThumbailPicker :option="OptionByProp('color')" @UPDATE_OPTION="imageOptionUpdated" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
+				<ProductImageThumbailPicker v-if="CurrentProduct && CurrentProduct.thumbnail_panel && CurrentProduct.thumbnail_panel.show" :option="ThumbnailPanelKey" @UPDATE_OPTION="imageOptionUpdated" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
 			</div>
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
@@ -213,7 +212,34 @@
 							</div>
 						</form>
 
-						<PendingItemsComponent :kit="$data._kit" :lineitemmessage="( CurrentProduct && $data._kit) ? CurrentProduct.title : false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
+						<a v-if="CurrentProductRavelryLink" :href="CurrentProductRavelryLink" >
+							<basecomponent :disabled="isDisabled" text="Download on ravelry"
+							               scheme="dark-accent-primary" :flags="['--icon-right','test']"
+							               font="small-caps"
+							               fontsize="lg"
+							               :showpicker="false" padding="md">
+								<template slot="right-icon" class="is-grid-2" >
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     width="126.283px" height="109.043px" viewBox="0 0 126.283 109.043" enable-background="new 0 0 126.283 109.043"
+     xml:space="preserve">
+<g>
+    <path fill="#EFC618" d="M19.146,99.946c19.438-22.778,51.355-30.832,107.138-15.86C100.109,108.604,52.111,117.313,19.146,99.946z"
+    />
+    <path fill="#EFC618" d="M0,84.354C14.732,41.479,38.793,14.969,120.137,0C107.49,46.33,78.048,74.376,0,84.354z"/>
+</g>
+</svg>
+								</template>
+
+							</basecomponent>
+						</a>
+
+
+						<div v-if="( CurrentProduct && CurrentProduct.recc_yarn)"><a :href="getProductUrl(CurrentProduct.recc_yarn)" >Recommended Yarn</a></div>
+						<div v-if="( CurrentProduct && CurrentProduct.recc_kit)"><a :href="getProductUrl(CurrentProduct.recc_kit)" >Recommended Kit</a></div>
+
+
+
+						<PendingItemsComponent v-if="(CurrentProduct && !CurrentProduct.notforsale)" :kit="$data._kit" :lineitemmessage="( CurrentProduct && $data._kit) ? CurrentProduct.title : false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 
 						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
 						</div>
@@ -296,8 +322,15 @@
 		    productid: {
 			    default: false
 		    },
+            producthandle: {
+                default: false
+            },
             productdata: {
                 default: () => []
+            },
+            producthandledata:{
+                default: () => {}
+
             },
 		    sectionsettings: {
 		    	default: {}
@@ -314,9 +347,6 @@
 	        shop:{
 		        default: false
 	        },
-            subtitle:{
-	            default:false
-            },
             metavisible: {
                 type: Boolean,
                 default: true
@@ -369,6 +399,14 @@
              })
         ,
 
+		    ThumbnailPanelKey:function() {
+                if (this.CurrentProduct && this.CurrentProduct.thumbnail_panel && this.CurrentProduct.thumbnail_panel.option_key && this.OptionByProp(this.CurrentProduct.thumbnail_panel.option_key)){
+                   return this.OptionByProp(this.CurrentProduct.thumbnail_panel.option_key);
+                }else{
+                    return {};
+                }
+
+                },
             SelectedOptionsDictionary: function() {
                 if (  this.$data._currentVariant &&  this.$data._currentVariant.options){
                     return  this.$data._currentVariant.options;
@@ -411,12 +449,20 @@
 	    	let self = this;
 
 	    	this.getShop().then(function(res){
-	    	    console.log("SHOP FOUDN!!!!",res)
 		    })
 		    this.loadProduct().then(function(res){
 
 			    //***PRODUCT
                 var additionalProductProps =self.$props.productdata;
+
+                ///merge props..
+                if ( self.$props.producthandle ){
+                    if ( self.$props.producthandledata.hasOwnProperty(self.$props.producthandle )){
+                        additionalProductProps =Object.assign(additionalProductProps,self.$props.producthandledata[self.$props.producthandle] )//self.$props.productdata;
+                    }
+                }
+                console.log("CDCURRENT PRODUCT", additionalProductProps)
+
                 self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
 
                 //***VARIANTS
@@ -437,6 +483,7 @@
                       optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
                           option_value_overrides: (self.CurrentProduct.optionvalues && self.CurrentProduct.optionvalues.length > 0) ? self.CurrentProduct.optionvalues  : false
                       };
+                      console.log("PAYYLOAD", payload)
                       self.add_options_to_dictionary(payload);
 
                       if ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
@@ -460,46 +507,55 @@
 			    testBtn:function(target){
 		    	this.setlayoutButton({index: target})
 		    },
+		    getProductUrl: function(handle){
+			      return `/product/${handle}`;
+		    },
             imageOptionUpdated: function(product_image,option,value) {
 
-			        var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
 
-                if ( newOptionDictionaryforPendingVariant.get(option.id) ){
+		        if (this.CurrentProduct && this.CurrentProduct.thumbnail_panel && !this.CurrentProduct.thumbnail_panel.option_key){
+                    this.imageUpdated(product_image);
+		        }else{
 
-                    if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
-                        newOptionDictionaryforPendingVariant.set(option.id, value);
-                        var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
-                            if (option.hasOwnProperty('id')){
-                                return option.id;
-                            }
-                        })
+                    var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
 
-                        var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+                    if ( newOptionDictionaryforPendingVariant.get(option.id) ){
 
-                        if (foundVariantArr && foundVariantArr.length==1 && isVariantAvailable(foundVariantArr[0]) ){
+                        if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
+                            newOptionDictionaryforPendingVariant.set(option.id, value);
+                            var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
+                                if (option.hasOwnProperty('id')){
+                                    return option.id;
+                                }
+                            })
+
+                            var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+
+                            if (foundVariantArr && foundVariantArr.length==1 && isVariantAvailable(foundVariantArr[0]) ){
 
 
-                            console.log("variant FOUND&&&&&&&&&&&&",foundVariantArr[0],newOptionDictionaryforPendingVariant )
+                                console.log("variant FOUND&&&&&&&&&&&&",foundVariantArr[0],newOptionDictionaryforPendingVariant )
 
-                            this.variantChanged(foundVariantArr[0]);
-                            //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
-                        }else{
-                            this.imageUpdated(product_image);
-
-                            var newFoundVariantArr = this._getVariantFromOptions( [value.id], this.Variants);
-
-							if ( newFoundVariantArr && newFoundVariantArr.length==1 &&  isVariantAvailable(newFoundVariantArr[0])){
-                                console.log("&&&&&&& ALTERNATE!!!",newFoundVariantArr,newOptionDictionaryforPendingVariant )
-
-                                this.variantChanged(newFoundVariantArr[0]);
+                                this.variantChanged(foundVariantArr[0]);
+                                //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
                             }else{
-                                console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+                                this.imageUpdated(product_image);
+
+                                var newFoundVariantArr = this._getVariantFromOptions( [value.id], this.Variants);
+
+                                if ( newFoundVariantArr && newFoundVariantArr.length==1 &&  isVariantAvailable(newFoundVariantArr[0])){
+                                    console.log("&&&&&&& ALTERNATE!!!",newFoundVariantArr,newOptionDictionaryforPendingVariant )
+
+                                    this.variantChanged(newFoundVariantArr[0]);
+                                }else{
+                                    console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+
+                                }
 
                             }
-
                         }
                     }
-                }
+		        }
 
                 /*
                 optionMap.set(option.id,optionvalue );
@@ -554,6 +610,7 @@
 						    message: "not set"
 			    };
 		    },
+
 	    	variantChanged: function(variant) {
 			    console.log("!!!!!!!!!variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
 			    this.$data._currentVariant   = variant;
@@ -590,15 +647,11 @@
 			    console.log("!**************!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
 
                 let tally = [];
-                console.log("tally", this.option_dictionary );
-
                 Array.from(this.option_dictionary.values()).forEach(function(option){
-                    console.log("tally", option );
-
                     tally =[...tally,...option.values];
 			    })
 
-			    console.log("tally last", tally );
+
 				   this.variantChanged(requestedVariant);
 		    },
 		    _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.

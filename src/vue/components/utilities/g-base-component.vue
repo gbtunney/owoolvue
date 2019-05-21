@@ -237,7 +237,7 @@
                     disabledClass="--disabled";
 			    }
 			    if ( this.$props.flags){
-			        return [...this.$props.flags,...this.$data._flags,disabledClass];
+			        return [...this.$data._flags,...this.$props.flags,disabledClass];
 			    }else{
                     return  this.$data._flags;
 
@@ -355,8 +355,7 @@
 	}
 
 	.icon{
-		@include u-icon-svg(false,false,false);
-
+		@include u-icon-svg(false,1em);
 
 		&.icon-right,&.icon-left{
 			//width:0;

@@ -9,7 +9,7 @@ export const ProductImageSlideshowMixin = {
             default: () => []
         },
 		currentimage:{
-            type: Array,
+            type: [Boolean,Array],
             default: () => {}
 		},
         imagesize: {

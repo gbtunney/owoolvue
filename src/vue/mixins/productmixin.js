@@ -59,6 +59,15 @@ export const ProductMixin={
 			return [];
 		}
 	},
+		    CurrentProductRavelryLink :function() {
+            
+                if ( this.CurrentProduct && this.CurrentProduct.download && this.CurrentProduct.download.ravelry){
+	                
+                    return  this.CurrentProduct.download.ravelry;
+                }else{
+                    return false;;
+                }
+            },
     CurrentProductID: function() {
 	
 	    return this.CurrentProduct.id;
