@@ -42,6 +42,10 @@
 						</a>
 					</div>
 					<div class="{{ menu_name }}__meta">
+						<div class="{{ menu_name }}__search" >
+							{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header', searchplaceholder: ' ',input_flags: '',button_flags:' --no-border' %}
+						</div>
+
 						<div class="{{ menu_name }}__social">
 							{% include 'c-social-nav-links' with social_nav_theme : header_style_modifier__social %}
 						</div>
@@ -218,9 +222,6 @@
 								{% endif %}
 
 							</ul>
-							<div class="{{ menu_name }}__search" >
-								{% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header', searchplaceholder: ' ',input_flags: '',button_flags:' --no-border' %}
-							</div>
 
 						</nav>
 

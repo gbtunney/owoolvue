@@ -50,14 +50,13 @@
 		@include breakpoint-range(sm,"<=") {
 			@include set-type(lg, font-san-serif);
 			border-width: 0px ;
-
 		}
 
 
 		input[type="search"]{
-			width: 30%;
+			//width: 30%;
 			@include breakpoint-range(sm,"<="){
-				width: 100%;
+				width: 0;
 				margin: 0 auto;
 			}
 			border-width: 0px ;

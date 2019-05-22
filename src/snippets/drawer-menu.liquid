@@ -5,16 +5,23 @@
 	      {% include 'c-ui-icon' with icon_name: 'leaves-a' ,style_modifier: 'dark-accent-primary', flags: '--no-border' %}
       </div>
 
-    <ul class="mobile-nav">
-      {% for link in linklists[section.settings.main_menu_link_list].links %}
+
+
+      <ul class="mobile-nav">
+          <li class="mobile-nav__social">
+		      {% include 'c-social-nav-links' with social_nav_theme : 'accent-primary' %}
+          </li>
+
+	      {% for link in linklists[section.settings.main_menu_link_list].links %}
         {% if link.links != blank %}
           <li class="mobile-nav__item">
             <div class="mobile-nav__has-sublist">
               <a
-                href="{{ link.url }}"
-                class="mobile-nav__link"
+
+                class="mobile-nav__toggle-btn mobile-nav__link"
                 id="Label-{{ forloop.index }}"
-                {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>{{ link.title | escape }}</a>
+                {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
+                  {{ link.title | escape }}</a>
               <div class="mobile-nav__toggle">
                 <button type="button" class="mobile-nav__toggle-btn icon-fallback-text" aria-controls="Linklist-{{ forloop.index }}" aria-expanded="false">
                   <span class="icon-fallback-text mobile-nav__toggle-open">
@@ -35,8 +42,9 @@
                 <li class="mobile-nav__item">
                   <div class="mobile-nav__has-sublist">
                     <a
-                      href="{{ childlink.url }}"
-                      class="mobile-nav__link"
+                            href="{{ link.url }}"
+
+                      class="mobile-nav__link mobile-nav__toggle-btn"
                       id="Label-{{ parent_index }}-{{ forloop.index }}"
                       {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
                         {{ childlink.title }}
@@ -140,9 +148,7 @@
         </ul>
       </li>
 	    {% endif %}
-        <li class="mobile-nav__item mobile-nav__item--search">
-	    {% include 'search-bar', input_style_modifier: 'accent-primary' ,button_style_modifier: 'accent-primary', search_bar_location: 'search-bar--header' %}
-        </li>
+
 
     </ul>
     <!-- //mobile-nav -->

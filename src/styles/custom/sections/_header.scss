@@ -156,7 +156,16 @@ $show-guides: false;
 	}
 
 	&__search {
-		//background: red;
+		.search-bar{
+input[type="search"]{
+	border-width: 0px;
+	&:focus{
+		border-bottom-width: 1px;
+
+	}
+}
+		}
+		//
 		//display: none;
 	}
 }

@@ -33,20 +33,21 @@
 					</div>
 				</a>
 			</div>
-			<div class="{{ menu_name }}__social">
-				{% include 'c-social-nav-links' with social_nav_theme : header_style_modifier__social %}
-			</div>
 		</div>
-		<div class="{{ menu_name }}__col">
+		<div class="{{ menu_name }}__col col__final">
 			<div class="{{ menu_name }}__cart cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
 				<div class="{{ menu_name }}__cart-icon">
-					{% include 'c-ui-icon' with icon_name: 'cart' ,style_modifier: header_style_modifier__cart , flags: header_flags__cart %}
+					{% include 'c-ui-icon' with icon_name: 'cart' ,style_modifier: 'accent-primary' , flags: header_flags__cart %}
 				</div>
-				<div class="{{ menu_name }}__cart-item-count">
-					<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
-						({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
-					</div>
+
+			</div>
+			<div class="{{ menu_name }}__cart-item-count">
+				<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
+					({{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %})
 				</div>
+			</div>
+			<div class="{{ menu_name }}__search">
+				{% include 'search-bar', input_style_modifier: 'accent-primary' ,button_style_modifier: 'accent-primary', search_bar_location: 'search-bar--header' %}
 			</div>
 		</div>
 

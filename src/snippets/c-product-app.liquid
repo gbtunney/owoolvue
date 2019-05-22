@@ -13,10 +13,11 @@ This is the full Product App vue component.
 {% include datafilestring  %}
 {% endcapture %}
 
+
+
 {% capture producthandledata %}
 {% include "settings-product.json"  %}
 {% endcapture %}
-{{producthandledata}}
 
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
@@ -26,8 +27,6 @@ This is the full Product App vue component.
      prop-productdata='{{   productdata | strip_newlines }}'
      prop-producthandledata='{{   producthandledata | strip_newlines }}'
 	prop-producthandle="{{ product.handle }}"
-	{% include 'g-props-meta-loop' with meta_namespace : product_meta.download,  meta_namespace_prop : 'download'  %}
-	{% include 'g-props-meta-loop' with prop_single: true, meta_namespace : product_meta.productdata ,  meta_namespace_prop : 'subtitle'  %}
 
 		{% for kitmeta in current_variant.metafields.kit %}
 
@@ -39,9 +38,4 @@ This is the full Product App vue component.
 	{% endfor %}
 
 >
-
-	<div slot="productdescription">
-		<h1>Here might be a page title
-		TESTING GILLIAN</h1>
-	</div>
 </div>

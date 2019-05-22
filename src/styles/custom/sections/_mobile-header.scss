@@ -113,17 +113,16 @@ $show-guides: false;
 	//part of meta
 	&__cart {
 		width: auto;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		@include set-type(sm, font-serif-italic); //this resizes the icon;
+
+		@include g-typeset(sm, font-serif-italic); //this resizes the icon;
 
 		&-icon {
+			@include g-typeset(lg, font-serif-italic); //this resizes the icon;
+
 			// @include u-icon-svg(false,2em);
 			.c-button {
-				@include set-type(xxl); //this resizes the icon;
-				padding-bottom: get-spacing(.25);
+				//@include set-type(xxl); //this resizes the icon;
+				//padding-bottom: get-spacing(.25);
 			}
 		}
 		&-item-count {
@@ -131,14 +130,17 @@ $show-guides: false;
 		}
 	}
 
-	&__social {
-		width: auto;
-		height: auto;
-		@include u-horizontal-list(0);
-		@include breakpoint-range(sm) {
-		}
+	ul{
+		padding: 0;
 	}
 
+
+	.col__final{
+	//	background: red;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
 	&__customer {
 		width: auto;
 
@@ -164,13 +166,42 @@ $show-guides: false;
 
 	&__search {
 		//background: red;
+		padding: 0;
+
+		.c-button{
+			padding: 0;
+			border-width: 0;
+		}
+
+		input[type="search"]{
+			width: 20px;
+			border-width: 0;
+		}
+		//background: red;
 		//display: none;
 	}
 
 	//Owool_Mobile-Header__nav-trigger
 }
 
+.mobile-nav{
+	padding: 0;
+	&__social {
+
+
+		@include rhythm-padding-sides(top bottom,lg);
+
+		width: 90%;
+		margin: 0 auto;
+		height: auto;
+		@include u-horizontal-list(0);
+		@include breakpoint-range(sm) {
+		}
+	}
+}
+
 .Owool_Main-Menu-Mobile {
+
 	//display: none;
 	a {
 		//   @include u-reset-link;
@@ -282,26 +313,32 @@ $show-guides: false;
 }
 
 .mobile-nav__item {
-	padding: get-spacing(1, lg);
-	@include set-type(base, font-serif);
+
+	@include g-typeset(base, font-serif);
 
 	a {
-		padding-left: get-spacing(1, sm);
-		@include set-type(md, font-serif);
+		@include rhythm-padding-sides(left,lg);
+		@include rhythm-padding-sides(top bottom,lg);
+
+		@include g-typeset(md, font-serif);
 		color: color($nav-drawer-scheme, foreground); //adaptive-color($colorDrawerText, 25%);
 	}
 
 	&--search {
-		@include rhythm-margin(xl);
-		padding: 0;
+	//	@include rhythm-margin(xl);
+		//padding: 0;
 	}
 }
 
 .mobile-nav__sublist {
 	background: darken(color($nav-drawer-scheme, background), 5%);
+	@include rhythm-margin-sides(left,lg);
+	@include rhythm-padding-sides(top bottom,lg);
 	> .mobile-nav__item {
 		//padding: get-spacing(2);
-		@include set-type(sm, font-san-serif);
+		a{
+			@include g-typeset(base, font-san-serif);
+		}
 
 		&:after {
 			content: none;
