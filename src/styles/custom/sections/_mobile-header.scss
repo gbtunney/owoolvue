@@ -332,12 +332,12 @@ $show-guides: false;
 
 .mobile-nav__sublist {
 	background: darken(color($nav-drawer-scheme, background), 5%);
-	@include rhythm-margin-sides(left,lg);
-	@include rhythm-padding-sides(top bottom,lg);
+	@include rhythm-margin-sides(left right,lg);
+	@include rhythm-padding-sides(top bottom,md);
 	> .mobile-nav__item {
 		//padding: get-spacing(2);
 		a{
-			@include g-typeset(base, font-san-serif);
+			@include g-typeset(sm, font-small-caps);
 		}
 
 		&:after {
