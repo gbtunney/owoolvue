@@ -186,6 +186,12 @@ $show-guides: false;
 
 .mobile-nav{
 	padding: 0;
+	@include rhythm-padding-sides( bottom,lg);
+
+	.leaves-deco{
+		@include rhythm-padding-sides( top,lg);
+
+	}
 	&__social {
 
 
