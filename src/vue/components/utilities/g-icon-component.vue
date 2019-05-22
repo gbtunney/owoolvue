@@ -1,67 +1,12 @@
 <template>
-	<div>
-		<button :disabled="$props.disabled" @click="$emit('click')" :class="Styles">
-			<span  class="icon icon-left icon--md">
-			<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(30 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(60 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(90 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(120 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(150 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(180 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(210 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(240 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(270 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(300 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-				</rect>
-			</g><g transform="rotate(330 50 50)">
-				<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-					<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-				</rect>
-			</g></svg>
-		</span>
-			<span v-if="text">{{text}}</span>
-			<span :class="IconSize"  class="icon icon-right icon--md">
-				    <slot name="right-icon"></slot>
-		</span>
-	</button>
+	<span  class="">
+		<slot name="icon">
+			<div :class="Styles" class="icon" v-if="icon_id" v-html='IconHTML'></div>
+		</slot>
+{{AddlProps}}
+				<button v-if="showpicker" v-for="my_props in Props" @click="AddlProps = my_props ">{{my_props}}</button>
 
-		<button v-if="showpicker" v-for="myscheme in $data._schemes" @click="Scheme = myscheme ">{{myscheme}}</button>
-		<button v-if="showpicker" v-for="prop in Props" @click="AddlProps = prop ">{{props}}</button>
-
-	</div>
+	</span>
 
 </template>
 
@@ -71,7 +16,7 @@
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 	import store from '@/store'
 
-
+//<button v-if="showpicker" v-for="prop in Props" @click="AddlProps = prop ">{{props}}</butto
 	const values  = [
         ".font--base",
         ".font--lg",
@@ -156,10 +101,8 @@
                 type: Boolean,
                 default: false,
             },
-            text: {
-                type: String,
-
-                default: false
+            icon_id: {
+                default: false,
             },
             flags: {
                 type: [Array, Boolean],
@@ -181,7 +124,7 @@
                 default: 'base'
             },
             iconsize: {
-                default: 'base'
+                default: 'sm'
             },
             showpicker: {
                 default: true
@@ -246,6 +189,10 @@
                     ".type--font-test"
                 ];
 			},
+			IconHTML:function(){
+
+               return this.getIconSVG(this.$props.icon_id)
+			},
             Padding: function() {
 			    if ( this.$props.padding){
 			        return `padding--${this.$props.padding}`
@@ -287,10 +234,12 @@
             AddlProps: {
                 get: function() {
                    return  this.$data._addlProps;
+	               // return ['icon', 'testing']
                 },
                 set: function(newVal) {
                     //=newVal;
-                    this.$data._addlProps = newVal;
+
+                   this.$data._addlProps.push( newVal.substr(1));
                 }
             },
 			Flags:function(){
@@ -323,11 +272,15 @@
 			}
 		},
 		methods: {
+            getIconSVG:function( icon_id ){
+                var element = document.getElementById(icon_id);
+                return element.outerHTML;
+            }
 		}
 	}
 </script>
 
-<style lang="scss" type="text/scss" scoped>
+<style lang="scss" type="text/scss">
 	@import "src/vue/helpers/product-dependancies.scss";
 	$vue-component-render-objects: (
 		(
@@ -426,6 +379,10 @@
 			visibility: hidden;
 		}
 
+	}
+
+	.testing{
+		background: red;
 	}
 
 
