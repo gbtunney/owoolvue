@@ -1,9 +1,8 @@
 <template>
-	<span  class="">
+	<span  class="g-type--xxl">
 		<slot name="icon">
-			<div :class="Styles" class="icon" v-if="icon_id" v-html='IconHTML'></div>
+			<div :class="Styles" :style="addl_styles" class="c-icon-base" v-if="icon_id" v-html='IconHTML'></div>
 		</slot>
-{{AddlProps}}
 				<button v-if="showpicker" v-for="my_props in Props" @click="AddlProps = my_props ">{{my_props}}</button>
 
 	</span>
@@ -18,54 +17,74 @@
 
 //<button v-if="showpicker" v-for="prop in Props" @click="AddlProps = prop ">{{props}}</butto
 	const values  = [
-        ".font--base",
-        ".font--lg",
-        ".font--md",
-        ".font--sm",
-        ".font--xl",
-        ".font--xs",
-        ".font--xxl",
-        ".font--xxs",
-        ".font--xxxl",
-        "g",
-        ".icon--base",
-        ".icon--lg",
-        ".icon--md",
-        ".icon--sm",
-        ".icon--xl",
-        ".margin--lg",
-        ".margin--md",
-        ".margin--sm",
-        ".margin--xl",
-        ".margin--xs",
-        ".margin--xxs",
-        ".padding--lg",
-        ".padding--md",
-        ".padding--sm",
-        ".padding--xl",
-        ".padding--xs",
-        ".padding--xxs",
-        "path",
-        "rect",
-        ".scheme--accent-default",
-        ".scheme--accent-primary",
-        ".scheme--accent-secondary",
-        ".scheme--alt-light",
-        ".scheme--dark",
-        ".scheme--dark-accent-default",
-        ".scheme--dark-accent-primary",
-        ".scheme--dark-accent-secondary",
-        ".scheme--functional",
-        ".scheme--invert-functional",
-        ".scheme--light",
-        ".scheme--light-alt",
-        ".type--default",
-        ".type--font-san-serif",
-        ".type--font-serif",
-        ".type--font-serif-bold",
-        ".type--font-serif-italic",
-        ".type--font-small-caps",
-        ".type--font-test"
+		".example-button",
+		".example-button--accent-default",
+		".example-button--accent-primary",
+		".example-button--accent-secondary",
+		".example-button--alt-light",
+		".example-button--dark",
+		".example-button--dark-accent-default",
+		".example-button--dark-accent-primary",
+		".example-button--dark-accent-secondary",
+		".example-button--functional",
+		".example-button--invert-functional",
+		".example-button--light",
+		".example-button--light-alt",
+		".g-icon-absolute--base",
+		".g-icon-absolute--lg",
+		".g-icon-absolute--md",
+		".g-icon-absolute--sm",
+		".g-icon-absolute--xl",
+		".g-icon-absolute--xs",
+		".g-icon-absolute--xxl",
+		".g-icon-absolute--xxs",
+		".g-icon-absolute--xxxl",
+		".g-icon-relative--base",
+		".g-icon-relative--lg",
+		".g-icon-relative--md",
+		".g-icon-relative--sm",
+		".g-icon-relative--xl",
+		".g-margin--lg",
+		".g-margin--md",
+		".g-margin--sm",
+		".g-margin--xl",
+		".g-margin--xs",
+		".g-margin--xxs",
+		".g-padding--lg",
+		".g-padding--md",
+		".g-padding--sm",
+		".g-padding--xl",
+		".g-padding--xs",
+		".g-padding--xxs",
+		".g-type--base",
+		".g-type--default",
+		".g-type--font-reset",
+		".g-type--font-san-serif",
+		".g-type--font-serif",
+		".g-type--font-serif-bold",
+		".g-type--font-serif-italic",
+		".g-type--font-small-caps",
+		".g-type--font-test",
+		".g-type--lg",
+		".g-type--md",
+		".g-type--sm",
+		".g-type--xl",
+		".g-type--xs",
+		".g-type--xxl",
+		".g-type--xxs",
+		".g-type--xxxl",
+		".u-color-schemes--accent-default",
+		".u-color-schemes--accent-primary",
+		".u-color-schemes--accent-secondary",
+		".u-color-schemes--alt-light",
+		".u-color-schemes--dark",
+		".u-color-schemes--dark-accent-default",
+		".u-color-schemes--dark-accent-primary",
+		".u-color-schemes--dark-accent-secondary",
+		".u-color-schemes--functional",
+		".u-color-schemes--invert-functional",
+		".u-color-schemes--light",
+		".u-color-schemes--light-alt"
 	]
 	module.exports = {
 		name: '',
@@ -75,7 +94,7 @@
 			return {
 			    _addlProps:[],
 				_scheme: false,
-				_flags:['button','--border'],
+				_flags:[],
                 _schemes: [  "accent-default",
                     "accent-primary",
                     "accent-secondary",
@@ -124,11 +143,14 @@
                 default: 'base'
             },
             iconsize: {
-                default: 'sm'
+                default: 'false'
             },
             showpicker: {
                 default: true
-            }
+            },
+			addl_styles:{
+				default: false
+			}
 		},
 
 
@@ -138,56 +160,7 @@
 			]),
 			Props:function(){
 
-			    return [
-                    ".font--base",
-                    ".font--lg",
-                    ".font--md",
-                    ".font--sm",
-                    ".font--xl",
-                    ".font--xs",
-                    ".font--xxl",
-                    ".font--xxs",
-                    ".font--xxxl",
-                    "g",
-                    ".icon--base",
-                    ".icon--lg",
-                    ".icon--md",
-                    ".icon--sm",
-                    ".icon--xl",
-                    ".margin--lg",
-                    ".margin--md",
-                    ".margin--sm",
-                    ".margin--xl",
-                    ".margin--xs",
-                    ".margin--xxs",
-                    ".padding--lg",
-                    ".padding--md",
-                    ".padding--sm",
-                    ".padding--xl",
-                    ".padding--xs",
-                    ".padding--xxs",
-                    "path",
-                    "rect",
-                    ".scheme--accent-default",
-                    ".scheme--accent-primary",
-                    ".scheme--accent-secondary",
-                    ".scheme--alt-light",
-                    ".scheme--dark",
-                    ".scheme--dark-accent-default",
-                    ".scheme--dark-accent-primary",
-                    ".scheme--dark-accent-secondary",
-                    ".scheme--functional",
-                    ".scheme--invert-functional",
-                    ".scheme--light",
-                    ".scheme--light-alt",
-                    ".type--default",
-                    ".type--font-san-serif",
-                    ".type--font-serif",
-                    ".type--font-serif-bold",
-                    ".type--font-serif-italic",
-                    ".type--font-small-caps",
-                    ".type--font-test"
-                ];
+
 			},
 			IconHTML:function(){
 
@@ -195,35 +168,36 @@
 			},
             Padding: function() {
 			    if ( this.$props.padding){
-			        return `padding--${this.$props.padding}`
+			        return `g-padding--${this.$props.padding}`
 			    }
             },
             Margin: function() {
                 if ( this.$props.margin){
-                    return `margin--${this.$props.margin}`
+                    return `g-margin--${this.$props.margin}`
                 }
             },
             FontSize: function() {
                 if ( this.$props.fontsize){
-                    return `font--${this.$props.fontsize}`
+                    return `g-font--${this.$props.fontsize}`
                 }
             },
             Font: function() {
                 if ( this.$props.fontsize){
-                    return `type--font-${this.$props.font}`
+                    return `g-type--font-${this.$props.font}`
                 }
             },
             IconSize: function() {
+
                 if ( this.$props.iconsize){
-                    return `icon--${this.$props.iconsize}`
+                    return `g-icon-relative--${this.$props.iconsize}`
                 }
             },
             Scheme: {
                 get: function() {
                     if (!this.$data._scheme){
-                        return `scheme--${this.$props.scheme}`
+                        return `u-color-schemes--${this.$props.scheme}`
                     } else {
-                        return `scheme--${this.$data._scheme}`
+                        return `u-color-schemes--${this.$data._scheme}`
                     }
                 },
                 set: function(newVal) {
@@ -257,7 +231,7 @@
                 }
 			},
             Styles:function(){
-			   return [this.Scheme,this.FontSize,this.Font,this.Margin,this.Padding,...this.Flags] ;
+			   return [this.IconSize,this.Scheme,this.FontSize,this.Font,this.Margin,this.Padding,...this.Flags] ;
 			},
 			example: {
 				get: function() {
@@ -274,7 +248,7 @@
 		methods: {
             getIconSVG:function( icon_id ){
                 var element = document.getElementById(icon_id);
-                return element.outerHTML;
+                return element.innerHTML;
             }
 		}
 	}
@@ -282,88 +256,6 @@
 
 <style lang="scss" type="text/scss">
 	@import "src/vue/helpers/product-dependancies.scss";
-	$vue-component-render-objects: (
-		(
-			key: vue-generator-typography,
-			parent: typography,
-			selector: '.type',
-			suffix: true, //if it is to be generated, use a class suffix before,
-		),
-		(
-			key: vue-generator-font-size,
-			parent: font-size,
-			selector: '.font',
-			description: "Demo: modularscale size operation.",
-			suffix: true, //if it is to be generated, use a class suffix before,
-		),
-		(
-			key: vue-generator-padding,
-			parent: base-padding,
-			selector: '.padding',
-			description: "padding.",
-			suffix: true, //if it is to be generated, use a class suffix before,
-		),
-		(
-			key: vue-generator-margin,
-			parent: base-margin,
-			selector: '.margin',
-			description: "-margin.",
-			suffix: true, //if it is to be generated, use a class suffix before,
-		),
-		(
-			key: vue-icon-sizes,
-			parent: icon-sizes,
-			selector: '.icon',
-			description: "-margin.",
-			suffix: true, //if it is to be generated, use a class suffix before,
-		),
-		(
-			key: vue-generator-color-schemes,
-			description: "color schemes",
-			selector: '.scheme',
-			parent: color-schemes,
-			suffix: true,
-			variants:(
-				options: (
-					obj: (
-						background: true,
-						foreground: true,
-						accent:false,
-						border: true,
-						fill:foreground
-					)
-				)
-			)
-		),
-		(
-			key: vue-generator-color-schemes-hover,
-			description: "color schemes",
-			selector: '.--enabled.scheme',
-			parent: color-schemes,
-			suffix: true,
-			variants:(
-				options: (
-					obj: (
-						background: true,
-						foreground: true,
-						hover-background:lighten background 8%,
-						hover-foreground:lighten foreground 8%,
-					)
-				)
-			)
-		)
-	);
-
-	$patternlab: batch-add-to-style-dictionary(clean-collection(get-collection($vue-component-render-objects), parent));
-
-
-	//	@include render-queue(get-collection(font-size-spacing));
-
-
-	@include render-queue(get-collection(vue-generator-color-schemes));
-
-	/***-----MARGIN-----****/
-	@include render-queue(get-collection(vue-generator-color-schemes vue-generator-color-schemes-hover vue-generator-typography vue-generator-margin vue-icon-sizes vue-generator-padding vue-generator-font-size ));
 
 	.button {
 		display: flex;
@@ -371,24 +263,20 @@
 		@include u-transition(background-color, 0.3s, ease);
 	}
 
-	.icon{
-		@include u-icon-svg(false,1em);
-
-		&.icon-right,&.icon-left{
-			//width:0;
-			visibility: hidden;
-		}
-
-	}
 
 	.testing{
 		background: red;
 	}
 
 
-	.--border{
+	.c-icon-base{
 		border-width: 1px;
 		border-style: solid;
+
+		&.--no-border{
+			border-width: 0px;
+		}
+
 	}
 
 	.--icon-right{

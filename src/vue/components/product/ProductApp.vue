@@ -9,16 +9,16 @@
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
 
 				<div v-show="loading" class="product-app-loading">
-
+					<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="light" :showpicker="true"></iconcomponent>
 				</div>
 
 
 				<div v-show="!loading" class="product-single__meta">
 					<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 
-					<iconcomponent icon_id="svg-icon-leaves-a" :showpicker="true">
+					<iconcomponent  icon_id="svg-icon-leaves-a"   scheme="light" :showpicker="true"></iconcomponent>
 
-					</iconcomponent>
+					<iconcomponent icon_id="svg-icon-search"   scheme="light" :showpicker="true"></iconcomponent>
 
 					<h1 class="product-single__title" v-if="CurrentProductTitle" itemprop="name">{{CurrentProductTitle}}</h1>
 					<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>

@@ -1,62 +1,11 @@
 <template>
-	<div :class="$options.name">
+	<div :class="$options.name" style="position: relative;">
 		<swiper :options="swiperOption"  :ref="Ref"  >
 			<!-- slides -->
 			<swiper-slide v-for="image,index in ImageArray"  :key="index">
-				<div class="swiper-zoom-container">
-					<img class="swiper-lazy" :data-src="getShopifyImageURL(image)" :alt="image.alt">
-					<div class="lazy-preloader">
-						<svg  class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(30 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(60 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(90 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(120 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(150 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(180 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(210 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(240 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(270 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(300 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-							</rect>
-						</g><g transform="rotate(330 50 50)">
-							<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-								<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-							</rect>
-						</g></svg>
+					<div class="swiper-zoom-container">
+						<img class=" swiper-lazy"  :data-src="getShopifyImageURL(image)" :alt="image.alt">
 					</div>
-				</div>
 			</swiper-slide>
 
 			<!-- Optional controls -->
@@ -67,6 +16,9 @@
 				<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-right" viewBox="0 0 32 32"><path fill="#444" d="M7.667 3.795l1.797-1.684L24.334 16 9.464 29.889l-1.797-1.675L20.731 16z"/></svg>
 			</div>
 		</swiper>
+		<div class="lazy-preloader">
+				<iconcomponent  :addl_styles="{width: '10rem',height: '10rem'}" icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="accent-default" :showpicker="true"></iconcomponent>
+		</div>
 	</div>
 </template>
 
@@ -82,12 +34,14 @@
 
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
+    import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
     //:options="swiperOption" ref="mySwiper"
     export default {
         name: 'ProductImageSlideshow',
         mixins: [DictionaryMixin,UIDMixin,ProductImageSlideshowMixin],
         components: {
+	        iconcomponent,
             swiper,
             swiperSlide
         }, props: {
@@ -162,107 +116,84 @@
 <style lang="scss" type="text/scss"  >
 	@import "src/vue/helpers/product-dependancies.scss";
 
-	.ProductImageSlideshow{
+	.ProductImageSlideshow {
 
-	.swiper-lazy{
-		opacity:0;
-	}
-
-	.lazy-preloader{
-		display: block;
-		@include g-color-scheme(accent-default, (background:true, foreground:true,border:false,fill:true ));
-	}
-
-	.swiper-zoom-container{
-
-	}
-
-	.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
-
-		@include g-color-scheme(accent-primary, (background:false, foreground:true,border:false,fill:true ));
-		@include u-icon-svg(false,30px,150px);
-		opacity: .9;
-		margin:0;
-		left:none;
-		top:0;
-		background-image: none;
-		width: 8%;
-		height: 100%;
-		&:before{
-			content: "";
+		.lazy-preloader {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 50%;
+			justify-content: center;
+			display: flex;
+			align-items: center; //height: -webkit-fill-available;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
 		}
-	}
+		.swiper-button-prev, .swiper-button-next, .swiper-container-rtl .swiper-button-next {
 
-	.swiper-button-prev{
-		left: 0;
-	}
-	.swiper-button-next{
-		right: 0;
-	}
+			@include g-color-scheme(accent-primary, (background:false, foreground:true, border:false, fill:true));
+			@include u-icon-svg(false, 30px, 150px);
+			opacity: .9;
+			margin: 0;
+			left: none;
+			top: 0;
+			background-image: none;
+			width: 8%;
+			height: 100%;
 
-	.swiper-lazy-loaded{
-		opacity:1;
+			&:before {
+				content: "";
+			}
+		}
 
-		@include u-transition(opacity, .4s, ease,.5s);
-		+ .lazy-preloader{
+		.swiper-button-prev {
+			left: 0;
+		}
+
+		.swiper-button-next {
+			right: 0;
+		}
+
+		.swiper-lazy-loaded {
+			opacity: 1;
+			@include u-transition(opacity, .4s, ease, .5s);
+		}
+
+		.swiper-scrollbar {
 			display: none;
 		}
-	}
 
-	.swiper-scrollbar{
-		display: none;
-	}
-	.swiper-slide-shadow-left{
-		background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.9))!important;
-		//linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0))!important;
-	}
-	.slide-image {
-		height: 100%;
-		width: 400px;
+		.swiper-slide-shadow-left {
+			background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.9)) !important;
+		}
 
-		//width: 100%;
-	}
+		.swiper-container {
+			width: 100%;
+			height: auto;
+		}
 
-	.swiper-container {
-		width: 100%;
-		height: auto;
-	}
+		.swiper-slide {
+			overflow: hidden;
+		}
 
-	.swiper-slide {
-		overflow: hidden;
+		.swiper-slide {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			-webkit-justify-content: center;
+			justify-content: flex-end;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+			position: relative;
+		}
 	}
-
-	.swiper-slide {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-box-pack: center;
-		-ms-flex-pack: center;
-		-webkit-justify-content: center;
-		justify-content: center;
-		-webkit-box-align: center;
-		-ms-flex-align: center;
-		-webkit-align-items: center;
-		align-items: center;
-		/*text-align: center;
-		font-size: 18px;
-		background: #fff;
-		!* Center slide text vertically *!
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-box-pack: center;
-		-ms-flex-pack: center;
-		-webkit-justify-content: center;
-		justify-content: center;
-		-webkit-box-align: center;
-		-ms-flex-align: center;
-		-webkit-align-items: center;
-		align-items: center;*/
-	}
-}
 
 
 </style>

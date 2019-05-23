@@ -78,17 +78,18 @@ export const ProductImageSlideshowMixin = {
         return {
             idle: false,
             swiperOption: {
-                preloadImages: true,
-    
+                preloadImages: false,
+
                 grabCursor: false,
                 centeredSlides: false,
                 scrollbar:false,
                 zoom:true,
                 slidesPerView: 1,
                 spaceBetween: 0,
-	           // lazy:true,
+	            
                lazy: {
-                    loadPrevNext: true,
+	               preloaderClass: 'lazy-preloader',
+                    loadPrevNext: true
                    //loadOnTransitionStart:true
                 },
                 navigation: {
