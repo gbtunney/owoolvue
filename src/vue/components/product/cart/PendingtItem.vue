@@ -17,10 +17,11 @@
 		</span>
 		<span v-else>
 			<h3  v-if=" ManageQuantity"  class="pending-item-name">{{VariantName}}
-				<span class="pending-item-price">{{VariantTotalPrice |toUSD}}</span>
+				<span v-show="false" class="pending-item-price">{{VariantTotalPrice |toUSD}}</span>
 			</h3>
-			<div class="pending-item-available" v-if=" ManageQuantity" >available: {{Variant.inventory_quantity}}</div>
+			<div class="pending-item-available">Quantity:</div>
 			<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable && ManageQuantity" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
+			<div class="pending-item-available" v-if=" ManageQuantity" >available: {{Variant.inventory_quantity}}</div>
 		</span>
 	</div>
 </template>
@@ -179,6 +180,7 @@
         methods: {
             ShopifyImgURL,
             quantityChanged: function(item) {
+	          //  item = Object.assign(item,{total_price: 32323} )
                 this.$emit('requested_quantity_change', item)
             },
             ...mapActions([

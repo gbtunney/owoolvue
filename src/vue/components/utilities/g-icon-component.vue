@@ -1,5 +1,5 @@
 <template>
-	<span  class="g-type--xxl">
+	<span  class="">
 		<slot name="icon">
 			<div :class="Styles" :style="addl_styles" class="c-icon-base" v-if="icon_id" v-html='IconHTML'></div>
 		</slot>
@@ -143,7 +143,7 @@
                 default: 'base'
             },
             iconsize: {
-                default: 'false'
+                default: 'base'
             },
             showpicker: {
                 default: true

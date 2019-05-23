@@ -1,6 +1,7 @@
 <template>
 	<div class="component-productApp">
 		<div class="grid product-single">
+			<h1 class="product-single__title product-single__title-mobile" v-if="CurrentProductTitle" itemprop="name">{{CurrentProductTitle}}</h1>
 			<div class="grid__item large--seven-twelfths do-touch-manipulation medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentimage="$data._currentImageSlideshow" :imagearray="CurrentProductImages" :imagesize="'1250x1250'"></ProductImageSlideshow>
 				<ProductImageThumbailPicker v-if="CurrentProduct && CurrentProduct.thumbnail_panel && CurrentProduct.thumbnail_panel.show" :option="ThumbnailPanelKey" @UPDATE_OPTION="imageOptionUpdated" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
@@ -16,11 +17,10 @@
 				<div v-show="!loading" class="product-single__meta">
 					<h2 v-show="sectionsettings.product_vendor_enable && ProductVendor" class="product-single__vendor" itemprop="brand">{{ CurrentProductVendor }}</h2>
 
-					<iconcomponent  icon_id="svg-icon-leaves-a"   scheme="light" :showpicker="true"></iconcomponent>
 
-					<iconcomponent icon_id="svg-icon-search"   scheme="light" :showpicker="true"></iconcomponent>
-
-					<h1 class="product-single__title" v-if="CurrentProductTitle" itemprop="name">{{CurrentProductTitle}}</h1>
+					<iconcomponent  v-show="false" icon_id="svg-icon-leaves-a"   scheme="light" :showpicker="true"></iconcomponent>
+					<h1 class="product-single__title" v-if="CurrentProductTitle" itemprop="name">
+						{{CurrentProductTitle}}</h1>
 					<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
 					<div>
@@ -28,6 +28,8 @@
 						<meta itemprop="priceCurrency" v-if="shop" :content="shop.currency ">
 						<link itemprop="availability" href="http://schema.org/|| if product.available || InStock{% else %}OutOfStock{% endif %}">
 						<link itemprop="availability" href="http://schema.org/InStock">
+
+						<iconcomponent  v-show="false" icon_id="svg-icon-divider-right" :flags="['--no-border']"  scheme="light" :showpicker="true"></iconcomponent>
 
 						<kabob class="divider" scheme="accent-default" componentclass="c-kabob"></kabob>
 
@@ -41,102 +43,6 @@
 								<label class="single-option-radio__label" for="ProductSelect-option-0">
 									Color
 								</label>
-								<fieldset class="single-option-radio" name="color" id="ProductSelect-option-0">
-
-
-									<input type="radio" value="Alumroot" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Alumroot">
-									<label for="ProductSelect-option-color-Alumroot">Alumroot</label>
-
-
-									<input type="radio" value="Ash" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Ash">
-									<label for="ProductSelect-option-color-Ash">Ash</label>
-
-
-									<input type="radio" value="Basswood" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Basswood">
-									<label for="ProductSelect-option-color-Basswood">Basswood</label>
-
-
-									<input type="radio" value="Bee-Balm" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Bee-Balm">
-									<label for="ProductSelect-option-color-Bee-Balm">Bee-Balm</label>
-
-
-									<input type="radio" value="Bluebell" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Bluebell">
-									<label for="ProductSelect-option-color-Bluebell">Bluebell</label>
-
-
-									<input type="radio" value="Cresheim Creek" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Cresheim Creek">
-									<label for="ProductSelect-option-color-Cresheim Creek">Cresheim Creek</label>
-
-
-									<input type="radio" value="Cedar Berry" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Cedar Berry">
-									<label for="ProductSelect-option-color-Cedar Berry">Cedar Berry</label>
-
-
-									<input type="radio" value="Fringetree" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Fringetree">
-									<label for="ProductSelect-option-color-Fringetree">Fringetree</label>
-
-
-									<input type="radio" value="Ganoga Falls" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Ganoga Falls">
-									<label for="ProductSelect-option-color-Ganoga Falls">Ganoga Falls</label>
-
-
-									<input type="radio" value="Gingko Nut" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Gingko Nut">
-									<label for="ProductSelect-option-color-Gingko Nut">Gingko Nut</label>
-
-
-									<input type="radio" value="Gray Birch" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Gray Birch">
-									<label for="ProductSelect-option-color-Gray Birch">Gray Birch</label>
-
-
-									<input type="radio" value="Juneberry" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Juneberry">
-									<label for="ProductSelect-option-color-Juneberry">Juneberry</label>
-
-
-									<input type="radio" checked="checked" value="Pachysandra" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Pachysandra">
-									<label for="ProductSelect-option-color-Pachysandra">Pachysandra</label>
-
-
-									<input type="radio" value="Porcupine" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Porcupine">
-									<label for="ProductSelect-option-color-Porcupine">Porcupine</label>
-
-
-									<input type="radio" value="Purple Loosestrife" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Purple Loosestrife">
-									<label for="ProductSelect-option-color-Purple Loosestrife">Purple
-										Loosestrife</label>
-
-
-									<input type="radio" value="Red Squirrel" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Red Squirrel">
-									<label for="ProductSelect-option-color-Red Squirrel">Red Squirrel</label>
-
-
-									<input type="radio" value="River Oat" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-River Oat">
-									<label for="ProductSelect-option-color-River Oat">River Oat</label>
-
-
-									<input type="radio" value="Scarlet Oak" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Scarlet Oak">
-									<label for="ProductSelect-option-color-Scarlet Oak">Scarlet Oak</label>
-
-
-									<input type="radio" value="Steelhead" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Steelhead">
-									<label for="ProductSelect-option-color-Steelhead">Steelhead</label>
-
-
-									<input type="radio" value="Wild Geranium" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wild Geranium">
-									<label for="ProductSelect-option-color-Wild Geranium">Wild Geranium</label>
-
-
-									<input type="radio" value="Wissahickon" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wissahickon">
-									<label for="ProductSelect-option-color-Wissahickon">Wissahickon</label>
-
-
-									<input type="radio" value="Wood Dove" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wood Dove">
-									<label for="ProductSelect-option-color-Wood Dove">Wood Dove</label>
-
-
-									<input type="radio" value="Wood Fern" data-index="option1" name="color" class="single-option-selector__radio" id="ProductSelect-option-color-Wood Fern">
-									<label for="ProductSelect-option-color-Wood Fern">Wood Fern</label>
-
-								</fieldset>
 							</div>
 							<div class="radio-wrapper js product-form__item">
 								<label class="single-option-radio__label" for="ProductSelect-option-1" data-children-count="0">
@@ -175,15 +81,7 @@
 							               fontsize="lg"
 							               :showpicker="false" padding="md">
 								<template slot="right-icon" class="is-grid-2" >
-									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-     width="126.283px" height="109.043px" viewBox="0 0 126.283 109.043" enable-background="new 0 0 126.283 109.043"
-     xml:space="preserve">
-<g>
-    <path fill="#EFC618" d="M19.146,99.946c19.438-22.778,51.355-30.832,107.138-15.86C100.109,108.604,52.111,117.313,19.146,99.946z"
-    />
-    <path fill="#EFC618" d="M0,84.354C14.732,41.479,38.793,14.969,120.137,0C107.49,46.33,78.048,74.376,0,84.354z"/>
-</g>
-</svg>
+									<span v-html="getIconSVG('leaves-single')"></span>
 								</template>
 
 							</basecomponent>
@@ -193,10 +91,7 @@
 						<div v-if="( CurrentProduct && CurrentProduct.recc_yarn)"><a :href="getProductUrl(CurrentProduct.recc_yarn)" >Recommended Yarn</a></div>
 						<div v-if="( CurrentProduct && CurrentProduct.recc_kit)"><a :href="getProductUrl(CurrentProduct.recc_kit)" >Recommended Kit</a></div>
 
-
-
-						<PendingItemsComponent v-if="(CurrentProduct && !CurrentProduct.notforsale)" :kit="$data._kit" :lineitemmessage="( CurrentProduct && $data._kit) ? CurrentProduct.title : false" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
-
+						<PendingItemsComponent :lineitemmessage="( CurrentProduct && $data._kit) ? CurrentProduct.title : false"  v-if="(CurrentProduct && !CurrentProduct.notforsale)" :kit="$data._kit" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
 						</div>
 
@@ -598,6 +493,8 @@
                 //TODO: figure this out
 
 				    if ( this.$data._kit ){
+
+				    	console.log("THIS IS A KIT" ,this.$props.addtocartvariants);
                         this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
                     }else{
                         this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
@@ -649,7 +546,12 @@
 <style lang="scss" type="text/scss" >
 
 	@import "src/vue/helpers/product-dependancies.scss";
+.product-single__title-mobile{
 
+	@include breakpoint-range(md,">="){
+		display: none;
+	}
+}
 	.product-app-loading{
 		//	@include c-button( false,  dark-accent-primary     font-small-caps md lg , color-schemes typography font-size base-padding ) ;
 		//background: red;

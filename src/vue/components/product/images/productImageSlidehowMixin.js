@@ -5,11 +5,11 @@ import { ShopifyImgURL, getVariantFromOptions} from '@/helpers/main.js'
 export const ProductImageSlideshowMixin = {
 	props: {
         imagearray: {
-            type: Array,
+            type: [Array, Boolean],
             default: () => []
         },
 		currentimage:{
-            type: [Boolean,Array],
+            type: [Object],
             default: () => {}
 		},
         imagesize: {

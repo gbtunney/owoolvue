@@ -36,7 +36,6 @@
     import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
     import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
-    //:options="swiperOption" ref="mySwiper"
     export default {
         name: 'ProductImageSlideshow',
         mixins: [DictionaryMixin,UIDMixin,ProductImageSlideshowMixin],

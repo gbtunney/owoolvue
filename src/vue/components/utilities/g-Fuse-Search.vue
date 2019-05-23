@@ -1,15 +1,14 @@
 <template>
 	<div >
-		<div id="sb-search" :class="[ UID,{'sb-search-open' : $data._active}]" class="  sb-search">
-				<input class="sb-search-input c-input--accent-default "
+		<div id="sb-search" :class="[ UID,{'sb-search-open' : $data._active}]" class=" g-type--base sb-search">
+				<input class=" sb-search-input  "
 				       v-model="$data._input_query"
 				       @input="_fuseSearch($data._input_query)"
 				       @blur="_inputLoseFocus"
 				       placeholder="Enter your search term..." type="text" value="" name="search" id="search">
-			<button @click="_openSearch" class="sb-btn-open c-icon--accent-default ">
-				<span class="sb-icon">
-					<svg aria-hidden="true" focusable="false" role="presentation"  viewBox="0 0 32 32"><path fill="#444" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z"/></svg>
-				</span>
+			<button @click="_openSearch" class="sb-btn-open">
+				<iconcomponent icon_id="svg-icon-search" iconsize="md" :flags="['--no-border']"  scheme="accent-default" :showpicker="false"></iconcomponent>
+
 			</button>
 		</div>
 	</div>
@@ -24,6 +23,7 @@
 	import Vue from 'vue';
 	import Fuse from 'fuse.js';
 	import math from 'mathjs'
+	import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
 
 	const fuse_options = {
@@ -42,7 +42,7 @@
 	export default {
 		name: 'fuseSearch',
 		mixins: [UIDMixin],
-		components: {},
+		components: {iconcomponent},
 		props: {
 			keys:{
 				type: Array,
@@ -146,10 +146,7 @@
 	@import "src/vue/helpers/product-dependancies.scss";
 
 	$search-padding: 5px 0;
-	.sb-icon{
-		@include u-dimensions(1.5em);
 
-	}
 
 	.sb-btn-open{
 	width:auto;
@@ -184,12 +181,18 @@
 		margin: 0;
 		padding: $search-padding;
 		z-index: 10;
+
+		@include g-color-scheme(accent-default, (background:true,foreground:true,border:true));
 		border-width:0px;
+@include rhythm-padding-sides(top bottom,md);
+
+
 		@include border-single-side(bottom, 1px);
 		-webkit-transition: width 0.3s;
 		-moz-transition: width 0.3s;
 		transition: width 0.3s;
 		-webkit-backface-visibility: hidden;
+
 
 
 	}

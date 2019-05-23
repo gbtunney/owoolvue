@@ -113,9 +113,9 @@ $show-guides: false;
 		}
 		&-item-count {
 
-			@include g-typeset(sm, font-serif-italic);
+			@include g-typeset(base, font-serif-italic);
 			a {
-				color: color(accent) !important;
+				color: darken( color(accent) , 10%)!important;
 			}
 			&.--active {
 
@@ -132,10 +132,11 @@ $show-guides: false;
 	&__customer {
 		width: auto;
 
-		@include g-typeset(sm, font-serif-italic);
+		@include g-typeset(base, font-serif-italic);
 
 		a {
-			color: color(accent) !important;
+			color: darken( color(accent) , 10%)!important;
+
 		}
 		padding: 0 rhythm(.5) 0 rhythm(1);
 		@include u-horizontal-list();

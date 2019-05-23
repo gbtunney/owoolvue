@@ -1,68 +1,17 @@
 <template>
 	<div class="pending-items-component --productApp">
-
-		<basecomponent :disabled="isDisabled" text="Add To Cart" :flags="IconClasses"
+		<basecomponent :disabled="isDisabled" :text="AddToCartString" :flags="IconClasses"
 		               scheme="dark-accent-primary"
 		               @click="addMultipletoCart(PendingItems)" font="small-caps"
-		               fontsize="lg"
+		               fontsize="md"
 		               :showpicker="false" padding="md">
 			<template slot="right-icon" class="is-grid-2" >
-
-				<svg v-show="Loading"  class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(30 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(60 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(90 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(120 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(150 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(180 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(210 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(240 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(270 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(300 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-					</rect>
-				</g><g transform="rotate(330 50 50)">
-					<rect x="47" y="24" rx="9.4" ry="4.8" width="6" height="12" fill="#fdfdfd">
-						<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-					</rect>
-				</g></svg>
+				<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="light" :showpicker="true"></iconcomponent>
 			</template>
 		</basecomponent>
-
 		<span v-show="!availablity">Product Unavailble </span>
 		<div v-show="metavisible" class="productMeta" >
-			<h5 v-show="kit">Includes: </h5>
+			<h5 v-show="kit">Kit Includes: </h5>
 			<ul>
 				<li v-for="pendingCartItem in PendingItems">
 					<PendingCartItem @available="updateAvailability" @requested_quantity_change="updateQuantity" :item="pendingCartItem" :kit="kit"></PendingCartItem>
@@ -84,6 +33,7 @@
 
 	import {CartMixin} from  '@/mixins/cartmixin.js';
     import basecomponent from '@/components/utilities/g-base-component.vue';
+	import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
     import Toasted from 'vue-toasted';
     Vue.use(Toasted)
@@ -92,16 +42,25 @@
 
 	import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
 
+	const Numeral = require('numeral');
+
+	///TODO  - figure out how to do this 4 reals.
+
+	Vue.filter('toUSD', function(value) {
+		return Numeral(value).format('$ 0,0[.]00');
+	});
+
 	module.exports = {
 		name: '',
 		mixins: [CartMixin,ShopifyApiMixin,DictionaryMixin],
-		components: {PendingCartItem,basecomponent},
+		components: {iconcomponent,PendingCartItem,basecomponent},
 		data: function() {
 			return {
 				_loading: false,
 				_pendingItems: [],
 				_isDisabled: false,
-				availablity:true
+				availablity:true,
+				_totalAmt:false,
 			}
 		},
 		props: {
@@ -132,12 +91,18 @@
 		mounted:function(){
 
 			let self = this;
+
+			this.$data._pendingItems = this.parsePendingItems(this.$props.addtocartvariants)
+			this.updateTotal();
+
 			this.getCart().then(function(res){
 			})
 	},
 	watch: {
 		addtocartvariants: function(val) {
+
 			this.$data._pendingItems = this.parsePendingItems(val)
+			this.updateTotal();
         }
 	},
 		computed: {
@@ -145,6 +110,9 @@
 				'Variants'
 			]),
 
+			AddToCartString:function(){
+				return `Add To Cart * ${Numeral(this.$data._totalAmt).format('$ 0,0[.]00')}`
+			},
 			IconClasses:function(){
 
 			    if ( this.Loading ){
@@ -153,6 +121,7 @@
                     return  ['test']
                 }
 			},
+
 				Loading: {
 				get: function() {
 					return this.$data._loading;
@@ -255,7 +224,21 @@
 
 			},
 			updateQuantity:function(item ){
-			console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems);
+
+				//getTotalAmount
+				this.updateTotal();
+
+				console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems,this.getTotalAmount(),this.$data._totalAmt );
+
+			},
+			updateTotal:function(){
+
+
+				this.$data._totalAmt =this.getTotalAmount();
+
+				console.log("updating!!",this.PendingItems, this.getTotalAmount() );
+
+
 			},
 			updateAvailability: function(bool) {
 
@@ -269,8 +252,7 @@
 				}
 			},
 			addVarianttoPendingItem: function(item , _variant){
-
-				return Object.assign(item, {variant: _variant});
+					return Object.assign(item, {variant: _variant});
 
 			},
 			parsePendingItemsSchema:function(itemArr){
@@ -289,6 +271,28 @@
 					return PENDING_ITEM_SCHEMA.parse(item);
 				});
 			},
+			getTotalAmount:function(){
+
+
+
+				if ( this.PendingItems ){
+
+					let totalprice = 0;
+
+					this.PendingItems.forEach(function(item){
+
+						var newtotal =  (item.requested_quantity * item.variant.price);
+
+						totalprice +=   newtotal;
+					})
+
+					return totalprice;
+
+				}else{
+					return false;
+				}
+
+			},
 			parsePendingItems: function(itemArr) {
 				let self = this;
 
@@ -303,6 +307,7 @@
 
 						if (self.variant_dictionary.get(item.id)){
 							retrievedDataArr.push(self.addVarianttoPendingItem(item, self.variant_dictionary.get(item.id)))
+							self.updateTotal();
 						} else {
 							self.getVariant({params: {id: item.id}}).then(function(res) {
 
@@ -312,9 +317,12 @@
 									return (item.id == Number(variantData.id)) ? true : false;
 								});
 								retrievedDataArr.push(self.addVarianttoPendingItem(myObj, res.data.variant));
+								self.updateTotal();
+
 							})
 						}
 					});
+
 					return retrievedDataArr;
 				} else {
 					//push it?
