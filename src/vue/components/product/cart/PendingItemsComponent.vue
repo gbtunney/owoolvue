@@ -92,6 +92,8 @@
 
 			let self = this;
 
+
+
 			this.$data._pendingItems = this.parsePendingItems(this.$props.addtocartvariants)
 			this.updateTotal();
 
@@ -99,9 +101,18 @@
 			})
 	},
 	watch: {
-		addtocartvariants: function(val) {
 
-			this.$data._pendingItems = this.parsePendingItems(val)
+
+			addtocartvariants: function(val) {
+
+				let items = val;
+				var product_ids  = val.map(function(item){
+
+					return item.product_id;
+				})
+					console.log("!!PRUDCT IDS IS",product_ids )
+
+					this.$data._pendingItems = this.parsePendingItems(val)
 			this.updateTotal();
         }
 	},
@@ -273,8 +284,6 @@
 			},
 			getTotalAmount:function(){
 
-
-
 				if ( this.PendingItems ){
 
 					let totalprice = 0;
@@ -288,6 +297,14 @@
 
 					return totalprice;
 
+				}else{
+					return false;
+				}
+			},
+			getData:function( item){
+				if (this.variant_dictionary.get(item.id)){
+					retrievedDataArr.push(self.addVarianttoPendingItem(item, self.variant_dictionary.get(item.id)))
+					self.updateTotal();
 				}else{
 					return false;
 				}
@@ -311,13 +328,37 @@
 						} else {
 							self.getVariant({params: {id: item.id}}).then(function(res) {
 
+								//	    self.add_variants_to_dictionary({variants: res.data.product.variants});
+
 								let variantData = res.data.variant;
 
+								if (self.product_dictionary.get(variantData.product_id)){
+									console.log("PRODUCT ID IS FOUND!!",variantData.product_id);
+
+								}else{
+									self.getProduct({params: {id: variantData.product_id}}).then(function(res){
+
+
+										self.add_product_to_dictionary({product: res.data.product});
+										self.add_variants_to_dictionary({variants: res.data.product.variants});
+										console.log("PRODUCT RETRWVAL OUND!!",self.product_dictionary.get(res.data.product.id) );
+
+										retrievedDataArr.push(self.addVarianttoPendingItem(myObj, res.data.variant));
+
+									})
+
+								}
+
+
+
+									/*
 								var myObj = requestedItemArr.find(function(item) {
 									return (item.id == Number(variantData.id)) ? true : false;
 								});
-								retrievedDataArr.push(self.addVarianttoPendingItem(myObj, res.data.variant));
-								self.updateTotal();
+
+									 */
+								//retrievedDataArr.push(self.addVarianttoPendingItem(myObj, res.data.variant));
+								//self.updateTotal();
 
 							})
 						}

@@ -15,9 +15,154 @@ This is the full Product App vue component.
 
 
 
-{% capture producthandledata %}
-{% include "settings-product.json"  %}
-{% endcapture %}
+<script type="application/javascript">
+	window.producthandledata = {
+		"yarn-for-bells-mill-cowl": {
+			"subtitle": "testing",
+
+			"variant_meta": {
+				"22589191225462": {
+					"kit": [{
+						"id": 22589225468022,
+						"title": "Cresheim Creek",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589225304182,
+							"title": "Brook Trout",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+
+				"22589191192694": {
+					"kit": [{
+						"id": 22589225861238,
+						"title": "Northern Cardinal",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589225435254,
+							"title": "Cooper's Hawk",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+
+
+				"22589191159926": {
+					"kit": [{
+						"id": 22589225697398,
+						"title": "Juneberry",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589226123382,
+							"title": "Silver Maple",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+				"22589191127158": {
+					"kit": [{
+						"id": 22589226319990,
+						"title": "Wineberry",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589225173110,
+							"title": "Arrowgrass",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+
+				"22589191094390": {
+					"kit": [{
+						"id": 22589225369718,
+						"title": "Bull Thistle",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589226254454,
+							"title": "Watermill",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+
+				"22589191061622": {
+					"kit": [{
+						"id": 22589225762934,
+						"title": "Meadow Violet",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589225992310,
+							"title": "Pearly Mussel",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+				"22589191028854": {
+					"kit": [{
+						"id": 22589225205878,
+						"title": "Barn Owl",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589226352758,
+							"title": "Wood Dove",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				},
+				"22589190996086": {
+					"kit": [{
+						"id": 22589226025078,
+						"title": "Porcupine",
+						"requested_quantity": 1,
+						"message": "Color A"
+					},
+						{
+							"id": 22589225959542,
+							"title": "Pasture Rose",
+							"requested_quantity": 1,
+							"message": "Color B"
+						}
+					]
+				}
+			}
+		},
+		"local": {
+			"subtitle":"This is local"
+		},
+		"andorra-wrap": {
+			"recc_yarn": "classic-worsted",
+			"recc_kit": "yarn-for-andorra-wrap",
+			"notforsale": true,
+			"download": {
+				"ravelry": "https://www.ravelry.com/patterns/library/anika-6"
+			}
+		}
+	};
+</script>
+
+
 
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
@@ -28,14 +173,6 @@ This is the full Product App vue component.
      prop-producthandledata='{{   producthandledata | strip_newlines }}'
 	prop-producthandle="{{ product.handle }}"
 
-		{% for kitmeta in current_variant.metafields.kit %}
-
-			{% capture key %}{{ kitmeta | first }}{% endcapture %}
-			{% capture value %}{{ kitmeta | last }}{% endcapture %}
-			{% capture  prop %} prop-{{ kitmeta | first }}='{{ kitmeta | last }}' {% endcapture %}
-			{{ prop }}
-
-	{% endfor %}
 
 >
 </div>

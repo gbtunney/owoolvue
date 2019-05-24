@@ -91,7 +91,7 @@
 						<div v-if="( CurrentProduct && CurrentProduct.recc_yarn)"><a :href="getProductUrl(CurrentProduct.recc_yarn)" >Recommended Yarn</a></div>
 						<div v-if="( CurrentProduct && CurrentProduct.recc_kit)"><a :href="getProductUrl(CurrentProduct.recc_kit)" >Recommended Kit</a></div>
 
-						<PendingItemsComponent :lineitemmessage="( CurrentProduct && $data._kit) ? CurrentProduct.title : false"  v-if="(CurrentProduct && !CurrentProduct.notforsale)" :kit="$data._kit" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
+						<PendingItemsComponent :lineitemmessage="( CurrentProduct && KitItems) ? CurrentProduct.title : false"  v-if="(CurrentProduct && !CurrentProduct.notforsale)" :kit="KitItems" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
 						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
 						</div>
 
@@ -233,6 +233,7 @@
 			    _optionMeta: [],
 			    _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
 		        _kit: false,
+			    _kititems:false,
 			    loading: false,
 			    convertedVariants:[],
 			    _currentImageSlideshow: false
@@ -251,7 +252,33 @@
             ...mapState({shop: state => state._shop
              })
         ,
+	    KitItems: {
+		    get: function() {
+			  return  this.$data._kititems;
+		    },
+		    set: function(newVal) {
+			    //=newVal;
+			    this.$data._kititems = newVal;
+		    }
+	    },
+	  /*  KitItems:function(){
+		//_kititems
 
+		    	if ( !_kititems){
+				    if ( .$props.addtocartvariants && self.$props.addtocartvariants.length >0
+			    }
+		    /!*if ( this.$data._kit ){
+
+			f ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
+
+
+			    console.log("THIS IS A KIT" ,this.$props.addtocartvariants);
+			    this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+		    }else{
+			    this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+		    }*!/
+
+	    },*/
 		    ThumbnailPanelKey:function() {
                 if (this.CurrentProduct && this.CurrentProduct.thumbnail_panel && this.CurrentProduct.thumbnail_panel.option_key && this.OptionByProp(this.CurrentProduct.thumbnail_panel.option_key)){
                    return this.OptionByProp(this.CurrentProduct.thumbnail_panel.option_key);
@@ -311,16 +338,39 @@
 
                 ///merge props..
                 if ( self.$props.producthandle ){
-                    if ( self.$props.producthandledata.hasOwnProperty(self.$props.producthandle )){
-                        additionalProductProps =Object.assign(additionalProductProps,self.$props.producthandledata[self.$props.producthandle] )//self.$props.productdata;
+                    if ( window.producthandledata &&window.producthandledata.hasOwnProperty(self.$props.producthandle )){
+	                    console.log("FOUND",window.producthandledata, window.producthandledata[self.$props.producthandle],self.$props.producthandle)
+
+	                    additionalProductProps =Object.assign(additionalProductProps,window.producthandledata[self.$props.producthandle] )//self.$props.productdata;
                     }
                 }
-                console.log("CDCURRENT PRODUCT", additionalProductProps)
 
                 self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
+			/*
+			    if (  this.CurrentProduct.variant_meta){
+				    let variantmeta = this.CurrentProduct.variant_meta
+				    var unmergedVariants = res.data.product.variants;
+				    var newarr = unmergedVariants.map(function(variant){
+					    if ( variantmeta[variant.id]){
+						    var eachvariantmeta = variantmeta[variant.id];
 
-                //***VARIANTS
-                self.add_variants_to_dictionary({variants: res.data.product.variants});
+						    return Object.assign(variant,{ variantmeta: eachvariantmeta })
+					    }else{
+						    return variant;
+					    }
+
+
+				    })
+
+				    console.log("VARIANTMERA PRODUCT", newarr)
+
+			    }*/
+
+
+
+
+			    //***VARIANTS
+	    self.add_variants_to_dictionary({variants: res.data.product.variants});
 
                 //***IMAGES
                 self.add_images_to_dictionary({images: res.data.product.images});
@@ -339,7 +389,7 @@
                       };
                       console.log("PAYYLOAD", payload)
                       self.add_options_to_dictionary(payload);
-
+///right here
                       if ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
                           self.$data._kit = true;
                       }
@@ -372,60 +422,44 @@
 
 		        if (this.CurrentProduct && this.CurrentProduct.thumbnail_panel && !this.CurrentProduct.thumbnail_panel.option_key){
                     this.imageUpdated(product_image);
-		        }else{
+		        }else {
 
-                    var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
+			        var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
 
-                    if ( newOptionDictionaryforPendingVariant.get(option.id) ){
+			        if (newOptionDictionaryforPendingVariant.get(option.id)){
 
-                        if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
-                            newOptionDictionaryforPendingVariant.set(option.id, value);
-                            var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
-                                if (option.hasOwnProperty('id')){
-                                    return option.id;
-                                }
-                            })
+				        if (newOptionDictionaryforPendingVariant.get(option.id) != value){
+					        newOptionDictionaryforPendingVariant.set(option.id, value);
+					        var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option) {
+						        if (option.hasOwnProperty('id')){
+							        return option.id;
+						        }
+					        })
 
-                            var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+					        var foundVariantArr = this._getVariantFromOptions(idmap, this.Variants);
 
-                            if (foundVariantArr && foundVariantArr.length==1 && isVariantAvailable(foundVariantArr[0]) ){
+					        if (foundVariantArr && foundVariantArr.length == 1 && isVariantAvailable(foundVariantArr[0])){
 
+						        console.log("variant FOUND&&&&&&&&&&&&", foundVariantArr[0], newOptionDictionaryforPendingVariant)
 
-                                console.log("variant FOUND&&&&&&&&&&&&",foundVariantArr[0],newOptionDictionaryforPendingVariant )
+						        this.variantChanged(foundVariantArr[0]);
+						        //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
+					        } else {
+						        this.imageUpdated(product_image);
 
-                                this.variantChanged(foundVariantArr[0]);
-                                //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
-                            }else{
-                                this.imageUpdated(product_image);
+						        var newFoundVariantArr = this._getVariantFromOptions([value.id], this.Variants);
 
-                                var newFoundVariantArr = this._getVariantFromOptions( [value.id], this.Variants);
+						        if (newFoundVariantArr && newFoundVariantArr.length == 1 && isVariantAvailable(newFoundVariantArr[0])){
+							        console.log("&&&&&&& ALTERNATE!!!", newFoundVariantArr, newOptionDictionaryforPendingVariant)
 
-                                if ( newFoundVariantArr && newFoundVariantArr.length==1 &&  isVariantAvailable(newFoundVariantArr[0])){
-                                    console.log("&&&&&&& ALTERNATE!!!",newFoundVariantArr,newOptionDictionaryforPendingVariant )
-
-                                    this.variantChanged(newFoundVariantArr[0]);
-                                }else{
-                                    console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
-
-                                }
-
-                            }
-                        }
-                    }
+							        this.variantChanged(newFoundVariantArr[0]);
+						        } else {
+							        console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!", foundVariantArr, newOptionDictionaryforPendingVariant)
+						        }
+					        }
+				        }
+			        }
 		        }
-
-                /*
-                optionMap.set(option.id,optionvalue );
-
-                var newArr = Array.from(optionMap.values());
-                newArr = newArr.map(function(optionvalue){
-                    return optionvalue.id;
-                })
-               var result =  this._getVariantFromOptions(newArr,this.Variants );*/
-              ///  console.log("*********optionMap THE OPTION",optionMap,newArr,result);
-
-
-
             },
             _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
                 return   getVariantFromOptions(optionArray, variantsArr);
@@ -433,32 +467,7 @@
             imageUpdated: function(product_image) {
               //  this.$emit(this.$props.updateMode, product_image);
             this.$data._currentImageSlideshow= product_image;
-                //@click="$emit('optionChanged',$props.option, optionvalue)"
-                /*
-						var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
-						console.log("******OPTION HANGED!!", newOptionDictionaryforPendingVariant, value)
 
-						if ( newOptionDictionaryforPendingVariant.get(option.id) ){
-
-							if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
-								newOptionDictionaryforPendingVariant.set(option.id, value);
-								var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
-									if (option.hasOwnProperty('id')){
-										return option.id;
-									}
-								})
-
-								var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
-
-								console.log("******OPTION HANGED!!", foundVariantArr, value)
-
-
-								if (foundVariantArr && foundVariantArr.length==1 ){
-									this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
-								}else{
-									console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
-								}
-							}*/
             },
 		    remapVariants:function(variantArr){
 
@@ -467,10 +476,25 @@
 						    message: "not set"
 			    };
 		    },
+		    getKitItems:function(variant){
+	    	if ( this.CurrentProduct && this.CurrentProduct.variant_meta ){
 
+	    		//console.log("HAS VARIANT META",this.CurrentProduct.variant_meta, variant.id);
+
+	    		if ( this.CurrentProduct.variant_meta[variant.id] && this.CurrentProduct.variant_meta[variant.id].hasOwnProperty('kit')  ){
+				    //console.log("HAS VARIANT META", this.CurrentProduct.variant_meta[variant.id]['kit']  );
+				    return this.CurrentProduct.variant_meta[variant.id]['kit'];
+			    }
+			    return false;
+		    }
+		    },
 	    	variantChanged: function(variant) {
-			    console.log("!!!!!!!!!variant changed!!!!!",this.$data._pendingItems,this.CurrentVariant,variant)
+			    console.log("!!!!!!!!!variant changed!!!!!",this.CurrentVariant,variant)
 			    this.$data._currentVariant   = variant;
+
+
+			    this.KitItems = this.getKitItems(variant);
+
 
 			    if ( this.product_image_dictionary.get(this.CurrentVariant.image_id)){
                     this.$data._currentImageSlideshow= this.product_image_dictionary.get(this.CurrentVariant.image_id);
@@ -492,10 +516,9 @@
 
                 //TODO: figure this out
 
-				    if ( this.$data._kit ){
-
-				    	console.log("THIS IS A KIT" ,this.$props.addtocartvariants);
-                        this.$data._pendingItems =this.$props.addtocartvariants;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+				    if ( this.KitItems ){
+				    	console.log("THIS IS A KIT" ,this.KitItems );
+                        this.$data._pendingItems =this.KitItems;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
                     }else{
                         this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
                     }

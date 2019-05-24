@@ -150,8 +150,10 @@ const main_store = {
                     pendingProduct = Object.assign(pendingProduct, payload.additionalProps);
                 }
                 state.product_dictionary = new Map(state.product_dictionary).set(parseInt(pendingProduct.id) ,pendingProduct)
-                
-            }else if (payload.products ){
+				//console.log("adding to dictionary!", state.product_dictionary);
+				
+				
+			}else if (payload.products ){
                 var productArr = payload.products;
                 
                 var newMap = new Map(state.product_dictionary  );

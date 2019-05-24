@@ -1,10 +1,28 @@
 <template>
 	<div>
 	<formgenerator :products="$data._products"></formgenerator>
-	KIT PRODUCT
+
+		<input type="text" v-model="$data.productID">
+		<h1>KIT</h1>
 			<Multiselect :options="$data._products"
-		             v-model="$data._selectedProduct"
-		             @input="productChanged($data._selectedProduct)"
+		             v-model="$data._selectedProductKit"
+		             @input="kitProductChanged($data._selectedProductKit)"
+		             track-by="title"
+		             label="title"
+		             class="multiselectmaster"
+		             :taggable="false"
+		             :multiple="false"
+		             :closeOnSelect="true"
+		             placeholder="Select one"
+		             :searchable="true"
+		             :allow-empty="false">
+		</Multiselect>
+
+
+
+		<Multiselect :options="$data._kitVariants"
+		             v-model="$data._selectedVariantKit"
+		             @input="productChanged"
 
 		             track-by="title"
 		             label="title"
@@ -17,24 +35,11 @@
 		             :allow-empty="false">
 		</Multiselect>
 
-		<p v-if="$data._selectedProduct">{{$data._selectedProduct.tags}}</p>
+		productID: {{KitProductID}}
+		variantID: {{KitVariantID}}
 
 
-		<Multiselect :options="$data._variants"
-		             v-model="$data._selectedVariant"
-		             @input="productChanged"
-
-		             track-by="title"
-		             label="title"
-		             class="multiselectmaster"
-		             :taggable="false"
-		             :multiple="true"
-		             :closeOnSelect="true"
-		             placeholder="Select one"
-		             :searchable="true"
-		             :allow-empty="false">
-		</Multiselect>
-
+		<hr>
 		Kit Contents :
 		<Multiselect :options="$data._products"
 		             v-model="$data._selectedProduct"
@@ -56,7 +61,7 @@
 
 		<Multiselect :options="$data._variants"
 		             v-model="$data._selectedVariant"
-		             @input="productChanged"
+		             @input="productChanged($data._selectedProduct)"
 
 		             track-by="title"
 		             label="title"
@@ -69,9 +74,15 @@
 		             :allow-empty="false">
 		</Multiselect>
 
+		<buttton text="DUMP Kit META>>> "  scheme="light"
+		               @click="remapVariants" font="san-serif"
+		               padding="md">DUMP KIT
+
+		</buttton>
 
 
-<h2>KIT</h2>
+
+		<h2>KIT</h2>
 
 		<ul>
 			<li v-for="item in $data._selectedVariant">
@@ -85,24 +96,8 @@
 				</ul>
 			</li>
 		</ul>
+<code>{{this.$data.convertedVariants }}</code>
 
-		<code>{{convertedVariants}}</code>
-		<basecomponent text="DUMP Kit META>>> " :flags="['--icon-right','test']" scheme="light"
-		              @click="remapVariants" font="san-serif"
-		               padding="md"></basecomponent>
-
-
-		<FuseSearch
-			class="fuseSearchComponent"
-
-			@fuseResult="fuseFilter"
-			@fuseInactive="fuseInactive"
-			:keys='["tags","title"]'
-			:list="FilteredProducts">
-		</FuseSearch>
-		<ul>
-		<li v-for="product in FilteredProducts">{{product.title}}{{product.tags}}</li>
-		</ul>
 	</div>
 </template>
 
@@ -145,8 +140,14 @@
         components: {formgenerator,FuseSearch,basecomponent,VueNumericInput,Multiselect},
         data() {
             return {
+
+            	_variantID: false,
+	            _productID:2651958116470,
                _products: [],
 	            _variants:[],
+	            _selectedProductKit:false,
+	            _selectedVariantKit:false,
+	            _kitVariants:[],
 	            _selectedProduct: false,
 	            _selectedVariant: false,
                 _kitproducts: [],
@@ -171,6 +172,17 @@
             ...mapState({shop: state => state._shop
             })
             ,
+	        KitVariantID:function(){
+
+
+            	return this.$data._selectedVariantKit.id;
+	        },
+	        KitProductID:function(){
+
+
+		        return this.$data._selectedProductKit.id;
+	        },
+
             FilteredProducts: {
                 get: function() {
                     if (!this.$data._filteredProductValues){
@@ -224,6 +236,13 @@
 
                 self.add_product_to_dictionary({products: res.data.products });
 
+                if ( self.$data._productID){
+	                self.$data._selectedProductKit = self.product_dictionary.get(self.$data._productID)
+
+	                self.kitProductChanged(self.product_dictionary.get(self.$data._productID));
+	                console.log("gbbggb!!!!!!",self.$data._selectedProductKit)
+                }
+
 
             });
         },
@@ -245,23 +264,60 @@
                 this.FilteredProducts = this.$data._products;
             },
             remapVariants:function(){
+console.log("REMAPPING");
 
-               this.$data.convertedVariants  = this.$data._selectedVariant.map(function(variant) {
+let letterString = "abcdefghij";
+	           let variantsnew = this.$data._selectedVariant.map(function(variant,index) {
 
-					   	return { id:variant.id,
-					    title: variant.title,
-						    requested_quantity: variant.requested_quantity,
-						    message: variant.message
-					    }
+		            return { id:variant.id,
+			            title: variant.title,
+			            requested_quantity: variant.requested_quantity,
+			            message:`Color ${(letterString.charAt(index)).toUpperCase()}`
+		            }
 
-				   })
-            },
+	            })
+
+var json ;
+
+	            var first = {};
+	           var second = {}
+	            second[String(this.KitVariantID)] = variantsnew;
+
+	            first[String(this.KitProductID)] =second;
+
+
+
+
+
+
+
+
+	            this.$data.convertedVariants = first;
+
+
+            },kitProductChanged: function(product) {
+		        console.log("producr changed!!!!!",product,this.product_dictionary.get(product.id))
+
+
+		        this.$data._kitVariants = product.variants;
+		       // var variantArr =  this.product_dictionary.get(product.id).variants;
+
+
+		      /*  this.$data._variants = variantArr.map(function(variant){
+			        return Object.assign(variant, {requested_quantity: 1, message: "colorway 1"});
+		        })*/
+
+
+	        },
+
             productChanged: function(product) {
                 console.log("producr changed!!!!!",product,this.product_dictionary.get(product.id))
 
 				var variantArr =  this.product_dictionary.get(product.id).variants;
-                this.$data._variants = variantArr.map(function(variant){
-                    return Object.assign(variant, {requested_quantity: 1, message: "colorway 1"});
+
+
+                this.$data._variants = variantArr.map(function(variant,index){
+                    return Object.assign(variant, {requested_quantity: 1, message: "Color"});
                 })
 
 
