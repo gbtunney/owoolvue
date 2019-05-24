@@ -192,13 +192,10 @@
 			    default: false
 		    },
 		    showmasterselect: {
-			    default: false
+			    default: true
 		    },
 	        updatehistory:{
 		        default: true
-	        },
-	        shop:{
-		        default: false
 	        },
             metavisible: {
                 type: Boolean,
@@ -209,7 +206,7 @@
             },
             addtocartvariants: {
                 type: Array,
-                default: []
+            default: () => []
             },
             label: {
                 type: String,
@@ -220,7 +217,7 @@
                 default: false
             },
             lineitemmessage: {   ///this is used to give the kit an id
-                type: String,
+                type: [String,Boolean],
                 default: false
             }
 	    },
@@ -303,6 +300,30 @@
 			    return "wild-geranium"
 		    },
 		    VariantArr: function() {
+
+			    let self =this;
+
+			    if ( this.CurrentProduct ){
+
+				    if (this.CurrentProduct.variants ){
+					    var newArr =    this.CurrentProduct.variants.map(function(variant){
+
+						    if (self.variant_dictionary.get(variant.id)){
+							    return	self.variant_dictionary.get(variant.id);
+						    }
+					    })
+					    console.log("-----NEW ARR",newArr)
+					    return this.Variants;
+				    }else{
+					    return this.Variants;
+				    }
+
+			    }else{
+				    this.Variants;
+			    }
+			    //    return this.Variants; //this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
+
+
 			    return this.Variants; //this._mapDisabledVariants(this.Variants, [] /*this._getVariantFromOptions( [value.id], this.Variants)*/);
 		    },
 		    Layout:function(){

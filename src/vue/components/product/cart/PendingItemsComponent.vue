@@ -268,19 +268,24 @@
 			},
 			parsePendingItemsSchema:function(itemArr){
 
-				return itemArr.map(function(item) {
+				if ( itemArr && itemArr.length > 0 ){
+					return itemArr.map(function(item) {
 
-					const PENDING_ITEM_SCHEMA = schema(
-						{
-							id: {type: Number, required: true},
-							variant: {type: Object},
-							message: {type: String},
-							requested_quantity: {type: Number, required: true, default: 1},
-							quantity_editable: {type:Boolean, default:false}
-						}
-					);
-					return PENDING_ITEM_SCHEMA.parse(item);
-				});
+						const PENDING_ITEM_SCHEMA = schema(
+							{
+								id: {type: Number, required: true},
+								variant: {type: Object},
+								message: {type: String},
+								requested_quantity: {type: Number, required: true, default: 1},
+								quantity_editable: {type:Boolean, default:false}
+							}
+						);
+						return PENDING_ITEM_SCHEMA.parse(item);
+					});
+				}else{
+					return [];
+				}
+
 			},
 			getTotalAmount:function(){
 
