@@ -516,6 +516,11 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+a-promise-queue@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/a-promise-queue/-/a-promise-queue-2.0.0.tgz#e24507a6f969483aeb722df612ccae5db2d4cf81"
+  integrity sha512-SBDZwLoNbUDWS+RjX3zrLxU71iywl0Vy0c3xX8bvzQtLK7bWI2lAAm7uBsHuSGZ57tgLjSt31EUbt8odoNDBTw==
+
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"

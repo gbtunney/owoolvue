@@ -62,6 +62,7 @@
     "test-styles": "node-sass  -r --importer=node_modules/node-sass-tilde-importer --include-path node_modules  --watch -rw src/styles/pattern-lab-tester.scss src/styles/pattern-lab-tester.css"
   },
   "dependencies": {
+    "a-promise-queue": "^2.0.0",
     "easy-promise-queue": "^0.5.4",
     "json-loader": "^0.5.7",
     "numeral": "^2.0.6",

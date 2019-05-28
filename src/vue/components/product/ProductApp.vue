@@ -312,7 +312,6 @@
 							    return	self.variant_dictionary.get(variant.id);
 						    }
 					    })
-					    console.log("-----NEW ARR",newArr)
 					    return this.Variants;
 				    }else{
 					    return this.Variants;
@@ -360,7 +359,7 @@
                 ///merge props..
                 if ( self.$props.producthandle ){
                     if ( window.producthandledata &&window.producthandledata.hasOwnProperty(self.$props.producthandle )){
-	                    console.log("FOUND",window.producthandledata, window.producthandledata[self.$props.producthandle],self.$props.producthandle)
+	                    //console.log("FOUND",window.producthandledata, window.producthandledata[self.$props.producthandle],self.$props.producthandle)
 
 	                    additionalProductProps =Object.assign(additionalProductProps,window.producthandledata[self.$props.producthandle] )//self.$props.productdata;
                     }
@@ -408,7 +407,6 @@
                       optionconfig: (self.CurrentProduct.optionconfig && self.CurrentProduct.optionconfig.length > 0) ? self.CurrentProduct.optionconfig : false,
                           option_value_overrides: (self.CurrentProduct.optionvalues && self.CurrentProduct.optionvalues.length > 0) ? self.CurrentProduct.optionvalues  : false
                       };
-                      console.log("PAYYLOAD", payload)
                       self.add_options_to_dictionary(payload);
 ///right here
                       if ( self.$props.addtocartvariants && self.$props.addtocartvariants.length >0 ){
@@ -461,7 +459,6 @@
 
 					        if (foundVariantArr && foundVariantArr.length == 1 && isVariantAvailable(foundVariantArr[0])){
 
-						        console.log("variant FOUND&&&&&&&&&&&&", foundVariantArr[0], newOptionDictionaryforPendingVariant)
 
 						        this.variantChanged(foundVariantArr[0]);
 						        //  this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
@@ -475,7 +472,7 @@
 
 							        this.variantChanged(newFoundVariantArr[0]);
 						        } else {
-							        console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!", foundVariantArr, newOptionDictionaryforPendingVariant)
+							       // console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!", foundVariantArr, newOptionDictionaryforPendingVariant)
 						        }
 					        }
 				        }
@@ -514,7 +511,8 @@
 			    this.$data._currentVariant   = variant;
 
 
-			    this.KitItems = this.getKitItems(variant);
+                this.KitItems = this.getKitItems(variant);
+
 
 
 			    if ( this.product_image_dictionary.get(this.CurrentVariant.image_id)){
@@ -526,7 +524,7 @@
 			    	var variantArr  =variant;
 			    	var newPending  = variantArr.map(function(_variant){
 
-			    		return { requested_quantity: 1,quantity_editable: true, variant: _variant, id: _variant.id }
+			    		return { requested_quantity: 1,quantity_editable: true, id: _variant.id }
 				    })
 				    this.$data._pendingItems =newPending;
 			    }else{
@@ -547,7 +545,7 @@
 	        },
 		    optionChanged: function(requestedVariant,option_dictionary) {
 
-			    console.log("!**************!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
+			  //  console.log("!**************!master option changed!!!!!",this.CurrentVariant,requestedVariant,option_dictionary);
 
                 let tally = [];
                 Array.from(this.option_dictionary.values()).forEach(function(option){

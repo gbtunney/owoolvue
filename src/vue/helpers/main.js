@@ -147,12 +147,12 @@ export const GDatamapper = {
 	}
 };
 
-export function isVariantAvailable(variant) {
+export function isVariantAvailable(variant, inventory_count = 1 ) {
 
 	if (variant && variant.hasOwnProperty('inventory_quantity') && variant.hasOwnProperty('inventory_management')){
 		if (variant.inventory_management == null){
 			return true;
-		} else if (variant.inventory_quantity > 0){
+		} else if (variant.inventory_quantity >= inventory_count){
 			return true;
 		} else {
 			return false;
