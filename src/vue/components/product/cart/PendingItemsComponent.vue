@@ -1,15 +1,23 @@
 <template>
-	<div class="pending-items-component --productApp">
-
-		<h4>TOTAL: {{  TotalAmount}}</h4>
-		<h3 >availability test {{Availability}} disabled {{ Disabled }}</h3>
-		<basecomponent  :text="AddToCartString" :flags="IconClasses"
+	<div :class="$options.name" class="pending-items-component --productApp">
+		<h4 v-show="false">TOTAL: {{  TotalAmount | toUSD }}</h4>
+		<h3 v-show="false">availability test {{Availability}} disabled {{ Disabled }}</h3>
+		<basecomponent  :text="AddToCartString"
 		               v-show="!Disabled" scheme="dark-accent-primary"
 		               @click="addMultipletoCart(PendingItems)" font="small-caps"
-		               fontsize="md"
-		               :showpicker="false" padding="md">
-			<template slot="right-icon" class="is-grid-2" >
-				<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="light" :showpicker="true"></iconcomponent>
+		               fontsize="lg"
+		               :showpicker="false">
+			<template slot="content" >
+				<span style="font-weight: 500">
+					Add To Cart
+				</span>
+				<span class="bullet-circle"></span>
+				<span class="addToCartPrice">
+					{{  TotalAmount | toUSD }}
+				</span>
+				<span>
+					<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border','icon-transistion', (!Loading)? 'icon-loading-hidden' : '' ]" iconsize="relative--lg" :showpicker="false"></iconcomponent>
+				</span>
 			</template>
 		</basecomponent>
 		<span v-show="!availablity">Product Unavailble </span>
@@ -26,7 +34,7 @@
 </template>
 
 <script>
-	
+
 	import Vue from 'vue';
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 	import store from '@/store'
@@ -57,7 +65,7 @@
 	});
 
 	module.exports = {
-		name: '',
+		name: 'PendingItemsComponent',
 		mixins: [CartMixin,ShopifyApiMixin,DictionaryMixin],
 		components: {iconcomponent,PendingCartItem,basecomponent},
 		data: function() {
@@ -84,7 +92,7 @@
 			},
 			disableunavailable: {
 				type: Boolean,
-				default: false
+				default: true
 			},
 			lineitemmessage: {   ///this is used to give the kit an id
 				type: [Boolean,String],
@@ -97,14 +105,9 @@
 		},
 		mounted:function(){
 			this.PendingItems =  this.parsePendingItemsSchema(this.$props.addtocartvariants);//this.parsePendingItems(this.$props.addtocartvariants)
-//this._addPendingItems();
-
-			///this._retrieveItemData(this.$data._pendingItems);
-
-			//this.updateTotal();
-
 			this.LocalVariantDictionary = this.variant_dictionary;
 
+			console.log("**************MOUNTED",	this.PendingItems);
 
             this._initPendingItem();
 
@@ -114,6 +117,7 @@
 	watch: {
 			addtocartvariants: function(val) {
 
+                console.log("**************WATCH",	this.PendingItems);
 
                 this.PendingItems =   this.parsePendingItemsSchema(val);//this.parsePendingItems(this.$props.addtocartvariants)
                 this._initPendingItem();
@@ -128,11 +132,6 @@
 
               ///  this._retrieveItemData(val);
 
-
-
-
-
-                //this.updateTotal();
         }
 	},
 		computed: {
@@ -161,16 +160,14 @@
 
                 if (this.PendingItems && this.PendingItems.length >= 1 &&  this.UnloadedDataItems.length == 0 ){
 
-                    //console.log("TOTAL AMT ")
                     let isUnavailable = false;
 
                     this.PendingItems.forEach(function(item){
+                        if ( item.variant_id && self.Variant(item.variant_id) ){
 
-                        if ( self.Variant(item.variant_id) ){
+                            var _variant = self.Variant(item.variant_id);
 
-                            var _variant = self.LocalVariantDictionary.get(item.variant_id);
-
-                            if ( !isUnavailable && !isVariantAvailable(_variant,1) ){
+                            if ( !isUnavailable && !isVariantAvailable(_variant,item.requested_quantity) ){
                                 isUnavailable=true;
                             }
                         }
@@ -178,66 +175,41 @@
                     })
 
                     return !isUnavailable;
-
-
-                }else{
-                    return false;
                 }
-			    //inventory_count
-
-              //  isVariantAvailable
-
+				return false;
 			},
             UnloadedDataItems:function(){
 			    let self = this;
 	            return this.PendingItems.filter(function(item){
-                     console.log("filtering item " ,item,self.LocalVariantDictionary.get(item.variant_id) )
-                    // return true;
+                     //console.log("filtering item " ,item,self.LocalVariantDictionary.get(item.variant_id) )
 
-                    if ( self.LocalVariantDictionary && item.variant_id && self.LocalVariantDictionary.get(item.variant_id) ){
+                    if ( self.Variant(item.variant_id) ){
                         return false;
                     }else{
                         return true;
-
                     }
-
                 })
             },
 			AddToCartString:function(){
-				return `Add To Cart * ${Numeral(this.$data._totalAmt).format('$ 0,0[.]00')}`
+				return `Add To Cart * ${Numeral(this.TotalAmount ).format('$ 0,0[.]00')}`
 			},
-			IconClasses:function(){
+            TotalAmount: function() {
+                let self = this;
 
-			    if ( this.Loading ){
-                    return  ['--icon-right','test']
-                }else{
-                    return  ['test']
+                if (this.PendingItems && this.PendingItems.length >= 1 && this.UnloadedDataItems.length == 0){
+
+                    let totalprice = 0;
+
+                    this.PendingItems.forEach(function(item) {
+                        if (self.Variant(item.variant_id))
+                            var _variant = self.Variant(item.variant_id);
+                        var newtotal = (item.requested_quantity * _variant.price);
+                        totalprice += newtotal;
+                    })
+
+                    return totalprice;
                 }
-			},
-            TotalAmount:function(){
-
-			    let self = this;
-			    if (this.PendingItems && this.PendingItems.length >= 1 &&  this.UnloadedDataItems.length == 0 ){
-
-			        //console.log("TOTAL AMT ")
-                        let totalprice = 0;
-
-                        this.PendingItems.forEach(function(item){
-
-                            if ( item.variant_id && self.LocalVariantDictionary && self.LocalVariantDictionary.get(item.variant_id)  )
-                            var _variant = self.LocalVariantDictionary.get(item.variant_id);
-
-                            var newtotal =  (item.requested_quantity * _variant.price);
-
-                            totalprice +=   newtotal;
-                        })
-
-                        return totalprice;
-
-
-			    }else{
-                return false;
-    }
+                return false
             },
 
 				Loading: {
@@ -250,25 +222,22 @@
 			}, PendingItemData:function(){
 				return Array.from(this.$data._pendingItemData.values());
 			},
-			LocalVariantDictionary: {
+            LocalVariantDictionary: {
                 get: function() {
-
-                    if ( !this.$data._local_variant_dictionary ){
-                        this.$data._local_variant_dictionary= new Map(this.variant_dictionary);
+                    if (!this.$data._local_variant_dictionary){
+                        this.$data._local_variant_dictionary = new Map(this.variant_dictionary);
                     }
                     return this.$data._local_variant_dictionary;
                 },
                 set: function(newVal) {
                     let self = this;
 
+                    if (typeof newVal == "map"){
+                        self.$data._local_variant_dictionary = new Map([newVal, self.$data._local_variant_dictionary]);
+                    } else if (typeof newVal == "object" && newVal.length >= 1){
+                        console.log("ADDING TO VARIANT DICTIONARY", newVal)
 
-                    if ( typeof newVal == "map" ){
-
-                        self.$data._local_variant_dictionary = new Map(newVal);
-                    }else if ( typeof newVal == "object" && newVal.length >1 ){
-                        console.log("Appending new",newVal, typeof newVal);
-
-                        newVal.forEach(function(variant){
+                        newVal.forEach(function(variant) {
                             self.$data._local_variant_dictionary = new Map(self.$data._local_variant_dictionary).set(variant.id, variant);
                         })
                         self.$data._local_variant_dictionary = new Map(self.$data._local_variant_dictionary);
@@ -280,25 +249,14 @@
 					return this.$data._pendingItems;
 				},
 				set: function(newVal) {
-
-
-                    //self.$data._pendingItemData = new Map( self.$data._pendingItemData).set(myObj.item_id, self.addVarianttoPendingItem(item, variantData));
-
-
-
-                    this.$data._pendingItems = newVal;
-
-					///this.$data._pendingItems = newVal;  ///this.Variants[this.CurrentVariant._index];
+				    this.$data._pendingItems = newVal;
 				}
 			},
-			ItemCount: function() {
-				let total = 0;
-
-				this.$data._pendingItems.forEach(function(item) {
-					total += item.requested_quantity;
-				})
-				return total;
-			}
+            PendingItemsMap: function(){
+			    return new Map(this.$data._pendingItems.map(function(item){
+			        return [ item.item_id, item];
+			    }))
+            }
 		},
 		methods: {
             Variant:function(variant_id ){
@@ -306,103 +264,36 @@
                     return this.LocalVariantDictionary.get(variant_id);
                 }else{
                     return false;
-
                 }
             },
 		    //NEW
-            _initPendingItem:function(){
-				let self = this;
-                console.log("CHECK DATA", this.UnloadedDataItems )
+            _initPendingItem: function() {
+                let self = this;
+                console.log("CHECK DATA", this.UnloadedDataItems)
 
-                Promise.all([ ...this.UnloadedDataItems.map(function(item) {
-                    return   self.getVariant({params: {id: item.variant_id }})
+                Promise.all([...this.UnloadedDataItems.map(function(item) {
+                    return self.getVariant({params: {id: item.variant_id}})
 
                 })]).then(function(values) {
 
-                 var myset=  new Set(values.map(function(res){
-                        return res.data.variant.product_id;
+                    var myset = new Set(values.map(function(res) {
+                            return res.data.variant.product_id;
+                        })
+                    )
+                    Array.from(myset.values()).map(function(product_id) {
+                        self.getProduct({params: {id: product_id}}).then(function(product_res) {
+
+
+                            self.add_product_to_dictionary({product: product_res.data.product});
+                            self.add_images_to_dictionary({images: product_res.data.product.images});
+                            self.LocalVariantDictionary = Array.from(product_res.data.product.variants);
+                            console.log("************ADDING PRODUCT TO DICTIONARYS",product_res.data.product.variants)
+
+                        })
                     })
-                )
-                 Array.from(myset.values()).map( function(product_id){
-
-
-                     console.log("TRYING TO GET PRODUCT",product_id );
-                     self.getProduct({params: {id: product_id}}).then(function(product_res){
-                         self.add_product_to_dictionary({product: product_res.data.product});
-                         self.add_images_to_dictionary({images: product_res.data.product.images});
-                         self.LocalVariantDictionary = Array.from(product_res.data.product.variants);
-                     })
-                 })
-                })  ;
-
-
-
-
-
-
-
-
-
-
-            /*    pq.add( [() => { return _productProm }] );
-
-                var _productProm =  self.getProduct({params: {id: myVariantData.product_id}}).then(function(product_res){
-
-                    console.log("--resolved product!!!", product_res.data.product);
-
-                    self.add_product_to_dictionary({product: product_res.data.product});
-                    self.add_images_to_dictionary({images: product_res.data.product.images});
-                    self.LocalVariantDictionary = Array.from(product_res.data.product.variants);
-                    console.log("--dictionary resolved product!!!",  self.LocalVariantDictionary );
-
                 })
-
-*/
-
-
-
-
-
-
-
-
-
-/*
-                    this.getVariant({params: {id: this.PendingItems[0].id }}).then(function(res) {
-	                    let variantData = res.data.variant;
-                        console.log("GOINGTO RETRIEVE!", res.data );
-
-                        if (self.product_dictionary.get(variantData.product_id)){
-                            self._addPendingItems();
-                        }else{
-                            console.log("RETRIEDING",variantData.product_id );
-
-                            self.getProduct({params: {id: variantData.product_id}}).then(function(res){
-
-                                self.add_product_to_dictionary({product: res.data.product});
-                                self.add_images_to_dictionary({images: res.data.product.images});
-                                self.$data._local_variant_dictionary=   self.arrayToDictionary(res.data.product.variants);
-
-                            })
-
-                        }
-
-
-
-                    });
-*/
-
-
-                    //var product_ids  = this.PendingItems.map(function(item){
-
-                      //  return item.product_id;
-                  //  })
-
-
-
-
-			},
-			transformItemArray:function(pendingItems , lineItemMessage =false){
+            },
+            transformCartItemArray:function(pendingItems , lineItemMessage =false){
 				///transform the pending item array for ajax cart.
 
 				///TODO THIS IS SOME DUMB BULLSHITTTTTT
@@ -421,12 +312,10 @@
 
 					const ITEM_SCHEMA = schema(
 						{
-							id: {type: Number, required: true},
+							id: {type: Number, required: true, default:  item.variant_id},
 							quantity: {type: Number, default: item.requested_quantity },
 							properties: {type: Number, default: line_props},
 						});
-
-
 
 					const data = ITEM_SCHEMA.parse(item);
 					const params = {}
@@ -435,14 +324,12 @@
 			} ,
 			addMultipletoCart: function(_pendingItems) {
 
-				let pendingItems  = this.transformItemArray(_pendingItems, this.$props.lineitemmessage)
+				let pendingItems  = this.transformCartItemArray(_pendingItems, this.$props.lineitemmessage)
 
 				let self = this;
 				let pq = new PromiseQueue({concurrency: 1});
 
-
-			//	this.Loading = this.isDisabled = true;
-
+				this.Loading = this.isDisabled = true;
 
 				pq.add([() => {
 					return new Promise(function(resolve, reject) {
@@ -456,7 +343,7 @@
 						}}), () => {
 						return new Promise(function(resolve, reject) {
 							setTimeout(function() {
-                               // self.Loading = self.isDisabled = false;
+                                self.Loading = self.isDisabled = false;
                                 self.getCart().then(function(res){
                                     $('.js-drawer-open-button').click()
                                 })
@@ -465,47 +352,64 @@
 							}, 5)
 						});
 					}])
-
-
 			},
-			updateQuantity:function(item ){
+			updateQuantity:function(item,value ){
 
 				//getTotalAmount
 				//this.updateTotal();
 
-				console.log("updateQuantity,TRYING TO REMOVE@!~!",item, this.PendingItems,this.getTotalAmount(),this.$data._totalAmt );
+
+				var itemsMap= this.PendingItemsMap;
+
+				if ( item && item.item_id ){
+
+				    var newItem = Object.assign(item, {requested_quantity: value })
+
+					if ( itemsMap.get(item.item_id) ){
+
+                        itemsMap.set(item.item_id,newItem)
+					}
+
+				this.PendingItems = Array.from(itemsMap.values());
+
+                    console.log("updateQuantity,TRYING TO REMOVE@!~!",value,newItem,itemsMap);
+
+                }
 
 			},
 			updateVariant:function(item,variant){
 
+                var itemsMap= this.PendingItemsMap;
 
+                if ( item && item.item_id ){
 
-				//this.$emit('variant_change', item, variant );
+                    var newItem = Object.assign(item, {variant_id: variant.id })
 
-				if ( item && item.item_id){
-                    var newItem = item;
+                    if ( itemsMap.get(item.item_id) ){
 
-                    newItem = Object.assign(item,{id: variant.id, variant: variant} );
-                    this.$data._pendingItemData  = new Map(	this.$data._pendingItemData).set(item.item_id,newItem  )
+                        itemsMap.set(item.item_id,newItem)
+                    }
+
+                    this.PendingItems = Array.from(itemsMap.values());
+
+                    console.log("updatevariant,TRYING TO REMOVE@!~!",value,newItem,itemsMap);
 
                 }
 
+                /*
+
+
+
+								//this.$emit('variant_change', item, variant );
+
+
+				*/
 
 			},
 
-			updateTotal:function(){
-
-
-				this.$data._totalAmt =this.getTotalAmount();
-
-				console.log("updating!!",this.PendingItems, this.getTotalAmount() );
-
-
-			},
 			updateAvailability: function(bool) {
 
-
-                //isVariantAvailable(foundVariantArr[0])
+         /*       //isVariantAvailable(foundVariantArr[0])
 				//todo: make some way of doing alternate number here.
 				let self = this;
 
@@ -513,7 +417,7 @@
 
 				if (this.$props.disableunavailable){
 				//	this.isDisabled = !bool;
-				}
+				}*/
 			},
 			parsePendingItemsSchema:function(itemArr){
 
@@ -562,5 +466,44 @@
 
 
 <style lang="scss" type="text/scss" >
+
+
+	.productMeta{
+		width: 100%;
+		//todo: change this;
+	}
+
+	$GENERATE-QUEUE: false;
+
+	@import "src/vue/helpers/product-dependancies.scss";
+
+	.addToCartPadding{
+		padding: .5em 2em;
+		@include breakpoint-range(sm,"<="){
+			padding: .5em 1em;
+
+		}
+	}
+
+	.icon-loading-hidden{
+		width: .2em;
+	}
+	.icon-transistion{
+		@include u-transition(all,.5s);
+	}
+
+	.bullet-circle{
+		width: 4px;
+		height: 4px;
+
+		margin: 0 4px;
+
+		@include g-color-scheme(light,(background:true,foreground:false));
+		border-radius: 100%;
+	}
+	.addToCartPrice {
+		@include g-typeset(md,font-small-caps);
+	}
+
 
 </style>

@@ -151,7 +151,22 @@ export function isVariantAvailable(variant, inventory_count = 1 ) {
 
 	if (variant && variant.hasOwnProperty('inventory_quantity') && variant.hasOwnProperty('inventory_management')){
 		if (variant.inventory_management == null){
+			console.log("inventoryFOUNDINGGGG",variant.inventory_management,variant.title);
+			
 			return true;
+		} else if (variant.inventory_quantity >= inventory_count){
+			console.log("not defaut",variant.inventory_quantity,inventory_count);
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+export function isGetMaxQuantity(variant, inventory_count = 1 ) {
+	
+	if (variant && variant.hasOwnProperty('inventory_quantity') && variant.hasOwnProperty('inventory_management')){
+		if (variant.inventory_management == null){
+			return 1;
 		} else if (variant.inventory_quantity >= inventory_count){
 			return true;
 		} else {
@@ -159,6 +174,7 @@ export function isVariantAvailable(variant, inventory_count = 1 ) {
 		}
 	}
 }
+
 export function getVariantFromOptions(inOptions, inVariants) {
 	let self = this;
 	let optionArray = inOptions;

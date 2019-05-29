@@ -1,33 +1,33 @@
 <template>
 	<div :class="$options.name"  ref="MYCART" class="cart-wrapper">
-		<span v-if="kit">
+		<div v-if="kit">
 			 <div class="kit_container">
-
-				 <div class="PendingItemLoader"
-				    <iconcomponent v-show="!this.Variant" icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="light" :showpicker="true"></iconcomponent>
+				 <div class="PendingItemLoader" v-show="!this.Variant" >
+				    <iconcomponent  icon_id="svg-icon-loadinganim" :flags="['--no-border','g-icon-absolute--md']" iconsize="absolute--xl" scheme="light" :showpicker="true"></iconcomponent>
 				 </div>
-				<div v-show="this.Variant"  class="PendingItemWrapper">
-					<span v-if="Image">
+				 <div v-show="this.Variant" :class="(!Availability) ? ['PendingItemUnavailable'] : []" class="PendingItemWrapper">
+				<span class="PendingItemImage" v-if="Image">
 						<img class="thumbnail"  v-if="kit && Image" :src="ShopifyImgURL(Image.src, $props.swatchsize)" :alt="Image.alt">
 					</span>
-					<span>
-					 <h5 v-if="Product">{{Product.title}} / {{Variant.title}}</h5>
-					 <p v-show="!Availability">NO STOCK AVAILABLE!!</p>
-					 <p v-if="Variant">{{RequestedQuantity}}x {{Variant.title}}</p>
-
-					  <p>--{{Message}}</p>
-					 	<Multiselect v-if="item.editable_variant" :options="ProductVariantArr"
-					                 @input="variantChanged(item)"
-					                 v-model="Variant"
-					                 track-by="title"
-					                 label="title"
-					                 class="multiselectmaster"
-					                 :taggable="false"
-					                 :multiple="allowmultiple"
-					                 :closeOnSelect="false"
-					                 placeholder="Select one"
-					                 :searchable="true"
-					                 :allow-empty="false">
+					 <span class="PendingItemDetails">
+					 <h5 class="PendingItemTitle" v-if="Product">{{Product.title}} / {{Variant.title}}</h5>
+						 <div>-- {{ (!IsFree)? RequestedQuantity : " "}} {{UnitString}} {{Message}}  ( <span v-if="(!IsFree)">{{ this.Variant.price | toUSD}}</span><span v-else="IsFree">Free</span> )</div>
+						<div style="opacity: .6;" v-if=" ManageQuantity">total available: {{Variant.inventory_quantity}}</div>
+						 <div v-if="( Variant && item.editable_variant)">
+							 <span>Color:</span>
+							 <span>
+								 <Multiselect  :options="ProductVariantArr"
+								              @input="variantChanged(item)"
+								              v-model="SelectedVariant"
+								              track-by="title"
+								              label="title"
+								              class="multiselectmaster"
+								              :taggable="false"
+								              :multiple="false"
+								              :closeOnSelect="false"
+								              placeholder="Select one"
+								              :searchable="true"
+								              :allow-empty="false">
 
 								<template slot="singleLabel" slot-scope="{ option }">
 									<span>  {{ option.title }}</span>
@@ -39,24 +39,32 @@
 										<span class="option__title">{{ props.option.title }}</span></div>
 								</template>
 					    </Multiselect>
-				        <p>
-					        Count: {{RequestedQuantity}} at {{VariantPrice | toUSD }} <strong>Total:</strong> {{VariantTotalPrice |toUSD}}
-				        </p>
+							 </span>
 
-						<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
-						<p>total available: {{Variant.inventory_quantity}}</p>
+						 </div>
+					    </p>
+
+
+						 <p v-show="!Availability">NO STOCK AVAILABLE!!</p>
+						 </p>
+						 <vue-numeric-input class="quantity-selector__input"   @input="quantityChanged(item,RequestedQuantity)" v-model="RequestedQuantity" v-if="item.quantity_editable"  :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
 					</span>
-				</div>
+				 </div>
+			 </div>
+		</div>
+		<div class="single_item_container" v-else>
+			<div class="">
+				<span class="pending-item-available" v-if=" ManageQuantity" >available: {{Variant.inventory_quantity}}</span>
 
-		</span>
-		<span v-else>
-			<h3  v-if=" ManageQuantity"  class="pending-item-name">{{VariantName}}
+				<h3 class="pending-item-name" v-if=" ManageQuantity"  >{{Variant.title}}</h3>
+
+			</div>
 				<span v-show="false" class="pending-item-price">{{VariantTotalPrice |toUSD}}</span>
-			</h3>
+
+
 			<div class="pending-item-available">Quantity:</div>
-			<vue-numeric-input class="quantity-selector__input" @input="quantityChanged(item)"  v-show="item.quantity_editable && ManageQuantity" v-model="item.requested_quantity" :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
-			<div class="pending-item-available" v-if=" ManageQuantity" >available: {{Variant.inventory_quantity}}</div>
-		</span>
+			<vue-numeric-input class="quantity-selector__input" v-if="item.quantity_editable"  @input="quantityChanged(item,RequestedQuantity)" v-model="RequestedQuantity"  :min="1" :max="Variant.inventory_quantity" :step="1"></vue-numeric-input>
+		</div>
 	</div>
 </template>
 
@@ -69,9 +77,9 @@
 
     import {isVariantAvailable} from '@/helpers/main.js'
 
-    import VueNumericInput from 'vue-numeric-input';
     import {ShopifyImgURL} from '@/helpers/main.js'
     import Multiselect from 'vue-multiselect'
+    import VueNumericInput from 'vue-numeric-input';
     import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
     const Numeral = require('numeral');
@@ -79,6 +87,11 @@
     ///TODO  - figure out how to do this 4 reals.
     
     Vue.filter('toUSD', function(value) {
+        if ( value == parseInt(0 )){
+            return "Free"
+        }
+
+        console.log("filtering " ,value)
         return Numeral(value).format('$ 0,0[.]00');
     });
 
@@ -114,159 +127,143 @@
         mixins: [DictionaryMixin],
         data() {
             return {
-                _variant: false,
-                _item: [],
-                _image: false
+                _selectedVariant:false,
+	            _requested_quantity: false
             }
         },
         created: function() {
-            /*  this.Variant = ;
-			 */
-            let self = this;
-           /* if (this.product_image_dictionary.get(this.Variant.image_id)){
-                this.Image = this.product_image_dictionary.get(this.Variant.image_id);
-            } else {
-                this.getVariantDefaultImage({
-                    params: {
-                        productid: this.Variant.product_id,
-                        imageid: this.Variant.image_id
-                    }
-                }).then(function(res) {
-                    self.Image = res.data.image;
-                });
-            }*/
-
         },
         watch: {
             item: function(val) {
                 console.log("NEW ITEM SSETTTT", this.Variant);
-                let self = this;
-/*
-                if (this.product_image_dictionary.get(this.Variant.image_id)){
-                    this.Image = this.product_image_dictionary.get(this.Variant.image_id);
-                } else {
-                    console.log("WATCH WM _ __ ", isVariantAvailable(this.Variant))
-
-                    this.getVariantDefaultImage({
-                        params: {
-                            productid: this.Variant.product_id,
-                            imageid: this.Variant.image_id
-                        }
-                    }).then(function(res) {
-                        //  self.Image= res.data.image;
-                        console.log("FOUND!!!!!!! _ __ ", res.data.image, isVariantAvailable(res))
-
-                    });
-                }*/
-               // this.$emit('available', this.Availability)
             }
         },
         mounted: function() {
 
-            // if (Availability){
-
-            console.log("mount EM IS ", this.Availability, isVariantAvailable(this.Variant))
-           // this.$emit('available', this.Availability)
-
-            // }
         }, computed: {
-            RequestedQuantity: function() {
-                return this.$props.item.requested_quantity;
-            },
-		    Variant:function() {
 
-                if ( this.$props.local_variant_dictionary && this.$props.item.variant_id && this.$props.local_variant_dictionary.get(this.$props.item.variant_id)  ){
-                    return  this.$props.local_variant_dictionary.get(this.$props.item.variant_id);
+            Variant: function() {
+
+                if (this.$props.local_variant_dictionary && this.$props.item.variant_id && this.$props.local_variant_dictionary.get(this.$props.item.variant_id)){
+                    return this.$props.local_variant_dictionary.get(this.$props.item.variant_id);
                 }
                 return false;
             },
-            Image:function(){
-              if( this.Variant && this.Variant.image_id && this.product_image_dictionary.get(this.Variant.image_id))  {
-                  return  this.product_image_dictionary.get(this.Variant.image_id);
+            Image: function() {
+
+                    if (this.Variant && this.Variant.image_id && this.product_image_dictionary.get(this.Variant.image_id)){
+                        return this.product_image_dictionary.get(this.Variant.image_id);
+                    }else if (this.Product && this.Product.image.id && this.product_image_dictionary.get(this.Product.image.id)){
+                       console.log("THROWING PRODUCT!!!!!!")
+                        return this.product_image_dictionary.get(this.Product.image.id);
+                    }
+
+                return false;
+
+            },
+		    UnitString:function(){
+              if ( this.Product && ( (this.Product.product_type).toLowerCase() == "yarns") ) {
+                  if ( this.$props.item.requested_quantity == 1) return "skein / "
+                  return "skeins /"
+
               }
-              return false;
-
-            },  /*{
-
-                get: function() {
-                    ShopifyImgURL
-                    return this.$data._image;
-                },
-                set: function(newVal) {
-
-                    this.$data._image = newVal;  ///this.Variants[this.CurrentVariant._index];
-                }
-            },*/
-		    ProductVariantArr:function(){
-            	/*if ( this.product_dictionary.get(this.Variant.product_id) ){
-		            return this.product_dictionary.get(this.Variant.product_id).variants;
-
-	            }else{
-            		return [];
-	            }*/
 		    },
-		    Product:function(){
-                if ( this.Variant && this.Variant.product_id && this.product_dictionary.get(this.Variant.product_id) ){
+			IsFree:function(){
+                if ( this.Variant && this.Variant.price == 0) return true;
+                return false;
+			},
+            ProductVariantArr: function() {
+                if ( this.Product ){
+					return this.Product.variants;
+
+				}else{
+					return [];
+				}
+            },
+            Product: function() {
+                if (this.Variant && this.Variant.product_id && this.product_dictionary.get(this.Variant.product_id)){
                     return this.product_dictionary.get(this.Variant.product_id);
                 }
                 return false;
 
-		    },
+            },
             VariantPrice: function() {
                 return this.Variant.price;
             },
             Message: function() {
-
                 if (this.$props.item.message){
                     return this.$props.item.message;
                 } else {
                     return "";
                 }
-
             },
             VariantTotalPrice: function() {
-                return ( this.Variant.price * this.$props.item.requested_quantity);
+                return (this.Variant.price * this.$props.item.requested_quantity);
             },
-            VariantName: function() {
-               // return this.Variant.title;
-            },
-            //
             ManageQuantity: function() {
-                return (this.Variant.inventory_management == null ) ? false : true;
+                return (this.Variant.inventory_management == null) ? false : true;
             },
             Availability: function() {
-
-                if (isVariantAvailable(this.Variant)){
-                    //TODO: templaray - might need to switch this back for kits
-                    // if (Number(this.RequestedQuantity) <= Number(this.Variant.inventory_quantity)){
+                if (this.Variant && isVariantAvailable(this.Variant, this.$props.item.requested_quantity)){
                     return true;
-                    //  }
-                } else {
-                    return false;
                 }
+                return false;
+            },
+		    RequestedQuantity: {
 
-            }
+
+                get: function() {
+
+                    return this.$props.item.requested_quantity
+                },
+                set: function(newVal) {
+                    if ( !isNaN(newVal)){
+                        this.$data._requested_quantity = newVal;  ///this.Variants[this.CurrentVariant._index];
+                    }else{
+                        this.$data._requested_quantity = 1;  ///this.Variants[this.CurrentVariant._index];
+
+                    }
+                }
+            },
+            SelectedVariant: {
+
+
+                get: function() {
+
+                    if ( !this.$data._selectedVariant && this.Variant ){
+                        this.$data._selectedVariant = this.Variant;
+                    }
+
+                    return this.$data._selectedVariant;
+                },
+                set: function(newVal) {
+
+                        this.$data._selectedVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
+
+
+                }
+            },
+
         },
         methods: {
-        	getVariantImage:function(variant){
-        		var image = this.product_image_dictionary.get(variant.image_id);
+            getVariantImage: function(variant) {
+                var image = this.product_image_dictionary.get(variant.image_id);
+                if (image){
+                    return ShopifyImgURL(image.src, this.$props.selectorswatchsize)
+                }
+                return false;
+            },
+            variantChanged: function(item) {
 
+                console.log("ITEM CHANGED~!!!!!!!" , item)
+                  this.$emit('variant_change', item, this.SelectedVariant )
 
-		        if ( image ){
-			       return ShopifyImgURL(image.src, this.$props.selectorswatchsize)
-
-		       }
-		       return false;
-
-	        },
-        	variantChanged:function(item){
-		      //  this.$emit('variant_change', item, this.Variant )
-
-	        },
+            },
             ShopifyImgURL,
-            quantityChanged: function(item) {
-	          //  item = Object.assign(item,{total_price: 32323} )
-                //this.$emit('requested_quantity_change', item)
+            quantityChanged: function(item, value) {
+                console.log("QUANTITY CHANGED " , item, this.$data._requested_quantity)
+                //  item = Object.assign(item,{total_price: 32323} )
+                this.$emit('requested_quantity_change', item, this.$data._requested_quantity )
             },
             ...mapActions([
                 'getVariantDefaultImage'
@@ -282,8 +279,11 @@
 	$GENERATE-QUEUE: false;
 	@import "src/vue/helpers/product-dependancies.scss";
 
-
-
+.pending-item-name{
+	@include g-typeset(lg, font-serif)
+}
+.pending-item-available{
+}
 	$btn-option-render-disabled: (
 		(
 			description: "color schemes",
@@ -308,7 +308,6 @@
 	);
 
 .PendingItem{
-	//background: red;
 	.multiselect * {
 		box-sizing: border-box;
 	}
@@ -329,7 +328,7 @@
 	}
 
 	.multiselect__content{
-		background: red;
+		background: white;
 	}
 	.multiselect__content-wrapper {
 

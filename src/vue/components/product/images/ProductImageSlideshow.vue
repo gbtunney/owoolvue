@@ -1,10 +1,10 @@
 <template>
 	<div :class="$options.name" style="position: relative;">
-		<swiper :options="swiperOption"  :ref="Ref"  >
+		<swiper :options="swiperOption"   :ref="Ref"  >
 			<!-- slides -->
-			<swiper-slide v-for="image,index in ImageArray"  :key="index">
+			<swiper-slide v-for="image,index in ImageArray" :key="index">
 					<div class="swiper-zoom-container">
-						<img class=" swiper-lazy"  :data-src="getShopifyImageURL(image)" :alt="image.alt">
+						<img :class="(index == 0)? getShopifyImageURL(image) : 'swiper-lazy' "  :src="(index == 0)? getShopifyImageURL(image) : '' " :data-src="getShopifyImageURL(image)" :alt="image.alt">
 					</div>
 			</swiper-slide>
 
@@ -27,85 +27,80 @@
     import Vue from 'vue';
     import store from '@/store'
     import {swiper, swiperSlide} from 'vue-awesome-swiper'
-    import {mapGetters,mapState,mapActions} from 'vuex'
-    import { normalize} from '@/helpers/main.js'
+    import {mapGetters, mapState, mapActions} from 'vuex'
+    import {normalize} from '@/helpers/main.js'
 
-    import {UIDMixin} from  '@/mixins/uid-mixin.js';
+    import {UIDMixin} from '@/mixins/uid-mixin.js';
 
-    import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
-    import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
+    import {DictionaryMixin} from '@/mixins/dictionarymixin.js';
+    import {ProductImageSlideshowMixin} from '@/components/product/images/productImageSlidehowMixin.js';
     import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
     export default {
         name: 'ProductImageSlideshow',
-        mixins: [DictionaryMixin,UIDMixin,ProductImageSlideshowMixin],
+        mixins: [DictionaryMixin, UIDMixin, ProductImageSlideshowMixin],
         components: {
-	        iconcomponent,
+            iconcomponent,
             swiper,
             swiperSlide
         }, props: {
-		    idleNext: {
-			    default: true
-		    },
-		    currentvariant: {
-    default: false
-    }
+            idleNext: {
+                default: true
+            },
+            currentvariant: {
+                default: false
+            }
+        },
+        created: function() {
+            let self = this;
+
+        },
+        mounted: function() {
+            this.swiper.on('lazyImageReady', function(target, value) { /* do something */
+                console.log("LAZY IMG REaDy !!!", target, value);
+            });
         },
         methods: {
-        	clicky:function(index){
-		       // this.swiper.slideTo(index, 0, false)
-		     // clearTimeout(  this.$data.idle);
-
-	        },
-            SlideTo: function(image_id) {
-               // var currentImage = this.product_image_dictionary.get(image_id.toString());
-                //console.log("IMAGES", currentImage);
-               // this.swiper.slideTo(currentImage._index, 1000, false)
-            },
             GetVariantSlideMatch: function(variantid) {
-	            let _variantid = variantid;
+                let _variantid = variantid;
 
-        		let tester = this.ImageArray.findIndex(function(item){
+                let tester = this.ImageArray.findIndex(function(item) {
 
-        			let found = false;
+                    let found = false;
 
-        			if (typeof item.variant_ids == 'object'){
+                    if (typeof item.variant_ids == 'object'){
 
-        				 found = item.variant_ids.find(function(innerid){
+                        found = item.variant_ids.find(function(innerid) {
 
-					         if (_variantid == innerid ){
-        							return true;
-					        }else{
-        						return false;
-					        }
-				        })
-			        }
-			        if (found ){
-        				return true;
-			        }else{
-			        	return false;
-			        }
-		        } )
-	            if ( tester < 0 ){
+                            if (_variantid == innerid){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        })
+                    }
+                    if (found){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })
+                if (tester < 0){
 
                     this.swiper.slideTo(1, 0, false)
 
-                }else{
+                } else {
                     this.swiper.slideTo(tester, 0, false)
                 }
             }
         },
         watch: {
-	        currentvariant: function(val) {
-		        if (this.ImageArray){
-			       this.GetVariantSlideMatch(val.id);
-		        }
-	        }
+            currentvariant: function(val) {
+                if (this.ImageArray){
+                    this.GetVariantSlideMatch(val.id);
+                }
+            }
         },
-        computed: {
-
-    },
-
     }
 
 </script>
@@ -155,9 +150,13 @@
 			right: 0;
 		}
 
+		.swiper-lazy{
+			opacity: 0;
+
+		}
 		.swiper-lazy-loaded {
 			opacity: 1;
-			@include u-transition(opacity, .4s, ease, .5s);
+			@include u-transition(opacity, .8s, ease);
 		}
 
 		.swiper-scrollbar {

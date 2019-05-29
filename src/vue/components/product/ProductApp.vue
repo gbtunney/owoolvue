@@ -397,8 +397,6 @@
                 /********/
 
 				 //todo, MOVE THIS PLS.
-                self.$data.currentProductImages=  self.ImagesByProduct(self.CurrentProduct);
-
 
 				  if (  self.Variants && self.Variants.length >1 ){
                       //!***OPTIONS
@@ -507,7 +505,7 @@
 		    }
 		    },
 	    	variantChanged: function(variant) {
-			    console.log("!!!!!!!!!variant changed!!!!!",this.CurrentVariant,variant)
+			    console.log("!!!!!!!!!variant changed!!!!!", this.$data._currentImageSlideshow,this.CurrentVariant,variant)
 			    this.$data._currentVariant   = variant;
 
 
@@ -518,7 +516,9 @@
 			    if ( this.product_image_dictionary.get(this.CurrentVariant.image_id)){
                     this.$data._currentImageSlideshow= this.product_image_dictionary.get(this.CurrentVariant.image_id);
 
-                }
+                }else{
+			        throw "DIDNT SET THE IMAGE!!";
+			    }
 
                 if (variant instanceof Array &&variant.length>0 ){
 			    	var variantArr  =variant;
@@ -539,7 +539,7 @@
 				    	console.log("THIS IS A KIT" ,this.KitItems );
                         this.$data._pendingItems =this.KitItems;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
                     }else{
-                        this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
+                        this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant_id:  this.CurrentVariant.id }];
                     }
 			    }
 	        },

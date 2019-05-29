@@ -134,7 +134,7 @@
                 default: false
             },
             scheme: {
-                default: 'dark',
+                default: false,
             },
             font: {
                 default: 'serif'
@@ -189,12 +189,15 @@
             IconSize: function() {
 
                 if ( this.$props.iconsize){
-                    return `g-icon-relative--${this.$props.iconsize}`
+                    return `g-icon-${this.$props.iconsize}`
                 }
             },
             Scheme: {
                 get: function() {
-                    if (!this.$data._scheme){
+                    if (!this.$data._scheme && !this.$props.scheme ) return "";
+
+                    if (!this.$data._scheme ){
+
                         return `u-color-schemes--${this.$props.scheme}`
                     } else {
                         return `u-color-schemes--${this.$data._scheme}`
@@ -279,6 +282,12 @@
 
 	}
 
+	.--no-border{
+
+	}
+	.--no-background{
+		background-color: none;
+	}
 	.--icon-right{
 		.icon-right{
 			display: block;
