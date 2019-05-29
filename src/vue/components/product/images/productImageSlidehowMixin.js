@@ -53,7 +53,7 @@ export const ProductImageSlideshowMixin = {
     methods: {
         goToImage: function(image) {
             if (this.swiper.activeIndex != this.getImageIndex(image)){
-                this.swiper.slideTo(this.getImageIndex(image, 0, false))
+                this.swiper.slideTo(this.getImageIndex(image), 0, false)
             }
         },
         getImageIndex: function(image) {
