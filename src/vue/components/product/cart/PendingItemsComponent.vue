@@ -2,7 +2,7 @@
 	<div :class="$options.name" class="pending-items-component --productApp">
 		<h4 v-show="false">TOTAL: {{  TotalAmount | toUSD }}</h4>
 		<h3 v-show="false">availability test {{Availability}} disabled {{ Disabled }}</h3>
-		<basecomponent  :text="AddToCartString"
+		<basecomponent  :text="AddToCartString" :flags="['addToCartPadding']"
 		               v-show="!Disabled" scheme="dark-accent-primary"
 		               @click="addMultipletoCart(PendingItems)" font="small-caps"
 		               fontsize="lg"
