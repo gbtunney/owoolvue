@@ -228,7 +228,7 @@
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
 			    toggle_exclusive:2,
 			    _optionMeta: [],
-			    _pendingItems:  "Hello there",// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
+			    _pendingItems:  false,// [  {"quantity": 3, "message":"this is a color way ","id": "18250174595190"} , {"quantity": 4, "id": "18250174627958"} ]
 		        _kit: false,
 			    _kititems:false,
 			    loading: false,
@@ -509,16 +509,15 @@
 			    this.$data._currentVariant   = variant;
 
 
-                this.KitItems = this.getKitItems(variant);
+                this.KitItems = this.getKitItems(variant); ///gets kit items from meta.
 
 
-
-			    if ( this.product_image_dictionary.get(this.CurrentVariant.image_id)){
-                    this.$data._currentImageSlideshow= this.product_image_dictionary.get(this.CurrentVariant.image_id);
-
+			    //set the default image in the slideshow
+                if ( this.CurrentProductDefaultImage ){
+                    this.$data._currentImageSlideshow=this.CurrentProductDefaultImage;
                 }else{
-			        throw "DIDNT SET THE IMAGE!!";
-			    }
+                    throw "DIDNT SET THE IMAGE!!";
+                }
 
                 if (variant instanceof Array &&variant.length>0 ){
 			    	var variantArr  =variant;

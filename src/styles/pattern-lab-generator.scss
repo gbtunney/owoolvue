@@ -1,8 +1,10 @@
+@debug "hello";
 
 
 //@import "slate/layout/_theme.scss";
 
 
+@import url('https://use.typekit.net/kxg6qeb.css');
 
 $GENERATE-QUEUE: true;
 
@@ -18,5 +20,16 @@ $GENERATE-QUEUE: true;
 @import "g-Patternlab/project-components";
 
 
+
+.--reflectX{
+
+		@include u-reflect-X();
+
+}
+.--reflectY{
+
+	@include u-reflect-Y();
+
+}
 
 

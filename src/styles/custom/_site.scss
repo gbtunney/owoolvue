@@ -1,4 +1,3 @@
-@import url('https://use.typekit.net/kxg6qeb.css');
 
 //@import "scaffold";
 //@import "templates/prod
@@ -15,6 +14,11 @@
 @import "snippets/search-bar";
 @import "snippets/announcement-bar";
 @import "snippets/email-list-form";
+
+@import "../vue-components/vue-numeric-input";
+
+@import "snippets/ajax-cart";
+
 //@import "snippets/pagination";
 
 .main-content .wrapper{

@@ -1,6 +1,6 @@
 
 //hack it cuz it sucks
-@mixin custom-vue-numeric-input($width: false,$main-scheme:accent-default, $btn-scheme:dark-accent-primary,
+@mixin custom-vue-numeric-input($width: false, $margin: 0 auto, $main-scheme:accent-default, $btn-scheme:dark-accent-primary,
                                     $main-collection:typography font-size, $main-variant-keys: font-san-serif md ){
 	.vue-numeric-input{
 
@@ -9,7 +9,10 @@
 		border-width: 1px;
 		display: flex;
 		padding:2px;
-		margin: 0 auto;
+
+		@if ($margin){
+			margin: $margin;
+		}
 		@if ( $width ){
 			width: $width!important;
 		}

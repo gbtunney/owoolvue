@@ -16,7 +16,7 @@
 				<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-right" viewBox="0 0 32 32"><path fill="#444" d="M7.667 3.795l1.797-1.684L24.334 16 9.464 29.889l-1.797-1.675L20.731 16z"/></svg>
 			</div>
 		</swiper>
-		<div class="lazy-preloader">
+		<div class="lazy-preloader" v-show="mounted">
 				<iconcomponent  :addl_styles="{width: '10rem',height: '10rem'}" icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="accent-default" :showpicker="true"></iconcomponent>
 		</div>
 	</div>
@@ -56,8 +56,16 @@
 
         },
         mounted: function() {
+
+
+
+            let self = this;
+            this.swiper.on('lazyImageLoad', function(target, value) { /* do something */
+                console.log("LAZY IMG LOADING !!!", target, value);
+            });
+
             this.swiper.on('lazyImageReady', function(target, value) { /* do something */
-                console.log("LAZY IMG REaDy !!!", target, value);
+                console.log("LAZY IMG REaDy !!!", target, value);                self.$data.mounted=true;
             });
         },
         methods: {
@@ -137,6 +145,8 @@
 			width: 8%;
 			height: 100%;
 
+			touch-action: none;
+
 			&:before {
 				content: "";
 			}
@@ -154,6 +164,9 @@
 			opacity: 0;
 
 		}
+		.swiper-button-disabled{
+			display: none;
+		}
 		.swiper-lazy-loaded {
 			opacity: 1;
 			@include u-transition(opacity, .8s, ease);
@@ -170,6 +183,7 @@
 		.swiper-container {
 			width: 100%;
 			height: auto;
+			min-height: 50vw;
 		}
 
 		.swiper-slide {

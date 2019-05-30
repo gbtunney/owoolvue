@@ -104,6 +104,7 @@
 		}
 		},
 		mounted:function(){
+
 			this.PendingItems =  this.parsePendingItemsSchema(this.$props.addtocartvariants);//this.parsePendingItems(this.$props.addtocartvariants)
 			this.LocalVariantDictionary = this.variant_dictionary;
 
@@ -346,6 +347,7 @@
                                 self.Loading = self.isDisabled = false;
                                 self.getCart().then(function(res){
                                     $('.js-drawer-open-button').click()
+
                                 })
 
                                 resolve();
@@ -421,6 +423,7 @@
 			},
 			parsePendingItemsSchema:function(itemArr){
 
+                console.log("BUG ITEM ARRR",itemArr );
 				if ( itemArr && itemArr.length > 0 ){
 					return itemArr.map(function(item) {
 

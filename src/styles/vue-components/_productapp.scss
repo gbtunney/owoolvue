@@ -1,16 +1,17 @@
 @import "vue-numeric-input";
 
-.single_item_container,.kit_container{
+.kit_container{
 	@include custom-vue-numeric-input;
+}
+
+.single_item_container{
+	@include custom-vue-numeric-input(false,0 auto);
 }
 
 @debug "THIS IS A CUSTOM";
 .PendingItemsComponent{
 
-
 	.PendingItem {
-
-
 		&Wrapper {
 			display: flex;
 			flex-wrap: nowrap;

@@ -1,5 +1,5 @@
 <template>
-	<div ref="MYCART" class="cart-wrapper">
+	<div  v-if="( this.Cart && this.Cart.items)" ref="MYCART" class="cart-wrapper">
 		<FreeShippingMessage ></FreeShippingMessage>
 		{{Cart.item_count}}
 		<div  v-if="this.Cart.items.length == 0">Your cart is currently empty</div>

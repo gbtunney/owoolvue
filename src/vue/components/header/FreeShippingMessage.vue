@@ -113,13 +113,13 @@
 		}
 		&__chart {
 			@include g-color-scheme(dark-accent-primary, (foreground:false, background: lighten background 18%, border:true));
-			height: .5em;
+			height: .8em;
 			border-radius: 15px;
 			display: flex;
 			&-inner {
 				height: 100%;
 				border-radius: 15px;
-				@include g-color-scheme(dark-accent-primary, (foreground:false, border:false, background: lighten background 10%));
+				@include g-color-scheme(dark-accent-primary, (foreground:false, border:false, background: lighten background 2%));
 			}
 		}
 	}

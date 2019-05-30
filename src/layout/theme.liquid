@@ -30,7 +30,6 @@
     {% include 'script-tags', layout: 'theme' %}
 
   <!-- CSS ================================================== -->
-    {{ 'fonts.css' | asset_url | stylesheet_tag }}
   {{ 'pattern-lab-generator.css' | asset_url | stylesheet_tag }}
 
 
@@ -93,7 +92,10 @@
         <div class="drawer__title">{{ 'cart.general.title' | t }}</div>
         <div class="drawer__close">
           <button type="button" class="icon-fallback-text drawer__close-button js-drawer-close">
-            <span class="icon icon-x" aria-hidden="true"></span>
+
+            <div class="u-color-schemes--dark-accent-primary c-icon-base g-icon-relative--lg --no-border">
+              {% include 'svg-definitions' with 'vintage-arrow-2' %}
+            </div>
             <span class="fallback-text">{{ 'cart.general.close_cart' | t }}</span>
           </button>
         </div>

@@ -80,6 +80,7 @@ export const ProductImageSlideshowMixin = {
     data() {
         return {
             idle: false,
+            mounted:false,
             swiperOption: {
                 preloadImages: false,
                 
