@@ -62,7 +62,7 @@ export function parseOptions(inOptions,option_config =false, option_value_overri
 		title: {type: String},
 		_index: {type: Number, required: true},
 		swatch_image: {type:Boolean,String, default: false},
-		color: {type: String, default: false},
+		color: {type: [Boolean,String], default: false},
 		color_story:{type:String, default:false},
         tags:{type:Array, default:[]}
     })
@@ -104,7 +104,7 @@ export function parseOptions(inOptions,option_config =false, option_value_overri
 		for (var u = 0; u < currentObj.values.length; u++) {
 			var newValueObj = GDatamapper.expandToObject(currentObj.values[u], "title", {
 				slug: Slugify(currentObj.values[u]),
-				color: 'none',//getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
+				color: false,//getColorData(Slugify(currentObj.values[u])), ///TODO : REWORK THIS
 				swatch_image: false, //getSwatchData(Slugify(currentObj.values[u])),
 				_index: u,
 				parent_id: normalize(optionsArray[i].id),

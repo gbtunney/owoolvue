@@ -16,14 +16,12 @@
 </template>
 
 <script type="text/javascript">
-	import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
-	import {ProductMixin} from  '@/mixins/productmixin.js';
+    import Vue from 'vue';
+    import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 
+	import {ProductMixin} from  '@/mixins/productmixin.js';
 	import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue'
 	import { getVariantFromOptions,filterArrayByValue,isVariantAvailable} from '@/helpers/main.js'
-	import 'vuetify/dist/vuetify.min.css'
-
-	import Vue from 'vue';
 
 	//  ProductMixin
 	export default {
@@ -91,9 +89,6 @@
 	created:function(){
 	},
 	mounted:function(){
-
-
-
 	},
 	methods:{
 		SelectedOptionValue: function( val ,optionsDictionary =this.SelectedOptionsDictionary  /* or id?????*/ ) {

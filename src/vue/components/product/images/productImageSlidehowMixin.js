@@ -1,9 +1,19 @@
-import {mapGetters, mapActions, mapState, mapMutations} from 'vuex';
-
+import Vue from 'vue';
+import store from '@/store'
+import {swiper, swiperSlide} from 'vue-awesome-swiper'
+import {mapGetters, mapState, mapActions} from 'vuex'
 const Numeral = require('numeral');
-import {ShopifyImgURL, getVariantFromOptions} from '@/helpers/main.js'
+
+import {ShopifyImgURL, getVariantFromOptions,normalize} from '@/helpers/main.js'
+import {UIDMixin} from '@/mixins/uid-mixin.js';
+import {DictionaryMixin} from '@/mixins/dictionarymixin.js';
 
 export const ProductImageSlideshowMixin = {
+    mixins: [DictionaryMixin, UIDMixin],
+    components: {
+        swiper,
+        swiperSlide
+    },
     props: {
         imagearray: {
             type: [Array, Boolean],
@@ -21,7 +31,6 @@ export const ProductImageSlideshowMixin = {
             default: false
         }
     },
-    components: {},
     computed: {
         ImageArray: function() {
             return this.$props.imagearray;

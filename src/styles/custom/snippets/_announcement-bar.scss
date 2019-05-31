@@ -17,12 +17,12 @@ $announcement-bar-scheme: dark !default;
 		fill:foreground,
 		hover-foreground:rgba(color($announcement-bar-scheme, foreground), .7)
 	);
-	@include set-type(md);
+	@include g-typeset(md);
 	@include render-queue(get-collection(base-padding, md));
 	@include g-color-scheme($announcement-bar-scheme, $props);
 
 	@include breakpoint-range(sm, "<=") {
-		@include set-type(base);
+		@include g-typeset(base);
 	}
 
 	@include u-transition(margin-top);

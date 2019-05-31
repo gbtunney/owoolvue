@@ -26,7 +26,6 @@
 }
 */
 .newsletter{
-
 	@include u-make-container(90%);
 }
 .newsletter__label {
@@ -35,5 +34,5 @@
 
 ///TODO: TEMPORARY INPUT GROUP COMPONENT.
 .input-group {
-	@include c-input-group(input-group);
+	//@include c-input-group(input-group);
 }

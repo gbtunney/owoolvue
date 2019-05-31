@@ -23,7 +23,7 @@ $my-default-spacing-variant: lg;
     );
     @include g-color-scheme(dark-accent-primary, $props);
 
-    @include set-type(md, font-serif);
+    @include g-typeset(md, font-serif);
 
     text-align: left;
 

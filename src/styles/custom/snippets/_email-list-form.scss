@@ -1,15 +1,13 @@
 .email-list-form {
 
-	$color-scheme: light-alt;
 	& > * {
 		@include u-horizontal-list(0);
 	}
-
 	input[type="text"] {
 		width: 100%;
-		background-color: white;
+		@include g-color-scheme(light,(background:true,foreground:true, border: background));
 	}
 	@include input-placeholder() {
-		color: color($color-scheme, foreground);
+		color: color(accent-default, foreground);
 	}
 }

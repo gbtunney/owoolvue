@@ -2,8 +2,8 @@
 	//background: red;
 	position: relative;
 	width: 100%;
-
-	@include set-type(xl, font-serif);
+background: red;
+	@include g-typeset(xl, font-serif);
 
 	label{
 		position: absolute;
@@ -41,14 +41,14 @@
 	}
 
 	&.search-bar--header{
-		@include set-type(md, font-san-serif);
+		@include g-typeset(md, font-san-serif);
 
 		display: flex;
 		justify-content: flex-end;
-		@include set-type(md, font-san-serif);
+		@include g-typeset(md, font-san-serif);
 
 		@include breakpoint-range(sm,"<=") {
-			@include set-type(lg, font-san-serif);
+			@include g-typeset(lg, font-san-serif);
 			border-width: 0px ;
 		}
 

@@ -24,25 +24,14 @@
 
 <script type="text/javascript">
 
-    import Vue from 'vue';
-    import store from '@/store'
-    import {swiper, swiperSlide} from 'vue-awesome-swiper'
-    import {mapGetters, mapState, mapActions} from 'vuex'
-    import {normalize} from '@/helpers/main.js'
-
-    import {UIDMixin} from '@/mixins/uid-mixin.js';
-
-    import {DictionaryMixin} from '@/mixins/dictionarymixin.js';
-    import {ProductImageSlideshowMixin} from '@/components/product/images/productImageSlidehowMixin.js';
+    import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
     import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
     export default {
         name: 'ProductImageSlideshow',
-        mixins: [DictionaryMixin, UIDMixin, ProductImageSlideshowMixin],
+        mixins: [ProductImageSlideshowMixin],
         components: {
-            iconcomponent,
-            swiper,
-            swiperSlide
+            iconcomponent
         }, props: {
             idleNext: {
                 default: true
@@ -53,12 +42,8 @@
         },
         created: function() {
             let self = this;
-
         },
         mounted: function() {
-
-
-
             let self = this;
             this.swiper.on('lazyImageLoad', function(target, value) { /* do something */
                 console.log("LAZY IMG LOADING !!!", target, value);
@@ -69,45 +54,8 @@
             });
         },
         methods: {
-            GetVariantSlideMatch: function(variantid) {
-                let _variantid = variantid;
-
-                let tester = this.ImageArray.findIndex(function(item) {
-
-                    let found = false;
-
-                    if (typeof item.variant_ids == 'object'){
-
-                        found = item.variant_ids.find(function(innerid) {
-
-                            if (_variantid == innerid){
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        })
-                    }
-                    if (found){
-                        return true;
-                    } else {
-                        return false;
-                    }
-                })
-                if (tester < 0){
-
-                    this.swiper.slideTo(1, 0, false)
-
-                } else {
-                    this.swiper.slideTo(tester, 0, false)
-                }
-            }
         },
         watch: {
-            currentvariant: function(val) {
-                if (this.ImageArray){
-                    this.GetVariantSlideMatch(val.id);
-                }
-            }
         },
     }
 

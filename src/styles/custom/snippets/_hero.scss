@@ -1,13 +1,45 @@
+
+
 .hero{
-	&__subtitle{
-		@include set-type(sm, font-san-serif);
-		text-transform: uppercase;
+	&__text-wrapper{
+		@include g-color-scheme(light,(background: true,border:false,accent:true,foreground:true));
+
+		text-align: left;
+		@include rhythm-padding(xl,true);
+		width: 80%;
+
+		$my-color: color(light,background);
+		$my-opacity: 0.9;
+
+		background-color: #{rgba($my-color, $my-opacity)};
+
+
+
+		//background-color: #{$greenAlpha};
 	}
-	&__title{
+	&__text-content{
+//		@include g-color-scheme(light,(background: false,border:false,accent:true,foreground:true));
 
 	}
+	&__slide &__subtitle{
+		@include g-typeset(lg, font-serif-italic);
+
+	//	text-transform: uppercase;
+		//background: red;
+	}
+	&__slide &__title{
+		@include g-typeset(xxl, font-serif-bold);
+
+		//@include g-color-scheme(dark,(background:false,border:false,accent:false,foreground:true));
+	}
 	.hero__cta{
-		@include set-type(sm,font-small-caps);
+		//@include g-typeset(lg,font-small-caps);
+
+		width: auto;
+		& a {
+		color:inherit;
+		}
+		//@include g-color-scheme(dark,(background: true,border:false,fill:true,foreground:true))
 	}
 
 }

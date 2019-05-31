@@ -1,23 +1,14 @@
-@debug "hello";
-
-
-//@import "slate/layout/_theme.scss";
-
-
 @import url('https://use.typekit.net/kxg6qeb.css');
 
 $GENERATE-QUEUE: true;
 
 
 @import "g-Patternlab/project-variables";
-
 @import "g-Patternlab/project-base";
-
-
-@import "slate/layout/_theme";
+//@import "slate/layout/_theme";
 @import "g-Patternlab/generator";
-
 @import "g-Patternlab/project-components";
+
 
 
 
@@ -31,5 +22,6 @@ $GENERATE-QUEUE: true;
 	@include u-reflect-Y();
 
 }
+
 
 

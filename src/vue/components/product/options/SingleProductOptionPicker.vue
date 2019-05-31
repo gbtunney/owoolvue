@@ -56,7 +56,7 @@
 
 					<template slot="option" class="is-grid-2" slot-scope="props">
 						<div class="option__swatch"  v-bind:style="OptionSwatchCSS(props.option)"  style="">
-							<img v-if="props.option.swatch_image" class="option__image" :src="_getSwatchSrc(props.option)" >
+							<img v-if="( props.option.swatch_image && _getSwatchSrc(props.option) ) " class="option__image" :src="_getSwatchSrc(props.option)" >
 						</div>
 						<div class="option__desc"><span class="option__title">{{ props.option.title }}</span></div>
 					</template>
@@ -215,10 +215,14 @@
             if (isColor(color)){
                 return {backgroundColor: color, 'border-width': '1px','border-style' :'solid'}
             } else {
-                if (!option.swatch_image){
+                if (!option.swatch_image || !this._getSwatchSrc(option) ){
                     return {display: 'none'}
                 }else{
-                    return {'border-width': '1px','border-style' :'solid'}
+                    if ( !color ){
+                        return {};
+                    }else{
+                        return {'border-width': '1px','border-style' :'solid'}
+                    }
                 }
             }
         },
@@ -231,10 +235,15 @@
                     var img = this.product_image_dictionary.get(foundVariantArr[0].image_id);
                     if (img){
                         return ShopifyImgURL(img.src, this.$props.swatchsize);
+                    }else{
+
                     }
+                }else{
+                   // throw ("NOT FOUND IMAGE!!",option);
+                    return false;
                 }
             }
-            return false;
+
 		},
 		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
 

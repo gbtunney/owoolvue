@@ -30,7 +30,7 @@
     textarea,
     button,
     select {
-        @include set-type(base, font-serif);
+        @include g-typeset(base, font-serif);
 
         $props: (
             background: true,
@@ -65,30 +65,30 @@
     }
 
     h1 {
-        @include set-type(xxl, font-serif);
+        @include g-typeset(xxl, font-serif);
     }
 
     h2 {
-        @include set-type(xl, font-serif);
+        @include g-typeset(xl, font-serif);
 
     }
 
     h3 {
-        @include set-type(lg, font-serif);
+        @include g-typeset(lg, font-serif);
     }
 
 
     h4 {
-        @include set-type(md, font-serif);
+        @include g-typeset(md, font-serif);
     }
 
     h5 {
-        @include set-type(md, font-serif);
+        @include g-typeset(md, font-serif);
 
     }
 
     h6 {
-        @include set-type(sm, font-serif);
+        @include g-typeset(sm, font-serif);
     }
 
     /*
@@ -103,12 +103,11 @@
     */
     blockquote {
 
-        @include set-type(md,font-serif-italic);
-        @include trailer();
+        @include g-typeset(md,font-serif-italic);
+       // @include trailer();
     }
 
     abbr {
-        @include trailing-border();
         cursor: help;
     }
 
@@ -122,13 +121,10 @@
     }
 
     iframe {
-        @include trailer();
     }
 
     figure {
-        @include trailer(2);
         img {
-            @include trailer(1);
         }
     }
     figcaption {

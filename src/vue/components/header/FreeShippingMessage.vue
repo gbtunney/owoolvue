@@ -82,7 +82,7 @@
                 }
             },
             Diff: function() {
-                return (this.$props.freeshippingmin - this.CartTotal )
+               return (this.$props.freeshippingmin - this.CartTotal )
             }
         },
         methods: {}

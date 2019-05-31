@@ -18,22 +18,18 @@
 
     import Vue from 'vue';
     import store from '@/store'
-    import {swiper, swiperSlide} from 'vue-awesome-swiper'
     import {mapGetters,mapState,mapActions} from 'vuex'
+    import { VTooltip } from 'v-tooltip'
+    import {swiper, swiperSlide} from 'vue-awesome-swiper'
+
     import { normalize} from '@/helpers/main.js'
-
-    import {UIDMixin} from  '@/mixins/uid-mixin.js';
-
-    import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ProductImageSlideshowMixin} from  '@/components/product/images/productImageSlidehowMixin.js';
 
-    import { VTooltip } from 'v-tooltip'
-
     Vue.directive('tooltip', VTooltip)
-    //:options="swiperOption" ref="mySwiper"
+
     export default {
         name: 'ProductImageThumbailPicker',
-        mixins: [DictionaryMixin,UIDMixin,ProductImageSlideshowMixin],
+        mixins: [ProductImageSlideshowMixin],
         components: {
             swiper,
             swiperSlide
@@ -42,29 +38,28 @@
                 type: String,
                 default: "UPDATE_IMAGE" // "UPDATE_OPTION" "UPDATE_VARIANT"
             },
-		    option:{
-                type: [Boolean,Object],
-                default:false
+            option: {
+                type: [Boolean, Object],
+                default: false
             },
-            tooltipAlt:{
+            tooltipAlt: {
                 type: [Boolean],
-                default:true
+                default: true
             }
         },
         data() {
-
             return {
                 swiperOption: {
                     loop: false,
                     preloadImages: true,
                     grabCursor: true,
                     centeredSlides: false,
-                    scrollbar:false,
+                    scrollbar: false,
                     slidesPerView: 6,
                     spaceBetween: 0,
-                    allowTouchMove:true,
-                    navigation:false,
-                    zoom:false,
+                    allowTouchMove: true,
+                    navigation: false,
+                    zoom: false,
                     /* navigation: {
 						 nextEl: '.swiper-button-next',
 						 prevEl: '.swiper-button-prev',
@@ -94,105 +89,38 @@
                 return false;
             },
             imageChanged: function(product_image) {
-                //this.$emit(this.$props.updateMode, product_image);
-				let self=this;
-                if ( this.$props.option ){
-                    if ( product_image.variants &&  product_image.variants.length> 0 ){
+                let self = this;
+                if (this.$props.option){
+                    if (product_image.variants && product_image.variants.length > 0){
 
                         let optionMap = new Map();
 
-                       var  variantList = product_image.variants.forEach(function(variant){
-                          if  (variant.options.get(self.OptionID)){
-                              var optionValue = variant.options.get(self.OptionID);
-                              optionMap.set(optionValue.id, optionValue);
-                          }
-                       })
-
-                       if ( optionMap.size > 1){
-                           throw "OPTION MAP ERROR!!";
-                       }else{
-                           var optionValue = Array.from( optionMap.values())[0];
-                       }
-
-                       this.$emit("UPDATE_OPTION", product_image,this.$props.option,optionValue );
-                    } else{
-                        this.$emit(this.$props.updateMode, product_image);
-                    }
-                }else{
-      this.$emit(this.$props.updateMode, product_image);
-                }
-
-
-                //@click="$emit('optionChanged',$props.option, optionvalue)"
-        /*
-                var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
-                console.log("******OPTION HANGED!!", newOptionDictionaryforPendingVariant, value)
-
-                if ( newOptionDictionaryforPendingVariant.get(option.id) ){
-
-                    if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
-                        newOptionDictionaryforPendingVariant.set(option.id, value);
-                        var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
-                            if (option.hasOwnProperty('id')){
-                                return option.id;
+                        var variantList = product_image.variants.forEach(function(variant) {
+                            if (variant.options.get(self.OptionID)){
+                                var optionValue = variant.options.get(self.OptionID);
+                                optionMap.set(optionValue.id, optionValue);
                             }
                         })
-
-                        var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
-
-                        console.log("******OPTION HANGED!!", foundVariantArr, value)
-
-
-                        if (foundVariantArr && foundVariantArr.length==1 ){
-                            this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
-                        }else{
-                            console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
+                        if (optionMap.size > 1){
+                            throw "OPTION MAP ERROR!!";
+                        } else {
+                            var optionValue = Array.from(optionMap.values())[0];
                         }
-                    }*/
-
-            },
-            GetVariantSlideMatch: function(variantid) {
-	            let _variantid = variantid;
-
-        		let tester = this.ImageArray.findIndex(function(item){
-
-        			let found = false;
-
-        			if (typeof item.variant_ids == 'object'){
-
-        				 found = item.variant_ids.find(function(innerid){
-
-					         if (_variantid == innerid ){
-        							return true;
-					        }else{
-        						return false;
-					        }
-				        })
-			        }
-			        if (found ){
-        				return true;
-			        }else{
-			        	return false;
-			        }
-		        } )
-	            if ( tester < 0 ){
-
-                    this.swiper.slideTo(1, 0, false)
-
-                }else{
-                    this.swiper.slideTo(tester, 0, false)
+                        this.$emit("UPDATE_OPTION", product_image, this.$props.option, optionValue);
+                    } else {
+                        this.$emit(this.$props.updateMode, product_image);
+                    }
+                } else {
+                    this.$emit(this.$props.updateMode, product_image);
                 }
-            }
+            },
         },
-        watch: {
-
-        },
+        watch: {},
         computed: {
-            OptionID:function(){
-                return (this.$props.option && this.$props.option.id )? this.$props.option.id : false;
+            OptionID: function() {
+                return (this.$props.option && this.$props.option.id) ? this.$props.option.id : false;
             }
         }
-
     }
 
 </script>
@@ -229,14 +157,12 @@
 			background: white	;
 			opacity: .5;
 			display: block;
-
-			//@include g-color-scheme(light, (background:true, foreground:true,border:true,fill:true ));
-			@include g-color-scheme(dark-accent-primary, (background:true, foreground:true,border:true,fill:true ));
 			left:0;
 			border-radius:0;
 			width:100%;
 			height: 10%;
 			bottom: 5px;
+			@include g-color-scheme(dark-accent-primary, (background:true, foreground:true,border:true,fill:true ));
 		}
 		.swiper-scrollbar-drag{
 			@include g-color-scheme(light, (background:true, foreground:true,border:false,fill:true ));
@@ -246,17 +172,12 @@
 	.tooltip {
 		display: block !important;
 		z-index: 10000;
-		//background: red;
-		@include set-type(lg,font-small-caps);
-		.tooltip-inner {
-			//background: black;
-			//color: white;
-			@include g-color-scheme(dark-accent-default, (background:true, foreground:true,border:false,fill:true ));
+		@include g-typeset(lg,font-small-caps);
 
+		.tooltip-inner {
 			border-radius: 16px;
 			padding: 5px 10px 4px;
-			//@include box-shadow(3px, 3px, 3px, #333);
-
+			@include g-color-scheme(dark-accent-default, (background:true, foreground:true,border:false,fill:true ));
 		}
 
 		.tooltip-arrow {
