@@ -13,9 +13,16 @@ import {Slugify, GDatamapper,filterArrayByValue,IsJsonString} from '@/helpers/ma
 
 Vue.use(Vuex);
 
-const vuexLocal = new VuexPersistence({
+/*const vuexLocal = new VuexPersistence({
   storage: window.sessionStorage || {},
-});
+});*/
+
+const vuexLocal = new VuexPersistence({
+	key:'gillianvuex',
+	storage: window.localStorage || {},
+	reducer: (state) => ({myproducts: state.product_dictionary})
+})
+
 
 const main_store = {
     state: {

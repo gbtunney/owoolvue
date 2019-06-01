@@ -458,6 +458,12 @@
                       //single variant
 				  }
 				 self.$data.loading = false;
+
+                self.loadProducts().then(function(res){
+
+                     self.add_product_to_dictionary({products: res.data.products });
+
+                });
 		    })
 	    },
 	    mounted:function(){

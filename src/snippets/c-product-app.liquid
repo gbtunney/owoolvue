@@ -14,15 +14,33 @@ This is the full Product App vue component.
 {% endcapture %}
 
 <script>
-    const UNIQID = require('uniqid');
+   // const UNIQID = require('uniqid');
 
 </script>
-{% capture productjson %}{{ product | json}}{% endcapture %}
+
+<script type="application/javascript">
+
+   window.productdata[{{ product.id }}] = {{ product | json }}
+
+</script>
+
+//
+//
+//
 
 <div js-mount-vue="ProductCard"  class="c-product-app"
-     prop-productid='{{ product.id }}'
+     prop-productid=2651977187446
 >
 </div>
+<div js-mount-vue="ProductCard"  class="c-product-app"
+     prop-productid='2651981938806'
+>
+</div>
+<div js-mount-vue="ProductCard"  class="c-product-app"
+     prop-productid='2651958116470'
+>
+</div>
+
 
 
 <script type="application/javascript">
