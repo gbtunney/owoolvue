@@ -99,6 +99,34 @@
 			</div>
 		</div>
 
+		<div class="g-center-panel-callout">
+			<ul>
+				<li>
+					<h6>YARN WEIGHT</h6>
+					<p>Worsted Weight
+						Put-up: 3.5 oz / 100g
+						Yardage: 240 yds / 219m
+					</p>
+				</li>
+				<li>
+					<span>Fiber Content:</span>
+					<span>50% alpaca from local farms in NJ & PA
+			50% certified organic merino</span>
+				</li>
+
+				<li>
+					<span>Gauge:</span>
+					<span>18 - 20 sts = 4” / 10cm</span>
+				</li>
+				<li>
+					<span>Needle:</span>
+					<span>7 - 9 US / 4.5 - 5.5mm</span>
+				</li>
+			</ul>
+
+
+		</div>
+
 		<Multiselect :options="VariantArr"
 		             v-model="CurrentVariant"
 		             @input="variantChanged"
@@ -107,21 +135,33 @@
 		             label="title"
 		             class="multiselectmaster"
 		             :taggable="false"
-		             :multiple="allowmultiple"
+		             :multiple="true"
 		             :closeOnSelect="false"
 		             placeholder="Select one"
 		             :searchable="true"
 		             :allow-empty="false">
 
-			<template slot="singleLabel" slot-scope="{ option }">
-				<strong>{{ option.id }}</strong> ID:<strong>  {{ option.title }}</strong>
-			</template>
 
+
+
+			clear
 			<template slot="option" class="is-grid-2" slot-scope="props" disabled="true">
 				<div disabled="true"  class="option__desc"><span class="option__title">qty{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
 			</template>
 
 		</Multiselect>
+		<div>
+			DRAGAABLE!!!!!
+		</div>
+		<draggable class="draggablePanel"  v-if="( CurrentVariant && CurrentVariant.length>0) " v-model="CurrentVariant" group="people" @start="drag=true" @end="drag=false">
+			<div v-for="selected_variant,key in CurrentVariant" :key="key">
+				<img  :src="ShopifyImgURL(_getVariantImage(selected_variant).src,'200x200')">
+				<span class="custom__remove" @click="removeSelectedVariant(key)">
+						X
+						</span></div>
+		</draggable>
+
+
 
 		<div @change="testBtn" v-show="false" v-model="LayoutToggle">
 			{{Layout}}
@@ -145,7 +185,7 @@
 <script type="text/javascript">
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
     const schema = require("schm");
-    import { getVariantFromOptions,isVariantAvailable,updateHistory} from '@/helpers/main.js'
+    import { getVariantFromOptions,isVariantAvailable,updateHistory,ShopifyImgURL} from '@/helpers/main.js'
     import Multiselect from 'vue-multiselect'
     import Vue from 'vue';
 
@@ -164,6 +204,7 @@
 
     import productOptionPicker from '@/components/product/options/ProductOptionsPicker.vue'
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
+    import draggable from 'vuedraggable'
 
     //  ProductMixin
     export default {
@@ -221,7 +262,7 @@
             }
 	    },
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
-	    components: {iconcomponent,ProductImageThumbailPicker,basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,productOptionPicker,Multiselect},
+	    components: {draggable,iconcomponent,ProductImageThumbailPicker,basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,productOptionPicker,Multiselect},
 	    data() {
 		    return {
 		    	toggle_classes:['layout-grid','layout-list','layout-lg','layout-sm' ],
@@ -427,12 +468,18 @@
 			    testBtn:function(target){
 		    	this.setlayoutButton({index: target})
 		    },
+            ShopifyImgURL,
 		    getProductUrl: function(handle){
 			      return `/product/${handle}`;
 		    },   getIconSVG:function( icon_id ){
                 var element = document.getElementById(icon_id);
                 return element.outerHTML;
             },
+
+		    removeSelectedVariant:function(index){
+                this.CurrentVariant.splice(index,1);
+
+		    },
             imageOptionUpdated: function(product_image,option,value) {
 
 
@@ -503,6 +550,14 @@
 			    return false;
 		    }
 		    },
+            _getVariantImage: function(variant){
+
+                if (variant && variant.image_id && this.product_image_dictionary.get(variant.image_id)){
+                    return this.product_image_dictionary.get(variant.image_id);
+                }
+                return false;
+
+            },
 	    	variantChanged: function(variant) {
 			    console.log("!!!!!!!!!variant changed!!!!!", this.$data._currentImageSlideshow,this.CurrentVariant,variant)
 			    this.$data._currentVariant   = variant;
@@ -582,10 +637,17 @@
 	    },
 };
 </script>
+<!--
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+-->
 
 <style lang="scss" type="text/scss" >
 
 	@import "src/vue/helpers/product-dependancies.scss";
+	.g-center-panel-callout{
+		@include g-color-scheme(accent-primary,(background:true,foreground:true,fill:true,border:true));
+		border-width: 2px;
+	}
 .product-single__title-mobile{
 
 	@include breakpoint-range(md,">="){
@@ -619,7 +681,16 @@
 		opacity: .5;
 		//@include rhythm-margin(md);
 	}
+
+.draggablePanel{
+	display: flex;
+	width: 100%;
+}
 .multiselectmaster{
+	background: red;
+
+	.multiselect__option--selected{
+	}
 	span.multiselect__option{;
 
 	}

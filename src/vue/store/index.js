@@ -25,8 +25,8 @@ const main_store = {
 	    variant_dictionary: new Map(),
 	    option_dictionary: new Map(),
 	    product_image_dictionary: new Map(),
-	    metafield_dictionary:new Map()
-	    
+	    metafield_dictionary:new Map(),
+	    recently_viewed: []
     },
 	getters: {
 		Count: function(state) {
@@ -185,6 +185,14 @@ const main_store = {
 				newMap.set(item.id,item);
             })
 			state.variant_dictionary = newMap;
+			
+		},
+		add_recently_viewed(state, payload) {
+			
+			var product = payload.product;
+		
+			//product
+			 state.recently_viewed.push( String(product));
 			
 		},
 		add_images_to_dictionary(state, payload) {

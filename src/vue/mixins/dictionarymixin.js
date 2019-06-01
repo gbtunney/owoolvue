@@ -12,9 +12,10 @@ export const DictionaryMixin = {
 	variant_dictionary: state => state.variant_dictionary,
 	product_image_dictionary: state => state.product_image_dictionary,
 	option_dictionary: state => state.option_dictionary,
+			recently_viewed: state => state.recently_viewed,
 	metafield_dictionary: state => state.metafield_dictionary, })
 	},
 	methods: {
-	...mapMutations(['add_product_to_dictionary','add_variants_to_dictionary','add_images_to_dictionary','add_options_to_dictionary']),
+	...mapMutations(['add_recently_viewed','add_product_to_dictionary','add_variants_to_dictionary','add_images_to_dictionary','add_options_to_dictionary']),
 	}
 }

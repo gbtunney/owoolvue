@@ -72,6 +72,8 @@ var three_row_index__product = 0;
 
 // Build Product Collage Item
 BCSfFilter.prototype.buildProductCollageItem = function(data, index, totalProduct) {
+    
+    console.log("BUILDING collage item ", data,index,totalProduct );
     /*** Prepare data ***/
     var images = data.images_info;
      // Displaying price base on the policy of Shopify, have to multiple by 100

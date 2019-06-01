@@ -27,6 +27,7 @@ function getAttributes(el, prefix = null) {
 
       // parse objects or arrays
       if (value.charAt(0) === '{' && value.charAt(value.length - 1) === '}') {
+          console.log("parsing!!",attributeNode)
         value = JSON.parse(value);
       } else if (value.charAt(0) === '[' && value.charAt(value.length - 1) === ']') {
         value = JSON.parse(value);

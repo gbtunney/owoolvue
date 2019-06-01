@@ -905,29 +905,6 @@ input[type="image"] {
 }
 
 /*================ Partials | Theme button overrides ================*/
-a {
-  color: $colorTextBody;
-  text-decoration: none;
-  background: transparent;
-
-  &:hover {
-    color: $colorTextBody;
-  }
-}
-
-.rte a,
-.text-link {
-  color: $colorLink;
-
-  &:hover {
-    color: $colorLinkHover;
-  }
-}
-
-.return-link {
-  @include accentFontStack;
-  font-size: em(14px);
-}
 
 /*================ Buttons and Input Groups ================*/
 .btn,

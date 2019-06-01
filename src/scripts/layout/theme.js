@@ -12,10 +12,10 @@ import ProductApp from "../../vue/components/product/ProductApp.vue";
 import CartIndicator from "../../vue/components/product/cart/CartIndicator.vue";
 
 import CartPanel from "../../vue/components/product/cart/CartPanel.vue";
-
 import KitEditorApp from "../../vue/components/admin/KitEditor.vue";
-
 import AnnouncementBarApp from "../../vue/components/header/AnnouncementBarApp.vue";
+
+import ProductCard from "../../vue/components/collection/ProductCard.vue";
 //import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
 //import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 //import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
@@ -59,9 +59,11 @@ if ( vueelements && vueelements.length>0){
            // mountVue(`#${uid}`, AdminProductApp);
         }else if (component=="CartIndicator"){
            mountVue(`#${uid}`, CartIndicator);
-    
-    
         }
+        else if (component=="ProductCard"){mountVue(`#${uid}`, ProductCard);
+        }
+    
+        
     });
 }
 

@@ -18,9 +18,11 @@
      */
     a {
         @extend %u-reset-link-color;
-        color: color(accent);
+        color: color(light,link);
             text-decoration: none;
         &:hover{
+            color: color(light,accent);
+
             text-decoration: inherit;
         }
     }
@@ -33,9 +35,9 @@
         @include g-typeset(base, font-serif);
 
         $props: (
-            background: true,
+            background: false,
             foreground: true,
-            accent: true,
+            accent: false,
         );
         @include g-color-scheme($chroma-active-scheme, $props);
 
@@ -48,7 +50,7 @@
     h4,
     h5,
     h6 {
-       color: color(accent);
+      // color: color(accent);
         margin-bottom: 0;
         margin-top: 0;
     }

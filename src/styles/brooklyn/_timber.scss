@@ -817,13 +817,8 @@ $class-type: unquote(".");
 /*================ Partials | Links and Buttons ================*/
 a,
 .text-link {
-  color: $colorLink;
   text-decoration: none;
   background: transparent;
-
-  &:hover {
-    color: $colorLinkHover;
-  }
 }
 
 a[href^="tel"] {

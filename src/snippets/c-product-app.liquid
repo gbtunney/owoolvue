@@ -13,6 +13,16 @@ This is the full Product App vue component.
 {% include datafilestring  %}
 {% endcapture %}
 
+<script>
+    const UNIQID = require('uniqid');
+
+</script>
+{% capture productjson %}{{ product | json}}{% endcapture %}
+
+<div js-mount-vue="ProductCard"  class="c-product-app"
+     prop-productid='{{ product.id }}'
+>
+</div>
 
 
 <script type="application/javascript">
