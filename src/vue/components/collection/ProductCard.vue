@@ -96,7 +96,7 @@
                 return false;
             },
             ProductUrl: function(){
-                if ( this.CurrentProduct && this.CurrentProduct.handle) return `/product/${this.CurrentProduct.handle}`
+                if ( this.CurrentProduct && this.CurrentProduct.handle) return `/products/${this.CurrentProduct.handle}`
                 return false;
             },
 			example: {
