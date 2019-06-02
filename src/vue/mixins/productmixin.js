@@ -121,7 +121,6 @@ export const ProductMixin = {
             this.getProductMeta({params: {productid: productid}}).then(function(res) {
             
             })
-            
         }
     },
 }

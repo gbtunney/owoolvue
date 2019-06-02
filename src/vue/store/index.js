@@ -151,35 +151,39 @@ const main_store = {
 		},
 		add_product_to_dictionary(state, payload) {
 			
+			let _payload = payload
 			if ( payload.product ){
                 var pendingProduct = payload.product;
                 if ( payload.additionalProps){
                     pendingProduct = Object.assign(pendingProduct, payload.additionalProps);
                 }
                 state.product_dictionary = new Map(state.product_dictionary).set(parseInt(pendingProduct.id) ,pendingProduct)
-				//console.log("adding to dictionary!", state.product_dictionary);
-				
-				
 			}else if (payload.products ){
                 var productArr = payload.products;
                 
                 var newMap = new Map(state.product_dictionary  );
-                
-                
-                productArr.forEach( function(item){
+				
+                let addl_propsType = {};
+				if ( payload.additionalProps){
+					addl_propsType =  payload.additionalProps;
+				}
+                productArr.forEach( function(product){
                 	
-                	if ( item.hasOwnProperty('tags')){
-                        var tags = String(item.tags).split(',');
-                        item = Object.assign(item, {tags:tags })
+                	if ( product.hasOwnProperty('tags')){
+                        var tags = String(product.tags).split(',');
+		                product = Object.assign(product, {tags:tags })
                     }
+	                let addl_propsHandle = {};
                 	
-                	
-                    newMap.set(item.id,item);
+	                if ( product.hasOwnProperty('handle')  && window.producthandledata &&window.producthandledata.hasOwnProperty(product.handle) ){
+		                addl_propsHandle = window.producthandledata[product.handle];
+	                }
+	                product = Object.assign(product,addl_propsType,addl_propsHandle); ///merge all the props.
+	                
+                    newMap.set(parseInt(product.id) ,product);
                 })
                 state.product_dictionary = newMap;
-                
             }
-			
 		},
 		add_variants_to_dictionary(state, payload) {
 		    

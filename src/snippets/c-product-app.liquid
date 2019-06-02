@@ -6,27 +6,17 @@ This is the full Product App vue component.
 {{ product.type | downcase }}
 {% endcapture %}
 
-
 {% capture datafilestring %}settings-{{ product.type | downcase }}.json{% endcapture %}
 
 {% capture productdata %}
 {% include datafilestring  %}
 {% endcapture %}
 
-<script>
-   // const UNIQID = require('uniqid');
-
-</script>
-
 <script type="application/javascript">
 
    window.productdata[{{ product.id }}] = {{ product | json }}
 
 </script>
-
-//
-//
-//
 
 <div js-mount-vue="ProductCard"  class="c-product-app"
      prop-productid=2651977187446
