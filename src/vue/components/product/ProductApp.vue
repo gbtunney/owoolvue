@@ -22,7 +22,19 @@
 						{{CurrentProductTitle}}</h1>
 					<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
+
 					<div>
+						<div data-price-container>
+							<span v-if="CurrentVariantOnSale" class="product-single__price wrapper" aria-hidden="false">
+								<span id="ComparePrice" class="product-single__price compare-at">{{ CurrentVariantCompareAtPrice }}</span>
+							</span>
+							<span id="ProductPrice"
+							      v-bind:class="{ 'on-sale' : CurrentVariantOnSale }"
+							      class="product-single__price "
+							      itemprop="price"
+							      :content="CurrentVariantPrice">{{ CurrentVariantPrice }}
+							</span>
+						</div>
 
 						<meta itemprop="priceCurrency" v-if="shop" :content="shop.currency ">
 						<link itemprop="availability" href="http://schema.org/|| if product.available || InStock{% else %}OutOfStock{% endif %}">
@@ -370,19 +382,7 @@
 		    },
 		    SelectedOptions:function(){
 			    return this.$data.toggle_classes[this.LayoutToggle];
-		    },
-	    IsOnSale :function(){
-
-		    	if (  this.$data._currentVariant   ){
-
-		    		if (this.$data._currentVariant.compare_at_price  == null) return false;
-		    		if (  this.$data._currentVariant.compare_at_price  >  this.$data._currentVariant.price  ){
-		    			return true;
-				    }
-
-			    }
-		    return false;
-	    }
+		    }
 	    },
 	    created:function(){
 

@@ -3,7 +3,17 @@
 		<h1 class="product-single__title" v-if="CurrentProductTitle" itemprop="name">
 			{{CurrentProductTitle}}</h1>
 		<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
-
+		<div data-price-container>
+							<span v-if="CurrentVariantOnSale" class="product-single__price wrapper" aria-hidden="false">
+								<span id="ComparePrice" class="product-single__price compare-at">{{ CurrentVariantCompareAtPrice }}</span>
+							</span>
+			<span id="ProductPrice"
+			      v-bind:class="{ 'on-sale' : CurrentVariantOnSale }"
+			      class="product-single__price "
+			      itemprop="price"
+			      :content="CurrentVariantPrice">{{ CurrentVariantPrice }}
+							</span>
+		</div>
 	</div>
 </template>
 
@@ -18,10 +28,11 @@
     import {VariantMixin} from  '@/mixins/variantmixin.js';
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
+    import {LocalVariantDictionaryMixin} from  '@/mixins/localVariantDictionaryMixin.js';
 
 	module.exports = {
 		name: '',
-        mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
+        mixins: [LocalVariantDictionaryMixin,DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
         components: {},
 		data: function() {
 			return {
@@ -43,26 +54,15 @@
 		mounted:function(){
 
 		    let self = this;
-		/*  if (this.product_dictionary &&  this.$props.productid ){
-		      ///console.log("trying to get it", this.product_dictionary, this.product_dictionary.get(this.$props.productid))
-//this.add_recently_viewed({product: this.$props.productid } )
-          }
-
-*/
-		  /*    this.loadProducts().then(function(res){
-
-                 // self.add_product_to_dictionary({products: res.data.products });
-
-              });*/
-		      //console.log("PRODUCT JSON!!!",JSON.parse(this.$props.product))
-            console.log("CURRENT PRODUCT!!!!!!!!!!!",this.CurrentProduct);
 
 		},
         watch: {
             ///todo: these miht need to be MIRRORED in a create func for some reason.
             product_dictionary: function(val) {
-
-                console.log("&&&&&&&&&&&&&&&&&PRODUCT DICTIONARY UPDATED@@!!!!!!!!!!!",val , this.CurrentProduct);
+                if ( this.CurrentProduct){
+                    //console.log("&&&&&&&&&&&&&&&&&PRODUCT DICTIONARY UPDATED@@!!!!!!!!!!!",val , this.CurrentProduct);
+					this.initProduct();
+                }
             }
         },
 		computed: {
@@ -79,6 +79,17 @@
 			}
 		},
 		methods: {
+		    initProduct:function (){
+                if ( this.CurrentProduct && this.CurrentProduct.variants){
+                    console.log("&&&initing product!", this.CurrentProduct, this.CurrentProduct.variants);
+                    this.LocalVariantDictionary = Array.from(this.CurrentProduct.variants);
+                    if ( !this.$props.variantid){
+                     this.CurrentVariant = this.CurrentProduct.variants[0]; ///use the default
+                    }else if (this.$props.variantid && this.LocalVariantDictionary && this.LocalVariantDictionary.get(this.$props.variantid) ) {
+                       this.CurrentVariant = tthis.variant_dictionary.get(this.$props.variantid);///use the set one.
+                    }
+                }
+		    }
 		}
 	}
 </script>
