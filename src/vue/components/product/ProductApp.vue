@@ -46,45 +46,6 @@
 
 						<productOptionPicker v-show="Options" :inSelectedVariant="CurrentVariant" :meta="$data._optionMeta" @optionChanged="optionChanged" :options="CurrentProductOptions"></productOptionPicker>
 
-						<form  v-show="false" method="post" action="/cart/add"
-						      id="AddToCartForm&#45;&#45;product-template"
-						      accept-charset="UTF-8" class="product-single__form" enctype="multipart/form-data" data-children-count="26">
-							<input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
-							<div class="radio-wrapper js product-form__item">
-								<label class="single-option-radio__label" for="ProductSelect-option-0">
-									Color
-								</label>
-							</div>
-							<div class="radio-wrapper js product-form__item">
-								<label class="single-option-radio__label" for="ProductSelect-option-1" data-children-count="0">
-									Size
-								</label>
-
-								<fieldset class="single-option-radio" name="size" id="ProductSelect-option-1" data-children-count="2">
-
-
-									<input type="radio" checked="checked" value="Skein" data-index="option2" name="size" class="single-option-selector__radio" id="ProductSelect-option-size-Skein">
-									<label for="ProductSelect-option-size-Skein">Skein</label>
-
-
-									<input type="radio" value="MiniSkein" data-index="option2" name="size" class="single-option-selector__radio" id="ProductSelect-option-size-MiniSkein">
-									<label for="ProductSelect-option-size-MiniSkein">MiniSkein</label>
-
-								</fieldset>
-
-							</div>
-							<div class="product-single__add-to-cart">
-								<button type="submit" name="add" id="AddToCart&#45;&#45;product-template" class="btn btn&#45;&#45;add-to-cart">
-                  <span class="btn__text">
-
-	                    Add to Cart
-
-                  </span>
-								</button>
-
-							</div>
-						</form>
-
 						<a v-if="CurrentProductRavelryLink" :href="CurrentProductRavelryLink" >
 							<basecomponent :disabled="isDisabled" text="Download on ravelry"
 							               scheme="dark-accent-primary" :flags="['--icon-right','test']"
@@ -94,17 +55,23 @@
 								<template slot="right-icon" class="is-grid-2" >
 									<span v-html="getIconSVG('leaves-single')"></span>
 								</template>
-
 							</basecomponent>
 						</a>
 
-
-						<div v-if="( CurrentProduct && CurrentProduct.recc_yarn)"><a :href="getProductUrl(CurrentProduct.recc_yarn)" >Recommended Yarn</a></div>
-						<div v-if="( CurrentProduct && CurrentProduct.recc_kit)"><a :href="getProductUrl(CurrentProduct.recc_kit)" >Recommended Kit</a></div>
-
-						<PendingItemsComponent :lineitemmessage="( CurrentProduct && KitItems) ? CurrentProduct.title : false"  v-if="(CurrentProduct && !CurrentProduct.notforsale)" :kit="KitItems" :addtocartvariants='$data._pendingItems'></PendingItemsComponent>
-						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description">
+						<div v-if="( CurrentProduct && CurrentProduct.recc_yarn)">
+							<a :href="getProductUrl(CurrentProduct.recc_yarn)" >Recommended Yarn</a>
 						</div>
+						<div v-if="( CurrentProduct && CurrentProduct.recc_kit)">
+							<a :href="getProductUrl(CurrentProduct.recc_kit)" >Recommended Kit</a>
+						</div>
+
+						<PendingItemsComponent :lineitemmessage="( CurrentProduct && KitItems) ? CurrentProduct.title : false"
+						                       v-if="(CurrentProduct && !CurrentProduct.notforsale)"
+						                       :kit="KitItems"
+						                       :addtocartvariants='$data._pendingItems'>
+						</PendingItemsComponent>
+
+						<div v-html="CurrentProductDesc" class="product-single__description rte" itemprop="description"></div>
 
 					</div>
 				</div>

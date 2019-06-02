@@ -98,7 +98,6 @@
 				required:false,
 				type:String ,
 				default:'150x150'
-
 			},
 			selectedoptionslug: {   ///TODO:this is acrually an optionvalueslug
 				required:false
@@ -150,20 +149,18 @@
 			},
 			disabledOptions: function(val) {
 				if ( val && val.length > 0 ){
-					this.OptionValues=	this.$data._optionValues;//this._mapDisabledOptions(this.$data._optionValues,val)
-					console.log("DISABLED CHANGEEEEEEDDDD!!",this._mapDisabledOptions(this.$props.option,val),val);
+					this.OptionValues=	this.$data._optionValues;
 				}
 			},
 			selectedoptionvalue:function(val) {
 				if (val && val.hasOwnProperty('id')){
 					this.$data.selectedOptions = val;
-					this.OptionValues =this.$data._optionValues; // updates disabledthis._mapDisabledOptions(this.$data._optionValues,this.$props.disabledOptions);// val.values;
-					console.log("SELECTED OPTION CHANGED, should update values???",val,this.$props.disabledOptions);
+					this.OptionValues =this.$data._optionValues;
 				}
 			},
 			option: function(val) {
 				if (val && val.values){
-					this.OptionValues = val.values;  //this._mapDisabledOptions(this.$data._optionValues,this.$props.disabledOptions);// val.values;
+					this.OptionValues = val.values;
 				}
 			}
 		},

@@ -60,7 +60,6 @@
             ///todo: these miht need to be MIRRORED in a create func for some reason.
             product_dictionary: function(val) {
                 if ( this.CurrentProduct){
-                    //console.log("&&&&&&&&&&&&&&&&&PRODUCT DICTIONARY UPDATED@@!!!!!!!!!!!",val , this.CurrentProduct);
 					this.initProduct();
                 }
             }
@@ -81,7 +80,6 @@
 		methods: {
 		    initProduct:function (){
                 if ( this.CurrentProduct && this.CurrentProduct.variants){
-                    console.log("&&&initing product!", this.CurrentProduct, this.CurrentProduct.variants);
                     this.LocalVariantDictionary = Array.from(this.CurrentProduct.variants);
                     if ( !this.$props.variantid){
                      this.CurrentVariant = this.CurrentProduct.variants[0]; ///use the default

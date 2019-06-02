@@ -205,7 +205,6 @@ export function getVariantFromOptions(inOptions, inVariants) {
 		}
 		
 		filteredVariantArray = filteredVariantArray.filter(function(variant) {
-			
 			if (!variant.options){
 				throw "does not have option for unparsed variants yet";
 				return false;

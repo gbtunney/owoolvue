@@ -39,18 +39,12 @@ export const ProductImageSlideshowMixin = {
         
         },
         swiper: function() {
-            
-            //	return  document.getElementById(this.UID);
             return this.$refs[this.Ref].swiper;
         },
         Ref: function() {
             return `swiper-${this.$options.name}`;
             
-        },
-        Reftest: function() {
-            // return this.$refs[UID].swiper;
-            
-        },
+        }
     },
     watch: {
         currentimage: function(val) {
@@ -68,14 +62,10 @@ export const ProductImageSlideshowMixin = {
         getImageIndex: function(image) {
             let _image = image;
             return this.ImageArray.findIndex(function(product_image) {
-                // console.log("searcing ",_image.id, product_image.id  )
                 if (_image.id == product_image.id){
-                    console.log("FOUND ", _image.id, product_image.id)
-                    
                     return true;
                 }
                 return false;
-                
             });
         },
         getShopifyImageURL(img, imgSize = this.$props.imagesize) {

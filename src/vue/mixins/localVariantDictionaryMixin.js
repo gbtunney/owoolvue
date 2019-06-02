@@ -1,4 +1,5 @@
 import {mapGetters, mapActions, mapState, mapMutations} from 'vuex';
+
 const Numeral = require('numeral');
 
 export const LocalVariantDictionaryMixin = {
@@ -19,17 +20,14 @@ export const LocalVariantDictionaryMixin = {
             },
             set: function(newVal) {
                 let self = this;
-            
+                
                 if (typeof newVal == "map"){
                     self.$data._local_variant_dictionary = new Map([newVal, self.$data._local_variant_dictionary]);
                 } else if (typeof newVal == "object" && newVal.length >= 1){
-                    console.log("ADDING TO VARIANT DICTIONARY", newVal)
-                
                     newVal.forEach(function(variant) {
-                       if (! self.$data._local_variant_dictionary) {
-                           self.$data._local_variant_dictionary = new Map();
-                       }
-                        
+                        if (!self.$data._local_variant_dictionary){
+                            self.$data._local_variant_dictionary = new Map();
+                        }
                         self.$data._local_variant_dictionary = new Map(self.$data._local_variant_dictionary).set(variant.id, variant);
                     })
                     self.$data._local_variant_dictionary = new Map(self.$data._local_variant_dictionary);

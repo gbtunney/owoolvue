@@ -46,11 +46,11 @@
         mounted: function() {
             let self = this;
             this.swiper.on('lazyImageLoad', function(target, value) { /* do something */
-                console.log("LAZY IMG LOADING !!!", target, value);
+             //   console.log("LAZY IMG LOADING !!!", target, value);
             });
 
             this.swiper.on('lazyImageReady', function(target, value) { /* do something */
-                console.log("LAZY IMG REaDy !!!", target, value);                self.$data.mounted=true;
+              //  console.log("LAZY IMG REaDy !!!", target, value);                self.$data.mounted=true;
             });
         },
         methods: {
