@@ -73,42 +73,38 @@
     import Vue from 'vue';
     import store from '@/store'
     import {mapState, mapGetters, mapActions} from "vuex";
-    import {DictionaryMixin} from '@/mixins/dictionarymixin.js';
-
-    import {isVariantAvailable} from '@/helpers/main.js'
-
-    import {ShopifyImgURL} from '@/helpers/main.js'
     import Multiselect from 'vue-multiselect'
     import VueNumericInput from 'vue-numeric-input';
-    import iconcomponent from '@/components/utilities/g-icon-component.vue';
-
     const Numeral = require('numeral');
 
-    ///TODO  - figure out how to do this 4 reals.
-    
+    import {DictionaryMixin} from '@/mixins/dictionarymixin.js';
+    import {isVariantAvailable, ShopifyImgURL} from '@/helpers/main.js'
+
+    import iconcomponent from '@/components/utilities/g-icon-component.vue';
+
     Vue.filter('toUSD', function(value) {
-        if ( value == parseInt(0 )){
+        if (value == parseInt(0)){
             return "Free"
         }
 
-        console.log("filtering " ,value)
+        console.log("filtering ", value)
         return Numeral(value).format('$ 0,0[.]00');
     });
 
     export default {
         name: 'PendingItem',
-        components: {VueNumericInput,Multiselect,iconcomponent},
+        components: {VueNumericInput, Multiselect, iconcomponent},
         props: {
             item: {
                 type: Object,
                 required: true
             },
-            local_variant_dictionary:{
-                default:false,
-	            type:[Boolean,Map]
+            local_variant_dictionary: {
+                default: false,
+                type: [Boolean, Map]
             },
             kit: {   ///this is used to give the kit an id
-                type: [Boolean,Array],
+                type: [Boolean, Array],
                 default: false
             },
             swatchsize: {
@@ -117,18 +113,18 @@
                 default: '100x100'
 
             },
-	        selectorswatchsize: {
-		        required:false,
-		        type:String ,
-		        default:'50x50'
+            selectorswatchsize: {
+                required: false,
+                type: String,
+                default: '50x50'
 
-	        },
+            },
         },
         mixins: [DictionaryMixin],
         data() {
             return {
-                _selectedVariant:false,
-	            _requested_quantity: false
+                _selectedVariant: false,
+                _requested_quantity: false
             }
         },
         created: function() {
@@ -138,54 +134,41 @@
                 console.log("NEW ITEM SSETTTT", this.Variant);
             }
         },
-        mounted: function() {
-
-        }, computed: {
+        computed: {
 
             Variant: function() {
-
                 if (this.$props.local_variant_dictionary && this.$props.item.variant_id && this.$props.local_variant_dictionary.get(this.$props.item.variant_id)){
                     return this.$props.local_variant_dictionary.get(this.$props.item.variant_id);
                 }
                 return false;
             },
             Image: function() {
-
-                    if (this.Variant && this.Variant.image_id && this.product_image_dictionary.get(this.Variant.image_id)){
-                        return this.product_image_dictionary.get(this.Variant.image_id);
-                    }else if (this.Product && this.Product.image.id && this.product_image_dictionary.get(this.Product.image.id)){
-                       console.log("THROWING PRODUCT!!!!!!")
-                        return this.product_image_dictionary.get(this.Product.image.id);
-                    }
-
+                if (this.Variant && this.Variant.image_id && this.product_image_dictionary.get(this.Variant.image_id)){
+                    return this.product_image_dictionary.get(this.Variant.image_id);
+                } else if (this.Product && this.Product.image.id && this.product_image_dictionary.get(this.Product.image.id)){
+                    return this.product_image_dictionary.get(this.Product.image.id);
+                }
                 return false;
-
             },
-		    UnitString:function(){
-              if ( this.Product && ( (this.Product.product_type).toLowerCase() == "yarns") ) {
-                  if ( this.$props.item.requested_quantity == 1) return "skein / "
-                  return "skeins /"
+            UnitString: function() {
+                if (this.Product && ((this.Product.product_type).toLowerCase() == "yarns")){
+                    if (this.$props.item.requested_quantity == 1) return "skein / "
+                    return "skeins /"
 
-              }
-		    },
-			IsFree:function(){
-                if ( this.Variant && this.Variant.price == 0) return true;
+                }
+            },
+            IsFree: function() {
+                if (this.Variant && this.Variant.price == 0) return true;
                 return false;
-			},
+            },
             ProductVariantArr: function() {
-                if ( this.Product ){
-					return this.Product.variants;
-
-				}else{
-					return [];
-				}
+                return (this.Product) ? this.Product.variants : []
             },
             Product: function() {
                 if (this.Variant && this.Variant.product_id && this.product_dictionary.get(this.Variant.product_id)){
                     return this.product_dictionary.get(this.Variant.product_id);
                 }
                 return false;
-
             },
             VariantPrice: function() {
                 return this.Variant.price;
@@ -209,41 +192,31 @@
                 }
                 return false;
             },
-		    RequestedQuantity: {
-
-
+            RequestedQuantity: {
                 get: function() {
 
                     return this.$props.item.requested_quantity
                 },
                 set: function(newVal) {
-                    if ( !isNaN(newVal)){
+                    if (!isNaN(newVal)){
                         this.$data._requested_quantity = newVal;  ///this.Variants[this.CurrentVariant._index];
-                    }else{
+                    } else {
                         this.$data._requested_quantity = 1;  ///this.Variants[this.CurrentVariant._index];
-
                     }
                 }
             },
             SelectedVariant: {
-
-
                 get: function() {
 
-                    if ( !this.$data._selectedVariant && this.Variant ){
+                    if (!this.$data._selectedVariant && this.Variant){
                         this.$data._selectedVariant = this.Variant;
                     }
-
                     return this.$data._selectedVariant;
                 },
                 set: function(newVal) {
-
-                        this.$data._selectedVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
-
-
+                    this.$data._selectedVariant = newVal;  ///this.Variants[this.CurrentVariant._index];
                 }
             },
-
         },
         methods: {
             getVariantImage: function(variant) {
@@ -254,16 +227,11 @@
                 return false;
             },
             variantChanged: function(item) {
-
-                console.log("ITEM CHANGED~!!!!!!!" , item)
-                  this.$emit('variant_change', item, this.SelectedVariant )
-
+                this.$emit('variant_change', item, this.SelectedVariant)
             },
             ShopifyImgURL,
             quantityChanged: function(item, value) {
-                console.log("QUANTITY CHANGED " , item, this.$data._requested_quantity)
-                //  item = Object.assign(item,{total_price: 32323} )
-                this.$emit('requested_quantity_change', item, this.$data._requested_quantity )
+                this.$emit('requested_quantity_change', item, this.$data._requested_quantity)
             },
             ...mapActions([
                 'getVariantDefaultImage'

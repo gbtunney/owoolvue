@@ -25,7 +25,12 @@
 			<h5 v-show="kit">Kit Includes: </h5>
 			<ul>
 				<li v-for="pendingItem in PendingItems">
-						<PendingCartItem :local_variant_dictionary="LocalVariantDictionary" :item="pendingItem" :kit="kit" @available="updateAvailability" @variant_change="updateVariant" @requested_quantity_change="updateQuantity" ></PendingCartItem>
+						<PendingCartItem :local_variant_dictionary="LocalVariantDictionary"
+						                 :item="pendingItem"
+						                 :kit="kit"
+						                 @variant_change="updateVariant"
+						                 @requested_quantity_change="updateQuantity" >
+						</PendingCartItem>
 				</li>
 			</ul>
 		</div>
