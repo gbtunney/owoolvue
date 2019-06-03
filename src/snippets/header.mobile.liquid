@@ -1,17 +1,7 @@
-{% assign header_style_modifier = 'light' %}
-{% assign header_style_modifier__social = 'dark-accent-default' %}
-{% assign header_style_modifier__cart = 'accent-primary' %}
-{% assign header_flags__cart = '--md --no-border --no-padding' %}
-{% assign header_style_modifier__divider = 'accent-default' %}
-{% assign header_style_modifier__main_menu_icon = 'accent-secondary --sm Owool_Main-Menu__icon' %}
-
-{% assign menu_name = 'Owool_Mobile-Header' %}
-
 <header class="{{ menu_name }}" role="banner">
 
 	<div class="{{ menu_name }}__wrapper">
 		<div class="{{ menu_name }}__col">
-
 			<div class="{{ menu_name }}__mobile-nav-trigger">
 				<button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
 					<div class="c-button c-button--accent-primary --rounded  padding--sm ">
@@ -52,9 +42,6 @@
 		</div>
 
 	</div>
-
-
-
 
 	<div class="{{ menu_name }}__divider">
 		{% include 'c-divider'   with  style_modifier: header_style_modifier__divider %}

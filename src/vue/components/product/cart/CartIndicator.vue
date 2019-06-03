@@ -1,7 +1,15 @@
 <template>
-	<span class="js-drawer-open-button">
-	{{ItemText}}
-	</span>
+	<div :class="$options.name"  class="cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+
+	<div class="__cart-item">
+		<iconcomponent icon_id="svg-icon-cart" :flags="['--no-border']" iconsize="relative--lg"  scheme="accent-secondary" :showpicker="true"></iconcomponent>
+	</div>
+	<div class="__cart-item-count">
+			<span class="js-drawer-open-button">
+				{{ItemText}}
+			</span>
+	</div>
+	</div>
 </template>
 
 <script type="text/javascript">
@@ -9,11 +17,12 @@
     import Vue from 'vue';
    import store from '@/store'
     import {mapState,mapGetters, mapActions} from "vuex";
+    import iconcomponent from '@/components/utilities/g-icon-component.vue';
 
     import {CartMixin} from  '@/mixins/cartmixin.js';
     export default {
-        name: 'Cart',
-        components: {
+        name: 'CartIndicator',
+        components: {iconcomponent
 
         }, props: {
         },
