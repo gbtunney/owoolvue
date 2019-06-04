@@ -21,7 +21,7 @@
 
 	import {ProductMixin} from  '@/mixins/productmixin.js';
 	import singleProductOptionPicker from '@/components/product/options/SingleProductOptionPicker.vue'
-	import { getVariantFromOptions,filterArrayByValue,isVariantAvailable} from '@/helpers/main.js'
+	import { getVariantFromOptions,dictionaryIDArr,filterArrayByValue,isVariantAvailable} from '@/helpers/main.js'
 
 	//  ProductMixin
 	export default {
@@ -32,9 +32,6 @@
 			inSelectedVariant: {  ////plural options
 				required:false
 			},
-			meta: {  ////plural options
-				required:false
-			}
 		},
 
 		mixins: [ProductMixin],
@@ -47,15 +44,7 @@
 		},
 		name: 'ProductOptionPicker',
 		computed: {
-		...mapGetters([
-				'OptionByProp',
-				'OptionValueByProp',
-			'MetafieldsByProps'
-			]
-		),
-		Slug:function(){
-			return "wild-geranium"
-		},
+
 		CurrentVariant:{
 			get: function() {
 					return  this.$data._currentVariant;
@@ -70,102 +59,83 @@
 		SelectedOptionsDictionary: function() {
 			if (  this.$data._currentVariant &&  this.$data._currentVariant.options){
 				return  this.$data._currentVariant.options;
-			}else{
-				return new Map;
 			}
-		}
+            return new Map;
+        }
 	},
 	watch: {
 		inSelectedVariant: function(val) {
-			console.log("app changed variant!!!!!!!!",val);
 			this.CurrentVariant=val;
-		},
-		meta: function(val) {
-			console.log("META SET!!!!!!!!!!!",val);
-			//this.CurrentVariant=val;
 		}
-	},
-	created:function(){
-	},
-	mounted:function(){
 	},
 	methods:{
-		SelectedOptionValue: function( val ,optionsDictionary =this.SelectedOptionsDictionary  /* or id?????*/ ) {
+        //***** FILTER OUT UNAVAILABLE VARIANTS FROM ARRAY
+        _getFilterUnavailable: function(variants) {
+            return variants.filter(function(variant) {
+                return (isVariantAvailable(variant)) ? true : false
+            })
+        },
+        SelectedOptionValue: function(val, optionsDictionary = this.SelectedOptionsDictionary  /* or id?????*/) {
+            if (val && isNaN(val) && val.hasOwnProperty('id')){    //the whole object
+                return (optionsDictionary.get(val.id)) ? optionsDictionary.get(val.id) : false;
+            } else if (optionsDictionary.get(val)){
+                return optionsDictionary.get(val);
+            } else if (!isNaN(val) && Array.from(optionsDictionary).length >= val){ /*or what ever total amt of optiosn is.  )*/
+                //its an index
+                return Array.from(optionsDictionary)[val];
+            }
+            return "**BUSTED";
+            throw "BUSTED SELECTED OPTION"
+        },
+        optionChanged: function(option, value) {
 
-			if ( val && isNaN(val) && val.hasOwnProperty('id')){    //the whole object
-				return ( optionsDictionary.get(val.id) ) ? optionsDictionary.get(val.id) : false;
-			}else if ( optionsDictionary.get(val) ) {
-				return optionsDictionary.get(val);
-			}else if ( !isNaN(val) &&  Array.from(optionsDictionary).length >= val ){ /*or what ever total amt of optiosn is.  )*/
-				//its an index
-				return Array.from(optionsDictionary)[val];
-			}
-			return "**BUSTED";
-			throw "BUSTED SELECTED OPTION"
-		},
-	...mapMutations(['setlayoutButton']),
+            //clone the selected options dictionary
+            var selectedOptionsDictionary_for_PendingVariant = new Map(this.SelectedOptionsDictionary);
 
-		optionChanged: function(option,value) {
+            ///if the single option selected is registered, replace with new option if its different.
+            if (selectedOptionsDictionary_for_PendingVariant.get(option.id) && (selectedOptionsDictionary_for_PendingVariant.get(option.id) != value)){
 
-				var newOptionDictionaryforPendingVariant = new Map(this.SelectedOptionsDictionary);
+                selectedOptionsDictionary_for_PendingVariant.set(option.id, value);
 
-				if ( newOptionDictionaryforPendingVariant.get(option.id) ){
+                //convert the dictionary to ids, then find the variants.
+                var foundVariantArr = this._getFilterUnavailable(getVariantFromOptions(dictionaryIDArr(selectedOptionsDictionary_for_PendingVariant), this.Variants));
 
-					if ( newOptionDictionaryforPendingVariant.get(option.id) != value ){
-						newOptionDictionaryforPendingVariant.set(option.id, value);
-						var idmap = Array.from(newOptionDictionaryforPendingVariant.values()).map(function(option){
-							if (option.hasOwnProperty('id')){
-								return option.id;
-							}
-						})
+                if (foundVariantArr && foundVariantArr.length == 1){
+                    this.$emit('optionChanged', foundVariantArr[0], selectedOptionsDictionary_for_PendingVariant)
+                } else {
+                    console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!", foundVariantArr, newOptionDictionaryforPendingVariant)
+                }
+            }
+        },
+        _remapOptionValuesDisabled: function(val) {
+            if (val){
+                let self = this;
+                let activeoption = val;//this.SelectedOption(val)
+                let selectedoptionsArr = Array.from(self.SelectedOptionsDictionary.values());
 
-						var foundVariantArr = this._getVariantFromOptions( idmap, this.Variants);
+                return activeoption.values.filter(function(activeoptionvalue) {
 
-						if (foundVariantArr && foundVariantArr.length==1 ){
-							this.$emit('optionChanged',foundVariantArr[0], newOptionDictionaryforPendingVariant )
-						}else{
-							console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!",foundVariantArr,newOptionDictionaryforPendingVariant )
-						}
-					}
-				}
-			},
-		_getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
-			return   getVariantFromOptions(optionArray, variantsArr);
-		},
-		_remapOptionValuesDisabled: function(val) {
+                    let variableOption = activeoptionvalue;
 
-			if ( val){
-				let self = this;
+                    var testableCombo = selectedoptionsArr.map(function(_optionvalues) {
+                        if (_optionvalues.parent_id == activeoptionvalue.parent_id){
+                            return activeoptionvalue;
+                        } else {
+                            return _optionvalues;
+                        }
+                    })
+                    var variants = getVariantFromOptions(testableCombo, self.Variants);
+                    if (variants.length < 1){
+                        return true;
 
-				let activeoption = val;//this.SelectedOption(val)
-				let selectedoptionsArr = Array.from(self.SelectedOptionsDictionary.values());
-
-				return activeoption.values.filter(function(activeoptionvalue) {
-
-					let variableOption = activeoptionvalue;
-
-					var testableCombo = selectedoptionsArr.map(function(_optionvalues) {
-						if (_optionvalues.parent_id == activeoptionvalue.parent_id){
-							return activeoptionvalue;
-						} else {
-							return _optionvalues;
-						}
-					})
-
-					var variants = self._getVariantFromOptions(testableCombo, self.Variants);
-					if (variants.length < 1){
-						return true;
-
-					}else if (variants.length == 1){
-						if ( !isVariantAvailable(variants[0]) ){
-							return true;
-						}
-					}
-
-				})
-
-			}
-		}
+                    } else if (variants.length == 1){
+                        if (!isVariantAvailable(variants[0])){
+                            return true;
+                        }
+                    }
+                })
+            }
+        }
 	},
 	};
 </script>

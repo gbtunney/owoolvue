@@ -123,7 +123,6 @@
 		},
 		data() {
 			return {
-				msg: 'Welcome to Your Vue.js App',
 				totalOptions: 3,
 				_optionValues: [],
 				searchQuery: false,
@@ -197,7 +196,6 @@
 	},
 	methods: {
 			transformOptions:function(){
-
 				var option = this.$data.selectedOptions;
 
 				var obj = 	{
@@ -210,38 +208,34 @@
         OptionSwatchCSS: function(option) {
             var color = option.color;
             if (isColor(color)){
-                return {backgroundColor: color, 'border-width': '1px','border-style' :'solid'}
+                return {backgroundColor: color, 'border-width': '1px', 'border-style': 'solid'}
             } else {
-                if (!option.swatch_image || !this._getSwatchSrc(option) ){
+                if (!option.swatch_image || !this._getSwatchSrc(option)){
                     return {display: 'none'}
-                }else{
-                    if ( !color ){
+                } else {
+                    if (!color){
                         return {};
-                    }else{
-                        return {'border-width': '1px','border-style' :'solid'}
+                    } else {
+                        return {'border-width': '1px', 'border-style': 'solid'}
                     }
                 }
             }
         },
-		_getSwatchSrc: function(option){
-
-			if (option.swatch_image == true || option.swatch_image == "true"){
+        _getSwatchSrc: function(option) {
+            if (option.swatch_image == true || option.swatch_image == "true"){
                 var foundVariantArr = getVariantFromOptions([option.id], this.Variants);
-
                 if (foundVariantArr && foundVariantArr.length > 0 && foundVariantArr[0].image_id){
                     var img = this.product_image_dictionary.get(foundVariantArr[0].image_id);
                     if (img){
                         return ShopifyImgURL(img.src, this.$props.swatchsize);
-                    }else{
+                    } else {
 
                     }
-                }else{
-                   // throw ("NOT FOUND IMAGE!!",option);
+                } else {
                     return false;
                 }
             }
-
-		},
+        },
 		_mapDisabledOptions:function(optionvalues,disabledOptions,bool=true){
 
 			let newOptionsArr =Array.from(optionvalues);

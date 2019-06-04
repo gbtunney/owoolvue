@@ -172,6 +172,14 @@ export function isGetMaxQuantity(variant, inventory_count = 1 ) {
 	}
 }
 
+export function dictionaryIDArr(dictionary) {
+	return Array.from(dictionary.values()).map(function(dictionary_item) {
+		if (dictionary_item.hasOwnProperty('id')){
+			return dictionary_item.id;
+		}
+	})
+}
+
 export function getVariantFromOptions(inOptions, inVariants) {
 	let self = this;
 	let optionArray = inOptions;

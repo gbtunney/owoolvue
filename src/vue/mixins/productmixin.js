@@ -82,6 +82,14 @@ export const ProductMixin = {
                 return false;
             }
         },
+        _getProductDefaultImage:function(product){
+        
+        
+        },
+        _getProductDefaultImage:function(product){
+        
+        
+        },
         CurrentProductDefaultImage: function() {
             if (this.CurrentProduct){
                 if (this.CurrentVariant && this.CurrentVariant.image_id && this.product_image_dictionary.get(this.CurrentVariant.image_id)){
