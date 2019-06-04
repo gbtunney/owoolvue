@@ -16,7 +16,7 @@
 					{{  TotalAmount | toUSD }}
 				</span>
 				<span>
-					<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border','icon-transistion', (!Loading)? 'icon-loading-hidden' : '' ]" iconsize="relative--lg" :showpicker="false"></iconcomponent>
+					<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border','icon-transistion', (!Loading)? 'icon-loading-hidden' : '' ]" iconsize="rel--lg" :showpicker="false"></iconcomponent>
 				</span>
 			</template>
 		</basecomponent>

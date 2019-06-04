@@ -20,55 +20,94 @@
 
 
 	const values  = [
-        ".font--base",
-        ".font--lg",
-        ".font--md",
-        ".font--sm",
-        ".font--xl",
-        ".font--xs",
-        ".font--xxl",
-        ".font--xxs",
-        ".font--xxxl",
-        "g",
-        ".icon--base",
-        ".icon--lg",
-        ".icon--md",
-        ".icon--sm",
-        ".icon--xl",
-        ".margin--lg",
-        ".margin--md",
-        ".margin--sm",
-        ".margin--xl",
-        ".margin--xs",
-        ".margin--xxs",
-        ".padding--lg",
-        ".padding--md",
-        ".padding--sm",
-        ".padding--xl",
-        ".padding--xs",
-        ".padding--xxs",
-        "path",
-        "rect",
-        ".scheme--accent-default",
-        ".scheme--accent-primary",
-        ".scheme--accent-secondary",
-        ".scheme--alt-light",
-        ".scheme--dark",
-        ".scheme--dark-accent-default",
-        ".scheme--dark-accent-primary",
-        ".scheme--dark-accent-secondary",
-        ".scheme--functional",
-        ".scheme--invert-functional",
-        ".scheme--light",
-        ".scheme--light-alt",
-        ".type--default",
-        ".type--font-san-serif",
-        ".type--font-serif",
-        ".type--font-serif-bold",
-        ".type--font-serif-italic",
-        ".type--font-small-caps",
-        ".type--font-test"
-	]
+        ".--reflectX",
+        ".--reflectY",
+        ".--scheme-hover",
+        ".g-font--base",
+        ".g-font--lg",
+        ".g-font--md",
+        ".g-font--sm",
+        ".g-font--xl",
+        ".g-font--xs",
+        ".g-font--xxl",
+        ".g-font--xxs",
+        ".g-font--xxxl",
+        ".g-margin--lg",
+        ".g-margin--md",
+        ".g-margin--sm",
+        ".g-margin--xl",
+        ".g-margin--xs",
+        ".g-margin--xxs",
+        ".g-padding--lg",
+        ".g-padding--md",
+        ".g-padding--sm",
+        ".g-padding--xl",
+        ".g-padding--xs",
+        ".g-padding--xxs",
+        ".g-scheme--accent-default",
+        ".g-scheme--accent-primary",
+        ".g-scheme--accent-secondary",
+        ".g-scheme--alt-light",
+        ".g-scheme--dark",
+        ".g-scheme--dark-accent-default",
+        ".g-scheme--dark-accent-primary",
+        ".g-scheme--dark-accent-secondary",
+        ".g-scheme--functional",
+        ".g-scheme--invert-functional",
+        ".g-scheme--light",
+        ".g-scheme--light-alt",
+        ".g-size-abs--base",
+        ".g-size-abs--lg",
+        ".g-size-abs--md",
+        ".g-size-abs--sm",
+        ".g-size-abs--xl",
+        ".g-size-abs--xs",
+        ".g-size-abs--xxl",
+        ".g-size-abs--xxs",
+        ".g-size-abs--xxxl",
+        ".g-size-rel--base",
+        ".g-size-rel--lg",
+        ".g-size-rel--md",
+        ".g-size-rel--sm",
+        ".g-size-rel--xl",
+        ".g-type--default",
+        ".g-type--font-reset",
+        ".g-type--font-san-serif",
+        ".g-type--font-serif",
+        ".g-type--font-serif-bold",
+        ".g-type--font-serif-italic",
+        ".g-type--font-small-caps",
+        ".g-type--font-test",
+        ".u-color-swatches--acadia",
+        ".u-color-swatches--black",
+        ".u-color-swatches--brown-bramble",
+        ".u-color-swatches--copper",
+        ".u-color-swatches--crowshead",
+        ".u-color-swatches--dark-gray",
+        ".u-color-swatches--fuscous-gray",
+        ".u-color-swatches--gum-leaf",
+        ".u-color-swatches--highball",
+        ".u-color-swatches--jacko-bean",
+        ".u-color-swatches--khaki",
+        ".u-color-swatches--kilamanjaro",
+        ".u-color-swatches--kournikova",
+        ".u-color-swatches--light-gray",
+        ".u-color-swatches--lightning-yellow",
+        ".u-color-swatches--madras",
+        ".u-color-swatches--onion",
+        ".u-color-swatches--oslo-gray",
+        ".u-color-swatches--saffron",
+        ".u-color-swatches--sandstone",
+        ".u-color-swatches--schooner",
+        ".u-color-swatches--silver-chalice",
+        ".u-color-swatches--silverleaf",
+        ".u-color-swatches--slugger",
+        ".u-color-swatches--spice",
+        ".u-color-swatches--tana",
+        ".u-color-swatches--west-coast",
+        ".u-color-swatches--white",
+        ".u-color-swatches--woodrush"
+    ]
 	module.exports = {
 		name: '',
 		mixins: [],
@@ -198,35 +237,35 @@
 			},
             Padding: function() {
 			    if ( this.$props.padding){
-			        return `padding--${this.$props.padding}`
+			        return `g-padding--${this.$props.padding}`
 			    }
             },
             Margin: function() {
                 if ( this.$props.margin){
-                    return `margin--${this.$props.margin}`
+                    return `g-margin--${this.$props.margin}`
                 }
             },
             FontSize: function() {
                 if ( this.$props.fontsize){
-                    return `font--${this.$props.fontsize}`
+                    return `g-font--${this.$props.fontsize}`
                 }
             },
             Font: function() {
                 if ( this.$props.fontsize){
-                    return `type--font-${this.$props.font}`
+                    return `g-type--font-${this.$props.font}`
                 }
             },
             IconSize: function() {
                 if ( this.$props.iconsize){
-                    return `icon--${this.$props.iconsize}`
+                    return `g-size-${this.$props.iconsize}`
                 }
             },
             Scheme: {
                 get: function() {
                     if (!this.$data._scheme){
-                        return `scheme--${this.$props.scheme}`
+                        return `g-scheme--${this.$props.scheme}`
                     } else {
-                        return `scheme--${this.$data._scheme}`
+                        return `g-scheme--${this.$data._scheme}`
                     }
                 },
                 set: function(newVal) {

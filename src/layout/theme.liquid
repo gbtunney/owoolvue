@@ -86,27 +86,9 @@
 
   {% section 'header' %}
 
-  <div id="CartDrawer" class="drawer drawer--right drawer--has-fixed-footer">
-    <div class="drawer__fixed-header">
-      <div class="drawer__header">
-        <div class="drawer__title">{{ 'cart.general.title' | t }}</div>
-        <div class="drawer__close">
-          <button type="button" class="icon-fallback-text drawer__close-button js-drawer-close">
 
-            <div class="u-color-schemes--dark-accent-primary c-icon-base g-icon-relative--lg --no-border">
-              {% include 'svg-definitions' with 'vintage-arrow-2' %}
-            </div>
-            <span class="fallback-text">{{ 'cart.general.close_cart' | t }}</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="drawer__inner">
-      <div id="CartContainer" class="drawer__cart">
-        <div js-mount-vue="CartPanel" class="add-to-cart-multiple"  prop-label="Kit #2"  prop-productid prop-variantid></div>
-      </div>
-    </div>
-  </div>
+        <div js-mount-vue="CartPanel" class="add-to-cart-multiple" prop-cart_notes_enable={{   settings.cart_notes_enable  }}  prop-label="Kit #2"  prop-productid prop-variantid></div>
+
 
   <div id="PageContainer"  class="page-container">
 {% include 'c-icon-dump' %}

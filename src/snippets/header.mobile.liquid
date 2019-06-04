@@ -25,17 +25,8 @@
 			</div>
 		</div>
 		<div class="{{ menu_name }}__col col__final">
-			<div class="{{ menu_name }}__cart cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
-				<div class="{{ menu_name }}__cart-icon">
-					{% include 'c-ui-icon' with icon_name: 'cart' ,style_modifier: 'accent-primary' , flags: header_flags__cart %}
-				</div>
+			<div js-mount-vue="CartIndicator"></div>
 
-			</div>
-			<div class="{{ menu_name }}__cart-item-count">
-				<div class="{{ menu_name }}__cart-item-count {% if cart.item_count > 0 %} --active{% endif %}">
-					<div js-mount-vue="CartIndicator"></div>
-				</div>
-			</div>
 			<div class="{{ menu_name }}__search">
 				{% include 'search-bar', input_style_modifier: 'accent-primary' ,button_style_modifier: 'accent-primary', search_bar_location: 'search-bar--header' %}
 			</div>

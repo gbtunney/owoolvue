@@ -12,13 +12,12 @@
                 <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
 
 	            {% assign footer_settings = section.settings %}
-                <div> {{ footer_settings.footer_emailform_text  }}</div>
+                <div class="footer-heading"> {{ footer_settings.footer_emailform_text  }}</div>
                 {% include 'c-email-list-form' %}
 
                 <div class="Owool_Footer__social">
                 {% include 'c-social-nav-links' with social_nav_theme:footer_style_modifier__social  %}
                 </div>
-	            {% include 'c-ui-icon' with icon_name: 'llama' ,style_modifier: 'dark-accent-primary --lg', flags: '  --no-border' %}
 
                 <!-- END: Constant Contact Basic Opt-in Email List Form -->
 

@@ -1,4 +1,5 @@
 //import "../../styles/slate/layout/theme.scss";
+import '../../assets/fonts.scss.liquid';
 import Vue from 'vue';
 
 

@@ -7,7 +7,7 @@
 				       @blur="_inputLoseFocus"
 				       placeholder="Enter your search term..." type="text" value="" name="search" id="search">
 			<button @click="_openSearch" class="sb-btn-open">
-				<iconcomponent icon_id="svg-icon-search" iconsize="relative--md" :flags="['--no-border']"  scheme="accent-default" :showpicker="false"></iconcomponent>
+				<iconcomponent icon_id="svg-icon-search" iconsize="rel--md" :flags="['--no-border']"  scheme="accent-default" :showpicker="false"></iconcomponent>
 
 			</button>
 		</div>

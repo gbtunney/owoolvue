@@ -157,6 +157,8 @@ const main_store = {
                 if ( payload.additionalProps){
                     pendingProduct = Object.assign(pendingProduct, payload.additionalProps);
                 }
+                
+                console.log("SETTING@@@@@@@@@@@@@@@@@@@@@",pendingProduct)
                 state.product_dictionary = new Map(state.product_dictionary).set(parseInt(pendingProduct.id) ,pendingProduct)
 			}else if (payload.products ){
                 var productArr = payload.products;
@@ -180,7 +182,12 @@ const main_store = {
 	                }
 	                product = Object.assign(product,addl_propsType,addl_propsHandle); ///merge all the props.
 	                
-                    newMap.set(parseInt(product.id) ,product);
+	                if ( newMap.get(parseInt(product.id)) ){
+	                	console.log("ALREADY ADDED ", product)
+	                }else{
+		                newMap.set(parseInt(product.id) ,product);
+		
+	                }
                 })
                 state.product_dictionary = newMap;
             }

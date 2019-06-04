@@ -131,7 +131,7 @@
         },
         watch: {
             item: function(val) {
-                console.log("NEW ITEM SSETTTT", this.Variant);
+               // console.log("NEW ITEM SSETTTT", this.Variant);
             }
         },
         computed: {

@@ -4,7 +4,14 @@
 			<h1 class="product-single__title product-single__title-mobile" v-if="CurrentProductTitle" itemprop="name">{{CurrentProductTitle}}</h1>
 			<div class="grid__item large--seven-twelfths do-touch-manipulation medium--seven-twelfths text-center">
 				<ProductImageSlideshow :currentimage="$data._currentImageSlideshow" :imagearray="CurrentProductImages" :imagesize="'1250x1250'"></ProductImageSlideshow>
-				<ProductImageThumbailPicker v-if="CurrentProduct && CurrentProduct.thumbnail_panel && CurrentProduct.thumbnail_panel.show" :option="ThumbnailPanelKey" @UPDATE_OPTION="imageOptionUpdated" @UPDATE_IMAGE="imageUpdated" :imagearray="CurrentProductImages" :imagesize="'150x150'"></ProductImageThumbailPicker>
+				<ProductImageThumbailPicker v-if="CurrentProduct && CurrentProduct.thumbnail_panel && CurrentProduct.thumbnail_panel.show"
+				                            :option="ThumbnailPanelKey"
+				                            :imagearray="CurrentProductImages"
+				                            :imagesize="'150x150'"
+				                            @UPDATE_OPTION="imageOptionUpdated"
+				                            @UPDATE_IMAGE="imageUpdated">
+
+				</ProductImageThumbailPicker>
 			</div>
 
 			<div class="grid__item product-single__meta--wrapper medium--five-twelfths large--five-twelfths">
@@ -114,7 +121,7 @@
 		             label="title"
 		             class="multiselectmaster"
 		             :taggable="false"
-		             :multiple="true"
+		             :multiple="false"
 		             :closeOnSelect="false"
 		             placeholder="Select one"
 		             :searchable="true"
@@ -205,6 +212,7 @@
 
             },
 		    sectionsettings: {
+		        type: Object,
 		    	default: {}
 		    },
 		    allowmultiple: {
@@ -366,9 +374,10 @@
                 ///merge props..
                 if ( self.$props.producthandle ){
                     if ( window.producthandledata &&window.producthandledata.hasOwnProperty(self.$props.producthandle )){
-	                    //console.log("FOUND",window.producthandledata, window.producthandledata[self.$props.producthandle],self.$props.producthandle)
 
 	                    additionalProductProps =Object.assign(additionalProductProps,window.producthandledata[self.$props.producthandle] )//self.$props.productdata;
+                        console.log("FOUND",additionalProductProps,window.producthandledata, window.producthandledata[self.$props.producthandle],self.$props.producthandle)
+
                     }
                 }
 
@@ -428,7 +437,7 @@
 
                 self.loadProducts().then(function(res){
 
-                     self.add_product_to_dictionary({products: res.data.products });
+                    // self.add_product_to_dictionary({products: res.data.products });
 
                 });
 		    })
@@ -455,7 +464,7 @@
 		    },
             imageOptionUpdated: function(product_image,option,value) {
 
-
+				console.log("image option updated",product_image,option,value)
 		        if (this.CurrentProduct && this.CurrentProduct.thumbnail_panel && !this.CurrentProduct.thumbnail_panel.option_key){
                     this.imageUpdated(product_image);
 		        }else {
@@ -484,12 +493,15 @@
 
 						        var newFoundVariantArr = this._getVariantFromOptions([value.id], this.Variants);
 
-						        if (newFoundVariantArr && newFoundVariantArr.length == 1 && isVariantAvailable(newFoundVariantArr[0])){
+                                console.log("&&&&&&& looking for ALTERNATE!!!", newFoundVariantArr);
+
+
+                                if (newFoundVariantArr && newFoundVariantArr.length == 1 && isVariantAvailable(newFoundVariantArr[0])){
 							        console.log("&&&&&&& ALTERNATE!!!", newFoundVariantArr, newOptionDictionaryforPendingVariant)
 
 							        this.variantChanged(newFoundVariantArr[0]);
 						        } else {
-							       // console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!", foundVariantArr, newOptionDictionaryforPendingVariant)
+							        console.log("VARIANT SEARCH RETURNED MORE OR LESS THAN AMOUNT TO TRIGGER A CHANGE!!!", newFoundVariantArr, newOptionDictionaryforPendingVariant)
 						        }
 					        }
 				        }
@@ -497,7 +509,8 @@
 		        }
             },
             _getVariantFromOptions: function( optionArray, variantsArr ) {   //move to a mixin.
-                return   getVariantFromOptions(optionArray, variantsArr);
+
+	        return   getVariantFromOptions(optionArray, variantsArr);
             },
             imageUpdated: function(product_image) {
               //  this.$emit(this.$props.updateMode, product_image);

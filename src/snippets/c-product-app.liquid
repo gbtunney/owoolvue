@@ -14,9 +14,9 @@ This is the full Product App vue component.
 
 <script type="application/javascript">
 
-   window.productdata[{{ product.id }}] = {{ product | json }}
 
 </script>
+
 
 
 
@@ -220,8 +220,7 @@ This is the full Product App vue component.
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
      prop-variantid="{{ variant_id }}"
-
-     prop-sectionsettings='{{   settings | json }}'
+     prop-sectionsettings='{{   sectionsettings | json }}'
      prop-productdata='{{   productdata | strip_newlines }}'
      prop-producthandledata='{{   producthandledata | strip_newlines }}'
 	prop-producthandle="{{ product.handle }}"

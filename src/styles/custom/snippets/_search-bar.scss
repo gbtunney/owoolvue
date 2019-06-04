@@ -2,7 +2,7 @@
 	//background: red;
 	position: relative;
 	width: 100%;
-background: red;
+//background: red;
 	@include g-typeset(xl, font-serif);
 
 	label{
@@ -58,6 +58,7 @@ background: red;
 			@include breakpoint-range(sm,"<="){
 				width: 0;
 				margin: 0 auto;
+				padding: 0;
 			}
 			border-width: 0px ;
 			&:focus{

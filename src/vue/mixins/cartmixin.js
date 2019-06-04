@@ -15,7 +15,7 @@ export const CartMixin = {
 	},
 	methods: {
 ...mapActions([
-		'updateCartItem','getCart', 'addItem','getVariantDefaultImage'
+		'updateCartItem','getCart', 'addItem','getVariantDefaultImage','updateCartNote'
 	])
 }
 }

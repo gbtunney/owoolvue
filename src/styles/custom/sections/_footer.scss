@@ -6,6 +6,8 @@ footer {
 
 $my-default-spacing-variant: lg;
 
+
+
 .Owool_Footer {
    // @include u-full-width-container;
 
@@ -33,8 +35,18 @@ $my-default-spacing-variant: lg;
         font-family: inherit;
         font-size: inherit;
     }
+
+    .footer-heading{
+     //   @include g-typeset(lg, font-small-caps);
+        @include rhythm-padding-sides(bottom, base , relative-size);
+
+
+    }
     &__divider {
-        @include 	rhythm-padding($my-default-spacing-variant);
+      //  @include u-leader-padding;
+       @include 	rhythm-padding(md,false,relative-size);
+    @include rhythm-padding-sides(top, lg , relative-size);
+   // rhythm-padding($prop: $default-padding-variant ,$all:false, $key:$default-padding-key)
 
     }
     &__meta {
@@ -43,17 +55,27 @@ $my-default-spacing-variant: lg;
     }
 
     &__social {
-        @include 	rhythm-padding($my-default-spacing-variant);
-        @include u-horizontal-list;
+        @include 	rhythm-padding(base);
+       // @include u-horizontal-list;
+        display:flex;
+        width:auto;
+
+        @include rhythm-padding-sides(top bottom, base , relative-size);
+
         @include breakpoint-range(sm,"<="){
-            @include u-make-container(70%);
+            //@include u-make-container(70%);
+        }
+
+        & > * {
+            margin-right:  get-lookup-prop(relative-size,base);
         }
 
     }
     &__grid {
         display: grid;
         grid-template-columns: 1fr  1fr 1fr;
-        grid-gap: get-spacing();
+        grid-gap: get-lookup-prop(relative-size,lg);
+    //    @debug "LOOKUP #{get-lookup-prop(absolute-size,5)}";
 
         @include breakpoint-range(sm,"<="){
             display: block;

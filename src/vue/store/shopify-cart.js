@@ -40,6 +40,28 @@ const SHOPIFY_API = new ShopifyApi({
         throw "REST ERROR"
     }
 })
+.post({
+    action: "updateCartNote",
+    property: "_cart",
+    // data: $('#'+form_id).serialize(),
+    path: "/cart/update.js",
+    dataType: "json",
+    contentType: "application/json;charset=UTF-8",
+    
+    onSuccess(state, payload, axios, {params, data}) {
+        // if you define the onSuccess function you have to set the state by yourself
+        
+        //let product_id = params.product_id;
+        // state._cart = payload.data;
+        state._cart = payload.data;
+        console.log(`add to  cart successfully done.`, payload,data,state._cart);
+    },
+    onError(state, error, axios, {params, data}) {
+        // if you define the onSuccess function you have to set the state by yourself
+        //	state.post = null;
+        throw "REST ERROR"
+    }
+})
 .get({
     action: "getCart",
     property: "_cart",

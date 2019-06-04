@@ -13,10 +13,10 @@
 {% endif %}
 
 <div class="c-{{ component_name }} c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }} {{ flags | default: default_flags }}{% if reflect %} --reflect{% endif %}">
-    <div class="c-{{ component_name }}__left c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__left">
+    <div class="c-{{ component_name }}__left __left c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__left">
         {% include 'svg-definitions' with kabob_left_icon  %}
     </div>
-    <div class="c-{{ component_name }}__center c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__center">
+    <div class="c-{{ component_name }}__center __center c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__center">
         <div class="c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__inner">
             {% if kabob_label %}
                 <span>{{ kabob_label | escape }}</span>
@@ -24,11 +24,11 @@
         </div>
     </div>
     {% if reflect %}
-        <div class="c-{{ component_name }}__right c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__right">
+        <div class="c-{{ component_name }}__right __right c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__right">
             {% include 'svg-definitions' with kabob_left_icon  %}
         </div>
     {% elsif kabob_right_icon %}
-        <div class="c-{{ component_name }}__right c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__right">
+        <div class="c-{{ component_name }}__right __right c-{{ component_name }}--{{ style_modifier | default: default_style_modifier }}__right">
             {% include 'svg-definitions' with kabob_right_icon  %}
         </div>
     {% endif %}
