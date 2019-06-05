@@ -174,8 +174,10 @@ $show-guides: false;
 			border-width: 0;
 		}
 
+
 		input[type="search"]{
-			width: 20px;
+			width: 20px!important;
+		//	background: red;
 			border-width: 0;
 		}
 		//background: red;

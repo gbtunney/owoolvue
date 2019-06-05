@@ -2,7 +2,7 @@
 	<div :class="$options.name" class="pending-items-component --productApp">
 		<h4 v-show="false">TOTAL: {{  TotalAmount | toUSD }}</h4>
 		<h3 v-show="false">availability test {{Availability}} disabled {{ Disabled }}</h3>
-		<basecomponent  :text="AddToCartString" :flags="['addToCartPadding']"
+		<basecomponent class="add-to-cart-button" :text="AddToCartString" :flags="['addToCartPadding']"
 		               v-show="!Disabled" scheme="dark-accent-primary"
 		               @click="addMultipletoCart(PendingItems)" font="small-caps"
 		               fontsize="lg"
@@ -343,7 +343,9 @@
 
 <style lang="scss" type="text/scss" >
 
-
+.add-to-cart-button{
+	margin: 0 auto;
+}
 	.productMeta{
 		width: 100%;
 		//todo: change this;
@@ -360,6 +362,7 @@
 
 		}
 	}
+
 
 	.icon-loading-hidden{
 		width: .2em;

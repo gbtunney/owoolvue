@@ -41,39 +41,6 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 
-/*================ Site-wide styles ================*/
-/*================ Partials | Layout Styles ================*/
-html,
-body {
-  background-color: $colorBody;
-}
-
-[tabindex="-1"]:focus {
-  outline: none;
-}
-
-.wrapper {
-  max-width: $siteWidth;
-  margin: 0 auto;
-  padding: 0 ($gutter / 2);
-
-  @include at-query ($min, $postSmall) {
-    padding: 0 $gutter;
-  }
-}
-
-.main-content {
-  display: block;
-  padding-top: $gutter;
-
-  @include at-query($min, $postSmall) {
-    padding-bottom: 40px;
-  }
-
-  @include at-query($min, $large) {
-    padding-top: $contentTopMargin;
-  }
-}
 
 hr {
   clear: both;

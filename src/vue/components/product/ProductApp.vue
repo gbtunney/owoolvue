@@ -27,11 +27,11 @@
 					<iconcomponent  v-show="false" icon_id="svg-icon-leaves-a"   scheme="light" :showpicker="true"></iconcomponent>
 					<h1 class="product-single__title" v-if="CurrentProductTitle" itemprop="name">
 						{{CurrentProductTitle}}</h1>
-					<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
+					<h3 class="product-single__subtitle" v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
 
 					<div>
-						<div data-price-container>
+						<div class="product__price-container" data-price-container>
 							<span v-if="CurrentVariantOnSale" class="product-single__price wrapper" aria-hidden="false">
 								<span id="ComparePrice" class="product-single__price compare-at">{{ CurrentVariantCompareAtPrice }}</span>
 							</span>

@@ -13,20 +13,22 @@
 				</ul><button @click="transformOptions">TRANSFORM ARRAY</button>
 
 			</div>
-			<div>
+			<div class="single-attribute-panel">
+				<FuseSearch
+				class="fuseSearchComponent"
+				v-show="searchable"
+				@fuseResult="fuseFilter"
+				@fuseInactive="fuseInactive"
+				:keys='["title","tags","color_story"]'
+				:list="OptionValues">
+			</FuseSearch>
+
 				<h5 class="option__name">{{option.name}}<span v-if="selectedOptions.title"> : {{selectedOptions.title}}</span> </h5>
 				<h5 class="option__color-story" v-if="selectedOptions.color_story">{{selectedOptions.color_story}}</h5>
-				<FuseSearch
-					class="fuseSearchComponent"
-					v-show="searchable"
-					@fuseResult="fuseFilter"
-					@fuseInactive="fuseInactive"
-					:keys='["title","tags","color_story"]'
-					:list="OptionValues">
-				</FuseSearch>
 
 
-				<Multiselect :options="FilteredOptionValues" class="--is-open"
+
+				<Multiselect :options="FilteredOptionValues" class="option-picker --is-open"
 				             v-model="selectedOptions"
 				             @input="$emit('optionChanged',option, selectedOptions)"
 				             v-on:close=""
@@ -299,7 +301,9 @@
 	@include g-color-scheme(dark, (background:true, foreground:true, border:true));
 
 }
-
+.option-picker{
+	margin-top: 1em;
+}
 
 	.option {
 
@@ -316,7 +320,17 @@
 	}
 //	.option__color-story{}
 
+.single-attribute-panel{
+	position: relative;
+	margin-top: .5em;
 
+	.fuseSearchComponent{
+		position: absolute;
+		top:0;
+		right: 0;
+		width: 100%;
+	}
+}
 
 
 	.multiselect__single{
@@ -331,10 +345,38 @@
 
 	}
 
+	.multiselect__option{
+		//@include render-queue(get-collection( $btn-option-render));
+		$collection:color-schemes typography font-size base-padding;
+		$variant-keys: light font-small-caps base sm;
+		@include render-queue( get-collection( $collection,$variant-keys) );
+
+		@include breakpoint-range(xs){
+			$collection:color-schemes typography font-size base-padding;
+			$variant-keys: light font-small-caps base xs;
+			@include render-queue( get-collection( $collection,$variant-keys) );
+
+		}
+
+		@extend %c-button-static-props;
+
+		border-width: 0px!important;
+		display: flex;
+
+		//$new-list: get-collection((base-spacing, color-schemes, font-size,typography), $no-selectors`);
+		//	$new-list: overwrite-collections($new-list, (sm, dark, md,font-san-serif), variant-key);
+		// @include render-queue($new-list);
+		//  @include render-queue(get-collection($example-component-render));
+
+
+		text-transform: uppercase;
+	}
+
+
 .fuseSearchComponent{
-	padding-top: 0;
-	padding-bottom:  get-lookup-prop( base-padding, md);//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
-margin-top:-20px;
+	//padding-top: 0;
+	//padding-bottom:  get-lookup-prop( base-padding, md);//get-lookup-prop($collection:(),$variant-key:false, $prop: false );
+//margin-top:-20px;
 }
 
 

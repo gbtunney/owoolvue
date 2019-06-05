@@ -93,7 +93,7 @@
 			width: 8%;
 			height: 100%;
 
-			touch-action: none;
+	//		touch-action: none;
 
 			&:before {
 				content: "";

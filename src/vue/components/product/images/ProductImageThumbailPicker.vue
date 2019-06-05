@@ -4,14 +4,16 @@
 				<!-- slides -->
 				<swiper-slide v-for="image,index in ImageArray" :key="index">
 					<div>
-						<img @click="imageChanged(image)"  v-tooltip.top-start="getImageTooltip(image)" :src="getShopifyImageURL(image)" alt="image.alt">
+						{{getImageTooltip(image)}}
+						<img @click="imageChanged(image)"  v-tooltip.top-start="getImageTooltip(image)" :src="getShopifyImageURL(image)" :alt="image.alt">
 					</div>
 				</swiper-slide>
 				<!-- Optional controls -->
 				<div class="swiper-scrollbar"   slot="scrollbar"></div>
 			</swiper>
+
+			<h2 v-tooltip.top-start="'ghhhh'">GILLIAN </h2>
 		</div>
-	</div>
 </template>
 
 <script type="text/javascript">
@@ -52,12 +54,10 @@
                 swiperOption: {
                     loop: false,
                     preloadImages: true,
-                    grabCursor: true,
                     centeredSlides: false,
                     scrollbar: false,
                     slidesPerView: 6,
                     spaceBetween: 0,
-                    allowTouchMove: true,
                     navigation: false,
                     zoom: false,
                     /* navigation: {
@@ -130,6 +130,11 @@
 <style lang="scss" type="text/scss"  >
 	@import "src/vue/helpers/product-dependancies.scss";
 
+	h2{
+		&:hover{
+			background: red;
+		}
+	}
 	.ProductImageThumbailPicker{
 
 		.swiper-button-prev,.swiper-button-next, .swiper-container-rtl .swiper-button-next {
@@ -169,7 +174,7 @@
 			opacity: 1;
 		}
 	}
-	.tooltip {
+	.tooltipbnbn {
 		display: block !important;
 		z-index: 10000;
 		@include g-typeset(lg,font-small-caps);
@@ -266,17 +271,6 @@
 			}
 		}
 
-		&[aria-hidden='true'] {
-			visibility: hidden;
-			opacity: 0;
-			transition: opacity .15s, visibility .15s;
-		}
-
-		&[aria-hidden='false'] {
-			visibility: visible;
-			opacity: 1;
-			transition: opacity .15s;
-		}
 	}
 
 </style>

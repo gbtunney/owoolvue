@@ -10,6 +10,38 @@
 
 @debug "THIS IS A CUSTOM";
 .PendingItemsComponent{
+	.kit_container{
+		display:flex;
+		align-items: center;
+
+	}
+
+	ul{
+		padding: 0;
+	}
+
+	&.--productApp{
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+
+		.pending-item-name{
+			//@include 	rhythm-padding($my-default-spacing-variant);
+		}
+		.pending-item-available,.pending-item-price{
+			//@include 	u-leader-padding($my-default-spacing-variant);
+			@include g-typeset(xs,font-small-caps )
+		}
+
+
+
+		////CUSTOMIZED OVERRIDE OF VUE NUMERIC INPUT
+
+	}
+	.PendingItemsComponent{
+
+	}
+
 
 	.PendingItem {
 		&Wrapper {
@@ -60,6 +92,29 @@
 
 .ProductApp{
 
+	.product-single{
+
+
+		&__meta{
+padding-top: 0;
+		}
+		&__title{
+			@include breakpoint-range(md, ">=") {
+				margin-bottom: 0;
+			}
+
+		}
+		&__title-mobile {
+			@include g-typeset(5,font-serif);
+			@include breakpoint-range(md, ">=") {
+				display: none;
+			}
+		}
+		&__subtitle{
+			@include g-typeset(base,font-small-caps);
+		}
+	}
+
 	.product__main-loader{
 
 	}
@@ -71,13 +126,9 @@
 		margin: 0 auto;
 		opacity: .5;
 	}
-	.product-single__title{
 
-	}
-	.product-single__title-mobile {
-		@include breakpoint-range(md, ">=") {
-			display: none;
-		}
+	.product__price-container{
+
 	}
 
 
@@ -88,36 +139,6 @@
 .product-single__meta{
 ///	padding: 0;
 }
-	.pending-items-component{
-		.kit_container{
-			display:flex;
-			align-items: center;
-
-		}
-
-		ul{
-			padding: 0;
-		}
-
-		&.--productApp{
-			display: flex;
-			flex-direction: column-reverse;
-			align-items: center;
-
-			.pending-item-name{
-				//@include 	rhythm-padding($my-default-spacing-variant);
-			}
-			.pending-item-available,.pending-item-price{
-				//@include 	u-leader-padding($my-default-spacing-variant);
-				@include g-typeset(xs,font-small-caps )
-			}
-
-
-
-			////CUSTOMIZED OVERRIDE OF VUE NUMERIC INPUT
-
-		}
-	}
 
 	.pending-item-price{
 

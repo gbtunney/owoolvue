@@ -21,6 +21,9 @@
 
 //@import "snippets/pagination";
 
+.main-content{
+	padding: 0;
+}
 .main-content .wrapper{
 	@include breakpoint-range(sm,"<="){
 		padding: 0;
@@ -34,5 +37,42 @@
 #preview-bar-iframe{
 	display: none;
 }
+
+/*================ Site-wide styles ================*/
+/*================ Partials | Layout Styles ================*/
+html,
+body {
+	background-color: $colorBody;
+}
+
+[tabindex="-1"]:focus {
+	outline: none;
+}
+
+.wrapper {
+	//@include u-make-container(80%);
+	max-width: $siteWidth;
+margin: 0 auto;
+//	padding: 0 ($gutter / 2);
+
+	@include at-query ($min, $postSmall) {
+		//padding: 0 $gutter;
+	}
+}
+
+.main-content {
+	display: block;
+	 padding-top: 4rem;
+
+	//@include rhythm-padding(xl,true,absolute-size);
+	@include at-query($min, $postSmall) {
+		//padding-bottom: 40px;
+	}
+
+	@include at-query($min, $large) {
+	//	padding-top: $contentTopMargin;
+	}
+}
+
 
 

@@ -379,32 +379,7 @@
 	}
 
 
-	.multiselect__option{
-		//@include render-queue(get-collection( $btn-option-render));
-		$collection:color-schemes typography font-size base-padding;
-		$variant-keys: light font-small-caps xs sm;
-		@include render-queue( get-collection( $collection,$variant-keys) );
 
-		@include breakpoint-range(xs){
-			$collection:color-schemes typography font-size base-padding;
-			$variant-keys: light font-small-caps xxs xs;
-			@include render-queue( get-collection( $collection,$variant-keys) );
-
-		}
-
-					@extend %c-button-static-props;
-
-border-width: 0px!important;
-		display: flex;
-
-		//$new-list: get-collection((base-spacing, color-schemes, font-size,typography), $no-selectors`);
-	//	$new-list: overwrite-collections($new-list, (sm, dark, md,font-san-serif), variant-key);
-		// @include render-queue($new-list);
-		//  @include render-queue(get-collection($example-component-render));
-
-
-text-transform: uppercase;
-	}
 
 	.multiselect__option {
 

@@ -54,7 +54,7 @@
 
 
 		input[type="search"]{
-			//width: 30%;
+
 			@include breakpoint-range(sm,"<="){
 				width: 0;
 				margin: 0 auto;
