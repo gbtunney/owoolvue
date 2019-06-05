@@ -85,7 +85,7 @@
 			</div>
 		</div>
 
-		<div class="g-center-panel-callout">
+		<div v-show="false" class="g-center-panel-callout">
 			<ul>
 				<li>
 					<h6>YARN WEIGHT</h6>
@@ -218,7 +218,7 @@
 			    default: false
 		    },
 		    showmasterselect: {
-			    default: true
+			    default: false
 		    },
 	        updatehistory:{
 		        default: true

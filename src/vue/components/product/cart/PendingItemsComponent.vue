@@ -333,7 +333,7 @@
                         itemsMap.set(item.item_id, newItem)
                     }
                     this.PendingItems = Array.from(itemsMap.values());
-                    console.log("updatevariant,TRYING TO REMOVE@!~!", value, newItem, itemsMap);
+                    //console.log("updatevariant,TRYING TO REMOVE@!~!", value, newItem, itemsMap);
                 }
             }
         }
