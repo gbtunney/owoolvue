@@ -1,17 +1,33 @@
 //SASS
 
+.pagination{
+    @include g-typeset(3, font-serif);
+
+    .page{
+
+      //  padding: 0 rhythm(.25);
+        &.current{
+            @include trailing-border(2px,-1);
+            border-color: color($chroma-active-scheme,accent);
+        }
+
+        &:hover{
+            // @include color-scheme(dark, false,false);
+            @include trailing-border(2px,-1);
+
+            border-color: color($chroma-active-scheme,border);
+
+        }
+    }
+}
+
 .Owool_Pagination{
     @include u-make-container(30%);
 
 @include trailer(3);
-    $props: (
-        background: true,
-        foreground: true,
-        border: false
-    );
-    @include g-color-scheme($chroma-active-scheme,$props...);
+  //  @include g-color-scheme(light,$props);
 
-    @include g-typeset(2, font-serif);
+    @include g-typeset(4, font-serif);
 
 @include breakpoint-range(sm,"<="){
     @include g-typeset(1, font-serif);

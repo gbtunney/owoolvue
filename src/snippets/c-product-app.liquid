@@ -17,10 +17,6 @@ This is the full Product App vue component.
 
 </script>
 
-
-
-
-
 <script type="application/javascript">
     window.producthandledata = {
         "yarn-for-bells-mill-cowl": {
@@ -219,6 +215,7 @@ This is the full Product App vue component.
 
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
+     prop-product={{  product | json }}
      prop-variantid="{{ variant_id }}"
      prop-sectionsettings='{{   sectionsettings | json }}'
      prop-productdata='{{   productdata | strip_newlines }}'

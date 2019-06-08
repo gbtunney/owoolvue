@@ -22,7 +22,7 @@
         <label for="Email" class="newsletter__label hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
         <input type="hidden" name="contact[tags]" value="newsletter">
         <div class="newsletter--form">
-          <div class=" c-test-input-group">
+          <div class="input-group">
             <input type="email" class="c-input c-input--light-alt c-test-input-group__input" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" id="Email"  autocorrect="off" autocapitalize="off">
               <button id="Subscribe" type="submit"
                 class=" c-button c-button--dark-accent-primary --no-border --round-right newsletter__submit"

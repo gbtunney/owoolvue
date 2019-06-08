@@ -25,8 +25,48 @@ grid-gap: rhythm(2);
 
     }
     .g-Card__vendor{
+
         @include g-typeset(base, font-serif);
-       // background-color: red;
+
+       background-color: red;
     }
 }
+}
+
+.grid-product__wrapper{
+
+    .grid-product__title{
+        @include g-typeset(lg, font-serif);
+
+        @include breakpoint-range(sm,"<="){
+            @include g-typeset(md, font-serif);
+        }
+    }
+    .grid-product__vendor{
+        @include g-typeset(sm, font-small-caps);
+        font-size: 14px;
+       // @include g-color-scheme(light,(background:false,foreground:true,accent:false,border:false));
+//        background-color: green;
+
+    }
+    .grid-product__meta{
+
+        //@include g-typeset(base, font-serif);
+        //background-color: red;
+    }
+}
+@debug "HI";
+
+.rich-text-section{
+    .rich-text.wrapper{
+        @include breakpoint-range(sm,"<=") {
+padding: 0 1em;
+        }
+        }
+}
+
+.feature-row__text{
+    @include breakpoint-range(sm,"<=") {
+        padding: 1em 1em;
+    }
 }

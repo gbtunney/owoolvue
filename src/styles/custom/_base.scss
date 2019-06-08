@@ -50,7 +50,7 @@
     h4,
     h5,
     h6 {
-      // color: color(accent);
+       color: color(light,accent);
         margin-bottom: 0;
         margin-top: 0;
     }
@@ -67,7 +67,7 @@
     }
 
     h1 {
-        @include g-typeset(xxl, font-serif);
+        @include g-typeset(5, font-serif);
     }
 
     h2 {

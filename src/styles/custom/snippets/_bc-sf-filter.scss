@@ -677,6 +677,16 @@ $searchBoxMobileHeight: 50px;
 	line-height: 20px
 }
 
+#bc-sf-filter-tree .bc-sf-filter-options-wrapper{
+
+	.bc-sf-filter-block-title{
+		@extend %u-reset-header;
+		@include g-typeset(3,font-san-serif);
+		@include g-color-scheme(light,(background:true,foreground:accent, border:true));
+		display: none;
+	}
+}
+
 .bc-sf-filter-selection-wrapper .bc-sf-filter-block-title h3 {
 	font-size: 16px;
 	margin: 0;
@@ -900,19 +910,45 @@ $searchBoxMobileHeight: 50px;
 	display: none
 }
 
-#bc-sf-filter-tree-mobile button {
-	width: 100%;
-	background: #000;
-	color: #fff;
-	padding: 10px 0;
-	margin: 20px 0;
-	border: none;
-	text-transform: uppercase;
-	font-size: 14px;
-	cursor: pointer;
-	display: block
+
+#CollectionSection	#bc-sf-filter-tree-mobile button {
+		width: 50%;
+margin: 0 auto;
+		padding: 10px 0;
+
+
+		@include g-color-scheme(accent-default,(background:true,foreground:true, border:true));
+		@include g-typeset(base, font-small-caps);
+		cursor: pointer;
+		display: block
+	}
+
+#bc-sf-filter-tree{
+	@include g-color-scheme(light,(background:true,foreground:true, border:true));
+
+	@include rhythm-padding();
+	padding: 20px;
 }
 
+
+.bc-sf-filter-block-content{
+
+	.bc-sf-filter-option-box{
+
+	}
+}
+#CollectionSection	 .section-header{
+	margin-bottom: 0;
+	margin: 20px;
+
+	#bc-sf-filter-collection-header{
+		margin:15px;
+	}
+
+	hr{
+		display: none;
+	}
+}
 .jspContainer {
 	width: 100% !important
 }

@@ -136,10 +136,8 @@
 			</template>
 
 		</Multiselect>
-		<div>
-			DRAGAABLE!!!!!
-		</div>
-		<draggable class="draggablePanel"  v-if="( CurrentVariant && CurrentVariant.length>0) " v-model="CurrentVariant" group="people" @start="drag=true" @end="drag=false">
+
+		<draggable v-show="false" class="draggablePanel"  v-if="( CurrentVariant && CurrentVariant.length>0) " v-model="CurrentVariant" group="people" @start="drag=true" @end="drag=false">
 			<div v-for="selected_variant,key in CurrentVariant" :key="key">
 				<img  :src="ShopifyImgURL(_getVariantDefaultImage(selected_variant).src,'200x200')">
 				<span class="custom__remove" @click="_removeSelectedVariant(key)">

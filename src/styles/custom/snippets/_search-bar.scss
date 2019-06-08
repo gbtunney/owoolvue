@@ -1,3 +1,14 @@
+.template-search{
+	.section-header{
+
+		@extend %u-reset-header;
+		@include g-typeset(3,font-san-serif);
+		hr{
+			display: none;
+		}
+	}
+}
+
 .search-bar {
 	//background: red;
 	position: relative;
@@ -34,9 +45,19 @@
 
 		}
 		margin: 0 auto;
+		font-size: inherit;
+
+
+		label{
+			position: absolute;
+			top:-1px;
+		}
 
 		input[type="search"]{
 			width: 100%;
+			@include g-color-scheme(light,(background:true,foreground:true,border:true)){
+				@include border-single-side(bottom);
+			}
 		}
 	}
 

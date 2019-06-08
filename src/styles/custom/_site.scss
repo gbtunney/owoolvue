@@ -14,6 +14,8 @@
 @import "snippets/search-bar";
 @import "snippets/announcement-bar";
 @import "snippets/email-list-form";
+@import 'snippets/_bc-sf-filter.scss';
+@import "snippets/pagination";
 
 @import "../vue-components/vue-numeric-input";
 
@@ -63,6 +65,10 @@ margin: 0 auto;
 .main-content {
 	display: block;
 	 padding-top: 4rem;
+	@include breakpoint-range(sm,"<="){
+		padding-top: 2rem;
+
+	}
 
 	//@include rhythm-padding(xl,true,absolute-size);
 	@include at-query($min, $postSmall) {

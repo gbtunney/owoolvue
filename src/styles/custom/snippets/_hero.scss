@@ -6,7 +6,13 @@
 
 		text-align: left;
 		@include rhythm-padding(xl,true);
+
 		width: 80%;
+
+		@include breakpoint-range(sm,"<="){
+			@include rhythm-padding(lg,true);
+			width: 100%;
+		}
 
 		$my-color: color(light,background);
 		$my-opacity: 0.9;
@@ -24,12 +30,19 @@
 	&__slide &__subtitle{
 		@include g-typeset(lg, font-serif-italic);
 
-	//	text-transform: uppercase;
+		@include breakpoint-range(sm,"<="){
+			@include g-typeset(md, font-serif-italic);
+		}
+
+			//	text-transform: uppercase;
 		//background: red;
 	}
 	&__slide &__title{
 		@include g-typeset(xxl, font-serif-bold);
 
+		@include breakpoint-range(sm,"<="){
+			@include g-typeset(xl, font-serif-bold);
+		}
 		//@include g-color-scheme(dark,(background:false,border:false,accent:false,foreground:true));
 	}
 	.hero__cta{

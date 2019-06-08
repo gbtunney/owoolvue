@@ -1,38 +1,59 @@
-/*================ Newsletter area ================*/
-/*
 
-@include at-query($max, $small) {
-	.newsletter__submit-text--large,
-	.password-page__login-form__submit-text--large {
-		display: none;
-	}
-
-	.newsletter__submit-text--small,
-	.password-page__login-form__submit-text--small {
-		display: block;
-	}
-}
-
-@include at-query($min, $postSmall) {
-	.newsletter__submit-text--large,
-	.password-page__login-form__submit-text--large {
-		display: block;
-	}
-
-	.newsletter__submit-text--small,
-	.password-page__login-form__submit-text--small {
-		display: none;
-	}
-}
-*/
 .newsletter{
 	@include u-make-container(90%);
-}
-.newsletter__label {
-	padding-left: 10px;
+	@extend %u-reset-header;
+
+
+	.section-header{
+		margin-bottom: .8em;
+.section-header__title{
+
+	@include g-typeset(3,font-serif-bold);
+	//padding-bottom: 0;
+
+
 }
 
-///TODO: TEMPORARY INPUT GROUP COMPONENT.
-.input-group {
-	//@include c-input-group(input-group);
+	}
+.newsletter--form{
+	padding-top: 1em;
 }
+		.section-subheading{
+			@include g-typeset(md,font-serif-italic);
+			line-height: 2;
+
+		}
+
+
+	.wrapper{
+
+		padding:2em 1em!important;
+		@include g-color-scheme(light,(foreground:true, background:true, accent:false,border:true))
+			@include breakpoint-range(md,">="){
+				@include u-make-container(50%);
+				padding:2.4em!important;
+
+			}
+	}
+
+	.newsletter__label {
+		padding-left: 10px;
+	}
+	.newsletter--form{
+		.input-group{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+
+		input[type="email"]{
+			flex-grow: 2;
+			@include g-color-scheme(accent-primary,(foreground:false, background:false, accent:false,border:true));
+
+
+		}
+	}
+}
+
+
+
