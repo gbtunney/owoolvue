@@ -186,6 +186,7 @@
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
     import draggable from 'vuedraggable'
 
+	import { Path } from 'ramda'
     //  ProductMixin
     export default {
 	    props: {
@@ -201,12 +202,10 @@
             producthandle: {
                 default: false
             },
-            productdata: {
-                default: () => []
-            },
-            producthandledata:{
-                default: () => {}
-            },
+			defaults:{
+				type: Object,
+				default: {}
+			},
 		    sectionsettings: {
 		        type: Object,
 		    	default: {}
@@ -320,6 +319,7 @@
             let self = this;
 	    	this.$data.loading=true;
 
+	    	console.log("GGG!!",this.$props.productvariants)
 	    	this.getShop().then(function(res){
 		    })
             self.loadProducts().then(function(res){
@@ -327,39 +327,38 @@
                 // self.add_product_to_dictionary({products: res.data.products });
 
             });
+			this.loadProduct().then(function(res){
 
-		    this.loadProduct().then(function(res){
+				//!***PRODUCT  ADDITIONAL PROPS.
+				var additionalProductProps =self.$props.productdata;
+				///merge props..
+				if ( self.$props.producthandle ){
+					if ( window.producthandledata &&window.producthandledata.hasOwnProperty(self.$props.producthandle )){
+						additionalProductProps =Object.assign(additionalProductProps,window.producthandledata[self.$props.producthandle] )//self.$props.productdata;
+					}
+				}
 
-			    //***PRODUCT  ADDITIONAL PROPS.
-                var additionalProductProps =self.$props.productdata;
-                ///merge props..
-                if ( self.$props.producthandle ){
-                    if ( window.producthandledata &&window.producthandledata.hasOwnProperty(self.$props.producthandle )){
-	                    additionalProductProps =Object.assign(additionalProductProps,window.producthandledata[self.$props.producthandle] )//self.$props.productdata;
-                    }
-                }
+				//***PRODUCT
+				self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
 
-                //***PRODUCT
-                self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
+				//!***VARIANTS
+				self.add_variants_to_dictionary({variants: res.data.product.variants});
 
-			    //***VARIANTS
-			    self.add_variants_to_dictionary({variants: res.data.product.variants});
+				//**IMAGES
+				self.add_images_to_dictionary({images: res.data.product.images});
 
-                //***IMAGES
-                self.add_images_to_dictionary({images: res.data.product.images});
-                /********/
+				//todo, MOVE THIS PLS.
 
-				 //todo, MOVE THIS PLS.
+				if (  self.Variants && self.Variants.length >1 ){
+					//!***INIT OPTIONS TODO: eventually be able to turn this off?
+					self.initOptions(self.CurrentProduct);
+				}
 
-				  if (  self.Variants && self.Variants.length >1 ){
-                      //!***INIT OPTIONS TODO: eventually be able to turn this off?
-                      self.initOptions(self.CurrentProduct);
-				  }
+				////!*****SET VARIANT
+				self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
+				self.$data.loading = false;
+			})
 
-                ////!*****SET VARIANT
-                self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
-			    self.$data.loading = false;
-		    })
 	    },
 	    mounted:function(){
 		  //  this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)

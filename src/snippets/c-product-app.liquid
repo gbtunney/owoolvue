@@ -6,219 +6,36 @@ This is the full Product App vue component.
 {{ product.type | downcase }}
 {% endcapture %}
 
-{% capture datafilestring %}settings-{{ product.type | downcase }}.json{% endcapture %}
+<h1>size: {{  product.variants | size }}</h1>
 
-{% capture productdata %}
-{% include datafilestring  %}
-{% endcapture %}
+{%- capture product_type_defaults -%}
+    {% include 'settings-product-type-defaults'  %}
+{%- endcapture -%}
 
+{%- capture product_handle_defaults -%}
+    {% include 'settings-product-handle-defaults'  %}
+{%- endcapture -%}
 
-
-
-<script type="application/javascript">
-    window.producthandledata = {
-        "yarn-for-bells-mill-cowl": {
-            "subtitle": "testing",
-
-            "variant_meta": {
-                "22684022112374": {
-                    "kit": [
-                        {
-                            "variant_id": 22589198008438,
-                            "requested_quantity": 1,
-                            "message": "PDF Download"
-                        },
-                        {
-                            "variant_id": 22589225468022,
-                            "title": "Cresheim Creek",
-                            "requested_quantity": 1,
-                            "message": "Color A",
-                            "editable_variant": true
-                        },
-                        {
-                            "variant_id": 22589225304182,
-                            "title": "Brook Trout",
-                            "requested_quantity": 1,
-                            "message": "Color B",
-                            "editable_variant": true
-
-                        }
-                    ]
-
-                },
-                "22589191225462": {
-                    "kit": [{
-                        "variant_id": 22589225468022,
-                        "title": "Cresheim Creek",
-                        "requested_quantity": 1,
-                        "message": "Color A"
-                    },
-                        {
-                            "variant_id": 22589225304182,
-                            "title": "Brook Trout",
-                            "requested_quantity": 1,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-
-                "22589191192694": {
-                    "kit": [{
-                        "variant_id": 22589225861238,
-                        "title": "Northern Cardinal",
-                        "requested_quantity": 1,
-                        "message": "Color A"
-                    },
-                        {
-                            "variant_id": 22589225435254,
-                            "title": "Cooper's Hawk",
-                            "requested_quantity": 34,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-
-                "22589191159926": {
-                    "kit": [{
-                        "variant_id": 22589225697398,
-                        "title": "Juneberry",
-                        "requested_quantity": 1,
-                        "message": "Color A"
-                    },
-                        {
-                            "variant_id": 22589226123382,
-                            "title": "Silver Maple",
-                            "requested_quantity": 1,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-                "22589191127158": {
-                    "kit": [{
-                        "variant_id": 22589226319990,
-                        "title": "Wineberry",
-                        "requested_quantity": 1,
-                        "message": "Color A"
-                    },
-                        {
-                            "variant_id": 22589225173110,
-                            "title": "Arrowgrass",
-                            "requested_quantity": 1,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-
-                "22589191094390": {
-                    "kit": [
-                        {
-                            "variant_id": 22589198008438,
-                            "requested_quantity": 1,
-                            "message": "PDF Download"
-                        }, {
-                            "variant_id": 22589225369718,
-                            "title": "Bull Thistle",
-                            "requested_quantity": 25,
-                            "message": "Color A"
-                        },
-                        {
-                            "variant_id": 22589226254454,
-                            "title": "Watermill",
-                            "requested_quantity": 1,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-
-                "22589191061622": {
-                    "kit": [
-                        {
-                            "variant_id": 22589198008438,
-                            "requested_quantity": 1,
-                            "message": "PDF Download"
-                        },
-                        {
-                            "variant_id": 22589225762934,
-                            "title": "Meadow Violet",
-                            "requested_quantity": 1,
-                            "message": "Color A"
-                        },
-                        {
-                            "variant_id": 22589225992310,
-                            "title": "Pearly Mussel",
-                            "requested_quantity": 1,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-                "22589191028854": {
-                    "kit": [
-                        {
-                            "variant_id": 22589198008438,
-                            "requested_quantity": 1,
-                            "message": "PDF Download"
-                        },
-                        {
-                            "variant_id": 22589225205878,
-                            "title": "Barn Owl",
-                            "requested_quantity": 1,
-                            "message": "Color A"
-                        },
-                        {
-                            "variant_id": 22589226352758,
-                            "title": "Wood Dove",
-                            "requested_quantity": 1,
-                            "message": "Color B"
-                        }
-                    ]
-                },
-                "22589190996086": {
-                    "kit": [{
-                        "variant_id": 22589226025078,
-                        "title": "Porcupine",
-                        "requested_quantity": 1,
-                        "message": "Color A",
-                        "quantity_editable": true,
-                        "editable_variant": true
-                    },
-                        {
-                            "variant_id": 22589225959542,
-                            "title": "Pasture Rose",
-                            "requested_quantity": 1,
-                            "message": "Color B",
-                            "quantity_editable": true,
-
-                            "editable_variant": true
-
-                        }
-                    ]
-                }
-            }
-        },
-        "local": {
-            "subtitle": "This is local"
-        },
-        "andorra-wrap": {
-            "recc_yarn": "classic-worsted",
-            "recc_kit": "yarn-for-andorra-wrap",
-            "notforsale": true,
-            "download": {
-                "ravelry": "https://www.ravelry.com/patterns/library/anika-6"
-            }
-        }
-    };
-</script>
-
-
+ {%- capture variant_admin_api_data -%}
+    [
+   {% for variant in product.variants %}
+      { "inventory_policy" : "{{variant.inventory_policy  }}",
+     "inventory_management": "{{variant.inventory_management  }}",
+     "inventory_quantity" :{{variant.inventory_quantity  }} } {% if forloop.last == false %},{% endif %}
+    {% endfor %}
+   ]
+{%- endcapture -%}
 
 <div js-mount-vue="ProductApp"  class="c-product-app"
-     prop-productid="{{ product_id }}"
-     prop-variantid="{{ variant_id }}"
-     prop-productvariants='{{ product.variants | json }}'
-     prop-sectionsettings='{{   sectionsettings | json }}'
-     prop-productdata='{{   productdata | strip_newlines }}'
-     prop-producthandledata='{{   producthandledata | strip_newlines }}'
-	prop-producthandle="{{ product.handle }}"
+     prop.productid="{{ product_id }}"
+     prop.variantid="{{ variant_id }}"
+     prop.sectionsettings='{{   sectionsettings | json }}'
+     prop.product='{{ product | json |strip_newlines | escape  }}'
+     prop.defaults.product.variants='{{- variant_admin_api_data|  remove: " " | remove: "    " | strip_newlines -}}'
+     prop.defaults.producttype='{{ product_type_defaults | escape | strip_newlines }}'
+     prop.defaults.producthandle='{{ product_handle_defaults | escape | strip_newlines }}'
+     prop.testprefix.datatest.2 = "data2!!!!"
+     prop.testprefix.datatest.3 = "data3!!!!"
 
 
 ></div>
