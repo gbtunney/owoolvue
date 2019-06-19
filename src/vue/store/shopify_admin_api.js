@@ -10,12 +10,12 @@ import {Slugify,GDatamapper} from '@/helpers/main.js'
 
 let BASE_URL_STAGE =  "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/";
 
-//let BASE_URL_OWOOL = "https://fcf957358a8d22ec7a238b8921cd8c09:427460c7bca64340eefc99d4a71c5d8b@o-wool.myshopify.com/admin/";
+let BASE_URL_OWOOL = "https://fcf957358a8d22ec7a238b8921cd8c09:427460c7bca64340eefc99d4a71c5d8b@o-wool.myshopify.com/admin/";
     
     //(window.location.hostname == "o-wool-stage.myshopify.com") ? "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/" : "https://o-wool.com"
 
 const SHOPIFY_API = new ShopifyApi({
-	baseURL: BASE_URL_STAGE,
+	baseURL: (window.location.hostname == "o-wool-stage.myshopify.com") ? BASE_URL_STAGE : BASE_URL_OWOOL,
 	state: {
         _product:[],
         _shop: false

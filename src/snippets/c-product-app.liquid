@@ -12,10 +12,8 @@ This is the full Product App vue component.
 {% include datafilestring  %}
 {% endcapture %}
 
-<script type="application/javascript">
 
 
-</script>
 
 <script type="application/javascript">
     window.producthandledata = {
@@ -215,13 +213,12 @@ This is the full Product App vue component.
 
 <div js-mount-vue="ProductApp"  class="c-product-app"
      prop-productid="{{ product_id }}"
-     prop-product={{  product | json }}
      prop-variantid="{{ variant_id }}"
+     prop-productvariants='{{ product.variants | json }}'
      prop-sectionsettings='{{   sectionsettings | json }}'
      prop-productdata='{{   productdata | strip_newlines }}'
      prop-producthandledata='{{   producthandledata | strip_newlines }}'
 	prop-producthandle="{{ product.handle }}"
 
 
->
-</div>
+></div>

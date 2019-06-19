@@ -126,10 +126,6 @@
 		             placeholder="Select one"
 		             :searchable="true"
 		             :allow-empty="false">
-
-
-
-
 			clear
 			<template slot="option" class="is-grid-2" slot-scope="props" disabled="true">
 				<div disabled="true"  class="option__desc"><span class="option__title">qty{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
@@ -197,8 +193,11 @@
 			    default: false
 		    },
 		    productid: {
-			    default: false
-		    },
+                default: false
+            },
+            product: {
+                default: false
+            },
             producthandle: {
                 default: false
             },
@@ -409,7 +408,6 @@
                     //TODO: figure this out
 
                     if ( this.KitItems ){
-                        console.log("THIS IS A KIT" ,this.KitItems );
                         this.$data._pendingItems =this.KitItems;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
                     }else{
                         this.$data._pendingItems = [{ requested_quantity: 1,quantity_editable: true, variant_id:  this.CurrentVariant.id }];

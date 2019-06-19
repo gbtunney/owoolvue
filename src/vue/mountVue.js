@@ -51,12 +51,20 @@ const router = new VueRouter({
     routes: []
 });
 
-
-
-export function mountVue(selector, rootComponent) {
+export function mountVue(selector, rootComponent, addl_props = {} ) {
   const el = document.querySelector(selector);
+    const elnode = document.querySelector(selector + "#testingdata");
+
+  //const eldata = JSON.parse(document.getElementById('testingdata').innerHTML);// document.getElementById('testingjson');
   if (el) {
-      const props = getAttributes(el, 'prop-');
+      const props =Object.assign( getAttributes(el, 'prop-'),addl_props );
+      //merge additional props..
+     // var myelement =  JSON.stringify('' + el.innerHTML.toString() +'');
+
+      var mytext = "'" + (el.innerText.substring(2, el.innerText.length-2)) + "'";
+
+
+      console.log(JSON.parse(mytext));
       var myvue = new Vue({
           store,
           router,
