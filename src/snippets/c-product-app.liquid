@@ -32,10 +32,12 @@ This is the full Product App vue component.
      prop.sectionsettings='{{   sectionsettings | json }}'
      prop.product='{{ product | json |strip_newlines | escape  }}'
      prop.defaults.product.variants='{{- variant_admin_api_data|  remove: " " | remove: "    " | strip_newlines -}}'
-     prop.defaults.producttype='{{ product_type_defaults | escape | strip_newlines }}'
-     prop.defaults.producthandle='{{ product_handle_defaults | escape | strip_newlines }}'
-     prop.testprefix.datatest.2 = "data2!!!!"
-     prop.testprefix.datatest.3 = "data3!!!!"
+     prop.defaults.product_type='{{ product_type_defaults | escape | strip_newlines }}'
+     prop.defaults.product_handle='{{ product_handle_defaults | escape | strip_newlines }}'
+     prop.default_heirarchy.0 = "product_type"
+     prop.default_heirarchy.1 = "product_handle"
+     prop.default_heirarchy.2 = "product"
+
 
 
 ></div>

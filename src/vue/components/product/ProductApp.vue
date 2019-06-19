@@ -186,63 +186,76 @@
     import PendingItemsComponent from '@/components/product/cart/PendingItemsComponent.vue'
     import draggable from 'vuedraggable'
 
-	import { Path } from 'ramda'
+	//const path = require('ramda').path;
+    //const type =  require('ramda').type;
+    const r =  require('ramda');
+
+	var flatten = require('flat')
+
+
+	const FLATTEN_OPTIONS_DEFAULT =  { maxDepth: 2 };
     //  ProductMixin
     export default {
-	    props: {
-		    variantid: {
-			    default: false
-		    },
-		    productid: {
-                default: false
-            },
-            product: {
-                default: false
-            },
-            producthandle: {
-                default: false
-            },
-			defaults:{
-				type: Object,
-				default: {}
+		props: {
+			variantid: {
+				default: false
 			},
-		    sectionsettings: {
-		        type: Object,
-		    	default: {}
-		    },
-		    allowmultiple: {
-			    default: false
-		    },
-		    showmasterselect: {
-			    default: false
-		    },
-	        updatehistory:{
-		        default: true
-	        },
-            metavisible: {
-                type: Boolean,
-                default: true
-            },
-            download: {
-                default:false
-            },
-            addtocartvariants: {
-                type: Array,
-            default: () => []
-            },
-            label: {
-                type: String,
-                default: "nottt setAdd to Cart"
-            },
-            disableunavailable: {
-                type: Boolean,
-                default: false
-            },
-            lineitemmessage: {   ///this is used to give the kit an id
-                type: [String,Boolean],
-                default: false
-            }
-	    },
+			productid: {
+				default: false
+			},
+			product: {
+				default: false
+			},
+			producthandle: {
+				default: false
+			},
+			defaults: {
+				type: Object,
+				default: () => {
+				}
+			},
+			default_heirarchy: {
+				type: Array,
+				default: () => []
+			},
+			sectionsettings: {
+				type: Object,
+				default: () => {
+				}
+			},
+			allowmultiple: {
+				default: false
+			},
+			showmasterselect: {
+				default: false
+			},
+			updatehistory: {
+				default: true
+			},
+			metavisible: {
+				type: Boolean,
+				default: true
+			},
+			download: {
+				default: false
+			},
+			addtocartvariants: {
+				type: Array,
+				default: () => []
+			},
+			label: {
+				type: String,
+				default: "nottt setAdd to Cart"
+			},
+			disableunavailable: {
+				type: Boolean,
+				default: false
+			},
+			lineitemmessage: {   ///this is used to give the kit an id
+				type: [String, Boolean],
+				default: false
+			}
+		},
 	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
 	    components: {draggable,iconcomponent,ProductImageThumbailPicker,basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,productOptionPicker,Multiselect},
 	    data() {
@@ -318,9 +331,9 @@
 	    created:function(){
             let self = this;
 	    	this.$data.loading=true;
-
-	    	console.log("GGG!!",this.$props.productvariants)
-	    	this.getShop().then(function(res){
+			var tester = this.Defaults('product',{ maxDepth: 3 });
+console.log("tester",tester)
+			this.getShop().then(function(res){
 		    })
             self.loadProducts().then(function(res){
 
@@ -364,6 +377,22 @@
 		  //  this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
 	    methods:{
+			Defaults: function (_key = false, _flattened = false, _defaults = this.$props.defaults, _delimiter = '.') {
+				var return_obj = false;
+				if (!_key) {
+					return_obj = _defaults;
+				} else if (_key && r.is(String, _key)) {
+					_key = _key.split(_delimiter);
+				}
+				if (_key && r.is(Array, _key)) {
+					return_obj = (r.path(_key, _defaults)) ? r.path(_key, _defaults) : false;
+				}
+
+				if (!_flattened) return return_obj;
+				if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
+				if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
+
+			},
 	        initOptions:function(current_product){
                 var payload = {
                     options: current_product.options,
