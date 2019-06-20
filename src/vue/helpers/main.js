@@ -150,7 +150,7 @@ export const GDatamapper = {
 export function isVariantAvailable(variant, inventory_count = 1 ) {
 
 	if (variant && variant.hasOwnProperty('inventory_quantity') && variant.hasOwnProperty('inventory_management')){
-		if (variant.inventory_management == null){
+		if (variant.inventory_management == null || variant.inventory_management == false || variant.available ){
 			return true;
 		} else if (variant.inventory_quantity >= inventory_count){
 			return true;

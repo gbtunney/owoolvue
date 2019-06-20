@@ -13,7 +13,7 @@
 				</span>
 				<span class="bullet-circle"></span>
 				<span class="addToCartPrice">
-					{{  TotalAmount | toUSD }}
+					{{  TotalAmount  }}
 				</span>
 				<span>
 					<iconcomponent icon_id="svg-icon-loadinganim" :flags="['--no-border','icon-transistion', (!Loading)? 'icon-loading-hidden' : '' ]" iconsize="rel--lg" :showpicker="false"></iconcomponent>
@@ -219,7 +219,7 @@
                         })
                     )
                     Array.from(myset.values()).map(function(product_id) {
-                        self.getProduct({params: {id: product_id}}).then(function(product_res) {
+                        self.getProduct({params: {path: "/admin/", handle: product_id}}).then(function(product_res) {
                             self.add_product_to_dictionary({product: product_res.data.product});
                             self.add_images_to_dictionary({images: product_res.data.product.images});
                             self.LocalVariantDictionary = Array.from(product_res.data.product.variants);
@@ -365,7 +365,7 @@
 
 
 	.icon-loading-hidden{
-		width: .2em;
+		width: .2em!important;
 	}
 	.icon-transistion{
 		@include u-transition(all,.5s);

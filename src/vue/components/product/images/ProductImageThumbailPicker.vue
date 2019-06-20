@@ -82,7 +82,7 @@
                 return false;
             },
             getProductImageOptionValue: function(product_image) {
-                if (product_image.variants && product_image.variants.length > 0){
+                if (product_image.variants && product_image.variants.length > 0 && variant && variant.options ){
                     var variant = product_image.variants[0];
                     return variant.options.get(this.OptionID);
                 }

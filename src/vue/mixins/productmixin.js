@@ -116,7 +116,7 @@ export const ProductMixin = {
         loadProduct: function() {
             let self = this;
             
-            return this.getProduct({params: {id: this.$props.productid}})
+            return this.getProduct({params: {id: this.$props.productid, handle: this.$props.producthandle}})
             
         },
         loadProducts: function() {

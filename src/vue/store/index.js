@@ -154,11 +154,7 @@ const main_store = {
 			let _payload = payload
 			if ( payload.product ){
                 var pendingProduct = payload.product;
-                if ( payload.additionalProps){
-                    pendingProduct = Object.assign(pendingProduct, payload.additionalProps);
-                }
-                
-                console.log("SETTING@@@@@@@@@@@@@@@@@@@@@",pendingProduct)
+                console.log("addng product",pendingProduct );
                 state.product_dictionary = new Map(state.product_dictionary).set(parseInt(pendingProduct.id) ,pendingProduct)
 			}else if (payload.products ){
                 var productArr = payload.products;

@@ -2,12 +2,6 @@
 This is the full Product App vue component.
 {% endcomment %}
 
-{% capture typeslug %}
-{{ product.type | downcase }}
-{% endcapture %}
-
-<h1>size: {{  product.variants | size }}</h1>
-
 {%- capture product_type_defaults -%}
     {% include 'settings-product-type-defaults'  %}
 {%- endcapture -%}
@@ -20,8 +14,8 @@ This is the full Product App vue component.
     [
    {% for variant in product.variants %}
       { "inventory_policy" : "{{variant.inventory_policy  }}",
-     "inventory_management": "{{variant.inventory_management  }}",
-     "inventory_quantity" :{{variant.inventory_quantity  }} } {% if forloop.last == false %},{% endif %}
+     "inventory_management": {% if variant.inventory_management  != nil %}"{{variant.inventory_management  }}"{% else %}false{% endif %},
+     "inventory_quantity" : {{variant.inventory_quantity}}  } {% if forloop.last == false %},{% endif %}
     {% endfor %}
    ]
 {%- endcapture -%}
@@ -30,12 +24,15 @@ This is the full Product App vue component.
      prop.productid="{{ product_id }}"
      prop.variantid="{{ variant_id }}"
      prop.sectionsettings='{{   sectionsettings | json }}'
+     prop.settings='{{ settings | json | escape  }}'
+     prop.producthandle='{{ product.handle  }}'
+
      prop.product='{{ product | json |strip_newlines | escape  }}'
      prop.defaults.product.variants='{{- variant_admin_api_data|  remove: " " | remove: "    " | strip_newlines -}}'
-     prop.defaults.product_type='{{ product_type_defaults | escape | strip_newlines }}'
-     prop.defaults.product_handle='{{ product_handle_defaults | escape | strip_newlines }}'
-     prop.default_heirarchy.0 = "product_type"
-     prop.default_heirarchy.1 = "product_handle"
+     prop.defaults.type='{{ product_type_defaults | escape | strip_newlines }}'
+     prop.defaults.handle='{{ product_handle_defaults | escape | strip_newlines }}'
+     prop.default_heirarchy.1 = "type"
+     prop.default_heirarchy.0 = "handle"
      prop.default_heirarchy.2 = "product"
 
 

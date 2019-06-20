@@ -112,7 +112,6 @@
 
 
 		</div>
-
 		<Multiselect :options="VariantArr"
 		             v-model="CurrentVariant"
 		             @input="variantChanged"
@@ -128,7 +127,7 @@
 		             :allow-empty="false">
 			clear
 			<template slot="option" class="is-grid-2" slot-scope="props" disabled="true">
-				<div disabled="true"  class="option__desc"><span class="option__title">qty{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
+				<div disabled="true"  v-if="props.option" class="option__desc"><span v-if="props.option.title" class="option__title">{{ props.option.inventory_quantity}}:  {{ props.option.title }}</span></div>
 			</template>
 
 		</Multiselect>
@@ -223,6 +222,11 @@
 				default: () => {
 				}
 			},
+			settings: {
+				type: Object,
+				default: () => {
+				}
+			},
 			allowmultiple: {
 				default: false
 			},
@@ -306,15 +310,17 @@
                 let self = this;
 
                 if (this.CurrentProduct){
-
                     if (this.CurrentProduct.variants){
                         var newArr = this.CurrentProduct.variants.map(function(variant) {
-
                             if (self.variant_dictionary.get(variant.id)){
                                 return self.variant_dictionary.get(variant.id);
                             }
+                            return false
                         })
-                        return newArr;
+                        return newArr.filter(function(item){
+                        	if ( !item ) return false;
+                        	return true;
+						});
                     } else {
                         return this.Variants;
                     }
@@ -326,57 +332,97 @@
             },
             Layout: function() {
                 return this.$data.toggle_classes[this.LayoutToggle];
-            }
-	    },
+            },
+			MappedDefaults: function () {
+				let self = this;
+				var new_map = this.$props.default_heirarchy.map(function (item) {
+
+					var delimiter = ".";
+					let keyItemArr = [];
+
+					if (r.is(Array, item)) {
+						keyItemArr = item;
+					}
+
+					if (r.is(String, item)) {
+						keyItemArr = item.toString().split(delimiter);
+					}
+					if (self.$props.product) {
+
+						if (self.$props.product.hasOwnProperty(item)) {
+							keyItemArr.push((self.$props.product[item]).toString().toLowerCase());
+						}
+					}
+					return self.Defaults(keyItemArr);
+				});
+
+				return Object.assign(...new_map);
+			}
+		},
 	    created:function(){
             let self = this;
 	    	this.$data.loading=true;
-			var tester = this.Defaults('product',{ maxDepth: 3 });
-console.log("tester",tester)
-			this.getShop().then(function(res){
-		    })
-            self.loadProducts().then(function(res){
+			//var tester = this.Defaults('product',{ maxDepth: 3 });
 
-                // self.add_product_to_dictionary({products: res.data.products });
 
-            });
+			if (this.MergedProduct){
+
+				let _product = this.MergedProduct;
+			//	this.add_product_to_dictionary({product:  this.MergedProduct});
+				console.log("NEW MAP",this.$props.product,this.MergedProduct);
+
+
+
+			}
+
 			this.loadProduct().then(function(res){
 
-				//!***PRODUCT  ADDITIONAL PROPS.
-				var additionalProductProps =self.$props.productdata;
-				///merge props..
-				if ( self.$props.producthandle ){
-					if ( window.producthandledata &&window.producthandledata.hasOwnProperty(self.$props.producthandle )){
-						additionalProductProps =Object.assign(additionalProductProps,window.producthandledata[self.$props.producthandle] )//self.$props.productdata;
-					}
-				}
-
-				//***PRODUCT
-				self.add_product_to_dictionary({product: res.data.product, additionalProps:additionalProductProps });
-
-				//!***VARIANTS
-				self.add_variants_to_dictionary({variants: res.data.product.variants});
-
-				//**IMAGES
-				self.add_images_to_dictionary({images: res.data.product.images});
-
-				//todo, MOVE THIS PLS.
-
-				if (  self.Variants && self.Variants.length >1 ){
-					//!***INIT OPTIONS TODO: eventually be able to turn this off?
-					self.initOptions(self.CurrentProduct);
-				}
+				self.initCurrentProduct(res.data.product);
 
 				////!*****SET VARIANT
 				self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
 				self.$data.loading = false;
+
 			})
+
+			/*
+			this.loadProducts().then(function(res){
+				self.add_product_to_dictionary({products: res.data.products });
+
+			});
+			this.getShop().then(function(res){
+		    })
+		   */
+
 
 	    },
 	    mounted:function(){
-		  //  this.loadVariantMeta(this.NormalizedProductID, this.NormalizedVariantID)
 	    },
 	    methods:{
+			initCurrentProduct: function (current_product) {
+
+				//!***PRODUCT
+				this.add_product_to_dictionary({product: this.GetMergedProduct(current_product)});
+
+				//!***VARIANTS
+				this.add_variants_to_dictionary({variants: this.CurrentProduct.variants});
+
+				//!**IMAGES
+				this.add_images_to_dictionary({images: this.CurrentProduct.images});
+
+				if (this.VariantArr && this.VariantArr.length > 1) {
+					//!***INIT OPTIONS TODO: eventually be able to turn this off?
+					this.initOptions(this.CurrentProduct);
+				}
+			},
+			initOptions:function(current_product){
+				var payload = {
+					options: current_product.options,
+					optionconfig: (current_product.optionconfig && current_product.optionconfig.length > 0) ? current_product.optionconfig : false,
+					option_value_overrides: (current_product.optionvalues && current_product.optionvalues.length > 0) ? current_product.optionvalues  : false
+				};
+				this.add_options_to_dictionary(payload);
+			},
 			Defaults: function (_key = false, _flattened = false, _defaults = this.$props.defaults, _delimiter = '.') {
 				var return_obj = false;
 				if (!_key) {
@@ -391,16 +437,23 @@ console.log("tester",tester)
 				if (!_flattened) return return_obj;
 				if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
 				if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
-
 			},
-	        initOptions:function(current_product){
-                var payload = {
-                    options: current_product.options,
-                    optionconfig: (current_product.optionconfig && current_product.optionconfig.length > 0) ? current_product.optionconfig : false,
-                    option_value_overrides: (current_product.optionvalues && current_product.optionvalues.length > 0) ? current_product.optionvalues  : false
-                };
-                this.add_options_to_dictionary(payload);
-	        },
+			GetMergedProduct: function (product = this.$props.product, override = this.MappedDefaults) {
+				if (!product) return false;
+				let R = r;
+				let self = this;
+				let customMerge = function (k, l, r) {
+					if (R.is(Array, k) && R.is(Array, l)) {
+						var newVal = k.map(function (item, index) {
+							return Object.assign(R.clone(item), l[index]);
+						})
+					}
+					return newVal;//k == 'values' ? R.concat(l, r) : r
+				};
+				return R.mergeWith(customMerge,
+						R.clone(product), R.clone(override)
+				);
+			},
 	    ...mapMutations(['setlayoutButton']),
 			    testBtn:function(target){
 		    	this.setlayoutButton({index: target})
@@ -409,9 +462,7 @@ console.log("tester",tester)
                 console.log("!!!!!!!!!variant changed!!!!!", this.$data._currentImageSlideshow,this.CurrentVariant,variant)
                 this.$data._currentVariant   = variant;
 
-
                 this.KitItems = this._getKitItems(variant); ///gets kit items from meta.
-
 
                 //set the default image in the slideshow
                 if ( this.CurrentProductDefaultImage ){
@@ -423,18 +474,15 @@ console.log("tester",tester)
                 if (variant instanceof Array &&variant.length>0 ){
                     var variantArr  =variant;
                     var newPending  = variantArr.map(function(_variant){
-
                         return { requested_quantity: 1,quantity_editable: true, id: _variant.id }
                     })
                     this.$data._pendingItems =newPending;
                 }else{
-
                     if ( this.$props.updatehistory ){
                         updateHistory(variant);
                     }
 
                     //TODO: figure this out
-
                     if ( this.KitItems ){
                         this.$data._pendingItems =this.KitItems;// [{ requested_quantity: 1,quantity_editable: true, variant: this.CurrentVariant, id:  this.CurrentVariant.id }];
                     }else{
