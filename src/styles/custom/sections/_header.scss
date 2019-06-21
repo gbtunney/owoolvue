@@ -13,7 +13,7 @@ $show-guides: false;
 		display: none;
 	}
 	@include u-default-container;
-	//	@extend %u-reset-link-color;
+	//	@extend %u-reset-link-zcolor;
 
 	padding-top: rhythm(1);
 

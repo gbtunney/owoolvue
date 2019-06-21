@@ -4,9 +4,13 @@ $GENERATE-QUEUE: false;
 
 
 .bc-sf-filter-option-block .bc-sf-filter-block-title{
-	//background: red!important;
+	@include reset-headings;
 	h3{
-		@include g-typeset(base, font-small-caps);
+		@include g-typeset(md, font-small-caps);
 	}
+}
+
+#bc-sf-filter-tree{
+	border-width: 0;
 }
 

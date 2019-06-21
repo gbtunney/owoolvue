@@ -33,8 +33,11 @@
 }
 
 .do-touch-manipulation{
-	touch-action: manipulation;
-	-ms-touch-action: manipulation;
+	@include breakpoint-range(sm,"<=") {
+
+		touch-action: manipulation;
+		-ms-touch-action: manipulation;
+	}
 }
 #preview-bar-iframe{
 	display: none;
@@ -50,7 +53,9 @@ body {
 [tabindex="-1"]:focus {
 	outline: none;
 }
+.do-touch-manipulation{
 
+}
 .wrapper {
 	//@include u-make-container(80%);
 	max-width: $siteWidth;

@@ -342,13 +342,7 @@ $searchBoxMobileHeight: 50px;
 	right: 120%
 }
 
-@font-face {
-	font-family: bc-sf-filter-ico;
-	src: url('//cdn.shopify.com/s/files/1/0084/4044/7094/t/21/assets/bc-sf-filter-ico.eot?1fx0e3&39055');
-	src: url('//cdn.shopify.com/s/files/1/0084/4044/7094/t/21/assets/bc-sf-filter-ico.eot?1fx0e3%23iefix&39055') format('embedded-opentype'), url('//cdn.shopify.com/s/files/1/0084/4044/7094/t/21/assets/bc-sf-filter-ico.ttf?1fx0e3&39055') format('truetype'), url('//cdn.shopify.com/s/files/1/0084/4044/7094/t/21/assets/bc-sf-filter-ico.woff?1fx0e3&39055') format('woff'), url('//cdn.shopify.com/s/files/1/0084/4044/7094/t/21/assets/bc-sf-filter-ico.svg?1fx0e3%23icomoon&39055') format('svg');
-	font-weight: 400;
-	font-style: normal
-}
+
 
 #bc-sf-filter-wrapper {
 	float: left;
@@ -379,7 +373,7 @@ $searchBoxMobileHeight: 50px;
 }
 
 .bc-sf-filter-sprite {
-	background: url(bc-sf-filter-sprite.png?v=6) no-repeat
+	//background: url(bc-sf-filter-sprite.png?v=6) no-repeat
 }
 
 .bc-sf-filter-option-block {
@@ -1027,7 +1021,7 @@ div.checker, div.selector.focus, div.selector.hover {
 }
 
 #bc-sf-filter-loading {
-	background: url(bc-sf-filter-loading.gif) center 14px no-repeat #fff;
+	//background: url(bc-sf-filter-loading.gif) center 14px no-repeat #fff;
 	bottom: auto;
 	right: auto;
 	width: 56px;
@@ -1043,7 +1037,7 @@ div.checker, div.selector.focus, div.selector.hover {
 }
 
 #bc-sf-filter-load-more-loading-icon {
-	background: url(bc-sf-filter-loading.gif) center 14px no-repeat #fff;
+	//background: url(bc-sf-filter-loading.gif) center 14px no-repeat #fff;
 	margin: 0 auto;
 	width: 56px;
 	height: 56px;
@@ -1278,7 +1272,7 @@ div.checker, div.selector.focus, div.selector.hover {
 }
 
 #bc-sf-filter-load-more #bc-sf-filter-load-more-loading #bc-sf-filter-load-more-icon {
-	background: url(bc-sf-filter-loading.gif) center 14px no-repeat #fff;
+	//background: url(bc-sf-filter-loading.gif) center 14px no-repeat #fff;
 	margin: 0 auto;
 	width: 56px;
 	height: 56px;

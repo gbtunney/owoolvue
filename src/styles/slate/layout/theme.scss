@@ -2,6 +2,10 @@
 @import "../../g-Patternlab/project-variables";
 $GENERATE-QUEUE: false;
 @import "../../g-Patternlab/project-base";*/
+$GENERATE-QUEUE: false;
+
+@import "../../g-Patternlab/project-variables";
+@import "../../g-Patternlab/project-base";
 @import "../../custom/variables";
 @import "../../brooklyn/brooklyn";
 @import "../../custom/site";
