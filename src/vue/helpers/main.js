@@ -1,3 +1,6 @@
+var unflatten = require('flat').unflatten
+var flatten = require('flat').flatten
+
 export function Slugify(text) {
 	// https://gist.github.com/mathewbyrne/1280286
 	return text.toString().toLowerCase()
@@ -21,6 +24,28 @@ export function ShopifyImgURL(src, size) {
 		return '_' + size + match;
 	})
 		;
+}
+
+const FLATTEN_OPTIONS_DEFAULT =  { maxDepth: 2 };
+
+export function getObjectAttrByPath ( _targetObj ={} ,
+									  _key = false,
+									  _flattened = false /*can also be an options object*/,
+									  _delimiter = '.') {
+	var return_obj = false;
+	if (!_key) {
+		return_obj = _targetObj;
+	} else if (_key && r.is(String, _key)) {
+		_key = _key.split(_delimiter);
+	}
+	if (_key && r.is(Array, _key)) {
+		return_obj = (r.path(_key, _targetObj)) ? r.path(_key, _targetObj) : false;
+	}
+
+	if (!_flattened) return return_obj;
+	if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
+	if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
+	return false;
 }
 
 export function updateHistory(variant) {
