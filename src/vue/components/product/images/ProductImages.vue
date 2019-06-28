@@ -1,5 +1,13 @@
 <template>
-	<p>{{ greeting }} World!</p>
+	<div :class="$options.name">
+		<ul class="wrapperdiv">
+			<li v-for="image,index in ImageArray" :key="index">
+				<div>
+					<img @click="imageChanged(image)" :src="getShopifyImageURL(image)" alt="image.alt">
+				</div>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
@@ -11,12 +19,11 @@
 
 
 	module.exports = {
-		name: '',
-		mixins: [],
+		name: 'ProductImages',
+		mixins: [ProductImagesMixin],
 		components: {},
 		data: function() {
 			return {
-				greeting: 'Hello'
 			}
 		},
 		props: {
@@ -47,9 +54,6 @@
 	}
 </script>
 
-<style lang="scss" type="text/scss" scoped>
-	p {
-		font-size: 2em;
-		text-align: center;
-	}
+<style lang="scss" type="text/scss" >
+
 </style>

@@ -4,7 +4,15 @@
 				{{CurrentProductTitle}}</h1>
 			<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
-			<ProductImageThumbailPicker v-if="CurrentProduct"
+
+		<ProductImages v-if="CurrentProduct"
+					   :option="ThumbnailPanelKey"
+					   :imagearray="CurrentProductImages"
+					   :imagesize="'150x150'">
+
+		</ProductImages>
+	
+		<ProductImageThumbailPicker v-if="CurrentProduct"
 										:option="ThumbnailPanelKey"
 										:imagearray="CurrentProductImages"
 										:imagesize="'150x150'">

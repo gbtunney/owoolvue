@@ -17,10 +17,13 @@ import KitEditorApp from "../../vue/components/admin/KitEditor.vue";
 import AnnouncementBarApp from "../../vue/components/header/AnnouncementBarApp.vue";
 
 import ProductCard from "../../vue/components/collection/ProductCard.vue";
+import GIcon from "../../vue/components/utilities/GIcon.vue";
+
 //import AdminProductApp from "../../vue/components/shopify/admin/AdminProductSelector.vue";
 //import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 //import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
 
+import PageDesignerDemo from "../../vue/components/admin/PageDesignerDemo.vue";
 
 //mountVue('#owool-test-app', NewProduct);
 
@@ -63,8 +66,11 @@ if ( vueelements && vueelements.length>0){
         }
         else if (component=="ProductCard"){mountVue(`#${uid}`, ProductCard);
         }
-    
-        
+        else if (component=="GIcon"){mountVue(`#${uid}`, GIcon);
+        }  else if (component=="PageDesignerDemo"){mountVue(`#${uid}`, PageDesignerDemo);
+        }
+
+
     });
 }
 
