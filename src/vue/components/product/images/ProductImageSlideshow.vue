@@ -17,7 +17,7 @@
 			</div>
 		</swiper>
 		<div class="lazy-preloader" v-show="mounted">
-				<iconcomponent  :addl_styles="{width: '10rem',height: '10rem'}" icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="accent-default" :showpicker="true"></iconcomponent>
+				<iconcomponent  :addl_styles="{width: '10rem',height: '10rem'}" icon_id="svg-icon-loadinganim" :flags="['--no-border']"  scheme="dark-accent-default" :showpicker="false"></iconcomponent>
 		</div>
 	</div>
 </template>

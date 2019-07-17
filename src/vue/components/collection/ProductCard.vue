@@ -4,16 +4,17 @@
 				{{CurrentProductTitle}}</h1>
 			<h3 v-if="CurrentProductSubtitle">{{CurrentProductSubtitle}}</h3>
 
+		<div v-html="testhtml">GILLIAN</div>
 
 		<ProductImages v-if="CurrentProduct"
-					   :option="ThumbnailPanelKey"
+					   :option=false
 					   :imagearray="CurrentProductImages"
 					   :imagesize="'150x150'">
 
 		</ProductImages>
-	
+
 		<ProductImageThumbailPicker v-if="CurrentProduct"
-										:option="ThumbnailPanelKey"
+										:option=false
 										:imagearray="CurrentProductImages"
 										:imagesize="'150x150'">
 
@@ -32,7 +33,7 @@
 				      :content="CurrentVariantPrice">{{ CurrentVariantPrice }}</span>
 			</div>
 
-			<lazy-component v-if="DefaultImage">
+			<lazy-component v-if="CurrentProductDefaultImage">
 				<img class="mini-cover" :src="getShopifyImageURL(CurrentProductDefaultImage)" :alt="CurrentProductDefaultImage.alt">
 			</lazy-component>
 
@@ -92,7 +93,10 @@
                 required: false,
                 type: [Boolean, String],
                  default:'350x350'
-            }
+            },
+			testhtml:{
+				required: false
+			}
 		},
 		mounted:function(){
 

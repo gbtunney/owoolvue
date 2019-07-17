@@ -1,0 +1,21 @@
+{% comment %}
+This is an example of a product dump for a specific collection, since shopifys ajax api omits important inventory count stuff
+{% endcomment %}
+
+{
+    {% for product in collections['yarns'].products %}
+        "{{product.handle}}": {
+            "variants": [
+                {% for variant in product.variants %}
+                    { "inventory_policy" : "{{variant.inventory_policy  }}",
+                    "id" : {{  variant.id }},
+                    "product_id" : {{ product.id }},
+                    "product_handle": "{{ product.handle }}",
+                    "inventory_management": {% if variant.inventory_management  != nil %}"{{variant.inventory_management  }}"{% else %}false{% endif %},
+                    "inventory_quantity" : {{variant.inventory_quantity}}  } {% if forloop.last == false %},{% endif %}
+                {% endfor %}
+            ]
+        }
+        {% if forloop.last == false %},{% endif %}
+    {% endfor %}
+}

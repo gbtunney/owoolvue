@@ -10,25 +10,9 @@ This is the full Product App vue component.
     {% include 'settings-product-handle-defaults'  %}
 {%- endcapture -%}
 
- {%- capture variant_admin_api_data -%}
-{
-   {% for product in collections['yarns'].products %}
-   "{{product.handle}}":  [
-        {% for variant in product.variants %}
-          { "inventory_policy" : "{{variant.inventory_policy  }}",
-          "id" : {{  variant.id }},
-          "product_id" : {{ product.id }},
-          "product_handle": "{{ product.handle }}",
-          "inventory_management": {% if variant.inventory_management  != nil %}"{{variant.inventory_management  }}"{% else %}false{% endif %},
-          "inventory_quantity" : {{variant.inventory_quantity}}  } {% if forloop.last == false %},{% endif %}
-        {% endfor %}
-    ]
-  {% if forloop.last == false %},{% endif %}
-  {% endfor %}
- }
- {%- endcapture -%}
-
-{{ variant_admin_api_data }}
+{%- capture product_variant_inventory_data -%}
+     {% include 'settings-product-variant-dump'  %}
+{%- endcapture -%}
 
 <div js-mount-vue="ProductApp"  class="do-touch-manipulation c-product-app"
      prop.productid="{{ product_id }}"
@@ -36,15 +20,12 @@ This is the full Product App vue component.
      prop.sectionsettings='{{   sectionsettings | json }}'
      prop.settings='{{ settings | json | escape  }}'
      prop.producthandle='{{ product.handle  }}'
-
-     prop.product='{{ product | json |strip_newlines | escape  }}'
-     prop.defaults.product.variants='{{- variant_admin_api_data|  remove: " " | remove: "    " | strip_newlines -}}'
+     prop.product='{{ product | json | strip_newlines | escape  }}'
+     prop.defaults.variant_inventory_data.handle='{{- product_variant_inventory_data|  remove: " " | remove: "    " | strip_newlines -}}'
      prop.defaults.type='{{ product_type_defaults | escape | strip_newlines }}'
      prop.defaults.handle='{{ product_handle_defaults | escape | strip_newlines }}'
      prop.default_heirarchy.1 = "type"
      prop.default_heirarchy.0 = "handle"
-     prop.default_heirarchy.2 = "product"
-
-
-
+     prop.default_heirarchy.3 = "product"
+     prop.default_heirarchy.2 = "variant_inventory_data.handle"
 ></div>
