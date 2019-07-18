@@ -189,10 +189,10 @@
     //const type =  require('ramda').type;
     const r =  require('ramda');
 
-	var flatten = require('flat')
+    const flatten = require('flat').flatten
+    const unflatten = require('flat').unflatten
 
-
-	const FLATTEN_OPTIONS_DEFAULT =  { maxDepth: 2 };
+	const FLATTEN_OPTIONS_DEFAULT =  { maxDepth: 4 };
     //  ProductMixin
     export default {
 		props: {
@@ -347,55 +347,39 @@
 					if (r.is(String, item)) {
 						keyItemArr = item.toString().split(delimiter);
 					}
-					if (self.$props.product) {
 
-						if (self.$props.product.hasOwnProperty(item)) {
-							keyItemArr.push((self.$props.product[item]).toString().toLowerCase());
-						}
-					}
-					return self.Defaults(keyItemArr);
+					let _product =  self.$props.product;
+
+                    keyItemArr.forEach(function(_item,index){
+                        if (_product.hasOwnProperty(_item)) {
+                            if (  typeof _item == 'string'){
+                                var push_value = (_product[_item]).toString().toLowerCase();
+                                keyItemArr.push(push_value);
+                            }
+                        }
+                    })
+                    return self.Defaults(keyItemArr);
 				});
 
 				return Object.assign(...new_map);
 			}
 		},
-	    created:function(){
+        created: function() {
             let self = this;
-	    	this.$data.loading=true;
-			//var tester = this.Defaults('product',{ maxDepth: 3 });
+            this.$data.loading = true;
+            //var tester = this.Defaults('product',{ maxDepth: 3 });
 
+            var tester = this.Defaults(['variant_inventory_data', 'handle', 'local'], {maxDepth: 4});
+            console.log("mapped defaults", this.MappedDefaults, tester);
+            this.loadProduct().then(function(res) {
 
-			if (this.MergedProduct){
+                self.initCurrentProduct(res.data.product);
 
-				let _product = this.MergedProduct;
-			//	this.add_product_to_dictionary({product:  this.MergedProduct});
-				console.log("NEW MAP",this.$props.product,this.MergedProduct);
-
-
-
-			}
-
-			this.loadProduct().then(function(res){
-
-				self.initCurrentProduct(res.data.product);
-
-				////!*****SET VARIANT
-				self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
-				self.$data.loading = false;
-
-			})
-
-			/*
-			this.loadProducts().then(function(res){
-				self.add_product_to_dictionary({products: res.data.products });
-
-			});
-			this.getShop().then(function(res){
-		    })
-		   */
-
-
-	    },
+                ////!*****SET VARIANT
+                self.variantChanged(self.variant_dictionary.get(self.NormalizedVariantID))
+                self.$data.loading = false;
+            })
+        },
 	    mounted:function(){
 	    },
 	    methods:{
@@ -433,7 +417,6 @@
 				if (_key && r.is(Array, _key)) {
 					return_obj = (r.path(_key, _defaults)) ? r.path(_key, _defaults) : false;
 				}
-
 				if (!_flattened) return return_obj;
 				if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
 				if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
@@ -450,9 +433,9 @@
 					}
 					return newVal;//k == 'values' ? R.concat(l, r) : r
 				};
-				return R.mergeWith(customMerge,
-						R.clone(product), R.clone(override)
-				);
+				return R.mergeDeepWith(customMerge,
+                    R.clone(product),
+                    R.clone(override));
 			},
 	    ...mapMutations(['setlayoutButton']),
 			    testBtn:function(target){
