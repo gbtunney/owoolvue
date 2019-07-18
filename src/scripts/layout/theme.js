@@ -23,7 +23,6 @@ import GIcon from "../../vue/components/utilities/GIcon.vue";
 //import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 //import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
 
-import PageDesignerDemo from "../../vue/components/admin/PageDesignerDemo.vue";
 
 //mountVue('#owool-test-app', NewProduct);
 
@@ -67,10 +66,7 @@ if ( vueelements && vueelements.length>0){
         else if (component=="ProductCard"){mountVue(`#${uid}`, ProductCard);
         }
         else if (component=="GIcon"){mountVue(`#${uid}`, GIcon);
-        }  else if (component=="PageDesignerDemo"){mountVue(`#${uid}`, PageDesignerDemo);
         }
-
-
     });
 }
 

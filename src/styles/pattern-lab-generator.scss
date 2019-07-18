@@ -13,11 +13,12 @@ $patternlab: batch-add-to-style-dictionary($base-render-objects);
 ///multilevel "inheritance"
 $patternlab: batch-add-to-style-dictionary(clean-collection(get-collection($secondary-objects), parent));
 
-@import "gillian/project-components"; //***DEPRICATED 
+@import "g-Patternlab/project-components"; //***DEPRICATED
 
 .--reflectX{
 		@include u-reflect-X();
 }
+
 .--reflectY{
 	@include u-reflect-Y();
 }

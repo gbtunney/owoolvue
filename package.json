@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "a-promise-queue": "^2.0.0",
+    "compass-mixins": "^0.12.10",
     "easy-promise-queue": "^0.5.4",
     "flat": "^4.1.0",
     "g-patternlab": "^1.0.0",

@@ -1,4 +1,11 @@
-<!doctype html>
+{% comment %}
+ DO A AJAX FEED HERE.
+{% endcomment %}
+{% if template == 'page.productdata' %}
+  {{ content_for_layout }}
+{% endif %}
+
+{% if template !=  'page.productdata' %}
 <html class="no-js" lang="{{ shop.locale }}">
 <head>
 
@@ -91,6 +98,8 @@
 
 
   <div id="PageContainer"  class="page-container">
+
+
 {% include 'c-icon-dump' %}
     {% if template.name == "index" %}
       {% section 'slideshow' %}
@@ -170,3 +179,4 @@ PLEASE MOVE THE FOLLOWING@@
 
 </body>
 </html>
+{% endif %}
