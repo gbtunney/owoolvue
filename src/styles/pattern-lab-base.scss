@@ -1,14 +1,17 @@
+@import "~g-patternlab/stylesheets/base";
+@import "~g-patternlab/stylesheets/specific-project-variables";
+@include init-cm($baseColors,$schemes);
 
+///ADD COLORS
+//add something to dictionary
+$patternlab: batch-add-to-style-dictionary($base-render-color-objs);
 
+///ADD SIZING VALUES
+$patternlab: batch-add-to-style-dictionary($base-render-objects);
 
+///multilevel "inheritance"
+$patternlab: batch-add-to-style-dictionary(clean-collection(get-collection($secondary-objects), parent));
 
-
-
-
-
-
-
-
-
-
+$GENERATOR_ON:true;
+@import "~g-patternlab/stylesheets/generator";
 
