@@ -75,6 +75,7 @@
                 _isDisabled: false,
                 availablity: true,
                 _totalAmt: false,
+	            _variantMap:false
             }
         },
         props: {
@@ -121,6 +122,14 @@
             ...mapGetters([
                 'Variants'
             ]),
+            VariantMap:{
+                get: function() {
+                    return this.$data._variantMap;
+                },
+                set: function(newVal) {
+                    this.$data._variantMap = newVal;
+                }
+            },
             Disabled: function() {
                 if (this.$props.disableunavailable && !this.Availability){
                     return true;
@@ -198,7 +207,12 @@
             }
         },
         methods: {
+            loadProducts: function() {
+                let self = this;
+                return this.getProducts();
+            },
             Variant: function(variant_id) {
+                console.log("ching for ", variant_id)
                 if (this.LocalVariantDictionary && variant_id && this.LocalVariantDictionary.get(variant_id)){
                     return this.LocalVariantDictionary.get(variant_id);
                 } else {
@@ -209,7 +223,57 @@
             _initPendingItem: function() {
                 let self = this;
 
-                Promise.all([...this.UnloadedDataItems.map(function(item) {
+
+
+if (  this.UnloadedDataItems.length > 0 && !this.VariantMap ){
+
+
+    this.loadProducts().then(function (res){
+        /// self.add_product_to_dictionary({products: res.data.products});
+
+
+        let temp_variantArr = []
+
+
+        var products =  res.data.products.forEach(function(product){
+            //console.log("!!!product",product)
+
+            if (product.variants){
+                var newmap = product.variants.map(function(variant) {
+                    var arr = [variant.id, variant];
+                    return arr;
+                })
+
+            }
+            temp_variantArr = [...temp_variantArr, ...newmap];
+
+        })
+
+
+
+        console.log("TR!!!!YING TO MP!!!",temp_variantArr.length, new Map(temp_variantArr).size);
+        self.LocalVariantDictionary  = new Map(temp_variantArr);
+
+
+        //       self.UnloadedDataItems.map(function(item) {
+
+//        return map.get(item.variant_id)
+        //return self.getVariant({params: {id: item.variant_id}})
+
+        //  })
+
+
+    })
+
+}
+
+
+
+
+
+
+                /*Promise.all([...this.UnloadedDataItems.map(function(item) {
+
                     return self.getVariant({params: {id: item.variant_id}})
 
                 })]).then(function(values) {
@@ -225,7 +289,7 @@
                             self.LocalVariantDictionary = Array.from(product_res.data.product.variants);
                         })
                     })
-                })
+                })*/
             },
             parsePendingItemsSchema: function(itemArr) {
                 if (itemArr && itemArr.length > 0){

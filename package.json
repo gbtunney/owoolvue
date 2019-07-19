@@ -65,6 +65,7 @@
     "numeral": "^2.0.6",
     "ramda": "^0.26.1",
     "sass-dry": "^1.0.0",
+    "shopify-api-node": "^2.20.1",
     "uniqid": "^5.0.3",
     "v-tooltip": "^2.0.2",
     "vue": "^2.5.21",

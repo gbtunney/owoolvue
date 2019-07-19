@@ -20,9 +20,17 @@ export const LocalVariantDictionaryMixin = {
             },
             set: function(newVal) {
                 let self = this;
+    
+    
                 
-                if (typeof newVal == "map"){
-                    self.$data._local_variant_dictionary = new Map([newVal, self.$data._local_variant_dictionary]);
+                if ( newVal.size > 0){
+                    console.log("NEWVAlLL" ,newVal,  typeof newVal)
+
+                    var merged = new Map([...self.$data._local_variant_dictionary,...newVal])
+                   self.$data._local_variant_dictionary =merged;
+    
+                        console.log("****************ITS A MAO@@@" ,self.$data._local_variant_dictionary,merged )
+                    //    self.$data._local_variant_dictionary = new Map([newVal, self.$data._local_variant_dictionary]);
                 } else if (typeof newVal == "object" && newVal.length >= 1){
                     newVal.forEach(function(variant) {
                         if (!self.$data._local_variant_dictionary){

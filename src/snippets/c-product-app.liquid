@@ -14,6 +14,15 @@ This is the full Product App vue component.
      {% include 'settings-product-variant-dump'  %}
 {%- endcapture -%}
 
+{%- capture variant_admin_api_data -%}
+   [{% for variant in product.variants %}
+          { "inventory_policy" : "{{variant.inventory_policy  }}",
+         "inventory_management": {% if variant.inventory_management  != nil %}"{{variant.inventory_management  }}"{% else %}false{% endif %},
+         "inventory_quantity" : {{variant.inventory_quantity}}  } {% if forloop.last == false %},{% endif %}
+        {% endfor %}]
+ {%- endcapture -%}
+
+
 <div js-mount-vue="ProductApp"  class="do-touch-manipulation c-product-app"
      prop.productid="{{ product_id }}"
      prop.variantid="{{ variant_id }}"
@@ -22,10 +31,15 @@ This is the full Product App vue component.
      prop.producthandle='{{ product.handle  }}'
      prop.product='{{ product | json | strip_newlines | escape  }}'
      prop.defaults.variant_inventory_data.handle='{{- product_variant_inventory_data|  remove: " " | remove: "    " | strip_newlines -}}'
+     prop.defaults.product.variants='{{- variant_admin_api_data|  remove: " " | remove: "    " | strip_newlines -}}'
+
      prop.defaults.type='{{ product_type_defaults | escape | strip_newlines }}'
      prop.defaults.handle='{{ product_handle_defaults | escape | strip_newlines }}'
      prop.default_heirarchy.1 = "type"
      prop.default_heirarchy.0 = "handle"
-     prop.default_heirarchy.3 = "product"
-     prop.default_heirarchy.2 = "variant_inventory_data.handle"
+     prop.default_heirarchy.2 = "product"
+     prop.default_heirarchy.3 = "variant_inventory_data.handle"
+
+
+
 ></div>
