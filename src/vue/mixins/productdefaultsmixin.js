@@ -38,6 +38,22 @@ export const ProductDefaultsMixin = {
             if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
             if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
         },
+        GetMergedProduct: function (product = this.$props.product, override = this.MappedDefaults) {
+            if (!product) return false;
+            let R = r;
+            let self = this;
+            let customMerge = function (k, l, r) {
+                if (R.is(Array, k) && R.is(Array, l)) {
+                    var newVal = k.map(function (item, index) {
+                        return Object.assign(R.clone(item), l[index]);
+                    })
+                }
+                return newVal;//k == 'values' ? R.concat(l, r) : r
+            };
+            return R.mergeDeepWith(customMerge,
+                R.clone(product),
+                R.clone(override));
+        },
         GetMappedDefaults: function (_product = this.$props.product,_defaultdata= this.$props.defaults, _default_heirarchy  = this.$props.default_heirarchy) {
             
             console.log("THE MAPPED DEFUALTS ARE", r)

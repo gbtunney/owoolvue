@@ -57,6 +57,7 @@
     import basecomponent from '@/components/utilities/g-base-component.vue';
 	import iconcomponent from '@/components/utilities/g-icon-component.vue';
     import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
+    import {ProductDefaultsMixin} from  '@/mixins/productdefaultsmixin.js';
 
 	///TODO  - figure out how to do this 4 reals.
 
@@ -66,7 +67,7 @@
 
     module.exports = {
         name: 'PendingItemsComponent',
-        mixins: [LocalVariantDictionaryMixin, CartMixin, ShopifyApiMixin, DictionaryMixin],
+        mixins: [LocalVariantDictionaryMixin, CartMixin, ShopifyApiMixin, DictionaryMixin,ProductDefaultsMixin],
         components: {iconcomponent, PendingCartItem, basecomponent},
         data: function() {
             return {

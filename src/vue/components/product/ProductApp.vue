@@ -172,6 +172,7 @@
     import {VariantMixin} from  '@/mixins/variantmixin.js';
     import {DictionaryMixin} from  '@/mixins/dictionarymixin.js';
     import {ShopifyApiMixin} from  '@/mixins/shopifyapimixin.js';
+    import {ProductDefaultsMixin} from  '@/mixins/productdefaultsmixin.js';
 
     import kabob from '@/components/utilities/kabob';
     import iconcomponent from '@/components/utilities/g-icon-component.vue';
@@ -208,15 +209,7 @@
 			producthandle: {
 				default: false
 			},
-			defaults: {
-				type: Object,
-				default: () => {
-				}
-			},
-			default_heirarchy: {
-				type: Array,
-				default: () => []
-			},
+
 			sectionsettings: {
 				type: Object,
 				default: () => {
@@ -260,7 +253,7 @@
 				default: false
 			}
 		},
-	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin],
+	    mixins: [DictionaryMixin,ProductMixin,VariantMixin,ShopifyApiMixin,ProductDefaultsMixin],
 	    components: {draggable,iconcomponent,ProductImageThumbailPicker,basecomponent,ProductImageSlideshow,kabob,PendingItemsComponent,productOptionPicker,Multiselect},
 	    data() {
 		    return {
@@ -334,34 +327,7 @@
                 return this.$data.toggle_classes[this.LayoutToggle];
             },
 			MappedDefaults: function () {
-				let self = this;
-				var new_map = this.$props.default_heirarchy.map(function (item) {
-
-					var delimiter = ".";
-					let keyItemArr = [];
-
-					if (r.is(Array, item)) {
-						keyItemArr = item;
-					}
-
-					if (r.is(String, item)) {
-						keyItemArr = item.toString().split(delimiter);
-					}
-
-					let _product =  self.$props.product;
-
-                    keyItemArr.forEach(function(_item,index){
-                        if (_product.hasOwnProperty(_item)) {
-                            if (  typeof _item == 'string'){
-                                var push_value = (_product[_item]).toString().toLowerCase();
-                                keyItemArr.push(push_value);
-                            }
-                        }
-                    })
-                    return self.Defaults(keyItemArr);
-				});
-
-				return Object.assign(...new_map);
+				return this.GetMappedDefaults();
 			}
 		},
         created: function() {
@@ -420,22 +386,6 @@
 				if (!_flattened) return return_obj;
 				if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
 				if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
-			},
-			GetMergedProduct: function (product = this.$props.product, override = this.MappedDefaults) {
-				if (!product) return false;
-				let R = r;
-				let self = this;
-				let customMerge = function (k, l, r) {
-					if (R.is(Array, k) && R.is(Array, l)) {
-						var newVal = k.map(function (item, index) {
-							return Object.assign(R.clone(item), l[index]);
-						})
-					}
-					return newVal;//k == 'values' ? R.concat(l, r) : r
-				};
-				return R.mergeDeepWith(customMerge,
-                    R.clone(product),
-                    R.clone(override));
 			},
 	    ...mapMutations(['setlayoutButton']),
 			    testBtn:function(target){
