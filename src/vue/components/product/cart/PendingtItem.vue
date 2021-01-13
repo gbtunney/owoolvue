@@ -132,6 +132,11 @@
         watch: {
             item: function(val) {
                // console.log("NEW ITEM SSETTTT", this.Variant);
+            },
+            local_variant_dictionary:function(){
+                 console.log("CHANNNNGEDDD", this.Variant);
+
+
             }
         },
         computed: {

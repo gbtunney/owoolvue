@@ -2,6 +2,8 @@
 	<div :class="$options.name" class="pending-items-component --productApp">
 		<h4 v-show="false">TOTAL: {{  TotalAmount | toUSD }}</h4>
 		<h3 v-show="false">availability test {{Availability}} disabled {{ Disabled }}</h3>
+
+	{{LocalVariantDictionary.size}}
 		<basecomponent class="add-to-cart-button" :text="AddToCartString" :flags="['addToCartPadding']"
 		               v-show="!Disabled" scheme="dark-accent-primary"
 		               @click="addMultipletoCart(PendingItems)" font="small-caps"
@@ -58,6 +60,7 @@
 	import iconcomponent from '@/components/utilities/g-icon-component.vue';
     import PendingCartItem from '@/components/product/cart/PendingtItem.vue'
     import {ProductDefaultsMixin} from  '@/mixins/productdefaultsmixin.js';
+    const r =  require('ramda');
 
 	///TODO  - figure out how to do this 4 reals.
 
@@ -107,7 +110,7 @@
         mounted: function() {
 
             this.PendingItems = this.parsePendingItemsSchema(this.$props.addtocartvariants);//this.parsePendingItems(this.$props.addtocartvariants)
-            this.LocalVariantDictionary = this.variant_dictionary;
+            this.LocalVariantDictionary = new Map(this.variant_dictionary);
             this._initPendingItem();
 
             this.getCart().then(function(res) {
@@ -116,21 +119,13 @@
         watch: {
             addtocartvariants: function(val) {
                 this.PendingItems = this.parsePendingItemsSchema(val);//this.parsePendingItems(this.$props.addtocartvariants)
-                this._initPendingItem();
+               this._initPendingItem();
             }
         },
         computed: {
             ...mapGetters([
                 'Variants'
             ]),
-            VariantMap:{
-                get: function() {
-                    return this.$data._variantMap;
-                },
-                set: function(newVal) {
-                    this.$data._variantMap = newVal;
-                }
-            },
             Disabled: function() {
                 if (this.$props.disableunavailable && !this.Availability){
                     return true;
@@ -213,84 +208,70 @@
                 return this.getProducts();
             },
             Variant: function(variant_id) {
-                console.log("ching for ", variant_id)
-                if (this.LocalVariantDictionary && variant_id && this.LocalVariantDictionary.get(variant_id)){
+
+	            if ( this.LocalVariantDictionary && variant_id && this.LocalVariantDictionary.get(variant_id) ){
+                    console.log("!!!!!!!!!!!ching for ", variant_id)
+
                     return this.LocalVariantDictionary.get(variant_id);
-                } else {
+
+
+                }else {
                     return false;
                 }
             },
             //NEW
             _initPendingItem: function() {
                 let self = this;
+                console.log("trying to find a dara uten",this.UnloadedDataItems);
 
 
+                if ( this.UnloadedDataItems.length > 0 ){
 
-if (  this.UnloadedDataItems.length > 0 && !this.VariantMap ){
+                    this.loadProducts().then(function(res) {
 
+                        var getAges = r.pluck('age');
+                        ; //=> [29, 27]
 
-    this.loadProducts().then(function (res){
-        /// self.add_product_to_dictionary({products: res.data.products});
+                        let PRODUCT_CACHE  =  res.data.products;
+                      //  console.log("trying to find a dara uten",PRODUCT_CACHE);
 
-
-        let temp_variantArr = []
-
-
-        var products =  res.data.products.forEach(function(product){
-            //console.log("!!!product",product)
-
-            if (product.variants){
-                var newmap = product.variants.map(function(variant) {
-                    var arr = [variant.id, variant];
-                    return arr;
-                })
-
-            }
-            temp_variantArr = [...temp_variantArr, ...newmap];
-
-        })
+                     //   var pluckFunc = r.pluck('variants');
+                     //   let variantList =pluckFunc(res.data.products).flat();
 
 
+                        self.UnloadedDataItems.forEach(function(item) {
 
-        console.log("TR!!!!YING TO MP!!!",temp_variantArr.length, new Map(temp_variantArr).size);
-        self.LocalVariantDictionary  = new Map(temp_variantArr);
+                          var product_result =   PRODUCT_CACHE.find(function (product){
 
+                                if ( product.variants) {
 
-        //       self.UnloadedDataItems.map(function(item) {
+                                    var variant_result = product.variants.find(function(variant){
+                                        if ( item.variant_id == variant.id ) return true
 
-//        return map.get(item.variant_id)
-        //return self.getVariant({params: {id: item.variant_id}})
+                                    })
 
-        //  })
+	                                if ( !variant_result ){
+                                        console.log("variant not  found for ", item.variant_id)
 
-
-    })
-
-}
-
-
-
+                                    }
+                                    return variant_result;
+                                }
 
 
+                            })
+                            console.log("VARIANT RESULT",product_result);
 
-                /*Promise.all([...this.UnloadedDataItems.map(function(item) {
-
-                    return self.getVariant({params: {id: item.variant_id}})
-
-                })]).then(function(values) {
-
-                    var myset = new Set(values.map(function(res) {
-                            return res.data.variant.product_id;
+                         /*   if (product_set){
+                                self.add_product_to_dictionary({product: foundProduct});
+                                self.add_images_to_dictionary({images: foundProduct.images});
+                                //    self.LocalVariantDictionary = Array.from(foundProduct.variants);
+                                self.LocalVariantDictionary =    mergeDictionary(Array.from(foundProduct.variants));
+                            }*/
                         })
-                    )
-                    Array.from(myset.values()).map(function(product_id) {
-                        self.getProduct({params: {path: "/admin/", handle: product_id}}).then(function(product_res) {
-                            self.add_product_to_dictionary({product: product_res.data.product});
-                            self.add_images_to_dictionary({images: product_res.data.product.images});
-                            self.LocalVariantDictionary = Array.from(product_res.data.product.variants);
-                        })
+
                     })
-                })*/
+                }
+
             },
             parsePendingItemsSchema: function(itemArr) {
                 if (itemArr && itemArr.length > 0){
@@ -316,6 +297,7 @@ if (  this.UnloadedDataItems.length > 0 && !this.VariantMap ){
                 ///transform the pending item array for ajax cart.
 
                 ///TODO THIS IS SOME DUMB BULLSHITTTTTT
+                ///TODO THIS IS SOME DUMB BULLSHITTTTTT
                 return pendingItems.map(function(item) {
 
                     let line_props = {};
@@ -339,6 +321,14 @@ if (  this.UnloadedDataItems.length > 0 && !this.VariantMap ){
                     return {params, data};
                 });
             },
+	        mergeDictionary:function(newArr){
+
+                    var _newvariants =  newArr.map(function(variant){
+                        return [[variant.id][variant]]
+                    })
+                    return new Map([...this.$data._local_variant_dictionary, ...new Map(_newvariants)])
+
+	        },
             addMultipletoCart: function(_pendingItems) {
 
                 let pendingItems = this.transformCartItemArray(_pendingItems, this.$props.lineitemmessage)
@@ -386,6 +376,11 @@ if (  this.UnloadedDataItems.length > 0 && !this.VariantMap ){
                 }
 
             },
+	        updateMasterVariantPending:function(){
+
+
+
+	        },
             updateVariant: function(item, variant) {
 
                 var itemsMap = this.PendingItemsMap;

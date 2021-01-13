@@ -73,7 +73,7 @@
 						</div>
 
 						<PendingItemsComponent :lineitemmessage="( CurrentProduct && KitItems) ? CurrentProduct.title : false"
-						                       v-if="(CurrentProduct && !CurrentProduct.notforsale)"
+						                      :default_heirarchy="default_heirarchy" :defaults="defaults" v-if="(CurrentProduct && !CurrentProduct.notforsale)"
 						                       :kit="KitItems"
 						                       :addtocartvariants='$data._pendingItems'>
 						</PendingItemsComponent>
@@ -372,20 +372,6 @@
 					option_value_overrides: (current_product.optionvalues && current_product.optionvalues.length > 0) ? current_product.optionvalues  : false
 				};
 				this.add_options_to_dictionary(payload);
-			},
-			Defaults: function (_key = false, _flattened = false, _defaults = this.$props.defaults, _delimiter = '.') {
-				var return_obj = false;
-				if (!_key) {
-					return_obj = _defaults;
-				} else if (_key && r.is(String, _key)) {
-					_key = _key.split(_delimiter);
-				}
-				if (_key && r.is(Array, _key)) {
-					return_obj = (r.path(_key, _defaults)) ? r.path(_key, _defaults) : false;
-				}
-				if (!_flattened) return return_obj;
-				if (_flattened && r.is(Boolean, _flattened)) return flatten(return_obj, FLATTEN_OPTIONS_DEFAULT);
-				if (_flattened && r.is(Object, _flattened)) return flatten(return_obj, _flattened) //overriding the default options.
 			},
 	    ...mapMutations(['setlayoutButton']),
 			    testBtn:function(target){

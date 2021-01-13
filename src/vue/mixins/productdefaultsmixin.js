@@ -24,7 +24,7 @@ export const ProductDefaultsMixin = {
         }
     },
     methods: {
-        DefaultsFunc: function (_key = false, _flattened = false, _defaults = this.$props.defaults, _delimiter = '.') {
+        Defaults: function (_key = false, _flattened = false, _defaults = this.$props.defaults, _delimiter = '.') {
             var return_obj = false;
             if (!_key) {
                 return_obj = _defaults;
