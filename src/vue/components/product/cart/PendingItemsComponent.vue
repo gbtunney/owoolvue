@@ -46,7 +46,9 @@
     import {mapGetters,mapActions,mapState, mapMutations} from 'vuex';
 	import store from '@/store'
 	const schema = require("schm");
-    const PromiseQueue = require("easy-promise-queue").default;
+    //const PromiseQueue = require("easy-promise-queue").default;
+    import PromiseQueue from 'easy-promise-queue';
+
     import math from 'mathjs'
     const Numeral = require('numeral');
 
