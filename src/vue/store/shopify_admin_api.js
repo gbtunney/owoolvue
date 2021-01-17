@@ -10,7 +10,7 @@ import {Slugify,GDatamapper} from '@/helpers/main.js'
 
 let BASE_URL_STAGE =  "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/";
 
-let BASE_URL_OWOOL = "https://o-wool.myshopify.com/";
+let BASE_URL_OWOOL = "https://o-wool.com/";
     
     //(window.location.hostname == "o-wool-stage.myshopify.com") ? "https://2f1979b64fd471f8692c920838ab735a:e6b8f159238f02584327577ca8ec1a2e@o-wool-stage.myshopify.com/admin/" : "https://o-wool.com"
 

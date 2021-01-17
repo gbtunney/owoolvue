@@ -23,7 +23,7 @@ import GIcon from "../../vue/components/utilities/GIcon.vue";
 //import NewProduct from "../../vue/components/shopify/product/TestProduct.vue";
 //import ProductVariantLinker from "../../vue/components/shopify/product/Product-Variant-Linker.vue"; //used for kits to link to variants
 
-import PageDesignerDemo from "../../vue/components/admin/PageDesignerDemo.vue";
+//import PageDesignerDemo from "../../vue/components/admin/PageDesignerDemo.vue";
 
 //mountVue('#owool-test-app', NewProduct);
 
