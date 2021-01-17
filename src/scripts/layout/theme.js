@@ -26,7 +26,7 @@ import GIcon from "../../vue/components/utilities/GIcon.vue";
 //import PageDesignerDemo from "../../vue/components/admin/PageDesignerDemo.vue";
 
 //mountVue('#owool-test-app', NewProduct);
-
+alert();
 
 const UNIQID = require('uniqid');
 
