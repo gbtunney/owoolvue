@@ -29,7 +29,7 @@
     "chroma-sass": "^1.2.6",
     "compass-mixins": "^0.12.10",
     "is-color": "^1.0.2",
-    "mathjs": "^5.4.2",
+    "mathjs": "^7.5.1",
     "modularscale-sass": "^3.0.8",
     "node-sass-tilde-importer": "^1.0.2",
     "postcss-import": "^12.0.1",
